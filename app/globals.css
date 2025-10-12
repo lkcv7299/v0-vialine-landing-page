@@ -167,3 +167,8 @@ a {
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
 }
+
+/* Safety CSS to prevent accidental duplicate promo bars */
+.promo-bar + .promo-bar {
+  display: none !important;
+}
