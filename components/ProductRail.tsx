@@ -24,8 +24,8 @@ export default function ProductRail({
   }
 
   return (
-    <section className="mx-auto max-w-7xl px-4 md:px-6 py-10">
-      <div className="flex items-end justify-between">
+    <section className="full-bleed px-4 sm:px-6 lg:px-8">
+      <div className="flex items-end justify-between mb-6">
         <h2 className="text-2xl md:text-3xl font-heading font-semibold">{title}</h2>
         {cta && (
           <Link href={cta.href} className="text-sm text-rose-700 hover:underline underline-offset-4">
@@ -34,16 +34,13 @@ export default function ProductRail({
         )}
       </div>
 
-      <div className="relative mt-3 -mx-[3px]">
+      <div className="relative">
         <div
           ref={ref}
-          className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 [-ms-overflow-style:none] [scrollbar-width:none]"
+          className="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-px-4 sm:scroll-px-6 lg:scroll-px-8 no-scrollbar"
         >
           {items.map((p) => (
-            <div
-              key={p.slug}
-              className="snap-start shrink-0 px-[3px] basis-[82%] sm:basis-[60%] md:basis-[48%] lg:basis-[24.8%]"
-            >
+            <div key={p.slug} className="snap-start shrink-0 w-[80vw] sm:w-[44vw] md:w-[32vw] lg:w-[24vw] xl:w-[22vw]">
               <ProductCard
                 href={`/producto/${p.slug}`}
                 title={p.title}
@@ -55,18 +52,17 @@ export default function ProductRail({
           ))}
         </div>
 
-        {/* Flechas (desktop) */}
         <button
           onClick={() => snap(-1)}
           aria-label="Anterior"
-          className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 h-10 w-10 items-center justify-center rounded-full bg-white shadow ring-1 ring-neutral-200"
+          className="hidden md:flex absolute top-1/2 -translate-y-1/2 left-4 h-10 w-10 items-center justify-center rounded-full bg-white shadow ring-1 ring-neutral-200 hover:bg-neutral-50 transition-colors"
         >
           ‹
         </button>
         <button
           onClick={() => snap(1)}
           aria-label="Siguiente"
-          className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 h-10 w-10 items-center justify-center rounded-full bg-white shadow ring-1 ring-neutral-200"
+          className="hidden md:flex absolute top-1/2 -translate-y-1/2 right-4 h-10 w-10 items-center justify-center rounded-full bg-white shadow ring-1 ring-neutral-200 hover:bg-neutral-50 transition-colors"
         >
           ›
         </button>

@@ -2,6 +2,8 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Outfit, Inter, Manrope } from "next/font/google"
 import "./globals.css"
+import AnnouncementBar from "@/components/AnnouncementBar"
+import PromoBar from "@/components/PromoBar"
 import Header from "@/components/Header"
 import WhatsAppFloat from "@/components/WhatsAppFloat"
 
@@ -64,6 +66,8 @@ export default function RootLayout({
             }),
           }}
         />
+        <AnnouncementBar />
+        <PromoBar />
         <Header />
         {children}
         <WhatsAppFloat />

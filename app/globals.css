@@ -152,3 +152,18 @@ a {
   height: 0;
   width: 0;
 }
+
+/* hide horizontal scrollbar on rails */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* full-bleed helper utility */
+.full-bleed {
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}

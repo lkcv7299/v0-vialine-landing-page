@@ -1,7 +1,6 @@
 import Link from "next/link"
-import { findProduct, byAudience } from "@/data/products"
-import ProductCard from "@/components/ProductCard"
-import ProductRail from "@/components/ProductRail"
+import { byAudience } from "@/data/products"
+import GymRail from "@/components/GymRail"
 
 const fabrics = [
   {
@@ -18,27 +17,23 @@ const fabrics = [
   },
 ]
 
-const categories = [
-  { name: "Leggings", href: "/colecciones/linea-suplex" },
-  { name: "Tops deportivos", href: "/colecciones/tops-algodon" },
-  { name: "Bikers", href: "/colecciones/linea-suplex" },
-  { name: "Enterizos", href: "/colecciones/enterizos" },
-  { name: "Bodys", href: "/colecciones/bodys" },
-  { name: "Camisetas (algodón)", href: "/colecciones/camisetas" },
-]
-
-const FEATURED_SLUGS = [
-  "short-ciclista-active",
-  "body-manga-larga",
-  "camiseta-manga-larga",
-  "top-venus",
-  "short-slim",
-  "straple-chanel",
-]
-
 export default function VialineHome() {
-  const featured = FEATURED_SLUGS.map((s) => findProduct(s)).filter(Boolean) as any[]
-  const ninaProducts = byAudience("nina")
+  const mujerProducts = byAudience("mujer").slice(0, 12)
+  const ninaProducts = byAudience("nina").slice(0, 12)
+
+  const popularMujer = mujerProducts.map((p) => ({
+    slug: p.slug,
+    name: p.title,
+    price: p.price,
+    image: p.image,
+  }))
+
+  const popularNina = ninaProducts.map((p) => ({
+    slug: p.slug,
+    name: p.title,
+    price: p.price,
+    image: p.image,
+  }))
 
   return (
     <main className="min-h-screen bg-neutral-50 text-neutral-900">
@@ -53,7 +48,10 @@ export default function VialineHome() {
             playsInline
             poster="/hero-woman.jpg"
           >
-            <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/hero-woman.mp4-8EA7bK3N8ZcPRWXPhjaYqWAl7RHWU6.mp4" type="video/mp4" />
+            <source
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/hero-woman.mp4-8EA7bK3N8ZcPRWXPhjaYqWAl7RHWU6.mp4"
+              type="video/mp4"
+            />
           </video>
 
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent" />
@@ -80,22 +78,7 @@ export default function VialineHome() {
           </div>
         </div>
 
-        <div className="mx-auto max-w-7xl px-6 md:px-8 py-12 md:py-16">
-          <ProductRail
-            title="Popular ahora (Mujer)"
-            slugs={[
-              "short-ciclista-active",
-              "short-slim",
-              "body-manga-larga",
-              "body-manga-corta",
-              "top-venus",
-              "top-afrodita",
-              "camiseta-manga-larga",
-              "camiseta-gia",
-            ]}
-            cta={{ label: "Ver todo mujer", href: "/mujer" }}
-          />
-        </div>
+        <GymRail title="Popular ahora (Mujer)" viewAllHref="/mujer" items={popularMujer} />
       </section>
 
       <section id="nina" className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] mt-10">
@@ -121,28 +104,7 @@ export default function VialineHome() {
           </div>
         </div>
 
-        {ninaProducts.length > 0 && (
-          <div className="mx-auto max-w-7xl px-6 md:px-8 py-12 md:py-16">
-            <ProductRail
-              title="Popular ahora (Niña)"
-              slugs={[
-                "cafarena-nina",
-                "panty-nina",
-                "enterizo-manga-corta-nina",
-                "enterizo-manga-larga-nina",
-                "legging-nina",
-                "maxi-short-nina",
-                "short-juvenil-nina",
-                "top-jazmin",
-                "top-margarita",
-                "top-orquidea",
-                "top-tulipan",
-                "top-vani",
-              ]}
-              cta={{ label: "Ver niña", href: "/nina" }}
-            />
-          </div>
-        )}
+        {popularNina.length > 0 && <GymRail title="Popular ahora (Niña)" viewAllHref="/nina" items={popularNina} />}
       </section>
 
       {/* COMPRA POR TEJIDO */}
@@ -191,16 +153,6 @@ export default function VialineHome() {
                 </svg>
               </div>
             </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* Popular ahora product grid */}
-      <section className="mx-auto max-w-7xl px-6 md:px-8 pb-16">
-        <h2 className="text-2xl md:text-3xl font-heading font-semibold">Popular ahora</h2>
-        <div className="mt-6 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-          {featured.map((p: any) => (
-            <ProductCard key={p.slug} product={p} />
           ))}
         </div>
       </section>
