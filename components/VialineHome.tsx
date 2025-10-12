@@ -1,7 +1,8 @@
 import Image from "next/image"
 import Link from "next/link"
-import { findProduct } from "@/data/products"
+import { findProduct, byAudience } from "@/data/products"
 import ProductCard from "@/components/ProductCard"
+import ProductRail from "@/components/ProductRail"
 
 const fabrics = [
   {
@@ -38,73 +39,119 @@ const FEATURED_SLUGS = [
 
 export default function VialineHome() {
   const featured = FEATURED_SLUGS.map((s) => findProduct(s)).filter(Boolean) as any[]
+  const ninaProducts = byAudience("nina")
 
   return (
     <main className="min-h-screen bg-neutral-50 text-neutral-900">
       {/* HERO: video Mujer + tarjeta Niña */}
-      <section className="relative overflow-hidden">
-        <div className="mx-auto max-w-7xl grid md:grid-cols-12">
-          {/* Lado Mujer (video) */}
-          <div className="relative md:col-span-7 md:h-[70vh] min-h-[420px] overflow-hidden rounded-3xl">
-            <video
-              className="absolute inset-0 h-full w-full object-cover object-center"
-              autoPlay
-              muted
-              loop
-              playsInline
-              poster="/hero-woman.jpg"
-            >
-              <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/vialine-1-PkicDlWXPsdb7O6iWW8hAEoSoyrlWL.mp4" type="video/mp4" />
-            </video>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-            <div className="absolute bottom-6 left-6 right-6 md:left-8 md:bottom-8 max-w-md text-white">
+      <section id="mujer" className="relative overflow-hidden bg-black">
+        <div className="relative h-[70vh] min-h-[500px]">
+          <video
+            className="absolute inset-0 h-full w-full object-cover object-center"
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster="/hero-woman.jpg"
+          >
+            <source
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/vialine-1-PkicDlWXPsdb7O6iWW8hAEoSoyrlWL.mp4"
+              type="video/mp4"
+            />
+          </video>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="max-w-3xl mx-auto px-6 text-center text-white">
               <p className="uppercase tracking-widest text-xs/relaxed opacity-90">Vialine · Línea Suplex</p>
-              <h1 className="mt-2 text-3xl md:text-4xl font-semibold">Básicos que rinden</h1>
-              <p className="mt-2 text-sm md:text-base text-white/90">
+              <h1 className="mt-3 text-4xl md:text-5xl lg:text-6xl font-bold">Básicos que rinden</h1>
+              <p className="mt-4 text-base md:text-lg text-white/90 max-w-2xl mx-auto">
                 Set suplex: top soporte medio + legging tiro alto. Ajuste que estiliza, opacidad total.
               </p>
-              <div className="mt-4 flex flex-wrap gap-3">
+              <div className="mt-6 flex flex-wrap gap-4 justify-center">
                 <Link
-                  href="/colecciones/linea-suplex"
-                  className="inline-flex items-center justify-center rounded-2xl bg-rose-600 px-5 py-3 text-white font-semibold tracking-wide shadow-lg hover:bg-rose-700 transition"
+                  href="/mujer"
+                  className="inline-flex items-center justify-center rounded-2xl bg-rose-600 px-6 py-3 text-white font-semibold tracking-wide shadow-lg hover:bg-rose-700 transition"
                 >
                   Comprar sets
                 </Link>
                 <Link
-                  href="/colecciones/linea-suplex"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/40 bg-white/10 px-5 py-3 backdrop-blur text-white hover:bg-white/20 transition"
+                  href="/tejido/suplex"
+                  className="inline-flex items-center justify-center rounded-2xl border border-white/40 bg-white/10 px-6 py-3 backdrop-blur text-white hover:bg-white/20 transition"
                 >
                   Ver Suplex
                 </Link>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Lado Niña (card) */}
-          <div className="md:col-span-5 md:h-[70vh] min-h-[420px] flex items-center">
-            <div className="w-full max-w-sm mx-auto text-center">
-              <div className="relative h-[420px] md:h-full overflow-hidden rounded-3xl">
-                <Image
-                  src="/hero-nina.jpg"
-                  alt="Niña con camiseta deportiva y legging Vialine"
-                  fill
-                  className="object-cover object-center"
-                  sizes="(min-width: 768px) 40vw, 100vw"
-                  priority={false}
-                />
-                <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-[#F7F3F2] via-[#F7F3F2]/70 to-transparent" />
-              </div>
-              <h3 className="mt-4 text-xl font-medium">Niña</h3>
-              <p className="text-sm text-neutral-600">Comodidad para moverse</p>
+        <div className="mx-auto max-w-7xl px-6 md:px-8 py-12 md:py-16">
+          <ProductRail
+            title="Popular ahora (Mujer)"
+            slugs={[
+              "short-ciclista-active",
+              "short-slim",
+              "body-manga-larga",
+              "body-manga-corta",
+              "top-venus",
+              "top-afrodita",
+              "camiseta-manga-larga",
+              "camiseta-gia",
+            ]}
+            cta={{ label: "Ver todo mujer", href: "/mujer" }}
+          />
+        </div>
+      </section>
+
+      <section id="nina" className="relative overflow-hidden bg-[#F7F3F2]">
+        <div className="relative h-[60vh] min-h-[400px]">
+          <Image
+            src="/hero-nina.jpg"
+            alt="Niña con ropa deportiva Vialine"
+            fill
+            className="object-cover object-center"
+            sizes="100vw"
+            priority={false}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#F7F3F2]/90 via-[#F7F3F2]/40 to-transparent" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="max-w-2xl mx-auto px-6 text-center">
+              <h2 className="text-4xl md:text-5xl font-bold text-neutral-900">Niña</h2>
+              <p className="mt-3 text-base md:text-lg text-neutral-700">
+                Comodidad para moverse, diseños que les encantan.
+              </p>
               <Link
                 href="/nina"
-                className="mt-4 inline-flex w-full items-center justify-center rounded-2xl border border-neutral-300 bg-white px-5 py-3 hover:bg-neutral-50 transition"
+                className="mt-6 inline-flex items-center justify-center rounded-2xl bg-rose-600 px-6 py-3 text-white font-semibold tracking-wide shadow-lg hover:bg-rose-700 transition"
               >
-                Ver niña
+                Ver colección niña
               </Link>
             </div>
           </div>
         </div>
+
+        {ninaProducts.length > 0 && (
+          <div className="mx-auto max-w-7xl px-6 md:px-8 py-12 md:py-16">
+            <ProductRail
+              title="Popular ahora (Niña)"
+              slugs={[
+                "cafarena-nina",
+                "panty-nina",
+                "enterizo-manga-corta-nina",
+                "enterizo-manga-larga-nina",
+                "legging-nina",
+                "maxi-short-nina",
+                "short-juvenil-nina",
+                "top-jazmin",
+                "top-margarita",
+                "top-orquidea",
+                "top-tulipan",
+                "top-vani",
+              ]}
+              cta={{ label: "Ver niña", href: "/nina" }}
+            />
+          </div>
+        )}
       </section>
 
       {/* COMPRA POR TEJIDO */}

@@ -7,6 +7,7 @@ export type Product = {
   fabric: "suplex" | "algodon"
   colors: string[]
   sizes: string[]
+  audience: "mujer" | "nina"
 }
 
 export const products: Product[] = [
@@ -20,6 +21,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Negro", "Gris", "Blanco", "Rojo"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "camiseta-manga-larga",
@@ -30,6 +32,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Rojo", "Negro", "Gris", "Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "camiseta-manga-corta",
@@ -40,6 +43,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Gris", "Negro", "Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "camiseta-tropical",
@@ -50,6 +54,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Blanco", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "camiseta-deportiva",
@@ -60,6 +65,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Rojo", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "camiseta-gia",
@@ -70,6 +76,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Negro", "Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
 
   // LÍNEA SUPLEX (bikers/shorts/leggings => suplex)
@@ -82,6 +89,7 @@ export const products: Product[] = [
     fabric: "suplex",
     colors: ["Gris", "Negro", "Rojo"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "short-ciclista-active",
@@ -92,6 +100,7 @@ export const products: Product[] = [
     fabric: "suplex",
     colors: ["Negro", "Gris"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "short-lux",
@@ -102,6 +111,7 @@ export const products: Product[] = [
     fabric: "suplex",
     colors: ["Rojo", "Negro", "Gris"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "short-brasil",
@@ -112,6 +122,7 @@ export const products: Product[] = [
     fabric: "suplex",
     colors: ["Blanco", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "maxi-short",
@@ -122,6 +133,7 @@ export const products: Product[] = [
     fabric: "suplex",
     colors: ["Blanco", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "short-clasico",
@@ -132,6 +144,7 @@ export const products: Product[] = [
     fabric: "suplex",
     colors: ["Blanco", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "mini-short",
@@ -142,6 +155,7 @@ export const products: Product[] = [
     fabric: "suplex",
     colors: ["Blanco", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
 
   // BODYS (mixto)
@@ -154,6 +168,7 @@ export const products: Product[] = [
     fabric: "suplex",
     colors: ["Gris", "Negro", "Rojo"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "body-manga-corta",
@@ -164,6 +179,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Rojo", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "body-manga-larga",
@@ -174,6 +190,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Negro", "Rojo"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
 
   // TOPS (algodón por defecto)
@@ -186,6 +203,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Azul", "Negro", "Rojo"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "top-venus",
@@ -196,6 +214,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Negro", "Gris"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "top-minerva",
@@ -206,6 +225,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Rojo", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "top-paradise",
@@ -216,6 +236,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Rojo", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "top-jungle",
@@ -226,6 +247,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Gris", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "top-astrid",
@@ -236,6 +258,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "top-soporte",
@@ -246,6 +269,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Blanco", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "top-arena",
@@ -256,6 +280,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Gris", "Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "top-zafiro",
@@ -266,6 +291,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "top-urban",
@@ -276,6 +302,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "top-perla",
@@ -286,6 +313,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "straple-chanel",
@@ -296,6 +324,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Blanco", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "top-deportivo",
@@ -306,6 +335,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "top-tira-fijas",
@@ -316,6 +346,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "top-athena",
@@ -326,6 +357,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Negro", "Rojo"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "top-jolie",
@@ -336,6 +368,7 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Beige", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer", // added audience
   },
   {
     slug: "top-brigid",
@@ -346,9 +379,145 @@ export const products: Product[] = [
     fabric: "algodon",
     colors: ["Gris", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer",
+  },
+
+  // PRODUCTOS DE NIÑA
+  {
+    slug: "cafarena-nina",
+    title: "Cafarena Niña",
+    price: 28,
+    image: "/productos/nina/cafarena-nina.webp",
+    category: "shorts",
+    fabric: "suplex",
+    colors: ["Rosa", "Azul", "Negro"],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+  },
+  {
+    slug: "panty-nina",
+    title: "Panty Niña",
+    price: 22,
+    image: "/productos/nina/panty-nina.webp",
+    category: "shorts",
+    fabric: "suplex",
+    colors: ["Rosa", "Negro", "Blanco"],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+  },
+  {
+    slug: "enterizo-manga-corta-nina",
+    title: "Enterizo manga corta Niña",
+    price: 38,
+    image: "/productos/nina/enterizo-manga-corta-nina.webp",
+    category: "enterizos",
+    fabric: "suplex",
+    colors: ["Rosa", "Negro", "Azul"],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+  },
+  {
+    slug: "enterizo-manga-larga-nina",
+    title: "Enterizo manga larga Niña",
+    price: 42,
+    image: "/productos/nina/enterizo-manga-larga-nina.webp",
+    category: "enterizos",
+    fabric: "suplex",
+    colors: ["Rosa", "Negro", "Morado"],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+  },
+  {
+    slug: "legging-nina",
+    title: "Legging Niña",
+    price: 32,
+    image: "/productos/nina/legging-nina.webp",
+    category: "leggings",
+    fabric: "suplex",
+    colors: ["Negro", "Rosa", "Azul"],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+  },
+  {
+    slug: "maxi-short-nina",
+    title: "Maxi Short Niña",
+    price: 26,
+    image: "/productos/nina/maxi-short-nina.webp",
+    category: "shorts",
+    fabric: "suplex",
+    colors: ["Rosa", "Negro", "Blanco"],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+  },
+  {
+    slug: "short-juvenil-nina",
+    title: "Short Juvenil Niña",
+    price: 24,
+    image: "/productos/nina/short-juvenil-nina.webp",
+    category: "shorts",
+    fabric: "suplex",
+    colors: ["Rosa", "Negro", "Azul"],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+  },
+  {
+    slug: "top-jazmin",
+    title: "Top Jazmín",
+    price: 30,
+    image: "/productos/nina/top-jazmin.webp",
+    category: "tops",
+    fabric: "algodon",
+    colors: ["Rosa", "Blanco", "Negro"],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+  },
+  {
+    slug: "top-margarita",
+    title: "Top Margarita",
+    price: 30,
+    image: "/productos/nina/top-margarita.webp",
+    category: "tops",
+    fabric: "algodon",
+    colors: ["Rosa", "Blanco", "Azul"],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+  },
+  {
+    slug: "top-orquidea",
+    title: "Top Orquídea",
+    price: 30,
+    image: "/productos/nina/top-orquidea.webp",
+    category: "tops",
+    fabric: "algodon",
+    colors: ["Morado", "Rosa", "Blanco"],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+  },
+  {
+    slug: "top-tulipan",
+    title: "Top Tulipán",
+    price: 30,
+    image: "/productos/nina/top-tulipan.webp",
+    category: "tops",
+    fabric: "algodon",
+    colors: ["Rosa", "Blanco", "Negro"],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+  },
+  {
+    slug: "top-vani",
+    title: "Top Vani",
+    price: 28,
+    image: "/productos/nina/top-vani.webp",
+    category: "tops",
+    fabric: "algodon",
+    colors: ["Rosa", "Blanco", "Azul"],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
   },
 ]
 
 export const findProduct = (slug: string) => products.find((p) => p.slug === slug)
 export const byCategory = (c: Product["category"]) => products.filter((p) => p.category === c)
 export const byFabric = (f: Product["fabric"]) => products.filter((p) => p.fabric === f)
+export const byAudience = (a: Product["audience"]) => products.filter((p) => p.audience === a)
