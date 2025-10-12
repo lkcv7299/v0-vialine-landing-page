@@ -2,6 +2,9 @@ import fs from "fs"
 import path from "path"
 import { products } from "@/data/products"
 
+export const runtime = "nodejs"
+export const dynamic = "force-dynamic"
+
 export default function Page() {
   const pub = path.join(process.cwd(), "public")
   const rows = products.map((p) => {
