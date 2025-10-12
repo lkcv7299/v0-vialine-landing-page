@@ -4,6 +4,7 @@ import { Outfit, Inter, Manrope } from "next/font/google"
 import "./globals.css"
 import Header from "@/components/Header"
 import WhatsAppFloat from "@/components/WhatsAppFloat"
+import { WishlistProvider } from "@/components/providers/WishlistContext"
 
 export const metadata: Metadata = {
   title: "Vialine | Activewear & ropa interior para mujer – Hecho en Perú",
@@ -64,9 +65,11 @@ export default function RootLayout({
             }),
           }}
         />
-        <Header />
-        {children}
-        <WhatsAppFloat />
+        <WishlistProvider>
+          <Header />
+          {children}
+          <WhatsAppFloat />
+        </WishlistProvider>
       </body>
     </html>
   )

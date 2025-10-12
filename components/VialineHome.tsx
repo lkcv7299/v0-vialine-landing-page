@@ -40,19 +40,11 @@ export default function VialineHome() {
       {/* HERO: video Mujer + tarjeta Niña */}
       <section id="mujer" className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
         <div className="relative overflow-hidden h-[82vh] min-h-[560px]">
-          <video
+          <img
+            src="/hero-woman.jpg"
+            alt="Vialine Mujer"
             className="absolute inset-0 h-full w-full object-cover object-center"
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster="/hero-woman.jpg"
-          >
-            <source
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/hero-woman.mp4-8EA7bK3N8ZcPRWXPhjaYqWAl7RHWU6.mp4"
-              type="video/mp4"
-            />
-          </video>
+          />
 
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent" />
           <div className="absolute bottom-8 left-6 right-6 md:left-12 max-w-xl text-white">
