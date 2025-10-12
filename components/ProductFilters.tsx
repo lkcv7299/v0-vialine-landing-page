@@ -8,6 +8,11 @@ function toggleMulti(sp: URLSearchParams, key: string, val: string) {
   ;(has ? vals.filter((v) => v !== val) : [...vals, val]).forEach((v) => sp.append(key, v))
 }
 
+function toggleSingle(sp: URLSearchParams, key: string, val: string) {
+  if (sp.get(key) === val) sp.delete(key)
+  else sp.set(key, val)
+}
+
 export default function ProductFilters() {
   const router = useRouter()
   const pathname = usePathname()
@@ -20,6 +25,7 @@ export default function ProductFilters() {
   }
 
   const isOn = (k: string, v: string) => params?.getAll(k).includes(v)
+  const fabricOn = params?.get("fabric")
 
   const sizes = ["XS", "S", "M", "L", "XL"]
   const colors = ["Negro", "Blanco", "Gris", "Rojo", "Azul", "Beige"]
@@ -58,16 +64,20 @@ export default function ProductFilters() {
         {fabrics.map((f) => (
           <button
             key={f}
-            onClick={() =>
-              apply((sp) => {
-                sp.set("fabric", f)
-              })
-            }
-            className={`px-3 py-1.5 rounded-full text-sm ${params?.get("fabric") === f ? "bg-rose-600 text-white" : "bg-neutral-100"}`}
+            onClick={() => apply((sp) => toggleSingle(sp, "fabric", f))}
+            className={`px-3 py-1.5 rounded-full text-sm ${fabricOn === f ? "bg-rose-600 text-white" : "bg-neutral-100"}`}
           >
             {f[0].toUpperCase() + f.slice(1)}
           </button>
         ))}
+        {fabricOn && (
+          <button
+            onClick={() => apply((sp) => sp.delete("fabric"))}
+            className="px-3 py-1.5 rounded-full text-sm bg-neutral-200"
+          >
+            Quitar tejido
+          </button>
+        )}
       </div>
 
       <h4 className="mt-4 font-semibold">Ordenar por</h4>
@@ -85,6 +95,13 @@ export default function ProductFilters() {
         <option value="price-asc">Precio: menor a mayor</option>
         <option value="price-desc">Precio: mayor a menor</option>
       </select>
+
+      <button
+        onClick={() => router.replace(pathname, { scroll: false })}
+        className="mt-4 text-sm text-rose-700 underline underline-offset-4"
+      >
+        Limpiar filtros
+      </button>
     </aside>
   )
 }

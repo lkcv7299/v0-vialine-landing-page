@@ -1,103 +1,91 @@
 "use client"
-
 import { useRef } from "react"
-import Image from "next/image"
 import Link from "next/link"
+import Image from "next/image"
 import { findProduct } from "@/data/products"
 
-interface ProductRailProps {
-  title: string
-  slugs: string[]
-  cta?: {
-    label: string
-    href: string
-  }
-}
+export default function ProductRail({
+  title,
+  slugs,
+  cta,
+}: { title: string; slugs: string[]; cta?: { label: string; href: string } }) {
+  const list = slugs.map(findProduct).filter(Boolean) as any[]
+  const ref = useRef<HTMLDivElement>(null)
 
-export default function ProductRail({ title, slugs, cta }: ProductRailProps) {
-  const scrollRef = useRef<HTMLDivElement>(null)
+  const snap = (dir: 1 | -1) => {
+    const scroller = ref.current
+    if (!scroller) return
+    const children = Array.from(scroller.children) as HTMLElement[]
+    if (!children.length) return
 
-  const scroll = (direction: "left" | "right") => {
-    if (scrollRef.current) {
-      const scrollAmount = direction === "left" ? -800 : 800
-      scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" })
+    const x = scroller.scrollLeft
+    const positions = children.map((el) => el.offsetLeft)
+
+    let target = 0
+    if (dir === 1) {
+      target = positions.find((p) => p > x + 4) ?? positions[positions.length - 1]
+    } else {
+      target = [...positions].reverse().find((p) => p < x - 4) ?? 0
     }
+    scroller.scrollTo({ left: target, behavior: "smooth" })
   }
-
-  const products = slugs.map((slug) => findProduct(slug)).filter(Boolean)
-
-  if (products.length === 0) return null
 
   return (
-    <section className="py-12">
-      <div className="mx-auto max-w-7xl px-4">
-        {/* Header */}
-        <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight">{title}</h2>
-          {cta && (
-            <Link href={cta.href} className="text-sm font-semibold text-rose-600 hover:text-rose-700 transition">
-              {cta.label} →
+    <section className="mx-auto max-w-7xl px-6 md:px-8 py-8">
+      <div className="flex items-end justify-between gap-4">
+        <h2 className="text-2xl md:text-3xl font-heading font-semibold">{title}</h2>
+        {cta && (
+          <Link href={cta.href} className="text-sm text-rose-700 hover:underline underline-offset-4">
+            {cta.label} →
+          </Link>
+        )}
+      </div>
+
+      <div className="relative mt-4">
+        <div
+          ref={ref}
+          className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2 [-ms-overflow-style:none] [scrollbar-width:none]"
+        >
+          {list.map((p) => (
+            <Link
+              key={p.slug}
+              href={`/producto/${p.slug}`}
+              className="min-w-[220px] sm:min-w-[240px] md:min-w-[260px] snap-start rounded-2xl border border-neutral-200 bg-white p-3 hover:shadow-lg transition"
+            >
+              <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl">
+                <Image
+                  src={p.image || "/placeholder.svg"}
+                  alt={`${p.title} Vialine`}
+                  fill
+                  className="object-cover object-center"
+                  sizes="(min-width:768px) 25vw, 70vw"
+                />
+              </div>
+              <div className="mt-3">
+                <p className="text-sm font-heading line-clamp-1">{p.title}</p>
+                <div className="mt-1 text-sm text-neutral-800">
+                  {new Intl.NumberFormat("es-PE", { style: "currency", currency: "PEN" }).format(p.price)}
+                </div>
+                <span className="mt-1 block text-xs text-rose-700">Seleccionar opciones →</span>
+              </div>
             </Link>
-          )}
+          ))}
         </div>
 
-        {/* Rail Container */}
-        <div className="relative group">
-          {/* Left Arrow */}
-          <button
-            onClick={() => scroll("left")}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full bg-white shadow-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-gray-50 disabled:opacity-0"
-            aria-label="Scroll left"
-          >
-            <svg className="h-5 w-5 text-gray-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-
-          {/* Scrollable Rail */}
-          <div
-            ref={scrollRef}
-            className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide pb-4"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-          >
-            {products.map((product) => (
-              <Link
-                key={product.slug}
-                href={`/producto/${product.slug}`}
-                className="flex-none w-[220px] md:w-[240px] snap-start group/card"
-              >
-                {/* Image */}
-                <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-gray-100 mb-3">
-                  <Image
-                    src={product.image || "/placeholder.svg"}
-                    alt={product.title}
-                    fill
-                    className="object-cover object-center group-hover/card:scale-105 transition-transform duration-300"
-                    sizes="(max-width: 768px) 220px, 240px"
-                  />
-                </div>
-
-                {/* Content */}
-                <div className="space-y-1">
-                  <h3 className="text-sm font-semibold text-gray-900 line-clamp-2">{product.title}</h3>
-                  <p className="text-lg font-bold text-gray-900">S/ {product.price.toFixed(2)}</p>
-                  <p className="text-sm text-rose-600 font-medium">Seleccionar opciones →</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-
-          {/* Right Arrow */}
-          <button
-            onClick={() => scroll("right")}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 h-10 w-10 rounded-full bg-white shadow-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-gray-50 disabled:opacity-0"
-            aria-label="Scroll right"
-          >
-            <svg className="h-5 w-5 text-gray-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
+        <button
+          aria-label="Anterior"
+          onClick={() => snap(-1)}
+          className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 h-10 w-10 items-center justify-center rounded-full bg-white shadow ring-1 ring-neutral-200"
+        >
+          ‹
+        </button>
+        <button
+          aria-label="Siguiente"
+          onClick={() => snap(1)}
+          className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 h-10 w-10 items-center justify-center rounded-full bg-white shadow ring-1 ring-neutral-200"
+        >
+          ›
+        </button>
       </div>
     </section>
   )

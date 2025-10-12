@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     locale: "es_PE",
     siteName: "Vialine",
   },
-    generator: 'v0.app'
+  generator: "v0.app",
 }
 
 const heading = Outfit({
@@ -45,7 +45,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className={`${heading.variable} ${body.variable} ${ui.variable}`}>
-      <body className="antialiased text-neutral-900 bg-pink-50">
+      <body className="antialiased text-neutral-900 bg-neutral-50">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

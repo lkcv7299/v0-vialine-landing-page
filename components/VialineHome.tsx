@@ -1,4 +1,3 @@
-import Image from "next/image"
 import Link from "next/link"
 import { findProduct, byAudience } from "@/data/products"
 import ProductCard from "@/components/ProductCard"
@@ -44,8 +43,8 @@ export default function VialineHome() {
   return (
     <main className="min-h-screen bg-neutral-50 text-neutral-900">
       {/* HERO: video Mujer + tarjeta Niña */}
-      <section id="mujer" className="relative overflow-hidden bg-black">
-        <div className="relative h-[70vh] min-h-[500px]">
+      <section id="mujer" className="mx-auto max-w-7xl px-6 md:px-8 pt-6">
+        <div className="relative overflow-hidden rounded-3xl h-[52vh] md:h-[62vh] lg:h-[68vh] max-h-[760px] min-h-[420px]">
           <video
             className="absolute inset-0 h-full w-full object-cover object-center"
             autoPlay
@@ -54,38 +53,34 @@ export default function VialineHome() {
             playsInline
             poster="/hero-woman.jpg"
           >
-            <source
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/vialine-1-PkicDlWXPsdb7O6iWW8hAEoSoyrlWL.mp4"
-              type="video/mp4"
-            />
+            <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/hero-woman.mp4-8EA7bK3N8ZcPRWXPhjaYqWAl7RHWU6.mp4" type="video/mp4" />
           </video>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="max-w-3xl mx-auto px-6 text-center text-white">
-              <p className="uppercase tracking-widest text-xs/relaxed opacity-90">Vialine · Línea Suplex</p>
-              <h1 className="mt-3 text-4xl md:text-5xl lg:text-6xl font-bold">Básicos que rinden</h1>
-              <p className="mt-4 text-base md:text-lg text-white/90 max-w-2xl mx-auto">
-                Set suplex: top soporte medio + legging tiro alto. Ajuste que estiliza, opacidad total.
-              </p>
-              <div className="mt-6 flex flex-wrap gap-4 justify-center">
-                <Link
-                  href="/mujer"
-                  className="inline-flex items-center justify-center rounded-2xl bg-rose-600 px-6 py-3 text-white font-semibold tracking-wide shadow-lg hover:bg-rose-700 transition"
-                >
-                  Comprar sets
-                </Link>
-                <Link
-                  href="/tejido/suplex"
-                  className="inline-flex items-center justify-center rounded-2xl border border-white/40 bg-white/10 px-6 py-3 backdrop-blur text-white hover:bg-white/20 transition"
-                >
-                  Ver Suplex
-                </Link>
-              </div>
+
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent" />
+          <div className="absolute bottom-7 left-6 right-6 md:left-10 max-w-xl text-white">
+            <p className="uppercase tracking-widest text-xs/relaxed opacity-90">Vialine · Línea Suplex</p>
+            <h1 className="mt-2 text-3xl md:text-5xl font-heading font-semibold">Básicos que rinden</h1>
+            <p className="mt-3 text-sm md:text-base text-white/90">
+              Set suplex: top soporte medio + legging tiro alto. Ajuste que estiliza, opacidad total.
+            </p>
+            <div className="mt-5 flex gap-3">
+              <Link
+                href="/mujer"
+                className="inline-flex items-center justify-center rounded-2xl bg-rose-600 px-5 py-3 text-white shadow-lg hover:bg-rose-700 transition"
+              >
+                Comprar sets
+              </Link>
+              <Link
+                href="/tejido/suplex"
+                className="inline-flex items-center justify-center rounded-2xl border border-white/40 bg-white/10 px-5 py-3 backdrop-blur text-white hover:bg-white/20 transition"
+              >
+                Ver Suplex
+              </Link>
             </div>
           </div>
         </div>
 
-        <div className="mx-auto max-w-7xl px-6 md:px-8 py-12 md:py-16">
+        <div className="py-12 md:py-16">
           <ProductRail
             title="Popular ahora (Mujer)"
             slugs={[
@@ -103,35 +98,31 @@ export default function VialineHome() {
         </div>
       </section>
 
-      <section id="nina" className="relative overflow-hidden bg-[#F7F3F2]">
-        <div className="relative h-[60vh] min-h-[400px]">
-          <Image
-            src="/hero-nina.jpg"
-            alt="Niña con ropa deportiva Vialine"
-            fill
-            className="object-cover object-center"
-            sizes="100vw"
-            priority={false}
+      <section id="nina" className="mx-auto max-w-7xl px-6 md:px-8 pt-8">
+        <div className="relative overflow-hidden rounded-3xl h-[44vh] md:h-[54vh] max-h-[620px] min-h-[360px]">
+          <img
+            src="/hero-nina.webp"
+            alt="Niña Vialine"
+            className="absolute inset-0 h-full w-full object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#F7F3F2]/90 via-[#F7F3F2]/40 to-transparent" />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="max-w-2xl mx-auto px-6 text-center">
-              <h2 className="text-4xl md:text-5xl font-bold text-neutral-900">Niña</h2>
-              <p className="mt-3 text-base md:text-lg text-neutral-700">
-                Comodidad para moverse, diseños que les encantan.
-              </p>
-              <Link
+          <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/15 to-transparent" />
+          <div className="absolute bottom-7 left-6 right-6 md:left-10 max-w-xl text-white text-center md:text-left">
+            <p className="uppercase tracking-widest text-xs/relaxed opacity-90">Vialine · Niña</p>
+            <h2 className="mt-2 text-3xl md:text-4xl font-heading font-semibold">Niña</h2>
+            <p className="mt-2 text-sm md:text-base text-white/90">Comodidad para moverse, diseños que les encantan.</p>
+            <div className="mt-4">
+              <a
                 href="/nina"
-                className="mt-6 inline-flex items-center justify-center rounded-2xl bg-rose-600 px-6 py-3 text-white font-semibold tracking-wide shadow-lg hover:bg-rose-700 transition"
+                className="inline-flex items-center justify-center rounded-2xl bg-rose-600 px-5 py-3 text-white shadow-lg hover:bg-rose-700 transition"
               >
                 Ver colección niña
-              </Link>
+              </a>
             </div>
           </div>
         </div>
 
         {ninaProducts.length > 0 && (
-          <div className="mx-auto max-w-7xl px-6 md:px-8 py-12 md:py-16">
+          <div className="py-12 md:py-16">
             <ProductRail
               title="Popular ahora (Niña)"
               slugs={[
