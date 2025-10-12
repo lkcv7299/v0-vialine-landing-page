@@ -15,23 +15,16 @@ export default function ProductRail({
   const snap = (dir: 1 | -1) => {
     const scroller = ref.current
     if (!scroller) return
-    const children = Array.from(scroller.children) as HTMLElement[]
-    if (!children.length) return
-
+    const kids = Array.from(scroller.children) as HTMLElement[]
     const x = scroller.scrollLeft
-    const positions = children.map((el) => el.offsetLeft)
-
-    let target = 0
-    if (dir === 1) {
-      target = positions.find((p) => p > x + 4) ?? positions[positions.length - 1]
-    } else {
-      target = [...positions].reverse().find((p) => p < x - 4) ?? 0
-    }
+    const pos = kids.map((k) => k.offsetLeft)
+    const target =
+      dir === 1 ? (pos.find((p) => p > x + 4) ?? pos[pos.length - 1]) : ([...pos].reverse().find((p) => p < x - 4) ?? 0)
     scroller.scrollTo({ left: target, behavior: "smooth" })
   }
 
   return (
-    <section className="mx-auto max-w-7xl px-6 md:px-8 py-8">
+    <section className="mx-auto max-w-7xl px-6 md:px-8 py-10">
       <div className="flex items-end justify-between gap-4">
         <h2 className="text-2xl md:text-3xl font-heading font-semibold">{title}</h2>
         {cta && (
@@ -54,11 +47,12 @@ export default function ProductRail({
             >
               <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl">
                 <Image
+                  unoptimized
                   src={p.image || "/placeholder.svg"}
                   alt={`${p.title} Vialine`}
                   fill
                   className="object-cover object-center"
-                  sizes="(min-width:768px) 25vw, 70vw"
+                  sizes="(min-width:1024px) 22vw, (min-width:768px) 40vw, 75vw"
                 />
               </div>
               <div className="mt-3">

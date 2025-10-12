@@ -43,8 +43,8 @@ export default function VialineHome() {
   return (
     <main className="min-h-screen bg-neutral-50 text-neutral-900">
       {/* HERO: video Mujer + tarjeta Niña */}
-      <section id="mujer" className="mx-auto max-w-7xl px-6 md:px-8 pt-6">
-        <div className="relative overflow-hidden rounded-3xl h-[52vh] md:h-[62vh] lg:h-[68vh] max-h-[760px] min-h-[420px]">
+      <section id="mujer" className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
+        <div className="relative overflow-hidden h-[82vh] min-h-[560px]">
           <video
             className="absolute inset-0 h-full w-full object-cover object-center"
             autoPlay
@@ -57,30 +57,30 @@ export default function VialineHome() {
           </video>
 
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent" />
-          <div className="absolute bottom-7 left-6 right-6 md:left-10 max-w-xl text-white">
+          <div className="absolute bottom-8 left-6 right-6 md:left-12 max-w-xl text-white">
             <p className="uppercase tracking-widest text-xs/relaxed opacity-90">Vialine · Línea Suplex</p>
             <h1 className="mt-2 text-3xl md:text-5xl font-heading font-semibold">Básicos que rinden</h1>
             <p className="mt-3 text-sm md:text-base text-white/90">
               Set suplex: top soporte medio + legging tiro alto. Ajuste que estiliza, opacidad total.
             </p>
             <div className="mt-5 flex gap-3">
-              <Link
+              <a
                 href="/mujer"
                 className="inline-flex items-center justify-center rounded-2xl bg-rose-600 px-5 py-3 text-white shadow-lg hover:bg-rose-700 transition"
               >
                 Comprar sets
-              </Link>
-              <Link
+              </a>
+              <a
                 href="/tejido/suplex"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/40 bg-white/10 px-5 py-3 backdrop-blur text-white hover:bg-white/20 transition"
               >
                 Ver Suplex
-              </Link>
+              </a>
             </div>
           </div>
         </div>
 
-        <div className="py-12 md:py-16">
+        <div className="mx-auto max-w-7xl px-6 md:px-8 py-12 md:py-16">
           <ProductRail
             title="Popular ahora (Mujer)"
             slugs={[
@@ -98,15 +98,15 @@ export default function VialineHome() {
         </div>
       </section>
 
-      <section id="nina" className="mx-auto max-w-7xl px-6 md:px-8 pt-8">
-        <div className="relative overflow-hidden rounded-3xl h-[44vh] md:h-[54vh] max-h-[620px] min-h-[360px]">
+      <section id="nina" className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] mt-10">
+        <div className="relative overflow-hidden h-[78vh] min-h-[520px]">
           <img
             src="/hero-nina.webp"
             alt="Niña Vialine"
             className="absolute inset-0 h-full w-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/15 to-transparent" />
-          <div className="absolute bottom-7 left-6 right-6 md:left-10 max-w-xl text-white text-center md:text-left">
+          <div className="absolute bottom-8 left-6 right-6 md:left-12 max-w-xl text-white">
             <p className="uppercase tracking-widest text-xs/relaxed opacity-90">Vialine · Niña</p>
             <h2 className="mt-2 text-3xl md:text-4xl font-heading font-semibold">Niña</h2>
             <p className="mt-2 text-sm md:text-base text-white/90">Comodidad para moverse, diseños que les encantan.</p>
@@ -122,7 +122,7 @@ export default function VialineHome() {
         </div>
 
         {ninaProducts.length > 0 && (
-          <div className="py-12 md:py-16">
+          <div className="mx-auto max-w-7xl px-6 md:px-8 py-12 md:py-16">
             <ProductRail
               title="Popular ahora (Niña)"
               slugs={[
