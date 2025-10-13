@@ -1,13 +1,20 @@
 export type Product = {
   slug: string
   title: string
-  price: number // PEN
+  price: number
   image: string // path under /public/productos/<category>/<slug>.jpg
   category: "leggings" | "bikers" | "shorts" | "tops" | "bodys" | "camisetas" | "enterizos" | "pescador" | "torero"
   fabric: "suplex" | "algodon"
-  colors: string[]
+  colors: string[] | { name: string; slug: string; hex: string; image: string }[] // Support both formats
   sizes: string[]
   audience: "mujer" | "nina"
+  // Optional detailed attributes for products with variants
+  tags?: string[]
+  attributes?: {
+    material: string
+    detalles: string[]
+    beneficios: string[]
+  }
 }
 
 export const products: Product[] = [
@@ -397,24 +404,96 @@ export const products: Product[] = [
   {
     slug: "enterizo-tiras",
     title: "Enterizo tiras",
-    price: 48,
-    image: "/productos/mujer/enterizo/enterizo-tiras.webp",
+    price: 59,
+    image: "/productos/mujer/enterizo/enterizo-tiras-azulino.webp",
     category: "enterizos",
     fabric: "suplex",
-    colors: ["Negro", "Gris", "Rojo"],
-    sizes: ["XS", "S", "M", "L", "XL"],
+    colors: [
+      {
+        name: "Azulino",
+        slug: "azulino",
+        hex: "#3A53A4",
+        image: "/productos/mujer/enterizo/enterizo-tiras-azulino.webp",
+      },
+      {
+        name: "Charcol",
+        slug: "charcol",
+        hex: "#5A5A5A",
+        image: "/productos/mujer/enterizo/enterizo-tiras-charcol.webp",
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/productos/mujer/enterizo/enterizo-tiras-negro.webp",
+      },
+      {
+        name: "Rojo",
+        slug: "rojo",
+        hex: "#D22B2B",
+        image: "/productos/mujer/enterizo/enterizo-tiras-rojo.webp",
+      },
+    ],
+    sizes: ["S", "M", "L"],
     audience: "mujer",
+    tags: ["enterizo", "enterizo tiras", "enterizos", "enterizos dama", "línea suplex dama", "dama", "damas", "tiras"],
+    attributes: {
+      material: "Suplex liso",
+      detalles: ["Tiras delgadas", "Costura plana para más comodidad"],
+      beneficios: [
+        "De alta elongación, se puede estirar sin perder su forma",
+        "Es resistente, liviana y de secado rápido",
+        "Se adapta al cuerpo como una segunda piel, te mantiene fresca en todo momento",
+        "Versatilidad; perfecto para actividades deportivas o para combinarlo con chaquetas o poleras para un look más casual",
+      ],
+    },
   },
   {
     slug: "enterizo-manga-cero",
     title: "Enterizo manga cero",
-    price: 45,
-    image: "/productos/mujer/enterizo/enterizo-manga-cero.webp",
+    price: 59,
+    image: "/productos/mujer/enterizo/enterizo-manga-cero-azulino.webp",
     category: "enterizos",
     fabric: "suplex",
-    colors: ["Negro", "Gris"],
-    sizes: ["XS", "S", "M", "L", "XL"],
+    colors: [
+      {
+        name: "Azulino",
+        slug: "azulino",
+        hex: "#3A53A4",
+        image: "/productos/mujer/enterizo/enterizo-manga-cero-azulino.webp",
+      },
+      {
+        name: "Charcol",
+        slug: "charcol",
+        hex: "#5A5A5A",
+        image: "/productos/mujer/enterizo/enterizo-manga-cero-charcol.webp",
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/productos/mujer/enterizo/enterizo-manga-cero-negro.webp",
+      },
+      {
+        name: "Rojo",
+        slug: "rojo",
+        hex: "#D22B2B",
+        image: "/productos/mujer/enterizo/enterizo-manga-cero-rojo.webp",
+      },
+    ],
+    sizes: ["S", "M", "L"],
     audience: "mujer",
+    tags: ["enterizo", "enterizo manga cero", "enterizos", "enterizos dama", "línea suplex dama", "dama", "damas"],
+    attributes: {
+      material: "Suplex liso",
+      detalles: ["Tiras anchas", "Espalda olímpica", "Costura plana para más comodidad"],
+      beneficios: [
+        "De alta elongación, se puede estirar sin perder su forma",
+        "Es resistente, liviana y de secado rápido",
+        "Se adapta al cuerpo como una segunda piel, te mantiene fresca en todo momento",
+        "Versatilidad; perfecto para actividades deportivas o para combinarlo con chaquetas o poleras para un look más casual",
+      ],
+    },
   },
   {
     slug: "enterizo-manga-corta-nina",
