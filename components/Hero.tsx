@@ -1,48 +1,85 @@
-import Image from "next/image"
-import Link from "next/link"
+"use client"
 
-export default function Hero() {
+import type React from "react"
+
+import Link from "next/link"
+import Image from "next/image"
+
+type Props = {
+  image: string
+  kicker?: string
+  title: string
+  description?: string
+  primary?: { href: string; label: string }
+  secondary?: { href: string; label: string }
+  // Opcionales para encuadre de la foto
+  objectPositionDesktop?: string // ej. "70% 45%"
+  objectPositionMobile?: string // ej. "70% 35%"
+  className?: string
+}
+
+export default function Hero({
+  image,
+  kicker,
+  title,
+  description,
+  primary,
+  secondary,
+  objectPositionDesktop = "70% 45%",
+  objectPositionMobile = "70% 35%",
+  className = "",
+}: Props) {
   return (
-    <section className="relative z-10">
-      <div className="relative mx-auto h-[78vh] max-h-[880px] min-h-[520px] w-full overflow-hidden">
-        {/* The hero image:
-           - object-cover to fill
-           - object-right on small screens (keeps the model visible)
-           - md:object-[70%_center] shifts the focal point a bit to the right on desktop */}
+    <section className={`relative isolate overflow-hidden bg-neutral-900 text-white ${className}`}>
+      {/* Imagen de fondo */}
+      <div className="absolute inset-0 -z-10">
         <Image
-          src="/hero-woman.jpg"
-          alt="Básicos que rinden"
+          src={image || "/placeholder.svg"}
+          alt={title}
           fill
           priority
-          className="object-cover object-right md:object-[70%_center]"
           sizes="100vw"
+          className="object-cover [object-position:var(--pos-mobile)] md:[object-position:var(--pos-desktop)]"
+          style={
+            {
+              // Posiciones responsivas para centrar la cara
+              ["--pos-desktop" as any]: objectPositionDesktop,
+              ["--pos-mobile" as any]: objectPositionMobile,
+            } as React.CSSProperties
+          }
         />
+        {/* degradado para legibilidad */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/0" />
+      </div>
 
-        {/* gradient for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/30 to-transparent" />
+      {/* Contenido anclado ABAJO */}
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="min-h-[520px] md:min-h-[640px] grid items-end">
+          <div className="pb-14 md:pb-20 max-w-3xl">
+            {kicker && <p className="mb-3 text-sm font-semibold tracking-wide text-white/80">{kicker}</p>}
+            <h1 className="text-4xl/tight md:text-6xl font-extrabold drop-shadow-sm">{title}</h1>
+            {description && <p className="mt-4 text-base md:text-lg text-white/90">{description}</p>}
 
-        {/* copy */}
-        <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-4 sm:px-6">
-          <div className="max-w-xl text-white">
-            <p className="text-xs font-semibold tracking-widest text-white/80">VIALINE · LÍNEA SUPLEX</p>
-            <h1 className="mt-3 text-4xl font-extrabold leading-tight sm:text-5xl">Básicos que rinden</h1>
-            <p className="mt-4 text-base text-white/90">
-              Set suplex: top soporte medio + legging tiro alto. Ajuste que estiliza, opacidad total.
-            </p>
-            <div className="mt-6 flex items-center gap-3">
-              <Link
-                href="/collections/sets"
-                className="rounded-full bg-pink-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-pink-700"
-              >
-                Comprar sets
-              </Link>
-              <Link
-                href="/mujer?tecido=suplex"
-                className="rounded-full bg-white/15 px-5 py-2.5 text-sm font-medium text-white backdrop-blur hover:bg-white/25"
-              >
-                Ver Suplex
-              </Link>
-            </div>
+            {(primary || secondary) && (
+              <div className="mt-8 flex gap-3">
+                {primary && (
+                  <Link
+                    href={primary.href}
+                    className="rounded-full bg-rose-600 px-5 py-3 text-sm font-semibold text-white hover:bg-rose-500"
+                  >
+                    {primary.label}
+                  </Link>
+                )}
+                {secondary && (
+                  <Link
+                    href={secondary.href}
+                    className="rounded-full bg-white/10 px-5 py-3 text-sm font-semibold text-white backdrop-blur hover:bg-white/20"
+                  >
+                    {secondary.label}
+                  </Link>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
