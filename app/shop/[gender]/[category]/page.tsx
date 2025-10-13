@@ -43,9 +43,21 @@ function matchCategory(p: any, catSlug: string) {
     .filter(Boolean)
     .map((v: string) => toSlug(v))
 
+  // Strip trailing 's' from both the search term and fields for better matching
+  const catBase = catSlug.replace(/s$/, "")
+  const fieldsWithVariants = fields.flatMap((f) => [f, f.replace(/s$/, "")])
+
   // Also allow name/slug/title to contain the category word
   const nameish = [p.name, p.slug, p.title].filter(Boolean).join(" ").toLowerCase()
-  return fields.includes(catSlug) || nameish.includes(catSlug.replace(/-/g, " ")) || nameish.includes(catSlug)
+
+  return (
+    fieldsWithVariants.includes(catSlug) ||
+    fieldsWithVariants.includes(catBase) ||
+    nameish.includes(catSlug.replace(/-/g, " ")) ||
+    nameish.includes(catBase.replace(/-/g, " ")) ||
+    nameish.includes(catSlug) ||
+    nameish.includes(catBase)
+  )
 }
 
 export async function generateMetadata({
