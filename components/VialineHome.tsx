@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { byAudience } from "@/data/products"
 import GymRail from "@/components/GymRail"
-import Hero from "@/components/Hero"
+import HeroBanner from "@/components/HeroBanner"
 
 const fabrics = [
   {
@@ -40,49 +40,30 @@ export default function VialineHome() {
     <main className="min-h-screen bg-neutral-50 text-neutral-900">
       {/* HERO: video Mujer + tarjeta Niña */}
       <section id="mujer" className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-        <Hero src="/hero/hero-woman2.jpg" alt="Básicos que rinden">
-          <div className="absolute bottom-8 left-6 right-6 md:left-12 max-w-xl text-white">
-            <p className="uppercase tracking-widest text-xs/relaxed opacity-90">Vialine · Línea Suplex</p>
-            <h1 className="mt-2 text-3xl md:text-5xl font-heading font-semibold">Básicos que rinden</h1>
-            <p className="mt-3 text-sm md:text-base text-white/90">
-              Set suplex: top soporte medio + legging tiro alto. Ajuste que estiliza, opacidad total.
-            </p>
-            <div className="mt-5 flex gap-3">
-              <a
-                href="/mujer"
-                className="inline-flex items-center justify-center rounded-2xl bg-rose-600 px-5 py-3 text-white shadow-lg hover:bg-rose-700 transition"
-              >
-                Comprar sets
-              </a>
-              <a
-                href="/tejido/suplex"
-                className="inline-flex items-center justify-center rounded-2xl border border-white/40 bg-white/10 px-5 py-3 backdrop-blur text-white hover:bg-white/20 transition"
-              >
-                Ver Suplex
-              </a>
-            </div>
-          </div>
-        </Hero>
+        <HeroBanner
+          image="/hero/hero-woman2.jpg"
+          alt="Básicos que rinden"
+          eyebrow="Vialine · Línea Suplex"
+          title="Básicos que rinden"
+          subtitle="Set suplex: top soporte medio + legging tiro alto. Ajuste que estiliza, opacidad total."
+          primaryCta={{ label: "Comprar sets", href: "/mujer" }}
+          secondaryCta={{ label: "Ver Suplex", href: "/tejido/suplex" }}
+          focal={{ x: 70, y: 50 }}
+        />
 
         <GymRail title="Popular ahora (Mujer)" viewAllHref="/mujer" items={popularMujer} />
       </section>
 
       <section id="nina" className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] mt-10">
-        <Hero src="/hero-nina.webp" alt="Niña Vialine">
-          <div className="absolute bottom-8 left-6 right-6 md:left-12 max-w-xl text-white">
-            <p className="uppercase tracking-widest text-xs/relaxed opacity-90">Vialine · Niña</p>
-            <h2 className="mt-2 text-3xl md:text-4xl font-heading font-semibold">Niña</h2>
-            <p className="mt-2 text-sm md:text-base text-white/90">Comodidad para moverse, diseños que les encantan.</p>
-            <div className="mt-4">
-              <a
-                href="/nina"
-                className="inline-flex items-center justify-center rounded-2xl bg-rose-600 px-5 py-3 text-white shadow-lg hover:bg-rose-700 transition"
-              >
-                Ver colección niña
-              </a>
-            </div>
-          </div>
-        </Hero>
+        <HeroBanner
+          image="/hero-nina.webp"
+          alt="Niña Vialine"
+          eyebrow="Vialine · Niña"
+          title="Niña"
+          subtitle="Comodidad para moverse, diseños que les encantan."
+          primaryCta={{ label: "Ver colección niña", href: "/nina" }}
+          focal={{ x: 50, y: 50 }}
+        />
 
         {popularNina.length > 0 && <GymRail title="Popular ahora (Niña)" viewAllHref="/nina" items={popularNina} />}
       </section>
