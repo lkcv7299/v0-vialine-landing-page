@@ -41,7 +41,7 @@ export default function VialineHome() {
       {/* HERO: video Mujer + tarjeta Niña */}
       <section id="mujer" className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
         <HeroBanner
-          image="/hero/hero-woman2.jpg"
+          image="/hero-woman.jpg"
           alt="Modelo en set suplex"
           eyebrow="VIALINE · LÍNEA SUPLEX"
           title="Básicos que rinden"
