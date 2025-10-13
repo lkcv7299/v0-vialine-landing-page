@@ -3,7 +3,7 @@ import Link from "next/link"
 
 export default function HeroNina() {
   return (
-    <section className="relative isolate min-h-[70vh] overflow-hidden">
+    <section className="hero-girl relative isolate min-h-[70vh] overflow-hidden">
       {/* Background image */}
       <div className="absolute inset-0 -z-10">
         <Image
@@ -12,7 +12,7 @@ export default function HeroNina() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[70%_center] md:object-center"
+          className="object-cover object-center lg:object-[70%_center]"
         />
         {/* Left gradient for legibility */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
@@ -26,7 +26,7 @@ export default function HeroNina() {
       {/* ABSOLUTE overlay pinned to bottom-left */}
       <div className="absolute inset-0 z-10 flex items-end">
         <div className="mx-auto w-full max-w-[1280px] px-4 sm:px-6 lg:px-8 pb-10 sm:pb-14 md:pb-16">
-          <div className="max-w-xl">
+          <div className="max-w-xl flex flex-col items-center text-center lg:items-start lg:text-left">
             <p className="text-sm font-medium text-white/80 uppercase tracking-wider">VIALINE · NIÑA</p>
             <h1 className="mt-2 text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight">Niña</h1>
             <p className="mt-4 text-lg md:text-xl text-white/90">Comodidad para moverse, diseños que les encantan.</p>
