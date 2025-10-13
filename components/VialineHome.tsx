@@ -2,6 +2,7 @@ import Link from "next/link"
 import { byAudience } from "@/data/products"
 import GymRail from "@/components/GymRail"
 import Hero from "@/components/Hero"
+import HeroNina from "@/components/hero/HeroNina"
 
 const fabrics = [
   {
@@ -54,15 +55,7 @@ export default function VialineHome() {
 
       {/* HERO: PromoHero for Girl */}
       <div id="nina" className="mt-10">
-        <Hero
-          image="/hero-girl.jpg"
-          kicker="VIALINE · NIÑA"
-          title="Niña"
-          description="Comodidad para moverse, diseños que les encantan."
-          primary={{ href: "/nina", label: "Ver colección niña" }}
-          objectPositionDesktop="60% 42%"
-          objectPositionMobile="58% 38%"
-        />
+        <HeroNina />
 
         {popularNina.length > 0 && <GymRail title="Popular ahora (Niña)" viewAllHref="/nina" items={popularNina} />}
       </div>
