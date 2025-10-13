@@ -463,10 +463,10 @@ export const products: Product[] = [
     audience: "mujer",
   },
   {
-    slug: "legging-funtional",
-    title: "Legging Funtional",
+    slug: "legging-functional",
+    title: "Legging Functional",
     price: 40,
-    image: "/productos/mujer/legging/legging-funtional.webp",
+    image: "/productos/mujer/legging/legging-functional.webp",
     category: "leggings",
     fabric: "suplex",
     colors: ["Negro", "Gris"],
@@ -485,10 +485,10 @@ export const products: Product[] = [
     audience: "mujer",
   },
   {
-    slug: "legging-realice-fresh-terry",
-    title: "Legging Realice Fresh Terry",
+    slug: "legging-realce-fresh-terry",
+    title: "Legging Realce Fresh Terry",
     price: 45,
-    image: "/productos/mujer/legging/legging-realice-fresh-terry.webp",
+    image: "/productos/mujer/legging/legging-realce-fresh-terry.webp",
     category: "leggings",
     fabric: "suplex",
     colors: ["Negro", "Gris"],
@@ -531,10 +531,10 @@ export const products: Product[] = [
 
   // PESCADOR (suplex)
   {
-    slug: "pescador-realice",
-    title: "Pescador Realice",
+    slug: "pescador-realce",
+    title: "Pescador Realce",
     price: 40,
-    image: "/productos/mujer/pescador/pescador-realice.webp",
+    image: "/productos/mujer/pescador/pescador-realce.webp",
     category: "pescador",
     fabric: "suplex",
     colors: ["Negro", "Gris", "Azul"],

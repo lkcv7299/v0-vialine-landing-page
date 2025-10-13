@@ -1,7 +1,8 @@
 import Link from "next/link"
-import { findProduct, byAudience } from "@/data/products"
-import ProductCard from "@/components/ProductCard"
-import ProductRail from "@/components/ProductRail"
+import { byAudience } from "@/data/products"
+import GymRail from "@/components/GymRail"
+import Hero from "@/components/Hero"
+import HeroNina from "@/components/hero/HeroNina"
 
 const fabrics = [
   {
@@ -18,132 +19,46 @@ const fabrics = [
   },
 ]
 
-const categories = [
-  { name: "Leggings", href: "/colecciones/linea-suplex" },
-  { name: "Tops deportivos", href: "/colecciones/tops-algodon" },
-  { name: "Bikers", href: "/colecciones/linea-suplex" },
-  { name: "Enterizos", href: "/colecciones/enterizos" },
-  { name: "Bodys", href: "/colecciones/bodys" },
-  { name: "Camisetas (algodón)", href: "/colecciones/camisetas" },
-]
-
-const FEATURED_SLUGS = [
-  "short-ciclista-active",
-  "body-manga-larga",
-  "camiseta-manga-larga",
-  "top-venus",
-  "short-slim",
-  "straple-chanel",
-]
-
 export default function VialineHome() {
-  const featured = FEATURED_SLUGS.map((s) => findProduct(s)).filter(Boolean) as any[]
-  const ninaProducts = byAudience("nina")
+  const mujerProducts = byAudience("mujer").slice(0, 12)
+  const ninaProducts = byAudience("nina").slice(0, 12)
+
+  const popularMujer = mujerProducts.map((p) => ({
+    slug: p.slug,
+    name: p.title,
+    price: p.price,
+    image: p.image,
+  }))
+
+  const popularNina = ninaProducts.map((p) => ({
+    slug: p.slug,
+    name: p.title,
+    price: p.price,
+    image: p.image,
+  }))
 
   return (
     <main className="min-h-screen bg-neutral-50 text-neutral-900">
-      {/* HERO: video Mujer + tarjeta Niña */}
-      <section id="mujer" className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-        <div className="relative overflow-hidden h-[82vh] min-h-[560px]">
-          <video
-            className="absolute inset-0 h-full w-full object-cover object-center"
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster="/hero-woman.jpg"
-          >
-            <source src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/hero-woman.mp4-8EA7bK3N8ZcPRWXPhjaYqWAl7RHWU6.mp4" type="video/mp4" />
-          </video>
+      {/* HERO: Hero component for Woman */}
+      <Hero
+        image="/hero-woman.jpg"
+        kicker="VIALINE · LÍNEA SUPLEX"
+        title="Básicos que rinden"
+        description="Set suplex: top soporte medio + legging tiro alto. Ajuste que estiliza, opacidad total."
+        primary={{ href: "/sets", label: "Comprar sets" }}
+        secondary={{ href: "/coleccion/suplex", label: "Ver Suplex" }}
+        objectPositionDesktop="78% 42%"
+        objectPositionMobile="68% 36%"
+      />
 
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent" />
-          <div className="absolute bottom-8 left-6 right-6 md:left-12 max-w-xl text-white">
-            <p className="uppercase tracking-widest text-xs/relaxed opacity-90">Vialine · Línea Suplex</p>
-            <h1 className="mt-2 text-3xl md:text-5xl font-heading font-semibold">Básicos que rinden</h1>
-            <p className="mt-3 text-sm md:text-base text-white/90">
-              Set suplex: top soporte medio + legging tiro alto. Ajuste que estiliza, opacidad total.
-            </p>
-            <div className="mt-5 flex gap-3">
-              <a
-                href="/mujer"
-                className="inline-flex items-center justify-center rounded-2xl bg-rose-600 px-5 py-3 text-white shadow-lg hover:bg-rose-700 transition"
-              >
-                Comprar sets
-              </a>
-              <a
-                href="/tejido/suplex"
-                className="inline-flex items-center justify-center rounded-2xl border border-white/40 bg-white/10 px-5 py-3 backdrop-blur text-white hover:bg-white/20 transition"
-              >
-                Ver Suplex
-              </a>
-            </div>
-          </div>
-        </div>
+      <GymRail title="Popular ahora (Mujer)" viewAllHref="/mujer" items={popularMujer} />
 
-        <div className="mx-auto max-w-7xl px-6 md:px-8 py-12 md:py-16">
-          <ProductRail
-            title="Popular ahora (Mujer)"
-            slugs={[
-              "short-ciclista-active",
-              "short-slim",
-              "body-manga-larga",
-              "body-manga-corta",
-              "top-venus",
-              "top-afrodita",
-              "camiseta-manga-larga",
-              "camiseta-gia",
-            ]}
-            cta={{ label: "Ver todo mujer", href: "/mujer" }}
-          />
-        </div>
-      </section>
+      {/* HERO: PromoHero for Girl */}
+      <div id="nina" className="mt-10">
+        <HeroNina />
 
-      <section id="nina" className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] mt-10">
-        <div className="relative overflow-hidden h-[78vh] min-h-[520px]">
-          <img
-            src="/hero-nina.webp"
-            alt="Niña Vialine"
-            className="absolute inset-0 h-full w-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/15 to-transparent" />
-          <div className="absolute bottom-8 left-6 right-6 md:left-12 max-w-xl text-white">
-            <p className="uppercase tracking-widest text-xs/relaxed opacity-90">Vialine · Niña</p>
-            <h2 className="mt-2 text-3xl md:text-4xl font-heading font-semibold">Niña</h2>
-            <p className="mt-2 text-sm md:text-base text-white/90">Comodidad para moverse, diseños que les encantan.</p>
-            <div className="mt-4">
-              <a
-                href="/nina"
-                className="inline-flex items-center justify-center rounded-2xl bg-rose-600 px-5 py-3 text-white shadow-lg hover:bg-rose-700 transition"
-              >
-                Ver colección niña
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {ninaProducts.length > 0 && (
-          <div className="mx-auto max-w-7xl px-6 md:px-8 py-12 md:py-16">
-            <ProductRail
-              title="Popular ahora (Niña)"
-              slugs={[
-                "cafarena-nina",
-                "panty-nina",
-                "enterizo-manga-corta-nina",
-                "enterizo-manga-larga-nina",
-                "legging-nina",
-                "maxi-short-nina",
-                "short-juvenil-nina",
-                "top-jazmin",
-                "top-margarita",
-                "top-orquidea",
-                "top-tulipan",
-                "top-vani",
-              ]}
-              cta={{ label: "Ver niña", href: "/nina" }}
-            />
-          </div>
-        )}
-      </section>
+        {popularNina.length > 0 && <GymRail title="Popular ahora (Niña)" viewAllHref="/nina" items={popularNina} />}
+      </div>
 
       {/* COMPRA POR TEJIDO */}
       <section className="mx-auto max-w-7xl px-6 md:px-8 py-12 md:py-16">
@@ -191,16 +106,6 @@ export default function VialineHome() {
                 </svg>
               </div>
             </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* Popular ahora product grid */}
-      <section className="mx-auto max-w-7xl px-6 md:px-8 pb-16">
-        <h2 className="text-2xl md:text-3xl font-heading font-semibold">Popular ahora</h2>
-        <div className="mt-6 grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-          {featured.map((p: any) => (
-            <ProductCard key={p.slug} product={p} />
           ))}
         </div>
       </section>

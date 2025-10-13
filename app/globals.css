@@ -152,3 +152,65 @@ a {
   height: 0;
   width: 0;
 }
+
+/* hide horizontal scrollbar on rails */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* full-bleed helper utility */
+.full-bleed {
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+/* Safety CSS to prevent accidental duplicate promo bars */
+.promo-bar + .promo-bar {
+  display: none !important;
+}
+
+/* HERO responsive focal point */
+.hero-media {
+  object-fit: cover;
+  /* En móvil: muestra más la derecha para que se vea la modelo */
+  object-position: 80% center; /* ajusta entre 70%–85% según gusto */
+}
+
+/* En pantallas medianas hacia arriba, centrado clásico */
+@media (min-width: 768px) {
+  .hero-media {
+    object-position: center center;
+  }
+}
+
+/* Full-bleed helper: lets a section escape any centered container and span the viewport */
+.edge-to-edge {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+/* Make sure mega-menu floats above hero/carousels */
+.mega-z {
+  z-index: 60; /* higher than headers/hero overlays */
+}
+
+/* Optional: smooth dropdown mount */
+.mega-animate {
+  transform-origin: top center;
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+/* Hero image utilities */
+.hero-img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
