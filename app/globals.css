@@ -186,3 +186,31 @@ a {
     object-position: center center;
   }
 }
+
+/* Full-bleed helper: lets a section escape any centered container and span the viewport */
+.edge-to-edge {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+/* Make sure mega-menu floats above hero/carousels */
+.mega-z {
+  z-index: 60; /* higher than headers/hero overlays */
+}
+
+/* Optional: smooth dropdown mount */
+.mega-animate {
+  transform-origin: top center;
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+/* Hero image utilities */
+.hero-img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
