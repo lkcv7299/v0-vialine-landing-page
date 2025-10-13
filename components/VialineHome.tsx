@@ -1,8 +1,7 @@
 import Link from "next/link"
 import { byAudience } from "@/data/products"
 import GymRail from "@/components/GymRail"
-import HeroBanner from "@/components/HeroBanner"
-import Hero from "@/components/Hero"
+import PromoHero from "@/components/Hero/PromoHero"
 
 const fabrics = [
   {
@@ -39,22 +38,30 @@ export default function VialineHome() {
 
   return (
     <main className="min-h-screen bg-neutral-50 text-neutral-900">
-      {/* HERO: video Mujer + tarjeta Niña */}
-      <Hero />
+      {/* HERO: PromoHero for Woman */}
+      <PromoHero
+        imageSrc="/hero-woman.jpg"
+        focal="72% center"
+        title="Básicos que rinden"
+        kicker="Vialine · Línea Suplex"
+        copy="Set suplex: top soporte medio + legging tiro alto. Ajuste que estiliza, opacidad total."
+        ctaPrimary={{ label: "Comprar sets", href: "/mujer#popular" }}
+        ctaSecondary={{ label: "Ver Suplex", href: "/mujer" }}
+      />
 
       <section id="mujer" className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
         <GymRail title="Popular ahora (Mujer)" viewAllHref="/mujer" items={popularMujer} />
       </section>
 
+      {/* HERO: PromoHero for Girl */}
       <section id="nina" className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] mt-10">
-        <HeroBanner
-          image="/hero-nina.webp"
-          alt="Niña Vialine"
-          eyebrow="Vialine · Niña"
+        <PromoHero
+          imageSrc="/hero-girl.jpg"
+          focal="60% center"
           title="Niña"
-          subtitle="Comodidad para moverse, diseños que les encantan."
-          primaryCta={{ label: "Ver colección niña", href: "/nina" }}
-          focal={{ x: 50, y: 50 }}
+          kicker="Vialine · Niña"
+          copy="Comodidad para moverse, diseños que les encantan."
+          ctaPrimary={{ label: "Ver colección niña", href: "/nina" }}
         />
 
         {popularNina.length > 0 && <GymRail title="Popular ahora (Niña)" viewAllHref="/nina" items={popularNina} />}
