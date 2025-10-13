@@ -60,8 +60,8 @@ export default function VialineHome() {
           title="Niña"
           description="Comodidad para moverse, diseños que les encantan."
           primary={{ href: "/nina", label: "Ver colección niña" }}
-          objectPositionDesktop="60% center"
-          objectPositionMobile="60% center"
+          objectPositionDesktop="60% 42%"
+          objectPositionMobile="58% 38%"
         />
 
         {popularNina.length > 0 && <GymRail title="Popular ahora (Niña)" viewAllHref="/nina" items={popularNina} />}
