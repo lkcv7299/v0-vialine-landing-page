@@ -172,3 +172,17 @@ a {
 .promo-bar + .promo-bar {
   display: none !important;
 }
+
+/* HERO responsive focal point */
+.hero-media {
+  object-fit: cover;
+  /* En móvil: muestra más la derecha para que se vea la modelo */
+  object-position: 80% center; /* ajusta entre 70%–85% según gusto */
+}
+
+/* En pantallas medianas hacia arriba, centrado clásico */
+@media (min-width: 768px) {
+  .hero-media {
+    object-position: center center;
+  }
+}
