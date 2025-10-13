@@ -42,13 +42,13 @@ export default function VialineHome() {
       <section id="mujer" className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
         <HeroBanner
           image="/hero/hero-woman2.jpg"
-          alt="Básicos que rinden"
-          eyebrow="Vialine · Línea Suplex"
+          alt="Modelo en set suplex"
+          eyebrow="VIALINE · LÍNEA SUPLEX"
           title="Básicos que rinden"
           subtitle="Set suplex: top soporte medio + legging tiro alto. Ajuste que estiliza, opacidad total."
-          primaryCta={{ label: "Comprar sets", href: "/mujer" }}
-          secondaryCta={{ label: "Ver Suplex", href: "/tejido/suplex" }}
-          focal={{ x: 70, y: 50 }}
+          primaryCta={{ label: "Comprar sets", href: "/colecciones/sets" }}
+          secondaryCta={{ label: "Ver Suplex", href: "/tejidos/suplex" }}
+          focal={{ x: 68, y: 50 }}
         />
 
         <GymRail title="Popular ahora (Mujer)" viewAllHref="/mujer" items={popularMujer} />
