@@ -50,12 +50,10 @@ export default function VialineHome() {
         objectPositionMobile="68% 36%"
       />
 
-      <section id="mujer" className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-        <GymRail title="Popular ahora (Mujer)" viewAllHref="/mujer" items={popularMujer} />
-      </section>
+      <GymRail title="Popular ahora (Mujer)" viewAllHref="/mujer" items={popularMujer} />
 
       {/* HERO: PromoHero for Girl */}
-      <section id="nina" className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] mt-10">
+      <div id="nina" className="mt-10">
         <Hero
           image="/hero-girl.jpg"
           kicker="VIALINE · NIÑA"
@@ -67,7 +65,7 @@ export default function VialineHome() {
         />
 
         {popularNina.length > 0 && <GymRail title="Popular ahora (Niña)" viewAllHref="/nina" items={popularNina} />}
-      </section>
+      </div>
 
       {/* COMPRA POR TEJIDO */}
       <section className="mx-auto max-w-7xl px-6 md:px-8 py-12 md:py-16">
