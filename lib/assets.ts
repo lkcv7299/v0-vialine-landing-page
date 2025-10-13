@@ -1,4 +1,4 @@
-export type CategorySlug = "bodys" | "enterizo" | "legging" | "pescador"
+export type CategorySlug = "bodys" | "enterizo" | "legging" | "pescador" | "torero"
 
 // Mapa de nombres de color -> sufijo de archivo (minúsculas, sin acentos)
 const COLOR_TO_FILE: Record<string, string> = {
@@ -26,7 +26,7 @@ export function toFileColor(color?: string): string | undefined {
  * Si no existe la variante, se usará fallback <slug>.webp (lo hacemos con onError en <img>).
  */
 export function getImageUrl(opts: {
-  category: CategorySlug // 'bodys' | 'enterizo' | 'legging' | 'pescador'
+  category: CategorySlug // 'bodys' | 'enterizo' | 'legging' | 'pescador' | 'torero'
   slug: string // ej. 'pescador-realce' | 'body-manga-larga' | 'legging-slim'
   color?: string // ej. 'negro' | 'azul marino' | 'charcol'
 }): { src: string; fallback: string } {
