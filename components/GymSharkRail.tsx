@@ -1,5 +1,4 @@
 "use client"
-import { useRef, useState, useEffect } from "react"
 import Link from "next/link"
 
 type Item = {
@@ -19,82 +18,25 @@ export default function GymSharkRail({
   viewAllHref: string
   items: Item[]
 }) {
-  const scroller = useRef<HTMLDivElement>(null)
-  const [canLeft, setCanLeft] = useState(false)
-  const [canRight, setCanRight] = useState(true)
-
-  const check = () => {
-    const el = scroller.current
-    if (!el) return
-    setCanLeft(el.scrollLeft > 8)
-    setCanRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 8)
-  }
-
-  useEffect(() => {
-    const el = scroller.current
-    if (!el) return
-    check()
-    const on = () => check()
-    el.addEventListener("scroll", on, { passive: true })
-    window.addEventListener("resize", on)
-    return () => {
-      el.removeEventListener("scroll", on)
-      window.removeEventListener("resize", on)
-    }
-  }, [])
-
-  const nudge = (dir: "left" | "right") => {
-    const el = scroller.current
-    if (!el) return
-    const card = el.querySelector<HTMLElement>('[data-card="1"]')
-    const step = card ? card.clientWidth + 12 : el.clientWidth * 0.8
-    el.scrollBy({ left: dir === "left" ? -step : step, behavior: "smooth" })
-  }
-
   return (
-    <section className="relative mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
-      <div className="mb-4 flex items-baseline justify-between">
-        <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
-        <Link href={viewAllHref} className="text-sm font-medium underline-offset-4 hover:underline">
-          Ver todo →
-        </Link>
+    <section className="edge-to-edge bg-neutral-50 py-8 sm:py-10">
+      <div className="flex items-baseline justify-between px-4 sm:px-6">
+        <h2 className="text-xl sm:text-2xl font-semibold">{title}</h2>
+        {viewAllHref && (
+          <Link href={viewAllHref} className="text-rose-600 text-sm font-medium hover:underline">
+            Ver todo →
+          </Link>
+        )}
       </div>
 
-      <div className="relative">
-        <button
-          aria-label="Anterior"
-          onClick={() => nudge("left")}
-          className={`absolute left-0 top-1/2 z-10 -translate-y-1/2 rounded-full border bg-white/90 px-3 py-3 shadow-sm backdrop-blur transition hover:bg-white ${
-            canLeft ? "opacity-100" : "opacity-0 pointer-events-none"
-          }`}
-        >
-          ‹
-        </button>
-        <button
-          aria-label="Siguiente"
-          onClick={() => nudge("right")}
-          className={`absolute right-0 top-1/2 z-10 -translate-y-1/2 rounded-full border bg-white/90 px-3 py-3 shadow-sm backdrop-blur transition hover:bg-white ${
-            canRight ? "opacity-100" : "opacity-0 pointer-events-none"
-          }`}
-        >
-          ›
-        </button>
-
-        <div
-          ref={scroller}
-          className="flex snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth pb-2 [-ms-overflow-style:none] [scrollbar-width:none]"
-          style={{ scrollbarWidth: "none" }}
-        >
-          <style jsx>{`
-            div::-webkit-scrollbar { display: none; }
-          `}</style>
-
+      {/* Track: full width, no side gaps; scroll padding keeps first/last card aligned */}
+      <div
+        className="mt-4 overflow-x-auto scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none]"
+        style={{ scrollbarWidth: "none" }}
+      >
+        <div className="-mx-2 sm:-mx-3 md:-mx-4 px-2 sm:px-3 md:px-4 grid grid-flow-col auto-cols-[70vw] xs:auto-cols-[55vw] sm:auto-cols-[40vw] md:auto-cols-[32vw] lg:auto-cols-[25vw] gap-3 sm:gap-4">
           {items.map((p) => (
-            <article
-              key={p.slug}
-              data-card="1"
-              className="snap-start shrink-0 w-[78vw] sm:w-[48vw] md:w-[32vw] lg:w-[23.5vw] xl:w-[21.5vw]"
-            >
+            <article key={p.slug} className="snap-start">
               <Link href={`/producto/${p.slug}`} className="block overflow-hidden rounded-xl bg-white">
                 <div className="relative aspect-[3/4] overflow-hidden">
                   <img
