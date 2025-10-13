@@ -2,6 +2,7 @@ import Link from "next/link"
 import { byAudience } from "@/data/products"
 import GymRail from "@/components/GymRail"
 import HeroBanner from "@/components/HeroBanner"
+import Hero from "@/components/Hero"
 
 const fabrics = [
   {
@@ -39,18 +40,9 @@ export default function VialineHome() {
   return (
     <main className="min-h-screen bg-neutral-50 text-neutral-900">
       {/* HERO: video Mujer + tarjeta Niña */}
-      <section id="mujer" className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-        <HeroBanner
-          image="/hero-woman.jpg"
-          alt="Modelo en set suplex"
-          eyebrow="VIALINE · LÍNEA SUPLEX"
-          title="Básicos que rinden"
-          subtitle="Set suplex: top soporte medio + legging tiro alto. Ajuste que estiliza, opacidad total."
-          primaryCta={{ label: "Comprar sets", href: "/colecciones/sets" }}
-          secondaryCta={{ label: "Ver Suplex", href: "/tejidos/suplex" }}
-          focal={{ x: 68, y: 50 }}
-        />
+      <Hero />
 
+      <section id="mujer" className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
         <GymRail title="Popular ahora (Mujer)" viewAllHref="/mujer" items={popularMujer} />
       </section>
 

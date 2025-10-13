@@ -1,53 +1,194 @@
 "use client"
-
 import Link from "next/link"
-import MegaMenu from "./MegaMenu"
-import PromoBar from "./PromoBar"
+import { useState, useRef } from "react"
+
+type OpenKey = "women" | "girls" | null
 
 export default function Header() {
+  const [open, setOpen] = useState<OpenKey>(null)
+  const hideTimer = useRef<NodeJS.Timeout | null>(null)
+
+  const openMenu = (k: OpenKey) => {
+    if (hideTimer.current) clearTimeout(hideTimer.current)
+    setOpen(k)
+  }
+  const delayedClose = () => {
+    if (hideTimer.current) clearTimeout(hideTimer.current)
+    hideTimer.current = setTimeout(() => setOpen(null), 120)
+  }
+
   return (
-    <>
-      <PromoBar />
-      <header className="border-b bg-white/95 backdrop-blur">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="h-16 flex items-center justify-between gap-4 relative">
-            <div className="flex items-center gap-8">
-              <Link href="/" className="text-lg font-semibold">
-                Vialine
-              </Link>
-              <nav className="hidden md:flex items-center gap-6">
-                <MegaMenu label="Mujer" />
-                <MegaMenu label="Niña" />
-              </nav>
+    <header className="sticky top-0 z-[60] isolate bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/75">
+      <div className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-4 sm:px-6">
+        {/* Left: logo + primary nav */}
+        <div className="flex min-w-0 flex-1 items-center gap-6">
+          <Link href="/" className="shrink-0 font-semibold tracking-tight text-gray-900">
+            Vialine
+          </Link>
+
+          {/* Primary nav */}
+          <nav className="relative hidden md:flex items-center gap-6 text-sm text-gray-800">
+            {/* Women */}
+            <div className="relative" onMouseEnter={() => openMenu("women")} onMouseLeave={delayedClose}>
+              <button className="py-2 text-gray-900 hover:text-pink-600 transition" aria-expanded={open === "women"}>
+                Mujer
+              </button>
+
+              {/* Panel */}
+              <div
+                onMouseEnter={() => openMenu("women")}
+                onMouseLeave={delayedClose}
+                className={`absolute left-0 top-full mt-2 w-[min(92vw,1100px)] rounded-2xl bg-white p-6 shadow-xl ring-1 ring-black/5 transition
+                ${open === "women" ? "opacity-100 visible" : "opacity-0 invisible"}`}
+                style={{ zIndex: 70 }}
+              >
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
+                  <div>
+                    <p className="mb-3 text-xs font-semibold text-gray-500">ROPA</p>
+                    <ul className="space-y-2">
+                      {[
+                        ["Leggings", "/mujer?cat=leggings"],
+                        ["Short", "/mujer?cat=short"],
+                        ["Pescador", "/mujer?cat=pescador"],
+                        ["Torero", "/mujer?cat=torero"],
+                        ["Bodys", "/mujer?cat=body"],
+                        ["Enterizos", "/mujer?cat=enterizos"],
+                        ["Tops", "/mujer?cat=tops"],
+                        ["Camisetas", "/mujer?cat=camisetas"],
+                      ].map(([label, href]) => (
+                        <li key={label}>
+                          <Link href={href} className="hover:text-pink-600">
+                            {label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <p className="mb-3 text-xs font-semibold text-gray-500">DESTACADOS</p>
+                    <ul className="space-y-2">
+                      <li>
+                        <Link href="/collections/popular" className="hover:text-pink-600">
+                          Popular ahora
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/collections/new" className="hover:text-pink-600">
+                          Novedades
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/collections/offers" className="hover:text-pink-600">
+                          Ofertas
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="hidden sm:flex items-start justify-end">
+                    <Link
+                      href="/mujer"
+                      className="inline-flex items-center rounded-full bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
+                    >
+                      Ver todo →
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="flex-1 max-w-[720px] hidden md:block">
-              <form action="/buscar" className="w-full">
-                <input
-                  name="q"
-                  placeholder="Buscar productos"
-                  className="w-full rounded-full border border-rose-200 px-4 py-2 outline-none focus:ring-2 focus:ring-rose-300"
-                />
-              </form>
-            </div>
+            {/* Girls */}
+            <div className="relative" onMouseEnter={() => openMenu("girls")} onMouseLeave={delayedClose}>
+              <button className="py-2 text-gray-900 hover:text-pink-600 transition" aria-expanded={open === "girls"}>
+                Niña
+              </button>
 
-            <div className="flex items-center gap-4">
-              <Link href="/cuenta" aria-label="Cuenta" className="p-2 rounded-md hover:bg-neutral-100">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M20 21a8 8 0 0 0-16 0" />
-                  <circle cx="12" cy="7" r="4" />
-                </svg>
-              </Link>
-              <Link href="/carrito" aria-label="Carrito" className="p-2 rounded-md hover:bg-neutral-100">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M6 7h12l-1 13H7L6 7Z" />
-                  <path d="M9 7a3 3 0 0 1 6 0" />
-                </svg>
-              </Link>
+              <div
+                onMouseEnter={() => openMenu("girls")}
+                onMouseLeave={delayedClose}
+                className={`absolute left-0 top-full mt-2 w-[min(92vw,950px)] rounded-2xl bg-white p-6 shadow-xl ring-1 ring-black/5 transition
+                ${open === "girls" ? "opacity-100 visible" : "opacity-0 invisible"}`}
+                style={{ zIndex: 70 }}
+              >
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
+                  <div>
+                    <p className="mb-3 text-xs font-semibold text-gray-500">ROPA</p>
+                    <ul className="space-y-2">
+                      {[
+                        ["Cafarenas", "/nina?cat=cafarenas"],
+                        ["Enterizos", "/nina?cat=enterizos"],
+                        ["Leggins", "/nina?cat=leggings"],
+                        ["Pantys", "/nina?cat=pantys"],
+                        ["Shorts", "/nina?cat=shorts"],
+                        ["Tops", "/nina?cat=tops"],
+                      ].map(([label, href]) => (
+                        <li key={label}>
+                          <Link href={href} className="hover:text-pink-600">
+                            {label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <p className="mb-3 text-xs font-semibold text-gray-500">DESTACADOS</p>
+                    <ul className="space-y-2">
+                      <li>
+                        <Link href="/nina?tag=popular" className="hover:text-pink-600">
+                          Popular ahora
+                        </Link>
+                      </li>
+                      <li>
+                        <Link href="/nina?tag=nuevo" className="hover:text-pink-600">
+                          Novedades
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="hidden sm:flex items-start justify-end">
+                    <Link
+                      href="/nina"
+                      className="inline-flex items-center rounded-full bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800"
+                    >
+                      Ver todo →
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
+          </nav>
         </div>
-      </header>
-    </>
+
+        {/* Center: search */}
+        <div className="hidden md:flex flex-1 justify-center">
+          <input
+            className="w-full max-w-2xl rounded-full border border-pink-200 px-5 py-2.5 text-sm outline-none focus:border-pink-400"
+            placeholder="Buscar productos"
+            aria-label="Buscar productos"
+          />
+        </div>
+
+        {/* Right: account/cart */}
+        <div className="ml-auto flex shrink-0 items-center gap-5">
+          <Link href="/account" aria-label="Cuenta" className="text-gray-900 hover:text-pink-600">
+            {/* user icon */}
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M20 21a8 8 0 0 0-16 0" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+          </Link>
+          <Link href="/cart" aria-label="Carrito" className="text-gray-900 hover:text-pink-600">
+            {/* bag icon */}
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M6 7h12l-1 13H7L6 7Z" />
+              <path d="M9 7a3 3 0 1 1 6 0" />
+            </svg>
+          </Link>
+        </div>
+      </div>
+    </header>
   )
 }
