@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link"
-import Image from "next/image"
+import { getImageUrl, type CategorySlug } from "@/lib/assets"
 
 export default function ProductCard({
   href,
@@ -9,24 +9,36 @@ export default function ProductCard({
   image,
   badge,
   fav = false,
+  category,
+  slug,
+  colors,
 }: {
   href: string
   title: string
   price: number
   image: string
-  badge?: string // ej. "NEW"
-  fav?: boolean // placeholder
+  badge?: string
+  fav?: boolean
+  category?: CategorySlug
+  slug?: string
+  colors?: string[]
 }) {
+  const imageData =
+    category && slug
+      ? getImageUrl({ category, slug, color: colors?.[0] })
+      : { src: image || "/placeholder.svg", fallback: "/placeholder.svg" }
+
   return (
     <Link href={href} className="group block">
       <div className="relative aspect-[3/4] w-full overflow-hidden rounded-md">
-        <Image
-          unoptimized
-          src={image || "/placeholder.svg"}
+        <img
+          src={imageData.src || "/placeholder.svg"}
+          onError={(e) => {
+            ;(e.currentTarget as HTMLImageElement).src = imageData.fallback
+          }}
           alt={title}
-          fill
-          sizes="(min-width:1280px) 22vw, (min-width:1024px) 28vw, (min-width:768px) 40vw, 90vw"
-          className="object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
+          className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
+          loading="lazy"
         />
         {/* Wish / Fav (placeholder) */}
         <div className="absolute right-2 top-2 grid h-9 w-9 place-items-center rounded-full bg-white/95 shadow-sm">

@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useMemo } from "react"
 import { notFound } from "next/navigation"
-import Image from "next/image"
 import { findProduct } from "@/data/products"
+import { getImageUrl, type CategorySlug } from "@/lib/assets"
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
   const [selectedSize, setSelectedSize] = useState<string>(() => findProduct(params.slug)?.sizes[0] || "")
@@ -21,6 +21,17 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
   const product = findProduct(params.slug)
   const hasColorVariants = product?.colors.length > 0 && typeof product?.colors[0] === "object"
 
+  const categorySlug = useMemo((): CategorySlug => {
+    if (!product) return "bodys"
+    const cat = product.category.toLowerCase()
+    if (cat === "enterizos") return "enterizo"
+    if (cat === "leggings") return "legging"
+    if (cat === "bodys" || cat === "enterizo" || cat === "legging" || cat === "pescador") {
+      return cat as CategorySlug
+    }
+    return "bodys" // fallback
+  }, [product])
+
   useEffect(() => {
     if (!product) return
     setSelectedSize(product.sizes[0] || "")
@@ -30,16 +41,24 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
     setSelectedColorSlug(firstColor?.slug || (product.colors[0] as string) || "")
   }, [product]) // Updated dependency array to be exhaustive
 
-  const currentImage = useMemo(() => {
-    if (!product) return "/placeholder.svg"
+  const { src: currentImage, fallback: fallbackImage } = useMemo(() => {
+    if (!product) return { src: "/placeholder.svg", fallback: "/placeholder.svg" }
+
+    // Get the selected color name for image path
+    let selectedColorName = ""
     if (hasColorVariants) {
       const selectedColor = (product.colors as { name: string; slug: string; hex: string; image: string }[]).find(
         (c) => c.slug === selectedColorSlug,
       )
-      return selectedColor?.image || product.image
+      selectedColorName = selectedColor?.name || ""
     }
-    return product.image
-  }, [product, hasColorVariants, selectedColorSlug])
+
+    return getImageUrl({
+      category: categorySlug,
+      slug: product.slug,
+      color: selectedColorName,
+    })
+  }, [product, categorySlug, hasColorVariants, selectedColorSlug])
 
   const currentColorName = useMemo(() => {
     if (!product) return ""
@@ -63,13 +82,14 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         {/* Gallery */}
         <div>
           <div className="aspect-[3/4] overflow-hidden rounded-2xl bg-neutral-100">
-            <Image
+            <img
+              key={selectedColorSlug || "default"}
               src={currentImage || "/placeholder.svg"}
+              onError={(e) => {
+                ;(e.currentTarget as HTMLImageElement).src = fallbackImage
+              }}
               alt={`${product.title} - ${currentColorName}`}
-              width={800}
-              height={1067}
               className="h-full w-full object-cover object-center"
-              priority
             />
           </div>
         </div>

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import { products } from "@/data/products"
 import ProductCard from "@/components/ui/ProductCard"
+import type { CategorySlug } from "@/lib/assets"
 
 type Params = {
   params: { gender: string; category: string }
@@ -60,6 +61,20 @@ function matchCategory(p: any, catSlug: string) {
   )
 }
 
+function mapCategory(category: string): CategorySlug | undefined {
+  const normalized = category.toLowerCase()
+  if (normalized === "enterizos" || normalized === "enterizo") return "enterizo"
+  if (normalized === "leggings" || normalized === "legging") return "legging"
+  if (normalized === "bodys" || normalized === "body") return "bodys"
+  if (normalized === "pescador") return "pescador"
+  return undefined
+}
+
+function getColorSlugs(colors: any): string[] | undefined {
+  if (!colors || !Array.isArray(colors) || colors.length === 0) return undefined
+  return colors.map((c: any) => (typeof c === "string" ? c.toLowerCase() : c.slug))
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -95,7 +110,15 @@ export default function Page({ params }: Params) {
       <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
         {rows.map((p) => (
           <li key={p.slug}>
-            <ProductCard href={`/producto/${p.slug}`} title={p.title} price={p.price} image={p.image} />
+            <ProductCard
+              href={`/producto/${p.slug}`}
+              title={p.title}
+              price={p.price}
+              image={p.image}
+              category={mapCategory(p.category)}
+              slug={p.slug}
+              colors={getColorSlugs(p.colors)}
+            />
           </li>
         ))}
       </ul>
