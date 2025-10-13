@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { byAudience } from "@/data/products"
 import GymRail from "@/components/GymRail"
+import Hero from "@/components/Hero"
 
 const fabrics = [
   {
@@ -39,14 +40,7 @@ export default function VialineHome() {
     <main className="min-h-screen bg-neutral-50 text-neutral-900">
       {/* HERO: video Mujer + tarjeta Niña */}
       <section id="mujer" className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-        <div className="relative overflow-hidden h-[82vh] min-h-[560px]">
-          <img
-            src="/hero-woman.jpg"
-            alt="Vialine Mujer"
-            className="absolute inset-0 h-full w-full object-cover object-center"
-          />
-
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent" />
+        <Hero src="/hero/hero-woman2.jpg" alt="Básicos que rinden">
           <div className="absolute bottom-8 left-6 right-6 md:left-12 max-w-xl text-white">
             <p className="uppercase tracking-widest text-xs/relaxed opacity-90">Vialine · Línea Suplex</p>
             <h1 className="mt-2 text-3xl md:text-5xl font-heading font-semibold">Básicos que rinden</h1>
@@ -68,19 +62,13 @@ export default function VialineHome() {
               </a>
             </div>
           </div>
-        </div>
+        </Hero>
 
         <GymRail title="Popular ahora (Mujer)" viewAllHref="/mujer" items={popularMujer} />
       </section>
 
       <section id="nina" className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] mt-10">
-        <div className="relative overflow-hidden h-[78vh] min-h-[520px]">
-          <img
-            src="/hero-nina.webp"
-            alt="Niña Vialine"
-            className="absolute inset-0 h-full w-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/15 to-transparent" />
+        <Hero src="/hero-nina.webp" alt="Niña Vialine">
           <div className="absolute bottom-8 left-6 right-6 md:left-12 max-w-xl text-white">
             <p className="uppercase tracking-widest text-xs/relaxed opacity-90">Vialine · Niña</p>
             <h2 className="mt-2 text-3xl md:text-4xl font-heading font-semibold">Niña</h2>
@@ -94,7 +82,7 @@ export default function VialineHome() {
               </a>
             </div>
           </div>
-        </div>
+        </Hero>
 
         {popularNina.length > 0 && <GymRail title="Popular ahora (Niña)" viewAllHref="/nina" items={popularNina} />}
       </section>
