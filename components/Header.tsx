@@ -47,14 +47,14 @@ export default function Header() {
                     <p className="mb-3 text-xs font-semibold text-gray-500">ROPA</p>
                     <ul className="space-y-2">
                       {[
-                        ["Leggings", "/mujer?cat=leggings"],
-                        ["Short", "/mujer?cat=short"],
-                        ["Pescador", "/mujer?cat=pescador"],
-                        ["Torero", "/mujer?cat=torero"],
-                        ["Bodys", "/mujer?cat=body"],
-                        ["Enterizos", "/mujer?cat=enterizos"],
-                        ["Tops", "/mujer?cat=tops"],
-                        ["Camisetas", "/mujer?cat=camisetas"],
+                        ["Leggings", "/shop/mujer/leggings"],
+                        ["Short", "/shop/mujer/short"],
+                        ["Pescador", "/shop/mujer/pescador"],
+                        ["Torero", "/shop/mujer/torero"],
+                        ["Bodys", "/shop/mujer/bodys"],
+                        ["Enterizos", "/shop/mujer/enterizos"],
+                        ["Tops", "/shop/mujer/tops"],
+                        ["Camisetas", "/shop/mujer/camisetas"],
                       ].map(([label, href]) => (
                         <li key={label}>
                           <Link href={href} className="hover:text-pink-600">
@@ -116,12 +116,12 @@ export default function Header() {
                     <p className="mb-3 text-xs font-semibold text-gray-500">ROPA</p>
                     <ul className="space-y-2">
                       {[
-                        ["Cafarenas", "/nina?cat=cafarenas"],
-                        ["Enterizos", "/nina?cat=enterizos"],
-                        ["Leggins", "/nina?cat=leggings"],
-                        ["Pantys", "/nina?cat=pantys"],
-                        ["Shorts", "/nina?cat=shorts"],
-                        ["Tops", "/nina?cat=tops"],
+                        ["Cafarenas", "/shop/nina/cafarenas"],
+                        ["Enterizos", "/shop/nina/enterizos"],
+                        ["Leggins", "/shop/nina/leggings"],
+                        ["Pantys", "/shop/nina/pantys"],
+                        ["Shorts", "/shop/nina/shorts"],
+                        ["Tops", "/shop/nina/tops"],
                       ].map(([label, href]) => (
                         <li key={label}>
                           <Link href={href} className="hover:text-pink-600">
