@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { byAudience } from "@/data/products"
 import GymRail from "@/components/GymRail"
-import PromoHero from "@/components/Hero/PromoHero"
+import Hero from "@/components/Hero"
 
 const fabrics = [
   {
@@ -38,15 +38,16 @@ export default function VialineHome() {
 
   return (
     <main className="min-h-screen bg-neutral-50 text-neutral-900">
-      {/* HERO: PromoHero for Woman */}
-      <PromoHero
-        imageSrc="/hero-woman.jpg"
-        focal="72% center"
+      {/* HERO: Hero component for Woman */}
+      <Hero
+        image="/hero-woman.jpg"
+        kicker="VIALINE · LÍNEA SUPLEX"
         title="Básicos que rinden"
-        kicker="Vialine · Línea Suplex"
-        copy="Set suplex: top soporte medio + legging tiro alto. Ajuste que estiliza, opacidad total."
-        ctaPrimary={{ label: "Comprar sets", href: "/mujer#popular" }}
-        ctaSecondary={{ label: "Ver Suplex", href: "/mujer" }}
+        description="Set suplex: top soporte medio + legging tiro alto. Ajuste que estiliza, opacidad total."
+        primary={{ href: "/sets", label: "Comprar sets" }}
+        secondary={{ href: "/coleccion/suplex", label: "Ver Suplex" }}
+        objectPositionDesktop="78% 42%"
+        objectPositionMobile="68% 36%"
       />
 
       <section id="mujer" className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
@@ -55,13 +56,14 @@ export default function VialineHome() {
 
       {/* HERO: PromoHero for Girl */}
       <section id="nina" className="relative w-screen left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] mt-10">
-        <PromoHero
-          imageSrc="/hero-girl.jpg"
-          focal="60% center"
+        <Hero
+          image="/hero-girl.jpg"
+          kicker="VIALINE · NIÑA"
           title="Niña"
-          kicker="Vialine · Niña"
-          copy="Comodidad para moverse, diseños que les encantan."
-          ctaPrimary={{ label: "Ver colección niña", href: "/nina" }}
+          description="Comodidad para moverse, diseños que les encantan."
+          primary={{ href: "/nina", label: "Ver colección niña" }}
+          objectPositionDesktop="60% center"
+          objectPositionMobile="60% center"
         />
 
         {popularNina.length > 0 && <GymRail title="Popular ahora (Niña)" viewAllHref="/nina" items={popularNina} />}
