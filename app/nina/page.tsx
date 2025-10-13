@@ -1,6 +1,7 @@
 import { byAudience, type Product } from "@/data/products"
 import ProductFilters from "@/components/ProductFilters"
 import ProductGrid from "@/components/ProductGrid"
+import Hero from "@/components/Hero"
 
 function apply(items: Product[], q: Record<string, string | string[] | undefined>) {
   let out = [...items]
@@ -25,13 +26,25 @@ export default function Page({ searchParams }: { searchParams: Record<string, st
   const base = byAudience("nina")
   const items = apply(base, searchParams)
   return (
-    <main className="mx-auto max-w-7xl px-6 md:px-8 py-8">
-      <h1 className="text-3xl md:text-4xl font-bold">Niña</h1>
-      <p className="text-neutral-600 mt-2">{items.length} productos</p>
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-[280px,1fr] gap-6">
-        <ProductFilters />
-        <ProductGrid items={items} />
-      </div>
-    </main>
+    <>
+      <Hero
+        image="/hero-girl.jpg"
+        kicker="VIALINE · NIÑA"
+        title="Niña"
+        description="Comodidad para moverse, diseños que les encantan."
+        primary={{ href: "/nina", label: "Ver colección niña" }}
+        objectPositionDesktop="60% 42%"
+        objectPositionMobile="58% 38%"
+      />
+
+      <main className="mx-auto max-w-7xl px-6 md:px-8 py-8">
+        <h1 className="text-3xl md:text-4xl font-bold">Niña</h1>
+        <p className="text-neutral-600 mt-2">{items.length} productos</p>
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-[280px,1fr] gap-6">
+          <ProductFilters />
+          <ProductGrid items={items} />
+        </div>
+      </main>
+    </>
   )
 }
