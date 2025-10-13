@@ -1,14 +1,14 @@
 export const WOMEN_MENU = {
   rootHref: "/mujer",
   clothing: [
-    { label: "Leggings", href: "/legging" },
-    { label: "Short", href: "/short" },
-    { label: "Pescador", href: "/pescador" },
-    { label: "Torero", href: "/torero" },
-    { label: "Bodys", href: "/body" },
-    { label: "Enterizos", href: "/enterizo" },
-    { label: "Tops", href: "/tops" },
-    { label: "Camisetas", href: "/camisetas" },
+    { label: "Leggings", href: "/shop/mujer/leggings" },
+    { label: "Short", href: "/shop/mujer/short" },
+    { label: "Pescador", href: "/shop/mujer/pescador" },
+    { label: "Torero", href: "/shop/mujer/torero" },
+    { label: "Bodys", href: "/shop/mujer/bodys" },
+    { label: "Enterizos", href: "/shop/mujer/enterizos" },
+    { label: "Tops", href: "/shop/mujer/tops" },
+    { label: "Camisetas", href: "/shop/mujer/camisetas" },
   ],
   featured: [
     { label: "Popular ahora", href: "/mujer#popular" },
@@ -20,12 +20,12 @@ export const WOMEN_MENU = {
 export const GIRL_MENU = {
   rootHref: "/nina",
   clothing: [
-    { label: "Cafarenas", href: "/cafarena-nina" },
-    { label: "Enterizos", href: "/enterizos-nina" },
-    { label: "Leggins", href: "/legging-nina" },
-    { label: "Pantys", href: "/panty-nina" },
-    { label: "Shorts", href: "/short-ninas" },
-    { label: "Tops", href: "/top-ninas" },
+    { label: "Cafarenas", href: "/shop/nina/cafarena" },
+    { label: "Enterizos", href: "/shop/nina/enterizos" },
+    { label: "Leggins", href: "/shop/nina/legging" },
+    { label: "Pantys", href: "/shop/nina/panty" },
+    { label: "Shorts", href: "/shop/nina/short" },
+    { label: "Tops", href: "/shop/nina/tops" },
   ],
   featured: [
     { label: "Popular ahora", href: "/nina#popular" },
