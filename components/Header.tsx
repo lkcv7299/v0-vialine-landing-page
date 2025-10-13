@@ -164,11 +164,17 @@ export default function Header() {
 
         {/* Center: search */}
         <div className="hidden md:flex flex-1 justify-center">
-          <input
-            className="w-full max-w-2xl rounded-full border border-pink-200 px-5 py-2.5 text-sm outline-none focus:border-pink-400"
-            placeholder="Buscar productos"
-            aria-label="Buscar productos"
-          />
+          <form action="/search" method="GET" className="group relative w-full max-w-[720px]">
+            <input
+              type="search"
+              name="q"
+              placeholder="Buscar productos"
+              className="w-full rounded-full border border-rose-200 bg-white/70 px-5 py-3 outline-none focus:border-rose-400"
+            />
+            <button type="submit" className="sr-only">
+              Search
+            </button>
+          </form>
         </div>
 
         {/* Right: account/cart */}
