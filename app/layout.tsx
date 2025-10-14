@@ -2,7 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Outfit, Inter, Manrope } from "next/font/google"
 import "./globals.css"
-import Header from "@/components/Header"
+import SiteHeader from "@/components/header/SiteHeader"
 import WhatsAppFloat from "@/components/WhatsAppFloat"
 import { WishlistProvider } from "@/components/providers/WishlistContext"
 import { CartProvider } from "@/contexts/CartContext"
@@ -68,7 +68,7 @@ export default function RootLayout({
         />
         <CartProvider>
           <WishlistProvider>
-            <Header />
+            <SiteHeader />
             {children}
             <WhatsAppFloat />
           </WishlistProvider>
