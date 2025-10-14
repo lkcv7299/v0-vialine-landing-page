@@ -1,4 +1,4 @@
-import ProductCard from "@/components/ui/ProductCard"
+import ProductCard from "@/components/ProductCard"
 import { searchProducts } from "@/lib/search"
 
 export default function Page({ searchParams }: { searchParams: { q?: string } }) {
@@ -12,15 +12,7 @@ export default function Page({ searchParams }: { searchParams: { q?: string } })
 
       <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-6">
         {list.map((p) => (
-          <ProductCard
-            key={p.slug}
-            href={`/producto/${p.slug}`}
-            title={p.title}
-            price={p.price}
-            image={p.image}
-            badge={p.badge}
-            slug={p.slug}
-          />
+          <ProductCard key={p.slug} product={p} />
         ))}
       </div>
     </main>

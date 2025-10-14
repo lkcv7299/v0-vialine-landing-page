@@ -2,7 +2,7 @@
 import { useRef } from "react"
 import Link from "next/link"
 import { findProduct } from "@/data/products"
-import ProductCard from "@/components/ui/ProductCard"
+import ProductCard from "./ProductCard"
 
 export default function ProductRail({
   title,
@@ -41,14 +41,7 @@ export default function ProductRail({
         >
           {items.map((p) => (
             <div key={p.slug} className="snap-start shrink-0 w-[80vw] sm:w-[44vw] md:w-[32vw] lg:w-[24vw] xl:w-[22vw]">
-              <ProductCard
-                href={`/producto/${p.slug}`}
-                title={p.title}
-                price={p.price}
-                image={p.image}
-                slug={p.slug}
-                badge={(p as any).badge}
-              />
+              <ProductCard product={p} />
             </div>
           ))}
         </div>
