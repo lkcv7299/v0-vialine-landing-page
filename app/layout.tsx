@@ -5,6 +5,7 @@ import "./globals.css"
 import Header from "@/components/Header"
 import WhatsAppFloat from "@/components/WhatsAppFloat"
 import { WishlistProvider } from "@/components/providers/WishlistContext"
+import { CartProvider } from "@/contexts/CartContext"
 
 export const metadata: Metadata = {
   title: "Vialine | Activewear & ropa interior para mujer – Hecho en Perú",
@@ -65,11 +66,13 @@ export default function RootLayout({
             }),
           }}
         />
-        <WishlistProvider>
-          <Header />
-          {children}
-          <WhatsAppFloat />
-        </WishlistProvider>
+        <CartProvider>
+          <WishlistProvider>
+            <Header />
+            {children}
+            <WhatsAppFloat />
+          </WishlistProvider>
+        </CartProvider>
       </body>
     </html>
   )
