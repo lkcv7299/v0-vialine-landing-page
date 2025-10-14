@@ -28,3 +28,5 @@ Continue building your app on:
 2. Deploy your chats from the v0 interface
 3. Changes are automatically pushed to this repository
 4. Vercel deploys the latest version from this repository
+
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/lkcv7299/v0-vialine-landing-page?utm_source=oss&utm_medium=github&utm_campaign=lkcv7299%2Fv0-vialine-landing-page&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
