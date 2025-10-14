@@ -23,9 +23,34 @@ export type Searchable = Product & {
 }
 
 // Construye índice simple
+function colorTokens(product: Product): string[] {
+  return (product.colors ?? []).flatMap((color) => {
+    if (typeof color === "string") return [color]
+    return [color.name, color.slug]
+  })
+}
+
+function attributeTokens(product: Product): string[] {
+  if (!product.attributes) return []
+  const { material, detalles, beneficios } = product.attributes
+  return [material, ...(detalles ?? []), ...(beneficios ?? [])].filter(Boolean) as string[]
+}
+
 function index(): Searchable[] {
   return products.map((p) => {
-    const base = [p.title, p.category, p.fabric, p.audience, ...p.colors].filter(Boolean).join(" ")
+    const base = [
+      p.title,
+      p.slug,
+      p.category,
+      p.fabric,
+      p.audience,
+      ...colorTokens(p),
+      ...(Array.isArray(p.tags) ? p.tags : []),
+      ...attributeTokens(p),
+    ]
+      .filter(Boolean)
+      .join(" ")
+
     return { ...p, _haystack: normalize(base) }
   })
 }

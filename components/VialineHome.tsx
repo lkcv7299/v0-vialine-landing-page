@@ -3,21 +3,7 @@ import { byAudience } from "@/data/products"
 import GymRail from "@/components/GymRail"
 import Hero from "@/components/Hero"
 import HeroNina from "@/components/hero/HeroNina"
-
-const fabrics = [
-  {
-    name: "Suplex",
-    slug: "suplex",
-    copy: "Compresión media-alta, transpirable y squat-proof.",
-    href: "/tejido/suplex",
-  },
-  {
-    name: "Algodón",
-    slug: "algodon",
-    copy: "Suave sobre la piel, uso diario, no transparenta.",
-    href: "/tejido/algodon",
-  },
-]
+import { FABRICS } from "@/data/fabrics"
 
 export default function VialineHome() {
   const mujerProducts = byAudience("mujer").slice(0, 12)
@@ -74,19 +60,19 @@ export default function VialineHome() {
           </Link>
         </div>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          {fabrics.map((f) => (
+          {FABRICS.map((fabric) => (
             <Link
-              key={f.slug}
-              href={f.href}
+              key={fabric.slug}
+              href={`/tejido/${fabric.slug}`}
               className="group rounded-3xl border border-neutral-200 bg-white p-6 hover:shadow-lg transition"
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg md:text-xl font-medium">{f.name}</h3>
-                  <p className="mt-1 text-sm text-neutral-600 max-w-prose">{f.copy}</p>
+                  <h3 className="text-lg md:text-xl font-medium">{fabric.name}</h3>
+                  <p className="mt-1 text-sm text-neutral-600 max-w-prose">{fabric.summary}</p>
                 </div>
                 <div className="h-14 w-14 rounded-2xl bg-neutral-100 grid place-content-center text-xs text-neutral-500">
-                  {f.name.substring(0, 2)}
+                  {fabric.name.substring(0, 2)}
                 </div>
               </div>
               <div className="mt-4 inline-flex items-center text-sm text-neutral-900">

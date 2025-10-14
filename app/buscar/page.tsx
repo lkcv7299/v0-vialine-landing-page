@@ -1,9 +1,9 @@
-import { products } from "@/data/products"
 import ProductCard from "@/components/ui/ProductCard"
+import { searchProducts } from "@/lib/search"
 
 export default function Page({ searchParams }: { searchParams: { q?: string } }) {
   const q = (searchParams.q || "").toString().trim().toLowerCase()
-  const list = q ? products.filter((p) => (p.title + " " + (p.tags || "")).toLowerCase().includes(q)) : []
+  const list = q ? searchProducts(q) : []
 
   return (
     <main className="mx-auto max-w-7xl px-4 md:px-6 py-8">
@@ -19,6 +19,7 @@ export default function Page({ searchParams }: { searchParams: { q?: string } })
             price={p.price}
             image={p.image}
             badge={p.badge}
+            slug={p.slug}
           />
         ))}
       </div>
