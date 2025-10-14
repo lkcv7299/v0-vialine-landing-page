@@ -7,8 +7,16 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    // ✅ CAMBIADO: Habilitar optimización de imágenes
+    // unoptimized: true, // ❌ ELIMINAR ESTO
+    formats: ['image/avif', 'image/webp'], // Formatos modernos y más ligeros
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 60, // Cache por 60 segundos
   },
+  // Optimizaciones adicionales
+  swcMinify: true, // Minificación más rápida
+  compress: true, // Comprimir respuestas
 }
 
 export default nextConfig
