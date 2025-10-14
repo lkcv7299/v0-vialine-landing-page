@@ -199,6 +199,19 @@ export const products: Product[] = [
     colors: ["Gris", "Negro", "Rojo"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Pretina elástica confortable",
+    "Ajuste perfecto sin marcar",
+    "Largo ideal"
+  ],
+  beneficios: [
+    "Máxima libertad de movimiento",
+    "Secado rápido y transpirable",
+    "Ideal para entrenamientos intensos"
+  ]
+},
   },
   {
     slug: "short-ciclista-active",
@@ -574,6 +587,20 @@ export const products: Product[] = [
     colors: ["Blanco", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Diseño deportivo elegante",
+    "Soporte medio confortable",
+    "Tejido elástico"
+  ],
+  beneficios: [
+    "Comodidad absoluta",
+    "Transpirable y fresco",
+    "Perfecto para el día a día"
+  ]
+},
+
   },
   {
     slug: "top-arena",
@@ -921,6 +948,19 @@ export const products: Product[] = [
     colors: ["Rosa", "Negro", "Azul"],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
   },
   {
     slug: "enterizo-manga-larga-nina",
@@ -932,6 +972,19 @@ export const products: Product[] = [
     colors: ["Rosa", "Negro", "Morado"],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
   },
 
   // LEGGINGS (suplex)
