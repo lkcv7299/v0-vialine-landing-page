@@ -1,80 +1,69 @@
 "use client"
 
-import { useState, useEffect, useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { notFound } from "next/navigation"
 import { findProduct } from "@/data/products"
-import { getImageUrl, type CategorySlug } from "@/lib/assets"
+import { buildWhatsAppUrl } from "@/lib/contact"
+
+type ColorVariant = {
+  name: string
+  slug: string
+  hex: string
+  image: string
+}
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
-  const [selectedSize, setSelectedSize] = useState<string>(() => findProduct(params.slug)?.sizes[0] || "")
-  const [selectedColorSlug, setSelectedColorSlug] = useState<string>(() => {
-    const product = findProduct(params.slug)
-    if (!product) return ""
-    const hasColorVariants = product.colors.length > 0 && typeof product.colors[0] === "object"
-    if (hasColorVariants) {
-      const firstColor = product.colors[0] as { name: string; slug: string; hex: string; image: string }
-      return firstColor?.slug || ""
-    }
-    return (product.colors[0] as string) || ""
-  })
-
   const product = findProduct(params.slug)
-  const hasColorVariants = product?.colors.length > 0 && typeof product?.colors[0] === "object"
 
-  const categorySlug = useMemo((): CategorySlug => {
-    if (!product) return "bodys"
-    const cat = product.category.toLowerCase()
-    if (cat === "enterizos") return "enterizo"
-    if (cat === "leggings") return "legging"
-    if (cat === "bodys" || cat === "enterizo" || cat === "legging" || cat === "pescador") {
-      return cat as CategorySlug
-    }
-    return "bodys" // fallback
-  }, [product])
+  const variantColors = useMemo(
+    () => (product?.colors ?? []).filter((color): color is ColorVariant => typeof color === "object"),
+    [product?.colors],
+  )
+  const hasColorVariants = variantColors.length > 0
+
+  const [selectedSize, setSelectedSize] = useState(() => product?.sizes[0] ?? "")
+  const [selectedColorSlug, setSelectedColorSlug] = useState(() => {
+    if (!product || product.colors.length === 0) return ""
+    const first = product.colors[0]
+    return typeof first === "string" ? first : first.slug
+  })
 
   useEffect(() => {
     if (!product) return
-    setSelectedSize(product.sizes[0] || "")
-    const firstColor = hasColorVariants
-      ? (product.colors[0] as { name: string; slug: string; hex: string; image: string })
-      : null
-    setSelectedColorSlug(firstColor?.slug || (product.colors[0] as string) || "")
-  }, [product]) // Updated dependency array to be exhaustive
-
-  const { src: currentImage, fallback: fallbackImage } = useMemo(() => {
-    if (!product) return { src: "/placeholder.svg", fallback: "/placeholder.svg" }
-
-    // Get the selected color name for image path
-    let selectedColorName = ""
-    if (hasColorVariants) {
-      const selectedColor = (product.colors as { name: string; slug: string; hex: string; image: string }[]).find(
-        (c) => c.slug === selectedColorSlug,
-      )
-      selectedColorName = selectedColor?.name || ""
+    setSelectedSize(product.sizes[0] ?? "")
+    if (product.colors.length === 0) {
+      setSelectedColorSlug("")
+      return
     }
+    const first = product.colors[0]
+    setSelectedColorSlug(typeof first === "string" ? first : first.slug)
+  }, [product?.slug])
 
-    return getImageUrl({
-      category: categorySlug,
-      slug: product.slug,
-      color: selectedColorName,
-    })
-  }, [product, categorySlug, hasColorVariants, selectedColorSlug])
+  const currentVariant = useMemo(() => {
+    if (!hasColorVariants) return undefined
+    return variantColors.find((color) => color.slug === selectedColorSlug) ?? variantColors[0]
+  }, [hasColorVariants, selectedColorSlug, variantColors])
 
-  const currentColorName = useMemo(() => {
-    if (!product) return ""
-    if (hasColorVariants) {
-      const selectedColor = (product.colors as { name: string; slug: string; hex: string; image: string }[]).find(
-        (c) => c.slug === selectedColorSlug,
-      )
-      return selectedColor?.name || selectedColorSlug
-    }
-    return selectedColorSlug
-  }, [product, hasColorVariants, selectedColorSlug])
+  const currentColorName = hasColorVariants
+    ? currentVariant?.name ?? selectedColorSlug
+    : selectedColorSlug
 
   if (!product) return notFound()
 
-  const whatsappMessage = `Hola, quiero el ${product.title} en color ${currentColorName}, talla ${selectedSize}.`
-  const whatsappUrl = `https://wa.me/51972327236?text=${encodeURIComponent(whatsappMessage)}`
+  const displayImage = hasColorVariants ? currentVariant?.image ?? product.image : product.image
+  const fallbackImage = product.image || "/placeholder.svg"
+
+  const whatsappMessage = `Hola, quiero el ${product.title} en color ${currentColorName || "predeterminado"}, talla ${
+    selectedSize || "disponible"
+  }.`
+  const whatsappUrl = buildWhatsAppUrl(whatsappMessage)
+
+  const simpleColors = hasColorVariants ? [] : (product.colors as string[])
+  const attributes = product.attributes ?? {
+    material: "",
+    detalles: [] as string[],
+    beneficios: [] as string[],
+  }
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10">
@@ -84,7 +73,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
           <div className="aspect-[3/4] overflow-hidden rounded-2xl bg-neutral-100">
             <img
               key={selectedColorSlug || "default"}
-              src={currentImage || "/placeholder.svg"}
+              src={displayImage || "/placeholder.svg"}
               onError={(e) => {
                 ;(e.currentTarget as HTMLImageElement).src = fallbackImage
               }}
@@ -105,7 +94,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
             <div className="flex flex-wrap gap-2">
               {hasColorVariants
                 ? // Render color chips with hex values
-                  (product.colors as { name: string; slug: string; hex: string; image: string }[]).map((color) => (
+                  variantColors.map((color) => (
                     <button
                       key={color.slug}
                       onClick={() => setSelectedColorSlug(color.slug)}
@@ -125,7 +114,7 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
                     </button>
                   ))
                 : // Render simple color buttons (backward compatible)
-                  (product.colors as string[]).map((color) => (
+                  simpleColors.map((color) => (
                     <button
                       key={color}
                       onClick={() => setSelectedColorSlug(color)}
@@ -161,71 +150,49 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
             </div>
           </div>
 
-          {product.attributes && (
-            <div className="mt-8 space-y-6">
-              {/* Material */}
-              <div>
-                <h3 className="text-sm font-semibold text-neutral-900 mb-2">Material</h3>
-                <p className="text-neutral-700">{product.attributes.material}</p>
-              </div>
+          <div className="mt-8 space-y-6">
+            {/* Material */}
+            <div>
+              <h3 className="text-sm font-semibold text-neutral-900 mb-2">Material</h3>
+              <p className="text-neutral-700 min-h-[1.5rem]">
+                {attributes.material ? attributes.material : "\u00A0"}
+              </p>
+            </div>
 
-              {/* Detalles */}
-              {product.attributes.detalles.length > 0 && (
-                <div>
-                  <h3 className="text-sm font-semibold text-neutral-900 mb-2">Detalles</h3>
-                  <ul className="space-y-1">
-                    {product.attributes.detalles.map((detalle, i) => (
-                      <li key={i} className="flex items-start gap-2 text-neutral-700">
-                        <span className="text-rose-600 mt-1">•</span>
-                        <span>{detalle}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Beneficios */}
-              {product.attributes.beneficios.length > 0 && (
-                <div>
-                  <h3 className="text-sm font-semibold text-neutral-900 mb-2">Beneficios</h3>
-                  <ul className="space-y-1">
-                    {product.attributes.beneficios.map((beneficio, i) => (
-                      <li key={i} className="flex items-start gap-2 text-neutral-700">
-                        <span className="text-rose-600 mt-1">•</span>
-                        <span>{beneficio}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+            {/* Detalles */}
+            <div>
+              <h3 className="text-sm font-semibold text-neutral-900 mb-2">Detalles</h3>
+              {attributes.detalles.length > 0 ? (
+                <ul className="space-y-1">
+                  {attributes.detalles.map((detalle, i) => (
+                    <li key={i} className="flex items-start gap-2 text-neutral-700">
+                      <span className="text-rose-600 mt-1">•</span>
+                      <span>{detalle}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div className="min-h-[1.5rem]" aria-hidden="true" />
               )}
             </div>
-          )}
 
-          {/* Benefits (default for products without attributes) */}
-          {!product.attributes && (
-            <ul className="mt-8 space-y-3">
-              <li className="flex items-center gap-3 text-neutral-700">
-                <svg className="w-5 h-5 text-rose-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <span>Envíos a todo el Perú</span>
-              </li>
-              <li className="flex items-center gap-3 text-neutral-700">
-                <svg className="w-5 h-5 text-rose-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <span>Cambios fáciles</span>
-              </li>
-            </ul>
-          )}
+            {/* Beneficios */}
+            <div>
+              <h3 className="text-sm font-semibold text-neutral-900 mb-2">Beneficios</h3>
+              {attributes.beneficios.length > 0 ? (
+                <ul className="space-y-1">
+                  {attributes.beneficios.map((beneficio, i) => (
+                    <li key={i} className="flex items-start gap-2 text-neutral-700">
+                      <span className="text-rose-600 mt-1">•</span>
+                      <span>{beneficio}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div className="min-h-[1.5rem]" aria-hidden="true" />
+              )}
+            </div>
+          </div>
 
           {/* CTA */}
           <a
