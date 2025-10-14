@@ -1,15 +1,10 @@
-import { products } from "@/data/products"
 import ProductCard from "@/components/ui/ProductCard"
+import { searchProducts } from "@/lib/search"
 
 export default function SearchPage({ searchParams }: { searchParams: { q?: string } }) {
   const q = (searchParams.q ?? "").toString().trim().toLowerCase()
 
-  const results = q
-    ? products.filter((p) => {
-        const haystack = [p.title, p.slug, p.category].join(" ").toLowerCase()
-        return haystack.includes(q)
-      })
-    : []
+  const results = q ? searchProducts(q) : []
 
   return (
     <main className="mx-auto max-w-7xl px-4 sm:px-6 py-8">
@@ -20,7 +15,7 @@ export default function SearchPage({ searchParams }: { searchParams: { q?: strin
         <ul className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {results.map((p) => (
             <li key={p.slug}>
-              <ProductCard href={`/producto/${p.slug}`} title={p.title} price={p.price} image={p.image} />
+              <ProductCard href={`/producto/${p.slug}`} title={p.title} price={p.price} image={p.image} slug={p.slug} />
             </li>
           ))}
         </ul>

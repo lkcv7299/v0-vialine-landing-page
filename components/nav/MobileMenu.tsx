@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import Drawer from "@/components/ui/Drawer"
 import { Menu, X, User, ShoppingBag } from "lucide-react"
+import { buildWhatsAppUrl } from "@/lib/contact"
 
 const mujer = [
   { label: "Leggings", href: "/shop/mujer/leggings" },
@@ -91,7 +92,7 @@ export default function MobileMenu() {
               items={[
                 { label: "Guía de tallas", href: "/pages/guia-de-tallas" },
                 { label: "Cambios y devoluciones", href: "/pages/envios-y-devoluciones" },
-                { label: "Soporte WhatsApp", href: "https://wa.me/51XXXXXXXXX", external: true },
+                { label: "Soporte WhatsApp", href: buildWhatsAppUrl("Hola Vialine"), external: true },
               ]}
             />
           </nav>

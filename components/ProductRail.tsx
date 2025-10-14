@@ -46,6 +46,7 @@ export default function ProductRail({
                 title={p.title}
                 price={p.price}
                 image={p.image}
+                slug={p.slug}
                 badge={(p as any).badge}
               />
             </div>

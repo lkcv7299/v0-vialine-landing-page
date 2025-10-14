@@ -1,7 +1,9 @@
+import { buildWhatsAppUrl } from "@/lib/contact"
+
 export default function WhatsAppFloat() {
   return (
     <a
-      href="https://wa.me/51972327236?text=Hola%20Vialine%2C%20quiero%20informaci%C3%B3n"
+      href={buildWhatsAppUrl("Hola Vialine, quiero información")}
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-4 right-4 z-50 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl ring-1 ring-black/5 hover:scale-105 transition"
