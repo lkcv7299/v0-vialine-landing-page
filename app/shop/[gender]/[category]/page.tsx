@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import { products } from "@/data/products"
-import ProductCard from "@/components/ui/ProductCard"
+import ProductCard from "@/components/ProductCard"
 
 type Params = {
   params: { gender: string; category: string }
@@ -95,13 +95,7 @@ export default function Page({ params }: Params) {
       <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
         {rows.map((p) => (
           <li key={p.slug}>
-            <ProductCard
-              href={`/producto/${p.slug}`}
-              title={p.title}
-              price={p.price}
-              image={p.image}
-              slug={p.slug}
-            />
+            <ProductCard product={p} />
           </li>
         ))}
       </ul>

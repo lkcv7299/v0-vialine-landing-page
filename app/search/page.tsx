@@ -1,4 +1,4 @@
-import ProductCard from "@/components/ui/ProductCard"
+import ProductCard from "@/components/ProductCard"
 import { searchProducts } from "@/lib/search"
 
 export default function SearchPage({ searchParams }: { searchParams: { q?: string } }) {
@@ -15,7 +15,7 @@ export default function SearchPage({ searchParams }: { searchParams: { q?: strin
         <ul className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {results.map((p) => (
             <li key={p.slug}>
-              <ProductCard href={`/producto/${p.slug}`} title={p.title} price={p.price} image={p.image} slug={p.slug} />
+              <ProductCard product={p} />
             </li>
           ))}
         </ul>
