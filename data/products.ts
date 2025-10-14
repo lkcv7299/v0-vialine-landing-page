@@ -43,6 +43,7 @@ export const products: Product[] = [
     colors: ["Negro", "Gris", "Blanco", "Rojo"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -57,6 +58,21 @@ export const products: Product[] = [
           "Ideal para uso diario y deportivo"
     ]
   },
+=======
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Tejido suave y transpirable",
+    "Costuras reforzadas",
+    "Corte moderno y cómodo"
+  ],
+  beneficios: [
+    "Máxima comodidad durante todo el día",
+    "Fácil de lavar y mantener",
+    "Ideal para uso diario"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "camiseta-manga-larga",
@@ -68,6 +84,7 @@ export const products: Product[] = [
     colors: ["Rojo", "Negro", "Gris", "Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -82,6 +99,21 @@ export const products: Product[] = [
           "Ideal para uso diario y deportivo"
     ]
   },
+=======
+      attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Tejido suave y transpirable",
+    "Costuras reforzadas",
+    "Corte moderno y cómodo"
+  ],
+  beneficios: [
+    "Máxima comodidad durante todo el día",
+    "Fácil de lavar y mantener",
+    "Ideal para uso diario"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "camiseta-manga-corta",
@@ -93,6 +125,7 @@ export const products: Product[] = [
     colors: ["Gris", "Negro", "Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -107,6 +140,21 @@ export const products: Product[] = [
           "Ideal para uso diario y deportivo"
     ]
   },
+=======
+      attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Tejido suave y transpirable",
+    "Costuras reforzadas",
+    "Corte moderno y cómodo"
+  ],
+  beneficios: [
+    "Máxima comodidad durante todo el día",
+    "Fácil de lavar y mantener",
+    "Ideal para uso diario"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "camiseta-tropical",
@@ -118,6 +166,7 @@ export const products: Product[] = [
     colors: ["Blanco", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -132,6 +181,21 @@ export const products: Product[] = [
           "Ideal para uso diario y deportivo"
     ]
   },
+=======
+      attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Tejido suave y transpirable",
+    "Costuras reforzadas",
+    "Corte moderno y cómodo"
+  ],
+  beneficios: [
+    "Máxima comodidad durante todo el día",
+    "Fácil de lavar y mantener",
+    "Ideal para uso diario"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "camiseta-deportiva",
@@ -143,6 +207,7 @@ export const products: Product[] = [
     colors: ["Rojo", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -157,6 +222,21 @@ export const products: Product[] = [
           "Ideal para uso diario y deportivo"
     ]
   },
+=======
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Tejido suave y transpirable",
+    "Costuras reforzadas",
+    "Corte moderno y cómodo"
+  ],
+  beneficios: [
+    "Máxima comodidad durante todo el día",
+    "Fácil de lavar y mantener",
+    "Ideal para uso diario"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "camiseta-gia",
@@ -168,6 +248,7 @@ export const products: Product[] = [
     colors: ["Negro", "Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -182,6 +263,21 @@ export const products: Product[] = [
           "Ideal para uso diario y deportivo"
     ]
   },
+=======
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Tejido suave y transpirable",
+    "Costuras reforzadas",
+    "Corte moderno y cómodo"
+  ],
+  beneficios: [
+    "Máxima comodidad durante todo el día",
+    "Fácil de lavar y mantener",
+    "Ideal para uso diario"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "camiseta-tiras-fijas",
@@ -193,6 +289,7 @@ export const products: Product[] = [
     colors: ["Negro", "Blanco", "Gris"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -207,6 +304,21 @@ export const products: Product[] = [
           "Ideal para uso diario y deportivo"
     ]
   },
+=======
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Tejido suave y transpirable",
+    "Costuras reforzadas",
+    "Corte moderno y cómodo"
+  ],
+  beneficios: [
+    "Máxima comodidad durante todo el día",
+    "Fácil de lavar y mantener",
+    "Ideal para uso diario"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
 
   // LÍNEA SUPLEX (bikers/shorts/leggings => suplex)
@@ -245,6 +357,7 @@ export const products: Product[] = [
     colors: ["Negro", "Gris"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -259,6 +372,21 @@ export const products: Product[] = [
           "Ideal para entrenamientos intensos"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Pretina elástica confortable",
+    "Ajuste perfecto sin marcar",
+    "Largo ideal"
+  ],
+  beneficios: [
+    "Máxima libertad de movimiento",
+    "Secado rápido y transpirable",
+    "Ideal para entrenamientos intensos"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "short-lux",
@@ -270,6 +398,7 @@ export const products: Product[] = [
     colors: ["Rojo", "Negro", "Gris"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -284,6 +413,21 @@ export const products: Product[] = [
           "Ideal para entrenamientos intensos"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Pretina elástica confortable",
+    "Ajuste perfecto sin marcar",
+    "Largo ideal"
+  ],
+  beneficios: [
+    "Máxima libertad de movimiento",
+    "Secado rápido y transpirable",
+    "Ideal para entrenamientos intensos"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "short-brasil",
@@ -295,6 +439,7 @@ export const products: Product[] = [
     colors: ["Blanco", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -309,6 +454,21 @@ export const products: Product[] = [
           "Resistente al uso frecuente"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Pretina elástica confortable",
+    "Ajuste perfecto sin marcar",
+    "Largo ideal"
+  ],
+  beneficios: [
+    "Máxima libertad de movimiento",
+    "Secado rápido y transpirable",
+    "Ideal para entrenamientos intensos"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "maxi-short",
@@ -320,6 +480,7 @@ export const products: Product[] = [
     colors: ["Blanco", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -334,6 +495,21 @@ export const products: Product[] = [
           "Resistente al uso frecuente"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Pretina elástica confortable",
+    "Ajuste perfecto sin marcar",
+    "Largo ideal"
+  ],
+  beneficios: [
+    "Máxima libertad de movimiento",
+    "Secado rápido y transpirable",
+    "Ideal para entrenamientos intensos"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "short-clasico",
@@ -345,6 +521,7 @@ export const products: Product[] = [
     colors: ["Blanco", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -359,6 +536,21 @@ export const products: Product[] = [
           "Resistente al uso frecuente"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Pretina elástica confortable",
+    "Ajuste perfecto sin marcar",
+    "Largo ideal"
+  ],
+  beneficios: [
+    "Máxima libertad de movimiento",
+    "Secado rápido y transpirable",
+    "Ideal para entrenamientos intensos"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "mini-short",
@@ -370,6 +562,7 @@ export const products: Product[] = [
     colors: ["Blanco", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -384,6 +577,21 @@ export const products: Product[] = [
           "Resistente al uso frecuente"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Pretina elástica confortable",
+    "Ajuste perfecto sin marcar",
+    "Largo ideal"
+  ],
+  beneficios: [
+    "Máxima libertad de movimiento",
+    "Secado rápido y transpirable",
+    "Ideal para entrenamientos intensos"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
 
   // BODYS (mixto)
@@ -397,6 +605,7 @@ export const products: Product[] = [
     colors: ["Gris", "Negro", "Rojo"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -411,6 +620,21 @@ export const products: Product[] = [
           "Define tu figura con comodidad"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Ajuste ceñido que define la silueta",
+    "Diseño ergonómico",
+    "Cierre práctico"
+  ],
+  beneficios: [
+    "Versatilidad para entrenar o uso casual",
+    "No se sale ni se sube",
+    "Define tu figura con comodidad"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "body-manga-corta",
@@ -422,6 +646,7 @@ export const products: Product[] = [
     colors: ["Rojo", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -436,6 +661,21 @@ export const products: Product[] = [
           "Comodidad que dura todo el día"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Ajuste ceñido que define la silueta",
+    "Diseño ergonómico",
+    "Cierre práctico"
+  ],
+  beneficios: [
+    "Versatilidad para entrenar o uso casual",
+    "No se sale ni se sube",
+    "Define tu figura con comodidad"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "body-manga-larga",
@@ -447,6 +687,7 @@ export const products: Product[] = [
     colors: ["Negro", "Rojo"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -461,6 +702,21 @@ export const products: Product[] = [
           "Comodidad que dura todo el día"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Ajuste ceñido que define la silueta",
+    "Diseño ergonómico",
+    "Cierre práctico"
+  ],
+  beneficios: [
+    "Versatilidad para entrenar o uso casual",
+    "No se sale ni se sube",
+    "Define tu figura con comodidad"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
 
   // TOPS (algodón por defecto)
@@ -474,6 +730,7 @@ export const products: Product[] = [
     colors: ["Azul", "Negro", "Rojo"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -488,6 +745,21 @@ export const products: Product[] = [
           "Perfecto para actividades ligeras"
     ]
   },
+=======
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Diseño deportivo elegante",
+    "Soporte medio confortable",
+    "Tejido elástico"
+  ],
+  beneficios: [
+    "Comodidad absoluta",
+    "Transpirable y fresco",
+    "Perfecto para el día a día"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "top-venus",
@@ -499,6 +771,7 @@ export const products: Product[] = [
     colors: ["Negro", "Gris"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -513,6 +786,21 @@ export const products: Product[] = [
           "Perfecto para actividades ligeras"
     ]
   },
+=======
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Diseño deportivo elegante",
+    "Soporte medio confortable",
+    "Tejido elástico"
+  ],
+  beneficios: [
+    "Comodidad absoluta",
+    "Transpirable y fresco",
+    "Perfecto para el día a día"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "top-minerva",
@@ -524,6 +812,7 @@ export const products: Product[] = [
     colors: ["Rojo", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -538,6 +827,21 @@ export const products: Product[] = [
           "Perfecto para actividades ligeras"
     ]
   },
+=======
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Diseño deportivo elegante",
+    "Soporte medio confortable",
+    "Tejido elástico"
+  ],
+  beneficios: [
+    "Comodidad absoluta",
+    "Transpirable y fresco",
+    "Perfecto para el día a día"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "top-paradise",
@@ -549,6 +853,7 @@ export const products: Product[] = [
     colors: ["Rojo", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -563,6 +868,21 @@ export const products: Product[] = [
           "Perfecto para actividades ligeras"
     ]
   },
+=======
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Diseño deportivo elegante",
+    "Soporte medio confortable",
+    "Tejido elástico"
+  ],
+  beneficios: [
+    "Comodidad absoluta",
+    "Transpirable y fresco",
+    "Perfecto para el día a día"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "top-jungle",
@@ -574,6 +894,7 @@ export const products: Product[] = [
     colors: ["Gris", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -588,6 +909,21 @@ export const products: Product[] = [
           "Perfecto para actividades ligeras"
     ]
   },
+=======
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Diseño deportivo elegante",
+    "Soporte medio confortable",
+    "Tejido elástico"
+  ],
+  beneficios: [
+    "Comodidad absoluta",
+    "Transpirable y fresco",
+    "Perfecto para el día a día"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "top-astrid",
@@ -599,6 +935,7 @@ export const products: Product[] = [
     colors: ["Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -613,6 +950,21 @@ export const products: Product[] = [
           "Perfecto para actividades ligeras"
     ]
   },
+=======
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Diseño deportivo elegante",
+    "Soporte medio confortable",
+    "Tejido elástico"
+  ],
+  beneficios: [
+    "Comodidad absoluta",
+    "Transpirable y fresco",
+    "Perfecto para el día a día"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "top-soporte",
@@ -649,6 +1001,7 @@ export const products: Product[] = [
     colors: ["Gris", "Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -663,6 +1016,21 @@ export const products: Product[] = [
           "Perfecto para actividades ligeras"
     ]
   },
+=======
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Diseño deportivo elegante",
+    "Soporte medio confortable",
+    "Tejido elástico"
+  ],
+  beneficios: [
+    "Comodidad absoluta",
+    "Transpirable y fresco",
+    "Perfecto para el día a día"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "top-zafiro",
@@ -674,6 +1042,7 @@ export const products: Product[] = [
     colors: ["Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -688,6 +1057,21 @@ export const products: Product[] = [
           "Perfecto para actividades ligeras"
     ]
   },
+=======
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Diseño deportivo elegante",
+    "Soporte medio confortable",
+    "Tejido elástico"
+  ],
+  beneficios: [
+    "Comodidad absoluta",
+    "Transpirable y fresco",
+    "Perfecto para el día a día"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "top-urban",
@@ -699,6 +1083,7 @@ export const products: Product[] = [
     colors: ["Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -713,6 +1098,21 @@ export const products: Product[] = [
           "Perfecto para actividades ligeras"
     ]
   },
+=======
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Diseño deportivo elegante",
+    "Soporte medio confortable",
+    "Tejido elástico"
+  ],
+  beneficios: [
+    "Comodidad absoluta",
+    "Transpirable y fresco",
+    "Perfecto para el día a día"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "top-perla",
@@ -724,6 +1124,7 @@ export const products: Product[] = [
     colors: ["Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -738,6 +1139,21 @@ export const products: Product[] = [
           "Perfecto para actividades ligeras"
     ]
   },
+=======
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Diseño deportivo elegante",
+    "Soporte medio confortable",
+    "Tejido elástico"
+  ],
+  beneficios: [
+    "Comodidad absoluta",
+    "Transpirable y fresco",
+    "Perfecto para el día a día"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "straple-chanel",
@@ -749,6 +1165,7 @@ export const products: Product[] = [
     colors: ["Blanco", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -763,6 +1180,21 @@ export const products: Product[] = [
           "Perfecto para actividades ligeras"
     ]
   },
+=======
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Diseño deportivo elegante",
+    "Soporte medio confortable",
+    "Tejido elástico"
+  ],
+  beneficios: [
+    "Comodidad absoluta",
+    "Transpirable y fresco",
+    "Perfecto para el día a día"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "top-deportivo",
@@ -774,6 +1206,7 @@ export const products: Product[] = [
     colors: ["Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -788,6 +1221,21 @@ export const products: Product[] = [
           "Perfecto para actividades ligeras"
     ]
   },
+=======
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Diseño deportivo elegante",
+    "Soporte medio confortable",
+    "Tejido elástico"
+  ],
+  beneficios: [
+    "Comodidad absoluta",
+    "Transpirable y fresco",
+    "Perfecto para el día a día"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "top-tira-fijas",
@@ -799,6 +1247,7 @@ export const products: Product[] = [
     colors: ["Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -813,6 +1262,21 @@ export const products: Product[] = [
           "Perfecto para actividades ligeras"
     ]
   },
+=======
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Diseño deportivo elegante",
+    "Soporte medio confortable",
+    "Tejido elástico"
+  ],
+  beneficios: [
+    "Comodidad absoluta",
+    "Transpirable y fresco",
+    "Perfecto para el día a día"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "top-athena",
@@ -824,6 +1288,7 @@ export const products: Product[] = [
     colors: ["Negro", "Rojo"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -838,6 +1303,21 @@ export const products: Product[] = [
           "Perfecto para actividades ligeras"
     ]
   },
+=======
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Diseño deportivo elegante",
+    "Soporte medio confortable",
+    "Tejido elástico"
+  ],
+  beneficios: [
+    "Comodidad absoluta",
+    "Transpirable y fresco",
+    "Perfecto para el día a día"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "top-jolie",
@@ -849,6 +1329,7 @@ export const products: Product[] = [
     colors: ["Beige", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -863,6 +1344,21 @@ export const products: Product[] = [
           "Perfecto para actividades ligeras"
     ]
   },
+=======
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Diseño deportivo elegante",
+    "Soporte medio confortable",
+    "Tejido elástico"
+  ],
+  beneficios: [
+    "Comodidad absoluta",
+    "Transpirable y fresco",
+    "Perfecto para el día a día"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "top-brigid",
@@ -874,6 +1370,7 @@ export const products: Product[] = [
     colors: ["Negro", "Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Algodón Premium",
@@ -888,6 +1385,21 @@ export const products: Product[] = [
           "Perfecto para actividades ligeras"
     ]
   },
+=======
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Diseño deportivo elegante",
+    "Soporte medio confortable",
+    "Tejido elástico"
+  ],
+  beneficios: [
+    "Comodidad absoluta",
+    "Transpirable y fresco",
+    "Perfecto para el día a día"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
 
   // ENTERIZOS (suplex)
@@ -1047,6 +1559,7 @@ export const products: Product[] = [
     colors: ["Negro", "Gris", "Azul"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -1061,6 +1574,21 @@ export const products: Product[] = [
           "Alta resistencia y durabilidad"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Pretina ancha para mejor soporte",
+    "Corte ajustado sin transparencias",
+    "Costuras planas"
+  ],
+  beneficios: [
+    "Se adapta al cuerpo como una segunda piel",
+    "Te mantiene fresca y seca durante el entrenamiento",
+    "Alta resistencia y durabilidad"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "legging-slim",
@@ -1072,6 +1600,7 @@ export const products: Product[] = [
     colors: ["Negro", "Gris", "Rojo"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -1086,6 +1615,21 @@ export const products: Product[] = [
           "Alta resistencia y durabilidad"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Pretina ancha para mejor soporte",
+    "Corte ajustado sin transparencias",
+    "Costuras planas"
+  ],
+  beneficios: [
+    "Se adapta al cuerpo como una segunda piel",
+    "Te mantiene fresca y seca durante el entrenamiento",
+    "Alta resistencia y durabilidad"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "legging-functional",
@@ -1097,6 +1641,7 @@ export const products: Product[] = [
     colors: ["Negro", "Gris"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -1111,6 +1656,21 @@ export const products: Product[] = [
           "Alta resistencia y durabilidad"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Pretina ancha para mejor soporte",
+    "Corte ajustado sin transparencias",
+    "Costuras planas"
+  ],
+  beneficios: [
+    "Se adapta al cuerpo como una segunda piel",
+    "Te mantiene fresca y seca durante el entrenamiento",
+    "Alta resistencia y durabilidad"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "legging-harmony",
@@ -1122,6 +1682,7 @@ export const products: Product[] = [
     colors: ["Negro", "Gris", "Azul"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -1136,6 +1697,21 @@ export const products: Product[] = [
           "Alta resistencia y durabilidad"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Pretina ancha para mejor soporte",
+    "Corte ajustado sin transparencias",
+    "Costuras planas"
+  ],
+  beneficios: [
+    "Se adapta al cuerpo como una segunda piel",
+    "Te mantiene fresca y seca durante el entrenamiento",
+    "Alta resistencia y durabilidad"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "legging-realce-fresh-terry",
@@ -1147,6 +1723,7 @@ export const products: Product[] = [
     colors: ["Negro", "Gris"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -1161,6 +1738,21 @@ export const products: Product[] = [
           "Alta resistencia y durabilidad"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Pretina ancha para mejor soporte",
+    "Corte ajustado sin transparencias",
+    "Costuras planas"
+  ],
+  beneficios: [
+    "Se adapta al cuerpo como una segunda piel",
+    "Te mantiene fresca y seca durante el entrenamiento",
+    "Alta resistencia y durabilidad"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "legging-clasica",
@@ -1172,6 +1764,7 @@ export const products: Product[] = [
     colors: ["Negro", "Gris", "Azul"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -1186,6 +1779,21 @@ export const products: Product[] = [
           "Alta resistencia y durabilidad"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Pretina ancha para mejor soporte",
+    "Corte ajustado sin transparencias",
+    "Costuras planas"
+  ],
+  beneficios: [
+    "Se adapta al cuerpo como una segunda piel",
+    "Te mantiene fresca y seca durante el entrenamiento",
+    "Alta resistencia y durabilidad"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "legging-clasica-gamuza",
@@ -1197,6 +1805,7 @@ export const products: Product[] = [
     colors: ["Negro", "Gris"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -1211,6 +1820,21 @@ export const products: Product[] = [
           "Alta resistencia y durabilidad"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Pretina ancha para mejor soporte",
+    "Corte ajustado sin transparencias",
+    "Costuras planas"
+  ],
+  beneficios: [
+    "Se adapta al cuerpo como una segunda piel",
+    "Te mantiene fresca y seca durante el entrenamiento",
+    "Alta resistencia y durabilidad"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "legging-nina",
@@ -1222,6 +1846,7 @@ export const products: Product[] = [
     colors: ["Negro", "Rosa", "Azul"],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -1236,6 +1861,21 @@ export const products: Product[] = [
           "Mantiene su forma después de múltiples lavados"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Pretina ancha para mejor soporte",
+    "Corte ajustado sin transparencias",
+    "Costuras planas"
+  ],
+  beneficios: [
+    "Se adapta al cuerpo como una segunda piel",
+    "Te mantiene fresca y seca durante el entrenamiento",
+    "Alta resistencia y durabilidad"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
 
   // PESCADOR (suplex)
@@ -1392,6 +2032,7 @@ export const products: Product[] = [
     colors: ["Rosa", "Azul", "Negro"],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -1406,6 +2047,21 @@ export const products: Product[] = [
           "Mantiene su forma después de múltiples lavados"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "panty-nina",
@@ -1417,6 +2073,7 @@ export const products: Product[] = [
     colors: ["Rosa", "Negro", "Blanco"],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -1431,6 +2088,21 @@ export const products: Product[] = [
           "Mantiene su forma después de múltiples lavados"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "maxi-short-nina",
@@ -1442,6 +2114,7 @@ export const products: Product[] = [
     colors: ["Rosa", "Negro", "Blanco"],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -1456,6 +2129,21 @@ export const products: Product[] = [
           "Mantiene su forma después de múltiples lavados"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "short-juvenil-nina",
@@ -1467,6 +2155,7 @@ export const products: Product[] = [
     colors: ["Rosa", "Negro", "Azul"],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -1481,6 +2170,21 @@ export const products: Product[] = [
           "Mantiene su forma después de múltiples lavados"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "top-jazmin",
@@ -1492,6 +2196,7 @@ export const products: Product[] = [
     colors: ["Rosa", "Blanco", "Negro"],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -1506,6 +2211,21 @@ export const products: Product[] = [
           "Mantiene su forma después de múltiples lavados"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "top-margarita",
@@ -1517,6 +2237,7 @@ export const products: Product[] = [
     colors: ["Rosa", "Blanco", "Azul"],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -1531,6 +2252,21 @@ export const products: Product[] = [
           "Mantiene su forma después de múltiples lavados"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "top-orquidea",
@@ -1542,6 +2278,7 @@ export const products: Product[] = [
     colors: ["Morado", "Rosa", "Blanco"],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -1556,6 +2293,21 @@ export const products: Product[] = [
           "Mantiene su forma después de múltiples lavados"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "top-tulipan",
@@ -1567,6 +2319,7 @@ export const products: Product[] = [
     colors: ["Rosa", "Blanco", "Negro"],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -1581,6 +2334,21 @@ export const products: Product[] = [
           "Mantiene su forma después de múltiples lavados"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
   {
     slug: "top-vani",
@@ -1592,6 +2360,7 @@ export const products: Product[] = [
     colors: ["Rosa", "Blanco", "Azul"],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
+<<<<<<< HEAD
   
   attributes: {
     material: "Suplex liso",
@@ -1606,6 +2375,21 @@ export const products: Product[] = [
           "Mantiene su forma después de múltiples lavados"
     ]
   },
+=======
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
+>>>>>>> ea6aeae7e6b95e218895c3f1359d3c161b49a36c
   },
 ]
 
