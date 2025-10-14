@@ -60,7 +60,7 @@ export default function RootLayout({
                 addressLocality: "Lima",
                 addressCountry: "PE",
               },
-              telephone: "+51 9XXXXXXXX",
+              telephone: "+51 972 327 236",
               url: "https://vialine.pe",
             }),
           }}

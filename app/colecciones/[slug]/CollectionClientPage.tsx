@@ -3,6 +3,7 @@
 import Image from "next/image"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState, useMemo } from "react"
+import { buildWhatsAppUrl } from "@/lib/contact"
 
 type Product = {
   id: string
@@ -193,7 +194,7 @@ export default function CollectionClientPage({ collection, slug }: { collection:
 
         <div className="mt-12 text-center">
           <a
-            href="https://wa.me/51972327236?text=Hola%20Vialine"
+            href={buildWhatsAppUrl("Hola Vialine")}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center px-5 py-3 rounded-2xl text-white font-semibold tracking-wide shadow-lg hover:bg-rose-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-700 transition uppercase bg-rose-600"

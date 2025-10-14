@@ -28,7 +28,19 @@ export default function ProductFilters() {
   const fabricOn = params?.get("fabric")
 
   const sizes = ["XS", "S", "M", "L", "XL"]
-  const colors = ["Negro", "Blanco", "Gris", "Rojo", "Azul", "Beige"]
+  const colors = [
+    "Negro",
+    "Blanco",
+    "Gris",
+    "Rojo",
+    "Azul",
+    "Azul marino",
+    "Azulino",
+    "Rosado",
+    "Beige",
+    "Charcol",
+    "Melange",
+  ]
   const fabrics = ["suplex", "algodon"]
 
   return (
