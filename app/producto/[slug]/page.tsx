@@ -24,14 +24,14 @@ export function generateMetadata({ params }: ProductPageProps): Metadata {
     }
   }
 
-  const colorNames = (product.colors ?? []).map((color) =>
-    typeof color === "string" ? color : color.name,
-  )
+  const colorNames =
+    product.colors?.map((color) => (typeof color === "string" ? color : color.name)) ??
+    []
 
   const descriptionSegments = [
     `Descubre ${product.title} de la colección Vialine.`,
-    product.sizes.length > 0 ? `Tallas disponibles: ${product.sizes.join(", ")}.` : undefined,
-    colorNames.length > 0 ? `Colores: ${colorNames.join(", ")}.` : undefined,
+    product.sizes.length > 0 ? `Tallas disponibles: ${product.sizes.join(", ")}.` : null,
+    colorNames.length > 0 ? `Colores: ${colorNames.join(", ")}.` : null,
   ].filter(Boolean) as string[]
 
   return {
