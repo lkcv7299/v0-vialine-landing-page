@@ -1,13 +1,19 @@
 "use client"
 import Link from "next/link"
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
+import { ShoppingBag } from "lucide-react"
 import MobileMenu from "@/components/nav/MobileMenu"
+import MiniCart from "@/components/MiniCart"
+import { useCart } from "@/contexts/CartContext"
 
 type OpenKey = "women" | "girls" | null
 
 export default function Header() {
   const [open, setOpen] = useState<OpenKey>(null)
+  const [cartOpen, setCartOpen] = useState(false)
   const hideTimer = useRef<NodeJS.Timeout | null>(null)
+  const cartRef = useRef<HTMLDivElement>(null)
+  const { itemCount } = useCart()
 
   const openMenu = (k: OpenKey) => {
     if (hideTimer.current) clearTimeout(hideTimer.current)
@@ -17,6 +23,19 @@ export default function Header() {
     if (hideTimer.current) clearTimeout(hideTimer.current)
     hideTimer.current = setTimeout(() => setOpen(null), 120)
   }
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (cartRef.current && !cartRef.current.contains(event.target as Node)) {
+        setCartOpen(false)
+      }
+    }
+
+    if (cartOpen) {
+      document.addEventListener("mousedown", handleClickOutside)
+      return () => document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [cartOpen])
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-slate-200 pointer-events-auto">
@@ -175,7 +194,25 @@ export default function Header() {
           </form>
         </div>
 
-        <div className="ml-auto">
+        <div className="relative" ref={cartRef}>
+          <button
+            onClick={() => setCartOpen(!cartOpen)}
+            className="relative p-2 text-gray-700 hover:text-rose-600 transition"
+            aria-label="Carrito de compras"
+            aria-expanded={cartOpen}
+          >
+            <ShoppingBag className="h-6 w-6" />
+            {itemCount > 0 && (
+              <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-rose-600 text-xs font-medium text-white animate-in zoom-in duration-200">
+                {itemCount > 9 ? "9+" : itemCount}
+              </span>
+            )}
+          </button>
+
+          {cartOpen && <MiniCart onClose={() => setCartOpen(false)} />}
+        </div>
+
+        <div className="ml-auto lg:ml-0">
           <MobileMenu />
         </div>
       </div>

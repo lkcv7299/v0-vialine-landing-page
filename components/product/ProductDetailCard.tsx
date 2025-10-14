@@ -1,9 +1,11 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
+import { Check } from "lucide-react"
 
 import type { Product } from "@/data/products"
 import { buildWhatsAppUrl } from "@/lib/contact"
+import { useCart } from "@/contexts/CartContext"
 
 type ColorVariant = {
   name: string
@@ -17,6 +19,9 @@ type ProductDetailCardProps = {
 }
 
 export default function ProductDetailCard({ product }: ProductDetailCardProps) {
+  const { addItem } = useCart()
+  const [added, setAdded] = useState(false)
+
   const variantColors = useMemo(
     () => (product.colors ?? []).filter((color): color is ColorVariant => typeof color === "object"),
     [product.colors],
@@ -45,9 +50,9 @@ export default function ProductDetailCard({ product }: ProductDetailCardProps) {
     return variantColors.find((color) => color.slug === selectedColorSlug) ?? variantColors[0]
   }, [hasColorVariants, selectedColorSlug, variantColors])
 
-  const currentColorName = hasColorVariants ? currentVariant?.name ?? selectedColorSlug : selectedColorSlug
+  const currentColorName = hasColorVariants ? (currentVariant?.name ?? selectedColorSlug) : selectedColorSlug
 
-  const displayImage = hasColorVariants ? currentVariant?.image ?? product.image : product.image
+  const displayImage = hasColorVariants ? (currentVariant?.image ?? product.image) : product.image
   const fallbackImage = product.image || "/placeholder.svg"
 
   const whatsappMessage = `Hola, quiero el ${product.title} en color ${currentColorName || "predeterminado"}, talla ${
@@ -56,6 +61,19 @@ export default function ProductDetailCard({ product }: ProductDetailCardProps) {
   const whatsappUrl = buildWhatsAppUrl(whatsappMessage)
 
   const simpleColors = hasColorVariants ? [] : (product.colors as string[])
+
+  const handleAddToCart = () => {
+    if (!selectedColorSlug || !selectedSize) return
+
+    addItem(product, selectedColorSlug, selectedSize)
+    setAdded(true)
+
+    setTimeout(() => {
+      setAdded(false)
+    }, 2000)
+  }
+
+  const isDisabled = !selectedColorSlug || !selectedSize
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10">
@@ -198,14 +216,35 @@ export default function ProductDetailCard({ product }: ProductDetailCardProps) {
             </ul>
           )}
 
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-8 inline-flex items-center justify-center w-full px-6 py-4 rounded-2xl bg-rose-600 text-white font-semibold tracking-wide shadow-lg hover:bg-rose-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-700 transition uppercase"
-          >
-            Comprar por WhatsApp
-          </a>
+          <div className="mt-8 flex flex-col md:flex-row gap-3 md:gap-4">
+            <button
+              onClick={handleAddToCart}
+              disabled={isDisabled}
+              className={`flex-1 inline-flex items-center justify-center px-6 py-4 rounded-2xl font-semibold tracking-wide transition ${
+                isDisabled
+                  ? "bg-neutral-900 text-white opacity-50 cursor-not-allowed"
+                  : "bg-neutral-900 text-white hover:bg-neutral-800 shadow-lg"
+              } ${added ? "animate-bounce" : ""}`}
+            >
+              {added ? (
+                <>
+                  <Check className="w-5 h-5 mr-2" />
+                  Agregado
+                </>
+              ) : (
+                "Agregar al Carrito"
+              )}
+            </button>
+
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 inline-flex items-center justify-center px-6 py-4 rounded-2xl bg-rose-600 text-white font-semibold tracking-wide shadow-lg hover:bg-rose-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-700 transition uppercase"
+            >
+              Comprar por WhatsApp
+            </a>
+          </div>
         </div>
       </div>
     </main>
