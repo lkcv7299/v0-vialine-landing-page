@@ -1,0 +1,152 @@
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Guía de Tallas | Vialine",
+  description: "Encuentra tu talla perfecta con nuestra guía completa de medidas para mujer y niña",
+}
+
+export default function GuiaDeTallasPage() {
+  return (
+    <main className="mx-auto max-w-4xl px-6 py-12">
+      <h1 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-8">Guía de Tallas</h1>
+
+      <div className="prose prose-neutral max-w-none space-y-8">
+        {/* Cómo medir */}
+        <section>
+          <h2 className="text-2xl font-semibold text-neutral-900 mb-4">Cómo tomar tus medidas</h2>
+          <div className="bg-rose-50 border border-rose-200 rounded-lg p-6 mb-6">
+            <p className="text-neutral-700 mb-4">
+              Para garantizar el ajuste perfecto, te recomendamos tomar tus medidas con cinta métrica siguiendo estos pasos:
+            </p>
+            <ul className="space-y-2 text-neutral-700">
+              <li className="flex items-start gap-2">
+                <span className="text-rose-600 font-bold">1.</span>
+                <span><strong>Busto:</strong> Mide alrededor de la parte más ancha del pecho</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-rose-600 font-bold">2.</span>
+                <span><strong>Cintura:</strong> Mide alrededor de la parte más estrecha de tu cintura</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-rose-600 font-bold">3.</span>
+                <span><strong>Cadera:</strong> Mide alrededor de la parte más ancha de tus caderas</span>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        {/* Tabla Mujer */}
+        <section>
+          <h2 className="text-2xl font-semibold text-neutral-900 mb-4">Tallas - Mujer</h2>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse border border-neutral-300">
+              <thead>
+                <tr className="bg-neutral-100">
+                  <th className="border border-neutral-300 px-4 py-3 text-left font-semibold">Talla</th>
+                  <th className="border border-neutral-300 px-4 py-3 text-left font-semibold">Busto (cm)</th>
+                  <th className="border border-neutral-300 px-4 py-3 text-left font-semibold">Cintura (cm)</th>
+                  <th className="border border-neutral-300 px-4 py-3 text-left font-semibold">Cadera (cm)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="border border-neutral-300 px-4 py-3 font-medium">XS</td>
+                  <td className="border border-neutral-300 px-4 py-3">78-82</td>
+                  <td className="border border-neutral-300 px-4 py-3">60-64</td>
+                  <td className="border border-neutral-300 px-4 py-3">85-89</td>
+                </tr>
+                <tr className="bg-neutral-50">
+                  <td className="border border-neutral-300 px-4 py-3 font-medium">S</td>
+                  <td className="border border-neutral-300 px-4 py-3">83-87</td>
+                  <td className="border border-neutral-300 px-4 py-3">65-69</td>
+                  <td className="border border-neutral-300 px-4 py-3">90-94</td>
+                </tr>
+                <tr>
+                  <td className="border border-neutral-300 px-4 py-3 font-medium">M</td>
+                  <td className="border border-neutral-300 px-4 py-3">88-92</td>
+                  <td className="border border-neutral-300 px-4 py-3">70-74</td>
+                  <td className="border border-neutral-300 px-4 py-3">95-99</td>
+                </tr>
+                <tr className="bg-neutral-50">
+                  <td className="border border-neutral-300 px-4 py-3 font-medium">L</td>
+                  <td className="border border-neutral-300 px-4 py-3">93-97</td>
+                  <td className="border border-neutral-300 px-4 py-3">75-79</td>
+                  <td className="border border-neutral-300 px-4 py-3">100-104</td>
+                </tr>
+                <tr>
+                  <td className="border border-neutral-300 px-4 py-3 font-medium">XL</td>
+                  <td className="border border-neutral-300 px-4 py-3">98-102</td>
+                  <td className="border border-neutral-300 px-4 py-3">80-84</td>
+                  <td className="border border-neutral-300 px-4 py-3">105-109</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* Tabla Niña */}
+        <section>
+          <h2 className="text-2xl font-semibold text-neutral-900 mb-4">Tallas - Niña</h2>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse border border-neutral-300">
+              <thead>
+                <tr className="bg-neutral-100">
+                  <th className="border border-neutral-300 px-4 py-3 text-left font-semibold">Talla</th>
+                  <th className="border border-neutral-300 px-4 py-3 text-left font-semibold">Edad (años)</th>
+                  <th className="border border-neutral-300 px-4 py-3 text-left font-semibold">Altura (cm)</th>
+                  <th className="border border-neutral-300 px-4 py-3 text-left font-semibold">Pecho (cm)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="border border-neutral-300 px-4 py-3 font-medium">2</td>
+                  <td className="border border-neutral-300 px-4 py-3">2</td>
+                  <td className="border border-neutral-300 px-4 py-3">86-92</td>
+                  <td className="border border-neutral-300 px-4 py-3">51-53</td>
+                </tr>
+                <tr className="bg-neutral-50">
+                  <td className="border border-neutral-300 px-4 py-3 font-medium">4</td>
+                  <td className="border border-neutral-300 px-4 py-3">4</td>
+                  <td className="border border-neutral-300 px-4 py-3">98-104</td>
+                  <td className="border border-neutral-300 px-4 py-3">55-57</td>
+                </tr>
+                <tr>
+                  <td className="border border-neutral-300 px-4 py-3 font-medium">6</td>
+                  <td className="border border-neutral-300 px-4 py-3">6</td>
+                  <td className="border border-neutral-300 px-4 py-3">110-116</td>
+                  <td className="border border-neutral-300 px-4 py-3">59-61</td>
+                </tr>
+                <tr className="bg-neutral-50">
+                  <td className="border border-neutral-300 px-4 py-3 font-medium">8</td>
+                  <td className="border border-neutral-300 px-4 py-3">8</td>
+                  <td className="border border-neutral-300 px-4 py-3">122-128</td>
+                  <td className="border border-neutral-300 px-4 py-3">63-66</td>
+                </tr>
+                <tr>
+                  <td className="border border-neutral-300 px-4 py-3 font-medium">10</td>
+                  <td className="border border-neutral-300 px-4 py-3">10</td>
+                  <td className="border border-neutral-300 px-4 py-3">134-140</td>
+                  <td className="border border-neutral-300 px-4 py-3">69-72</td>
+                </tr>
+                <tr className="bg-neutral-50">
+                  <td className="border border-neutral-300 px-4 py-3 font-medium">12</td>
+                  <td className="border border-neutral-300 px-4 py-3">12</td>
+                  <td className="border border-neutral-300 px-4 py-3">146-152</td>
+                  <td className="border border-neutral-300 px-4 py-3">75-78</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* Ayuda */}
+        <section className="bg-neutral-50 border border-neutral-200 rounded-lg p-6">
+          <h3 className="text-lg font-semibold text-neutral-900 mb-2">¿Necesitas ayuda?</h3>
+          <p className="text-neutral-700">
+            Si tienes dudas sobre tu talla, contáctanos por WhatsApp y te ayudaremos a elegir la talla perfecta.
+          </p>
+        </section>
+      </div>
+    </main>
+  )
+}
