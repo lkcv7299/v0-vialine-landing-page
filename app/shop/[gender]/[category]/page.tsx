@@ -8,8 +8,6 @@ type Params = {
   searchParams: Record<string, string | string[] | undefined>
 }
 
-type CategorySlug = "enterizo" | "legging" | "bodys" | "pescador"
-
 const toSlug = (s: string) =>
   s
     .toLowerCase()
@@ -60,20 +58,6 @@ function matchCategory(p: any, catSlug: string) {
   )
 }
 
-function mapCategory(category: string): CategorySlug | undefined {
-  const normalized = category.toLowerCase()
-  if (normalized === "enterizos" || normalized === "enterizo") return "enterizo"
-  if (normalized === "leggings" || normalized === "legging") return "legging"
-  if (normalized === "bodys" || normalized === "body") return "bodys"
-  if (normalized === "pescador") return "pescador"
-  return undefined
-}
-
-function getColorSlugs(colors: any): string[] | undefined {
-  if (!colors || !Array.isArray(colors) || colors.length === 0) return undefined
-  return colors.map((c: any) => (typeof c === "string" ? c.toLowerCase() : c.slug))
-}
-
 export async function generateMetadata({
   params,
 }: {
@@ -109,15 +93,7 @@ export default function Page({ params }: Params) {
       <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
         {rows.map((p) => (
           <li key={p.slug}>
-            <ProductCard
-              href={`/producto/${p.slug}`}
-              title={p.title}
-              price={p.price}
-              image={p.image}
-              category={mapCategory(p.category)}
-              slug={p.slug}
-              colors={getColorSlugs(p.colors)}
-            />
+            <ProductCard product={p} />
           </li>
         ))}
       </ul>
