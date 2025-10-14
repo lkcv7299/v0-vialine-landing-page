@@ -15,7 +15,6 @@ const nextConfig = {
     minimumCacheTTL: 60, // Cache por 60 segundos
   },
   // Optimizaciones adicionales
-  swcMinify: true, // Minificación más rápida
   compress: true, // Comprimir respuestas
 }
 
