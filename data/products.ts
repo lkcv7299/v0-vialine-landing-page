@@ -1,3 +1,10 @@
+export type ProductColor = {
+  name: string
+  slug: string
+  hex: string
+  image: string
+}
+
 export type Product = {
   slug: string
   title: string
@@ -5,9 +12,10 @@ export type Product = {
   image: string // path under /public/productos/<category>/<slug>.jpg
   category: "leggings" | "bikers" | "shorts" | "tops" | "bodys" | "camisetas" | "enterizos" | "pescador" | "torero"
   fabric: "suplex" | "algodon"
-  colors: string[] | { name: string; slug: string; hex: string; image: string }[] // Support both formats
+  colors: (string | ProductColor)[] // Support both formats per entry
   sizes: string[]
   audience: "mujer" | "nina"
+  badge?: string
   // Optional detailed attributes for products with variants
   tags?: string[]
   attributes?: {
@@ -857,3 +865,19 @@ export const findProduct = (slug: string) => products.find((p) => p.slug === slu
 export const byCategory = (c: Product["category"]) => products.filter((p) => p.category === c)
 export const byFabric = (f: Product["fabric"]) => products.filter((p) => p.fabric === f)
 export const byAudience = (a: Product["audience"]) => products.filter((p) => p.audience === a)
+
+export function productHasColor(product: Product, selected: string[]) {
+  if (!selected.length) return true
+  const normalized = selected.map((c) => c.toLowerCase())
+  return product.colors.some((entry) => {
+    if (typeof entry === "string") {
+      return normalized.includes(entry.toLowerCase())
+    }
+
+    const tokens = [entry.name, entry.slug]
+      .filter((value): value is string => Boolean(value))
+      .map((value) => value.toLowerCase())
+
+    return tokens.some((token) => normalized.includes(token))
+  })
+}

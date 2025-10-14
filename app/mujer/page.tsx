@@ -1,4 +1,4 @@
-import { byAudience, type Product } from "@/data/products"
+import { byAudience, productHasColor, type Product } from "@/data/products"
 import ProductFilters from "@/components/ProductFilters"
 import ProductGrid from "@/components/ProductGrid"
 
@@ -12,7 +12,7 @@ function apply(items: Product[], q: Record<string, string | string[] | undefined
   const size = getAll("size")
   if (size.length) out = out.filter((p) => p.sizes.some((s) => size.includes(s)))
   const color = getAll("color")
-  if (color.length) out = out.filter((p) => p.colors.some((c) => color.includes(c)))
+  if (color.length) out = out.filter((p) => productHasColor(p, color))
   const fabric = get("fabric")
   if (fabric) out = out.filter((p) => p.fabric === fabric)
   const sort = get("sort")

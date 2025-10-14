@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import MegaMenu from "./MegaMenu"
 import MobileNav from "./MobileNav"
-import { MEGA_MENU } from "./nav-data"
 
 export default function SiteHeader() {
   const [q, setQ] = useState("")
@@ -57,9 +56,7 @@ export default function SiteHeader() {
       </div>
 
       <div className="mx-auto hidden h-11 max-w-7xl items-center gap-4 px-4 lg:flex">
-        {MEGA_MENU.map((item) => (
-          <MegaMenu key={item.key} label={item.label} cols={item.columns} />
-        ))}
+        <MegaMenu />
       </div>
     </header>
   )
