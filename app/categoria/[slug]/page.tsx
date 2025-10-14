@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation"
-import { byCategory, type Product } from "@/data/products"
+import { byCategory, productHasColor, type Product } from "@/data/products"
 import ProductGrid from "@/components/ProductGrid"
 import ProductFilters from "@/components/ProductFilters"
 
@@ -11,6 +11,8 @@ const CATEGORY_NAMES: Record<Product["category"], string> = {
   bodys: "Bodys",
   camisetas: "Camisetas",
   enterizos: "Enterizos",
+  pescador: "Pescador",
+  torero: "Torero",
 }
 
 function applyFilters(items: Product[], q: { get: (k: string) => string | null; getAll: (k: string) => string[] }) {
@@ -20,7 +22,7 @@ function applyFilters(items: Product[], q: { get: (k: string) => string | null; 
   if (size.length) out = out.filter((p) => p.sizes.some((s) => size.includes(s)))
 
   const color = q.getAll("color")
-  if (color.length) out = out.filter((p) => p.colors.some((c) => color.includes(c)))
+  if (color.length) out = out.filter((p) => productHasColor(p, color))
 
   const fabric = q.get("fabric")
   if (fabric) out = out.filter((p) => p.fabric === fabric)

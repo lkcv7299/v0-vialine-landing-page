@@ -1,11 +1,11 @@
 import Link from "next/link"
-import type { Product } from "@/data/products"
+import type { Product, ProductColor } from "@/data/products"
 import WishlistHeart from "@/components/WishlistHeart"
 
 function resolvePrimaryImage(product: Product): string {
-  const colorEntry = product.colors.find((c) => typeof c === "object" && c.image) as
-    | { image: string }
-    | undefined
+  const colorEntry = product.colors.find((entry): entry is ProductColor => {
+    return typeof entry === "object" && "image" in entry && Boolean(entry.image)
+  })
   return colorEntry?.image || product.image || "/placeholder.svg"
 }
 
