@@ -24,7 +24,7 @@ export default function Hero({
 }: HeroProps) {
   return (
     <section className="relative h-[85vh] min-h-[600px] w-full overflow-hidden bg-neutral-900">
-      {/* Imagen de fondo - FULLWIDTH SIN BORDES */}
+      {/* Imagen de fondo */}
       <div className="absolute inset-0">
         <Image
           src={image}
@@ -37,21 +37,19 @@ export default function Hero({
           }}
           sizes="100vw"
         />
-        {/* Overlay sutil */}
         <div className="absolute inset-0 bg-black/20" />
       </div>
 
-      {/* Contenido - PEGADO EXTREMO A LA IZQUIERDA */}
+      {/* Contenido - POQUITO MÁS DE ESPACIO */}
       <div className="relative h-full flex items-center">
-        <div className="w-full pl-6 md:pl-8">
-          {/* Texto MUY pegado a la izquierda - MÍNIMO padding */}
+        <div className="w-full pl-8 md:pl-12">
           <div className="max-w-xl">
             {/* Kicker */}
             <p className="text-xs md:text-sm font-semibold tracking-widest text-white/90 uppercase mb-4">
               {kicker}
             </p>
 
-            {/* Título GRANDE y BOLD (estilo Gymshark) */}
+            {/* Título */}
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-none mb-6 uppercase">
               {title}
             </h1>

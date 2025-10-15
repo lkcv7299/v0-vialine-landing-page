@@ -4,7 +4,7 @@ import Image from "next/image"
 export default function HeroNina() {
   return (
     <section className="relative h-[70vh] min-h-[500px] w-full overflow-hidden bg-neutral-900">
-      {/* Imagen de fondo - FULLWIDTH SIN BORDES */}
+      {/* Imagen de fondo */}
       <div className="absolute inset-0">
         <Image
           src="/hero-nina.jpg"
@@ -16,13 +16,12 @@ export default function HeroNina() {
           }}
           sizes="100vw"
         />
-        {/* Overlay */}
         <div className="absolute inset-0 bg-black/20" />
       </div>
 
-      {/* Contenido - PEGADO A LA IZQUIERDA */}
+      {/* Contenido - POQUITO MÁS DE ESPACIO */}
       <div className="relative h-full flex items-center">
-        <div className="w-full pl-6 md:pl-8">
+        <div className="w-full pl-8 md:pl-12">
           <div className="max-w-xl">
             {/* Kicker */}
             <p className="text-xs md:text-sm font-semibold tracking-widest text-white/90 uppercase mb-4">
