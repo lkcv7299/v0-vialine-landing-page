@@ -5,9 +5,8 @@ import "./globals.css"
 import PromoBar from "@/components/PromoBar"
 import SiteHeader from "@/components/header/SiteHeader"
 import WhatsAppFloat from "@/components/WhatsAppFloat"
-import NewsletterPopup from "@/components/NewsletterPopup"
+import ClientWrapper from "@/components/ClientWrapper"
 import { WishlistProvider } from "@/components/providers/WishlistContext"
-import { NewsletterProvider } from "@/components/providers/NewsletterContext"
 import { CartProvider } from "@/contexts/CartContext"
 
 export const metadata: Metadata = {
@@ -71,17 +70,12 @@ export default function RootLayout({
         />
         <CartProvider>
           <WishlistProvider>
-            <NewsletterProvider>
-              {/* PROMO BAR - ARRIBA DE TODO */}
+            <ClientWrapper>
               <PromoBar />
-              
               <SiteHeader />
               {children}
               <WhatsAppFloat />
-              
-              {/* NEWSLETTER POPUP - SE MUESTRA AUTOMÁTICAMENTE */}
-              <NewsletterPopup />
-            </NewsletterProvider>
+            </ClientWrapper>
           </WishlistProvider>
         </CartProvider>
       </body>
