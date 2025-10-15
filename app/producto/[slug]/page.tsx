@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import ProductDetailCard from "@/components/product/ProductDetailCard"
 import { findProduct, products } from "@/data/products"
+import ReviewList from "@/components/ReviewList"  // <-- NUEVA LÍNEA
 
 type ProductPageProps = {
   params: {
@@ -87,10 +88,11 @@ export default function ProductPage({ params }: ProductPageProps) {
     "@type": "Product",
     "name": product.title,
     "image": fullImageUrl,
-    "description": `${product.title} de Vialine. ${product.attributes?.material || "Material de alta calidad"}.`,
+    "description": product.attributes?.material || "Ropa deportiva de alta calidad",
+    "sku": product.slug,
     "brand": {
       "@type": "Brand",
-      "name": "Vialine",
+      "name": "Vialine"
     },
     "offers": {
       "@type": "Offer",
@@ -98,28 +100,27 @@ export default function ProductPage({ params }: ProductPageProps) {
       "priceCurrency": "PEN",
       "price": product.price,
       "availability": "https://schema.org/InStock",
-      "priceValidUntil": "2025-12-31",
       "seller": {
         "@type": "Organization",
-        "name": "Vialine",
-      },
-    },
-    "category": product.category,
-    "material": product.attributes?.material,
+        "name": "Vialine"
+      }
+    }
   }
 
   return (
     <>
-      {/* Schema.org Structured Data */}
+      {/* Schema.org JSON-LD */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(productSchema),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
       />
-      
-      {/* Componente visual del producto */}
-      <ProductDetailCard key={product.slug} product={product} />
+
+      <div className="container mx-auto px-4 py-8">
+        <ProductDetailCard product={product} />
+        
+        {/* 🎯 SECCIÓN DE REVIEWS */}
+        <ReviewList productSlug={product.slug} />
+      </div>
     </>
   )
 }
