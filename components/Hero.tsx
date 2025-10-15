@@ -1,19 +1,15 @@
-"use client"
 import Link from "next/link"
-import type React from "react"
-
 import Image from "next/image"
 
-type Props = {
+type HeroProps = {
   image: string
-  kicker?: string
+  kicker: string
   title: string
-  description?: string
-  primary?: { href: string; label: string }
+  description: string
+  primary: { href: string; label: string }
   secondary?: { href: string; label: string }
-  objectPositionDesktop?: string // e.g. "78% 42%"
-  objectPositionMobile?: string // e.g. "68% 36%"
-  className?: string
+  objectPositionDesktop?: string
+  objectPositionMobile?: string
 }
 
 export default function Hero({
@@ -23,61 +19,80 @@ export default function Hero({
   description,
   primary,
   secondary,
-  objectPositionDesktop = "70% 45%",
-  objectPositionMobile = "70% 35%",
-  className = "",
-}: Props) {
+  objectPositionDesktop = "center",
+  objectPositionMobile = "center",
+}: HeroProps) {
   return (
-    <section className={`relative isolate overflow-hidden bg-neutral-900 text-white ${className}`}>
-      {/* Full-bleed image with responsive object-position */}
-      <div className="absolute inset-0 -z-10">
+    <section className="relative h-[85vh] min-h-[600px] w-full overflow-hidden bg-neutral-900">
+      {/* Imagen de fondo */}
+      <div className="absolute inset-0">
         <Image
-          src={image || "/placeholder.svg"}
+          src={image}
           alt={title}
           fill
           priority
+          className="object-cover"
+          style={{
+            objectPosition: objectPositionMobile,
+          }}
           sizes="100vw"
-          className="object-cover [object-position:var(--pos-mobile)] md:[object-position:var(--pos-desktop)]"
-          style={
-            {
-              ["--pos-desktop" as any]: objectPositionDesktop,
-              ["--pos-mobile" as any]: objectPositionMobile,
-            } as React.CSSProperties
-          }
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/0" />
+        {/* Overlay sutil */}
+        <div className="absolute inset-0 bg-black/20" />
       </div>
 
-      {/* Copy pinned bottom-left */}
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="min-h-[520px] md:min-h-[640px] grid items-end">
-          <div className="pb-14 md:pb-20 max-w-3xl">
-            {kicker && <p className="mb-3 text-sm font-semibold tracking-wide text-white/80">{kicker}</p>}
-            <h1 className="text-4xl/tight md:text-6xl font-extrabold drop-shadow-sm">{title}</h1>
-            {description && <p className="mt-4 text-base md:text-lg text-white/90">{description}</p>}
-            {(primary || secondary) && (
-              <div className="mt-8 flex gap-3">
-                {primary && (
-                  <Link
-                    href={primary.href}
-                    className="rounded-full bg-rose-600 px-5 py-3 text-sm font-semibold text-white hover:bg-rose-500"
-                  >
-                    {primary.label}
-                  </Link>
-                )}
+      {/* Contenido - PEGADO A LA IZQUIERDA (estilo Gymshark) */}
+      <div className="relative h-full flex items-center">
+        <div className="w-full">
+          {/* Texto MUY pegado a la izquierda - menos padding */}
+          <div className="max-w-7xl mx-auto px-6 md:px-8">
+            <div className="max-w-xl">
+              {/* Kicker */}
+              <p className="text-xs md:text-sm font-semibold tracking-widest text-white/90 uppercase mb-4">
+                {kicker}
+              </p>
+
+              {/* Título GRANDE y BOLD (estilo Gymshark) */}
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-none mb-6 uppercase">
+                {title}
+              </h1>
+
+              {/* Descripción */}
+              <p className="text-base md:text-lg text-white/90 mb-8 leading-relaxed">
+                {description}
+              </p>
+
+              {/* Botones */}
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  href={primary.href}
+                  className="px-8 py-4 bg-white text-neutral-900 font-bold text-sm uppercase rounded-full hover:bg-neutral-100 transition-colors"
+                >
+                  {primary.label}
+                </Link>
+
                 {secondary && (
                   <Link
                     href={secondary.href}
-                    className="rounded-full bg-white/10 px-5 py-3 text-sm font-semibold text-white backdrop-blur hover:bg-white/20"
+                    className="px-8 py-4 bg-transparent text-white font-bold text-sm uppercase rounded-full border-2 border-white hover:bg-white hover:text-neutral-900 transition-colors"
                   >
                     {secondary.label}
                   </Link>
                 )}
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Responsive object-position */}
+      <style jsx>{`
+        @media (min-width: 768px) {
+          .object-cover {
+            object-position: ${objectPositionDesktop};
+          }
+        }
+      `}</style>
     </section>
   )
 }

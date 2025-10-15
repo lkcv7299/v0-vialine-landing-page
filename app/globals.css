@@ -214,3 +214,95 @@ a {
   width: 100%;
   height: 100%;
 }
+
+/* ========================================
+   GYMSHARK STYLE - MENOS PADDING LATERAL
+   ======================================== */
+
+/* Contenedores con menos padding */
+.container {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Secciones edge-to-edge */
+.section-full {
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Max-width más ancho para más contenido visible */
+.max-w-page {
+  max-width: 1600px;
+}
+
+/* Grid de productos más ancho */
+.product-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (min-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .product-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+/* Scrollbar oculto para carruseles */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Snap para scroll suave */
+.snap-x {
+  scroll-snap-type: x mandatory;
+}
+
+.snap-start {
+  scroll-snap-align: start;
+}
+
+/* Reducir padding del main container globalmente */
+main {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 768px) {
+  main {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Para páginas específicas sin padding */
+.page-no-padding {
+  padding-left: 0;
+  padding-right: 0;
+}

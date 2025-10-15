@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Outfit, Inter, Manrope } from "next/font/google"
 import "./globals.css"
+import PromoBar from "@/components/PromoBar"
 import SiteHeader from "@/components/header/SiteHeader"
 import WhatsAppFloat from "@/components/WhatsAppFloat"
 import { WishlistProvider } from "@/components/providers/WishlistContext"
@@ -68,6 +69,9 @@ export default function RootLayout({
         />
         <CartProvider>
           <WishlistProvider>
+            {/* PROMO BAR - ARRIBA DE TODO */}
+            <PromoBar />
+            
             <SiteHeader />
             {children}
             <WhatsAppFloat />
