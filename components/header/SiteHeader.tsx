@@ -4,17 +4,19 @@ import type React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState, useRef, useEffect } from "react"
-import { ShoppingBag, X } from "lucide-react"
+import { ShoppingBag, X, Heart } from "lucide-react"
 import MegaMenu from "./MegaMenu"
 import MobileNav from "./MobileNav"
-import { MEGA_MENU } from "./nav-data"
 import { useCart } from "@/contexts/CartContext"
+import { useWishlist } from "@/components/providers/WishlistContext"
 
 export default function SiteHeader() {
   const [q, setQ] = useState("")
   const [showMiniCart, setShowMiniCart] = useState(false)
   const router = useRouter()
   const { items, itemCount, total, removeItem } = useCart()
+  const { items: wishlistItems } = useWishlist()
+  const wishlistCount = wishlistItems.length
   const miniCartRef = useRef<HTMLDivElement>(null)
 
   // Close dropdown when clicking outside
@@ -68,17 +70,37 @@ export default function SiteHeader() {
 
         {/* Right icons */}
         <div className="flex items-center gap-3">
+          {/* Wishlist Icon */}
+          <Link
+            href="/wishlist"
+            className="relative hover:text-rose-600 transition p-2"
+            aria-label={`Favoritos (${wishlistCount})`}
+          >
+            <Heart 
+              className={`w-6 h-6 transition-colors ${
+                wishlistCount > 0 
+                  ? "text-rose-600 fill-rose-600" 
+                  : "text-neutral-600"
+              }`} 
+            />
+            {wishlistCount > 0 && (
+              <span className="absolute -right-1 -top-1 h-5 min-w-5 rounded-full bg-rose-600 px-1 text-xs font-medium text-white flex items-center justify-center animate-in zoom-in">
+                {wishlistCount > 9 ? "9+" : wishlistCount}
+              </span>
+            )}
+          </Link>
+
           {/* Cart Icon with Badge */}
           <div className="relative" ref={miniCartRef}>
             <button
               onClick={() => setShowMiniCart(!showMiniCart)}
               aria-label="Carrito"
-              className="relative hover:text-rose-600 transition"
+              className="relative hover:text-rose-600 transition p-2"
             >
               <ShoppingBag className="w-6 h-6" />
               {itemCount > 0 && (
-                <span className="absolute -right-2 -top-2 h-5 min-w-5 rounded-full bg-rose-600 px-1 text-xs font-medium text-white flex items-center justify-center animate-in zoom-in">
-                  {itemCount}
+                <span className="absolute -right-1 -top-1 h-5 min-w-5 rounded-full bg-rose-600 px-1 text-xs font-medium text-white flex items-center justify-center animate-in zoom-in">
+                  {itemCount > 9 ? "9+" : itemCount}
                 </span>
               )}
             </button>
