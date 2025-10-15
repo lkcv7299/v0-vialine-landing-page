@@ -19,7 +19,6 @@ export default function SiteHeader() {
   const wishlistCount = wishlistItems.length
   const miniCartRef = useRef<HTMLDivElement>(null)
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (miniCartRef.current && !miniCartRef.current.contains(event.target as Node)) {
@@ -44,20 +43,20 @@ export default function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-20 w-full bg-white/80 backdrop-blur border-b">
-      {/* PADDING MÍNIMO - TODO EN LOS EXTREMOS */}
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 md:px-6 py-3">
+      {/* PADDING SUPER MÍNIMO - px-3 md:px-4 */}
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 md:px-4 py-3">
         {/* Mobile: hamburger */}
         <div className="lg:hidden">
           <MobileNav />
         </div>
 
-        {/* Logo - PEGADO A LA IZQUIERDA */}
-        <Link href="/" className="font-semibold tracking-wide">
+        {/* Logo */}
+        <Link href="/" className="font-semibold tracking-wide text-base">
           Vialine
         </Link>
 
         {/* Search (desktop) */}
-        <form onSubmit={submit} className="hidden flex-1 items-center lg:flex mx-8">
+        <form onSubmit={submit} className="hidden flex-1 items-center lg:flex mx-4">
           <div className="relative w-full max-w-xl">
             <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400">🔍</span>
             <input
@@ -69,8 +68,8 @@ export default function SiteHeader() {
           </div>
         </form>
 
-        {/* Right icons - PEGADO A LA DERECHA */}
-        <div className="flex items-center gap-2">
+        {/* Right icons */}
+        <div className="flex items-center gap-1">
           {/* Wishlist Icon */}
           <Link
             href="/wishlist"
@@ -78,29 +77,29 @@ export default function SiteHeader() {
             aria-label={`Favoritos (${wishlistCount})`}
           >
             <Heart 
-              className={`w-6 h-6 transition-colors ${
+              className={`w-5 h-5 transition-colors ${
                 wishlistCount > 0 
                   ? "text-rose-600 fill-rose-600" 
                   : "text-neutral-600"
               }`} 
             />
             {wishlistCount > 0 && (
-              <span className="absolute -right-1 -top-1 h-5 min-w-5 rounded-full bg-rose-600 px-1 text-xs font-medium text-white flex items-center justify-center animate-in zoom-in">
+              <span className="absolute -right-1 -top-1 h-4 min-w-4 rounded-full bg-rose-600 px-1 text-[10px] font-medium text-white flex items-center justify-center">
                 {wishlistCount > 9 ? "9+" : wishlistCount}
               </span>
             )}
           </Link>
 
-          {/* Cart Icon with Badge */}
+          {/* Cart Icon */}
           <div className="relative" ref={miniCartRef}>
             <button
               onClick={() => setShowMiniCart(!showMiniCart)}
               aria-label="Carrito"
               className="relative hover:text-rose-600 transition p-2"
             >
-              <ShoppingBag className="w-6 h-6" />
+              <ShoppingBag className="w-5 h-5" />
               {itemCount > 0 && (
-                <span className="absolute -right-1 -top-1 h-5 min-w-5 rounded-full bg-rose-600 px-1 text-xs font-medium text-white flex items-center justify-center animate-in zoom-in">
+                <span className="absolute -right-1 -top-1 h-4 min-w-4 rounded-full bg-rose-600 px-1 text-[10px] font-medium text-white flex items-center justify-center">
                   {itemCount > 9 ? "9+" : itemCount}
                 </span>
               )}
@@ -108,8 +107,7 @@ export default function SiteHeader() {
 
             {/* MiniCart Dropdown */}
             {showMiniCart && (
-              <div className="absolute right-0 top-full mt-2 w-96 max-w-[calc(100vw-2rem)] bg-white rounded-xl shadow-2xl border border-neutral-200 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
-                {/* Header */}
+              <div className="absolute right-0 top-full mt-2 w-96 max-w-[calc(100vw-2rem)] bg-white rounded-xl shadow-2xl border border-neutral-200 overflow-hidden">
                 <div className="flex items-center justify-between px-5 py-4 border-b">
                   <h3 className="font-semibold text-lg">Mi Carrito ({itemCount})</h3>
                   <button
@@ -120,7 +118,6 @@ export default function SiteHeader() {
                   </button>
                 </div>
 
-                {/* Empty State */}
                 {items.length === 0 ? (
                   <div className="px-5 py-10 text-center">
                     <ShoppingBag className="w-12 h-12 mx-auto text-neutral-300 mb-3" />
@@ -128,21 +125,17 @@ export default function SiteHeader() {
                   </div>
                 ) : (
                   <>
-                    {/* Cart Items (max 3 in dropdown) */}
                     <div className="max-h-[300px] overflow-y-auto">
                       {items.slice(0, 3).map((item) => (
                         <div
                           key={`${item.product.slug}-${item.selectedColor}-${item.selectedSize}`}
                           className="flex gap-3 p-4 border-b hover:bg-neutral-50"
                         >
-                          {/* Image */}
                           <img
                             src={item.product.image}
                             alt={item.product.title}
                             className="w-16 h-16 object-cover rounded-lg"
                           />
-
-                          {/* Info */}
                           <div className="flex-1 min-w-0">
                             <p className="font-medium text-sm truncate">{item.product.title}</p>
                             <p className="text-xs text-neutral-600 mt-1">
@@ -152,8 +145,6 @@ export default function SiteHeader() {
                               S/ {item.product.price} × {item.quantity}
                             </p>
                           </div>
-
-                          {/* Remove */}
                           <button
                             onClick={() => removeItem(item.product.slug, item.selectedColor, item.selectedSize)}
                             className="text-neutral-400 hover:text-rose-600 transition"
@@ -162,16 +153,12 @@ export default function SiteHeader() {
                           </button>
                         </div>
                       ))}
-
-                      {/* Show "more" indicator */}
                       {items.length > 3 && (
                         <p className="text-center py-3 text-sm text-neutral-600">
                           +{items.length - 3} productos más
                         </p>
                       )}
                     </div>
-
-                    {/* Footer */}
                     <div className="px-5 py-4 bg-neutral-50 border-t">
                       <div className="flex items-center justify-between mb-4">
                         <span className="font-semibold">Total</span>
@@ -193,8 +180,8 @@ export default function SiteHeader() {
         </div>
       </div>
 
-      {/* Desktop mega menu - TAMBIÉN PEGADO */}
-      <div className="mx-auto hidden h-11 max-w-7xl items-center gap-4 px-4 md:px-6 lg:flex">
+      {/* Desktop mega menu */}
+      <div className="mx-auto hidden h-11 max-w-7xl items-center gap-4 px-3 md:px-4 lg:flex">
         <MegaMenu />
       </div>
     </header>
