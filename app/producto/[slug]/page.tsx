@@ -2,7 +2,8 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import ProductDetailCard from "@/components/product/ProductDetailCard"
 import { findProduct, products } from "@/data/products"
-import ReviewList from "@/components/ReviewList"  // <-- NUEVA LÍNEA
+import ReviewList from "@/components/ReviewList"
+import RelatedProducts from "@/components/RelatedProducts"  // <-- NUEVA LÍNEA
 
 type ProductPageProps = {
   params: {
@@ -116,10 +117,14 @@ export default function ProductPage({ params }: ProductPageProps) {
       />
 
       <div className="container mx-auto px-4 py-8">
+        {/* 1. Detalle del producto */}
         <ProductDetailCard product={product} />
         
-        {/* 🎯 SECCIÓN DE REVIEWS */}
+        {/* 2. Reviews */}
         <ReviewList productSlug={product.slug} />
+
+        {/* 3. Productos relacionados */}
+        <RelatedProducts currentProduct={product} limit={4} />
       </div>
     </>
   )
