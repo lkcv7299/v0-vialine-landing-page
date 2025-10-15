@@ -38,7 +38,6 @@ export default function CarritoPage() {
     window.open(whatsappUrl, "_blank")
   }
 
-  // Empty state
   if (items.length === 0) {
     return (
       <main className="mx-auto max-w-4xl px-4 py-16">
@@ -62,7 +61,6 @@ export default function CarritoPage() {
       <h1 className="text-3xl font-bold mb-8">Carrito de Compras</h1>
 
       <div className="grid lg:grid-cols-3 gap-8">
-        {/* Cart Items - Left Column */}
         <div className="lg:col-span-2 space-y-4">
           {items.map((item) => {
             const itemSubtotal = item.product.price * item.quantity
@@ -72,14 +70,12 @@ export default function CarritoPage() {
                 key={`${item.product.slug}-${item.selectedColor}-${item.selectedSize}`}
                 className="bg-white rounded-xl p-4 lg:p-6 border border-neutral-200 flex gap-4"
               >
-                {/* Image */}
                 <img
                   src={item.product.image}
                   alt={item.product.title}
                   className="w-24 h-24 lg:w-32 lg:h-32 object-cover rounded-lg flex-shrink-0"
                 />
 
-                {/* Details */}
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between gap-4">
                     <div>
@@ -92,7 +88,6 @@ export default function CarritoPage() {
                       </p>
                     </div>
 
-                    {/* Remove button */}
                     <button
                       onClick={() => removeItem(item.product.slug, item.selectedColor, item.selectedSize)}
                       className="text-neutral-400 hover:text-rose-600 transition h-fit"
@@ -102,7 +97,6 @@ export default function CarritoPage() {
                     </button>
                   </div>
 
-                  {/* Quantity controls */}
                   <div className="flex items-center justify-between mt-4">
                     <div className="flex items-center gap-2 border border-neutral-300 rounded-lg">
                       <button
@@ -121,7 +115,6 @@ export default function CarritoPage() {
                       </button>
                     </div>
 
-                    {/* Subtotal */}
                     <p className="font-bold text-lg">S/ {itemSubtotal.toFixed(2)}</p>
                   </div>
                 </div>
@@ -130,18 +123,15 @@ export default function CarritoPage() {
           })}
         </div>
 
-        {/* Summary - Right Column (Sticky) */}
         <div className="lg:col-span-1">
           <div className="bg-white rounded-xl p-6 border border-neutral-200 sticky top-24">
             <h2 className="text-xl font-bold mb-6">Resumen del Pedido</h2>
 
-            {/* Subtotal */}
             <div className="flex justify-between mb-3">
               <span className="text-neutral-600">Subtotal</span>
               <span className="font-medium">S/ {total.toFixed(2)}</span>
             </div>
 
-            {/* Shipping */}
             <div className="flex justify-between mb-4">
               <span className="text-neutral-600">Envío</span>
               <span className={`font-medium ${shippingCost === 0 ? "text-green-600" : ""}`}>
@@ -149,7 +139,6 @@ export default function CarritoPage() {
               </span>
             </div>
 
-            {/* Free shipping progress */}
             {remainingForFreeShipping > 0 && (
               <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg">
                 <p className="text-sm text-green-700 font-medium mb-2">
@@ -164,7 +153,6 @@ export default function CarritoPage() {
               </div>
             )}
 
-            {/* Total */}
             <div className="border-t pt-4 mb-6">
               <div className="flex justify-between items-center">
                 <span className="text-lg font-bold">Total</span>
@@ -172,7 +160,6 @@ export default function CarritoPage() {
               </div>
             </div>
 
-            {/* Checkout Button */}
             <button
               onClick={handleCheckout}
               className="w-full bg-green-600 text-white py-4 rounded-lg font-semibold hover:bg-green-700 transition flex items-center justify-center gap-2"
