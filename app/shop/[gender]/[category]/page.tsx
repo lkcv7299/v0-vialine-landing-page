@@ -4,8 +4,8 @@ import { products } from "@/data/products"
 import ProductCard from "@/components/ProductCard"
 
 type Params = {
-  params: { gender: string; category: string }
-  searchParams: Record<string, string | string[] | undefined>
+  params: Promise<{ gender: string; category: string }>
+  searchParams: Promise<Record<string, string | string[] | undefined>>
 }
 
 const toSlug = (s: string) =>
@@ -58,26 +58,24 @@ function matchCategory(p: any, catSlug: string) {
   )
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { gender: string; category: string }
-}): Promise<Metadata> {
-  const gender = params.gender
-  const category = params.category.replace(/-/g, " ")
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const { gender, category } = await params
+  const categoryName = category.replace(/-/g, " ")
+  
   return {
-    title: `${category} · ${gender} · Vialine`,
-    description: `Explora ${category} para ${gender} en Vialine.`,
+    title: `${categoryName} · ${gender} · Vialine`,
+    description: `Explora ${categoryName} para ${gender} en Vialine.`,
   }
 }
 
-export default function Page({ params }: Params) {
-  const gender = toSlug(params.gender)
-  const category = toSlug(params.category)
+export default async function Page({ params }: Params) {
+  const { gender, category } = await params
+  const genderSlug = toSlug(gender)
+  const categorySlug = toSlug(category)
 
-  if (!["mujer", "nina"].includes(gender)) notFound()
+  if (!["mujer", "nina"].includes(genderSlug)) notFound()
 
-  const rows = (products as any[]).filter((p) => matchGender(p, gender) && matchCategory(p, category))
+  const rows = (products as any[]).filter((p) => matchGender(p, genderSlug) && matchCategory(p, categorySlug))
 
   if (!rows.length) {
     notFound()
@@ -86,8 +84,8 @@ export default function Page({ params }: Params) {
   return (
     <main className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 py-10">
       <header className="mb-8">
-        <h1 className="text-3xl sm:text-4xl font-semibold capitalize">{category.replace(/-/g, " ")}</h1>
-        <p className="mt-2 text-neutral-600 capitalize">{gender}</p>
+        <h1 className="text-3xl sm:text-4xl font-semibold capitalize">{categorySlug.replace(/-/g, " ")}</h1>
+        <p className="mt-2 text-neutral-600 capitalize">{genderSlug}</p>
       </header>
 
       <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">

@@ -11,14 +11,16 @@ const fabrics: Record<string, { title: string; desc: string }> = {
   },
 }
 
-export default function Page({
+export default async function TejidosPage({
   params,
   searchParams,
 }: {
-  params: { slug: string }
-  searchParams?: Record<string, string>
+  params: Promise<{ slug: string }>
+  searchParams: Promise<Record<string, string> | undefined>
 }) {
-  const f = fabrics[params.slug]
+  const { slug } = await params
+  const f = fabrics[slug]
+  
   if (!f) return notFound()
 
   return (
