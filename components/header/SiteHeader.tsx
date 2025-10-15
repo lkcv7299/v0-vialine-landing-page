@@ -44,20 +44,21 @@ export default function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-20 w-full bg-white/80 backdrop-blur border-b">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3">
+      {/* PADDING MÍNIMO - TODO EN LOS EXTREMOS */}
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 md:px-6 py-3">
         {/* Mobile: hamburger */}
         <div className="lg:hidden">
           <MobileNav />
         </div>
 
-        {/* Logo */}
+        {/* Logo - PEGADO A LA IZQUIERDA */}
         <Link href="/" className="font-semibold tracking-wide">
           Vialine
         </Link>
 
         {/* Search (desktop) */}
-        <form onSubmit={submit} className="hidden flex-1 items-center lg:flex">
-          <div className="relative mx-auto w-full max-w-xl">
+        <form onSubmit={submit} className="hidden flex-1 items-center lg:flex mx-8">
+          <div className="relative w-full max-w-xl">
             <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400">🔍</span>
             <input
               value={q}
@@ -68,8 +69,8 @@ export default function SiteHeader() {
           </div>
         </form>
 
-        {/* Right icons */}
-        <div className="flex items-center gap-3">
+        {/* Right icons - PEGADO A LA DERECHA */}
+        <div className="flex items-center gap-2">
           {/* Wishlist Icon */}
           <Link
             href="/wishlist"
@@ -192,8 +193,8 @@ export default function SiteHeader() {
         </div>
       </div>
 
-      {/* Desktop mega menu */}
-      <div className="mx-auto hidden h-11 max-w-7xl items-center gap-4 px-4 lg:flex">
+      {/* Desktop mega menu - TAMBIÉN PEGADO */}
+      <div className="mx-auto hidden h-11 max-w-7xl items-center gap-4 px-4 md:px-6 lg:flex">
         <MegaMenu />
       </div>
     </header>

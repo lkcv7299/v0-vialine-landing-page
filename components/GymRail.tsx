@@ -26,15 +26,15 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
   const scrollByCard = (dir: "prev" | "next") => {
     const el = trackRef.current
     if (!el) return
-    const card = el.querySelector<HTMLElement>("[data-card]")
-    const step = card ? card.offsetWidth + 16 : 320
-    el.scrollBy({ left: dir === "next" ? step : -step, behavior: "smooth" })
+    // Scroll exactamente por 4 productos
+    const scrollAmount = el.offsetWidth
+    el.scrollBy({ left: dir === "next" ? scrollAmount : -scrollAmount, behavior: "smooth" })
   }
 
   return (
     <section className="relative py-8 bg-white">
-      {/* Header */}
-      <div className="max-w-7xl mx-auto px-4 mb-6 flex items-end justify-between">
+      {/* Header - ALINEADO CON LAS IMÁGENES */}
+      <div className="max-w-7xl mx-auto px-4 md:px-6 mb-6 flex items-end justify-between">
         <div>
           <p className="text-xs font-semibold text-neutral-500 tracking-wide uppercase mb-1">
             WOMENS
@@ -51,80 +51,85 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
         </Link>
       </div>
 
-      {/* Carrusel ESTILO GYMSHARK */}
+      {/* Carrusel - EXACTAMENTE 4 PRODUCTOS VISIBLES */}
       <div className="relative group">
         <div
           ref={trackRef}
-          className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory px-4"
+          className="overflow-x-auto scrollbar-hide snap-x snap-mandatory"
         >
-          {items.map((item) => {
-            const rating = getAverageRating(item.slug)
-            const reviewCount = getReviewCount(item.slug)
-            
-            return (
-              <div
-                key={item.slug}
-                data-card
-                className="flex-shrink-0 w-[280px] snap-start"
-              >
-                <Link href={`/producto/${item.slug}`} className="group/card block">
-                  {/* Imagen CUADRADA */}
-                  <div className="relative aspect-square w-full overflow-hidden bg-neutral-100 mb-3">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover/card:scale-105"
-                    />
-                    
-                    {/* Wishlist Heart */}
-                    <WishlistHeart slug={item.slug} />
+          {/* Grid que muestra EXACTAMENTE 4 productos */}
+          <div className="max-w-7xl mx-auto px-4 md:px-6">
+            <div className="grid grid-flow-col auto-cols-[calc(25%-12px)] gap-4">
+              {items.map((item) => {
+                const rating = getAverageRating(item.slug)
+                const reviewCount = getReviewCount(item.slug)
+                
+                return (
+                  <div
+                    key={item.slug}
+                    data-card
+                    className="snap-start"
+                  >
+                    <Link href={`/producto/${item.slug}`} className="group/card block">
+                      {/* Imagen CUADRADA */}
+                      <div className="relative aspect-square w-full overflow-hidden bg-neutral-100 mb-3">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-full h-full object-cover transition-transform duration-300 group-hover/card:scale-105"
+                        />
+                        
+                        {/* Wishlist Heart */}
+                        <WishlistHeart slug={item.slug} />
 
-                    {/* Badge NEW */}
-                    {item.badge && (
-                      <span className="absolute left-3 top-3 bg-white px-2 py-1 text-xs font-bold uppercase">
-                        {item.badge}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Info */}
-                  <div className="space-y-1">
-                    <h3 className="text-sm font-medium text-neutral-900 leading-tight">
-                      {item.name}
-                    </h3>
-                    
-                    {/* Reviews - ESTILO GYMSHARK */}
-                    {reviewCount > 0 && (
-                      <div className="flex items-center gap-1.5">
-                        <div className="flex items-center gap-0.5">
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              className={`w-3 h-3 ${
-                                i < Math.floor(rating)
-                                  ? "fill-neutral-900 text-neutral-900"
-                                  : "fill-neutral-200 text-neutral-200"
-                              }`}
-                            />
-                          ))}
-                        </div>
-                        <span className="text-xs font-semibold text-neutral-900">
-                          {rating.toFixed(1)}
-                        </span>
-                        <span className="text-xs text-neutral-500">
-                          ({reviewCount})
-                        </span>
+                        {/* Badge NEW */}
+                        {item.badge && (
+                          <span className="absolute left-3 top-3 bg-white px-2 py-1 text-xs font-bold uppercase">
+                            {item.badge}
+                          </span>
+                        )}
                       </div>
-                    )}
 
-                    <p className="text-sm font-semibold text-neutral-900">
-                      S/ {item.price}
-                    </p>
+                      {/* Info */}
+                      <div className="space-y-1">
+                        <h3 className="text-sm font-medium text-neutral-900 leading-tight">
+                          {item.name}
+                        </h3>
+                        
+                        {/* Reviews - ESTILO GYMSHARK */}
+                        {reviewCount > 0 && (
+                          <div className="flex items-center gap-1.5">
+                            <div className="flex items-center gap-0.5">
+                              {[...Array(5)].map((_, i) => (
+                                <Star
+                                  key={i}
+                                  className={`w-3 h-3 ${
+                                    i < Math.floor(rating)
+                                      ? "fill-neutral-900 text-neutral-900"
+                                      : "fill-neutral-200 text-neutral-200"
+                                  }`}
+                                />
+                              ))}
+                            </div>
+                            <span className="text-xs font-semibold text-neutral-900">
+                              {rating.toFixed(1)}
+                            </span>
+                            <span className="text-xs text-neutral-500">
+                              ({reviewCount})
+                            </span>
+                          </div>
+                        )}
+
+                        <p className="text-sm font-semibold text-neutral-900">
+                          S/ {item.price}
+                        </p>
+                      </div>
+                    </Link>
                   </div>
-                </Link>
-              </div>
-            )
-          })}
+                )
+              })}
+            </div>
+          </div>
         </div>
 
         {/* Botones navegación */}
