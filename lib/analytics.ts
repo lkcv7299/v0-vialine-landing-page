@@ -1,11 +1,14 @@
 /**
- * Google Analytics 4 Event Tracking
- * Documentación: https://developers.google.com/analytics/devguides/collection/ga4/events
+ * Google Analytics 4 + Meta Pixel Event Tracking
+ * Documentación: 
+ * - GA4: https://developers.google.com/analytics/devguides/collection/ga4/events
+ * - Meta: https://developers.facebook.com/docs/meta-pixel/reference
  */
 
 declare global {
   interface Window {
     gtag: (...args: any[]) => void
+    fbq: (...args: any[]) => void
   }
 }
 
@@ -18,6 +21,7 @@ export const trackViewItem = (product: {
   price: number
   category?: string
 }) => {
+  // Google Analytics
   if (typeof window !== "undefined" && window.gtag) {
     window.gtag("event", "view_item", {
       currency: "PEN",
@@ -33,6 +37,17 @@ export const trackViewItem = (product: {
       ],
     })
   }
+
+  // Meta Pixel
+  if (typeof window !== "undefined" && window.fbq) {
+    window.fbq("track", "ViewContent", {
+      content_ids: [product.id],
+      content_name: product.name,
+      content_type: "product",
+      value: product.price,
+      currency: "PEN",
+    })
+  }
 }
 
 /**
@@ -44,6 +59,7 @@ export const trackAddToCart = (product: {
   price: number
   quantity: number
 }) => {
+  // Google Analytics
   if (typeof window !== "undefined" && window.gtag) {
     window.gtag("event", "add_to_cart", {
       currency: "PEN",
@@ -58,15 +74,27 @@ export const trackAddToCart = (product: {
       ],
     })
   }
+
+  // Meta Pixel
+  if (typeof window !== "undefined" && window.fbq) {
+    window.fbq("track", "AddToCart", {
+      content_ids: [product.id],
+      content_name: product.name,
+      content_type: "product",
+      value: product.price * product.quantity,
+      currency: "PEN",
+    })
+  }
 }
 
 /**
  * Ver el carrito
  */
 export const trackViewCart = (cartItems: Array<{ id: string; name: string; price: number; quantity: number }>) => {
+  const totalValue = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
+
+  // Google Analytics
   if (typeof window !== "undefined" && window.gtag) {
-    const totalValue = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
-    
     window.gtag("event", "view_cart", {
       currency: "PEN",
       value: totalValue,
@@ -84,9 +112,10 @@ export const trackViewCart = (cartItems: Array<{ id: string; name: string; price
  * Iniciar checkout
  */
 export const trackBeginCheckout = (cartItems: Array<{ id: string; name: string; price: number; quantity: number }>) => {
+  const totalValue = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
+
+  // Google Analytics
   if (typeof window !== "undefined" && window.gtag) {
-    const totalValue = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
-    
     window.gtag("event", "begin_checkout", {
       currency: "PEN",
       value: totalValue,
@@ -98,15 +127,37 @@ export const trackBeginCheckout = (cartItems: Array<{ id: string; name: string; 
       })),
     })
   }
+
+  // Meta Pixel
+  if (typeof window !== "undefined" && window.fbq) {
+    window.fbq("track", "InitiateCheckout", {
+      content_ids: cartItems.map((item) => item.id),
+      contents: cartItems.map((item) => ({
+        id: item.id,
+        quantity: item.quantity,
+      })),
+      value: totalValue,
+      currency: "PEN",
+      num_items: cartItems.length,
+    })
+  }
 }
 
 /**
  * Búsqueda
  */
 export const trackSearch = (searchTerm: string) => {
+  // Google Analytics
   if (typeof window !== "undefined" && window.gtag) {
     window.gtag("event", "search", {
       search_term: searchTerm,
+    })
+  }
+
+  // Meta Pixel
+  if (typeof window !== "undefined" && window.fbq) {
+    window.fbq("track", "Search", {
+      search_string: searchTerm,
     })
   }
 }
@@ -144,10 +195,18 @@ export const trackNewsletterPopupView = () => {
  * Suscripción a newsletter
  */
 export const trackNewsletterSubscribe = () => {
+  // Google Analytics
   if (typeof window !== "undefined" && window.gtag) {
     window.gtag("event", "newsletter_subscribe", {
       event_category: "conversion",
       event_label: "Newsletter Subscription",
+    })
+  }
+
+  // Meta Pixel - Lead event
+  if (typeof window !== "undefined" && window.fbq) {
+    window.fbq("track", "Lead", {
+      content_name: "Newsletter Subscription",
     })
   }
 }
@@ -156,6 +215,7 @@ export const trackNewsletterSubscribe = () => {
  * Agregar a wishlist
  */
 export const trackAddToWishlist = (product: { id: string; name: string; price: number }) => {
+  // Google Analytics
   if (typeof window !== "undefined" && window.gtag) {
     window.gtag("event", "add_to_wishlist", {
       currency: "PEN",
@@ -167,6 +227,54 @@ export const trackAddToWishlist = (product: { id: string; name: string; price: n
           price: product.price,
         },
       ],
+    })
+  }
+
+  // Meta Pixel
+  if (typeof window !== "undefined" && window.fbq) {
+    window.fbq("track", "AddToWishlist", {
+      content_ids: [product.id],
+      content_name: product.name,
+      value: product.price,
+      currency: "PEN",
+    })
+  }
+}
+
+/**
+ * Compra completada (para futuro checkout)
+ */
+export const trackPurchase = (
+  orderId: string,
+  cartItems: Array<{ id: string; name: string; price: number; quantity: number }>,
+  totalValue: number
+) => {
+  // Google Analytics
+  if (typeof window !== "undefined" && window.gtag) {
+    window.gtag("event", "purchase", {
+      transaction_id: orderId,
+      value: totalValue,
+      currency: "PEN",
+      items: cartItems.map((item) => ({
+        item_id: item.id,
+        item_name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+      })),
+    })
+  }
+
+  // Meta Pixel
+  if (typeof window !== "undefined" && window.fbq) {
+    window.fbq("track", "Purchase", {
+      content_ids: cartItems.map((item) => item.id),
+      contents: cartItems.map((item) => ({
+        id: item.id,
+        quantity: item.quantity,
+      })),
+      value: totalValue,
+      currency: "PEN",
+      num_items: cartItems.length,
     })
   }
 }

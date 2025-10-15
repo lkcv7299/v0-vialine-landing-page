@@ -7,6 +7,8 @@ import SiteHeader from "@/components/header/SiteHeader"
 import WhatsAppFloat from "@/components/WhatsAppFloat"
 import ClientWrapper from "@/components/ClientWrapper"
 import GoogleAnalytics from "@/components/GoogleAnalytics"
+import MetaPixel from "@/components/MetaPixel"
+import Clarity from "@/components/Clarity"
 import { WishlistProvider } from "@/components/providers/WishlistContext"
 import { CartProvider } from "@/contexts/CartContext"
 
@@ -51,9 +53,17 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${heading.variable} ${body.variable} ${ui.variable}`}>
       <body className="antialiased text-neutral-900 bg-neutral-50">
+        {/* ANALYTICS: Google Analytics 4 */}
         <GoogleAnalytics />
+        
+        {/* ANALYTICS: Meta Pixel (Facebook/Instagram) */}
+        <MetaPixel />
+        
+        {/* ANALYTICS: Microsoft Clarity (Heatmaps) */}
+        <Clarity />
+        
         <script
-        type="application/ld+json"
+          type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
