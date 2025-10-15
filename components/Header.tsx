@@ -5,6 +5,10 @@ import { ShoppingBag } from "lucide-react"
 import MobileMenu from "@/components/nav/MobileMenu"
 import MiniCart from "@/components/MiniCart"
 import { useCart } from "@/contexts/CartContext"
+import WishlistIcon from "@/components/WishlistIcon"
+
+// Dentro del header, junto al ícono del carrito:
+<WishlistIcon />
 
 type OpenKey = "women" | "girls" | null
 
