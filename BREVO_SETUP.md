@@ -27,9 +27,9 @@ Esta guía te explica paso a paso cómo configurar Brevo (antes Sendinblue) para
    - **API Keys** (en el menú lateral)
 2. Copia la **"v3" API Key** (es un texto largo tipo: `xkeysib-123abc...`)
 3. Pégala en tu archivo `.env.local`:
-   ```bash
+   \`\`\`bash
    NEXT_PUBLIC_BREVO_API_KEY=xkeysib-tu-api-key-aqui
-   ```
+   \`\`\`
 
 ---
 
@@ -44,9 +44,9 @@ Esta guía te explica paso a paso cómo configurar Brevo (antes Sendinblue) para
 5. **IMPORTANTE:** Anota el **List ID** (aparece en la URL o en la lista)
    - Ejemplo: `https://app.brevo.com/contact/list/id/2` → List ID = `2`
 6. Si el ID NO es `2`, actualiza en `lib/brevo.ts`:
-   ```typescript
+   \`\`\`typescript
    listIds: [2], // ← Cambia este número
-   ```
+   \`\`\`
 
 ---
 
@@ -72,7 +72,7 @@ Ahora vamos a crear el email automático que se envía cuando alguien se suscrib
 ### 4.4. Diseñar el Email
 Usa este contenido como plantilla:
 
-```
+\`\`\`
 Asunto: 🎁 ¡Bienvenida a Vialine! Tu cupón de 10% OFF te espera
 
 Hola {{ contact.FIRSTNAME }},
@@ -106,7 +106,7 @@ El equipo Vialine
 📍 Lima, Perú
 📧 Responde a este email si tienes dudas
 🔓 ¿No quieres más emails? [Darse de baja]
-```
+\`\`\`
 
 ### 4.5. Configurar Botón
 - **Text:** "Empezar a comprar"
@@ -140,9 +140,9 @@ Para mejorar la entregabilidad (evitar spam):
 ## 🧪 PASO 6: PROBAR LA INTEGRACIÓN
 
 1. Reinicia tu servidor de desarrollo:
-   ```bash
+   \`\`\`bash
    npm run dev
-   ```
+   \`\`\`
 2. Abre tu sitio: `http://localhost:3000`
 3. Espera 30 segundos O haz scroll hasta 50%
 4. Debería aparecer el popup
