@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
+import { sql } from "@vercel/postgres"
 
 // ====================================
 // TYPES
@@ -79,6 +80,86 @@ async function sendEmail(to: string, subject: string, html: string) {
 }
 
 // ====================================
+// GUARDAR EN BASE DE DATOS
+// ====================================
+
+async function saveOrderToDatabase(orderData: CheckoutRequest & { orderId: string, status: string }) {
+  try {
+    // 1. Insertar orden principal
+    await sql`
+      INSERT INTO orders (
+        order_id,
+        customer_first_name,
+        customer_last_name,
+        customer_email,
+        customer_phone,
+        shipping_address,
+        shipping_district,
+        shipping_city,
+        shipping_postal_code,
+        shipping_reference,
+        subtotal,
+        shipping_cost,
+        total,
+        payment_method,
+        notes,
+        status
+      ) VALUES (
+        ${orderData.orderId},
+        ${orderData.customer.firstName},
+        ${orderData.customer.lastName},
+        ${orderData.customer.email},
+        ${orderData.customer.phone},
+        ${orderData.shippingAddress.address},
+        ${orderData.shippingAddress.district},
+        ${orderData.shippingAddress.city},
+        ${orderData.shippingAddress.postalCode || null},
+        ${orderData.shippingAddress.reference || null},
+        ${orderData.subtotal},
+        ${orderData.shippingCost},
+        ${orderData.total},
+        ${orderData.paymentMethod},
+        ${orderData.notes || null},
+        ${orderData.status}
+      )
+    `
+
+    // 2. Insertar items de la orden
+    for (const item of orderData.items) {
+      await sql`
+        INSERT INTO order_items (
+          order_id,
+          product_slug,
+          product_title,
+          product_price,
+          product_image,
+          selected_color,
+          selected_size,
+          quantity,
+          item_total
+        ) VALUES (
+          ${orderData.orderId},
+          ${item.productSlug},
+          ${item.productTitle},
+          ${item.productPrice},
+          ${item.productImage},
+          ${item.selectedColor},
+          ${item.selectedSize},
+          ${item.quantity},
+          ${item.productPrice * item.quantity}
+        )
+      `
+    }
+
+    console.log(`✅ Orden ${orderData.orderId} guardada en base de datos`)
+    return true
+  } catch (error) {
+    console.error("❌ Error guardando en base de datos:", error)
+    return false
+  }
+}
+
+// ====================================
 // API ROUTE
 // ====================================
 
@@ -109,7 +190,18 @@ export async function POST(request: NextRequest) {
     console.log("🛍️ Items:", orderData.items.length)
     console.log("════════════════════════════════════\n")
 
+    // ====================================
+    // GUARDAR EN BASE DE DATOS
+    // ====================================
+    const dbSaved = await saveOrderToDatabase(orderData)
+    
+    if (!dbSaved) {
+      console.warn("⚠️ Orden NO guardada en DB, pero continuando con emails...")
+    }
+
+    // ====================================
     // EMAIL AL ADMIN
+    // ====================================
     const adminHTML = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <div style="background: #e11d48; color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0;">
@@ -189,77 +281,62 @@ export async function POST(request: NextRequest) {
         
         <div style="padding: 20px; background: #f9fafb;">
           <p>Hola <strong>${orderData.customer.firstName}</strong>,</p>
-          <p>¡Recibimos tu pedido correctamente! 🎊</p>
+          <p>¡Recibimos tu pedido correctamente! Estamos preparando todo para enviártelo.</p>
           
-          <div style="background: white; padding: 20px; margin: 15px 0; border-radius: 8px; border: 1px solid #e5e7eb;">
-            <h2 style="color: #e11d48; margin-top: 0;">📦 Tu pedido:</h2>
+          <div style="background: white; padding: 20px; margin: 20px 0; border-radius: 8px; border: 1px solid #e5e7eb;">
+            <h2 style="color: #e11d48; margin-top: 0;">📦 Resumen de tu pedido</h2>
             ${orderData.items.map(item => `
-              <div style="padding: 10px 0; border-bottom: 1px solid #eee;">
-                <p style="margin: 5px 0; font-weight: bold;">${item.productTitle}</p>
+              <div style="border-bottom: 1px solid #e5e7eb; padding: 10px 0;">
+                <p style="margin: 5px 0;">${item.productTitle}</p>
                 <p style="margin: 5px 0; color: #666; font-size: 14px;">
                   ${item.selectedColor} • ${item.selectedSize} • Cantidad: ${item.quantity}
                 </p>
               </div>
             `).join('')}
-            <div style="font-size: 24px; font-weight: bold; color: #e11d48; text-align: center; margin: 20px 0;">
-              Total: S/ ${orderData.total.toFixed(2)}
+            
+            <div style="margin-top: 15px; padding-top: 15px; border-top: 2px solid #e5e7eb;">
+              <p><strong>Total:</strong> S/ ${orderData.total.toFixed(2)}</p>
             </div>
           </div>
           
-          <div style="background: #dcfce7; padding: 15px; margin: 15px 0; border-radius: 8px; border: 1px solid #86efac;">
-            <h3 style="margin-top: 0; color: #166534;">⏱️ Tiempo de entrega:</h3>
-            <p style="margin: 5px 0;"><strong>Lima:</strong> 24-48 horas</p>
-            <p style="margin: 5px 0;"><strong>Provincias:</strong> 3-7 días hábiles</p>
+          <div style="background: #dcfce7; padding: 15px; border-radius: 8px; margin: 20px 0;">
+            <p style="margin: 5px 0;"><strong>🚚 Tiempo de entrega:</strong></p>
+            <p style="margin: 5px 0;">Lima: 24-48 horas</p>
+            <p style="margin: 5px 0;">Provincias: 3-7 días hábiles</p>
           </div>
           
-          <div style="text-align: center; margin: 20px 0;">
-            <p><strong>Te contactaremos pronto por WhatsApp para coordinar la entrega 📱</strong></p>
+          <p>Nos pondremos en contacto contigo pronto para coordinar la entrega.</p>
+          
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="https://wa.me/51972327236" 
+               style="display: inline-block; background: #25D366; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold;">
+              Contáctanos por WhatsApp
+            </a>
           </div>
           
-          <div style="text-align: center; color: #666; font-size: 14px; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
-            <p>¿Dudas? Escríbenos al WhatsApp: <strong>+51 972 327 236</strong></p>
-            <p style="margin-top: 10px;">Vialine - Ropa deportiva para mujeres empoderadas 💪</p>
-          </div>
+          <p style="color: #666; font-size: 14px; text-align: center;">
+            ¿Dudas? Responde este email o contáctanos por WhatsApp
+          </p>
         </div>
       </div>
     `
 
-    // ENVIAR AMBOS EMAILS
-    console.log("📧 Enviando emails...")
-    
-    await Promise.all([
-      sendEmail(
-        "osinpacha@gmail.com", // ⚠️ CAMBIA ESTO POR TU EMAIL
-        `🎉 Nueva Orden #${orderId} - S/ ${orderData.total.toFixed(2)}`,
-        adminHTML
-      ),
-      sendEmail(
-        orderData.customer.email,
-        `✅ Orden Confirmada #${orderId} - Vialine`,
-        customerHTML
-      )
-    ])
+    // Enviar emails
+    await sendEmail("osinpacha@gmail.com", `🎉 Nueva Orden: ${orderId}`, adminHTML)
+    await sendEmail(orderData.customer.email, "Confirmación de tu pedido en Vialine", customerHTML)
 
-    console.log("✅ Emails procesados\n")
-
-    return NextResponse.json({ 
-      orderId,
+    // Retornar respuesta
+    return NextResponse.json({
       success: true,
-      redirect: `/checkout/confirmacion?orderId=${orderId}`
+      orderId: orderId,
+      message: "Orden procesada exitosamente",
     })
+
   } catch (error) {
     console.error("❌ Error procesando orden:", error)
-    return NextResponse.json({ error: "Error procesando orden" }, { status: 500 })
+    return NextResponse.json(
+      { error: "Error procesando la orden" },
+      { status: 500 }
+    )
   }
-}
-
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url)
-  const orderId = searchParams.get("orderId")
-  
-  if (!orderId) {
-    return NextResponse.json({ error: "Order ID requerido" }, { status: 400 })
-  }
-  
-  return NextResponse.json({ orderId, status: "pending" })
 }
