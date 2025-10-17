@@ -15,6 +15,7 @@ export type Product = {
     detalles: string[]
     beneficios: string[]
   }
+  inventory?: number // ← AGREGAR ESTA LÍNEA
 }
 
 export const products: Product[] = [
@@ -53,6 +54,7 @@ export const products: Product[] = [
     colors: ["Rojo", "Negro", "Gris", "Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+    inventory: 0,
       attributes: {
   material: "Algodón Premium",
   detalles: [
@@ -77,6 +79,7 @@ export const products: Product[] = [
     colors: ["Gris", "Negro", "Blanco"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+    inventory: 3,
       attributes: {
   material: "Algodón Premium",
   detalles: [
@@ -101,6 +104,7 @@ export const products: Product[] = [
     colors: ["Blanco", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+    inventory: 10,
       attributes: {
   material: "Algodón Premium",
   detalles: [
@@ -125,6 +129,7 @@ export const products: Product[] = [
     colors: ["Rojo", "Negro"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+    inventory: 12,
     attributes: {
   material: "Algodón Premium",
   detalles: [
