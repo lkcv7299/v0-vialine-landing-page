@@ -11,6 +11,7 @@ import MetaPixel from "@/components/MetaPixel"
 import Clarity from "@/components/Clarity"
 import { WishlistProvider } from "@/components/providers/WishlistContext"
 import { CartProvider } from "@/contexts/CartContext"
+import TawkToChat from "@/components/TawkToChat"
 
 export const metadata: Metadata = {
   title: "Vialine | Activewear & ropa interior para mujer – Hecho en Perú",
@@ -62,6 +63,9 @@ export default function RootLayout({
         {/* ANALYTICS: Microsoft Clarity (Heatmaps) */}
         <Clarity />
         
+        {/* Live Chat */}
+<TawkToChat />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
