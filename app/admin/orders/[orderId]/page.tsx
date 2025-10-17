@@ -200,9 +200,9 @@ export default function OrderDetailPage() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="font-semibold">S/ {item.item_total.toFixed(2)}</p>
+                      <p className="font-semibold">S/ {Number(item.item_total).toFixed(2)}</p>
                       <p className="text-sm text-neutral-600">
-                        S/ {item.product_price.toFixed(2)} c/u
+                        S/ {Number(item.product_price).toFixed(2)} c/u
                       </p>
                     </div>
                   </div>
@@ -228,23 +228,23 @@ export default function OrderDetailPage() {
               <div className="space-y-3 mb-4 pb-4 border-b border-neutral-200">
                 <div className="flex justify-between">
                   <span className="text-neutral-600">Subtotal</span>
-                  <span className="font-medium">S/ {order.subtotal.toFixed(2)}</span>
+                  <span className="font-medium">S/ {Number(order.subtotal).toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-neutral-600">Envío</span>
                   <span className="font-medium">
-                    {order.shipping_cost === 0 ? (
-                      <span className="text-green-600">¡GRATIS!</span>
-                    ) : (
-                      `S/ ${order.shipping_cost.toFixed(2)}`
-                    )}
-                  </span>
+{Number(order.shipping_cost) === 0 ? (
+    <span className="text-green-600">¡GRATIS!</span>
+  ) : (
+    <>S/ {Number(order.shipping_cost).toFixed(2)}</>
+  )}
+</span>
                 </div>
               </div>
 
               <div className="flex justify-between text-lg font-bold mb-6">
                 <span>Total</span>
-                <span className="text-rose-600">S/ {order.total.toFixed(2)}</span>
+                <span className="text-rose-600">S/ {Number(order.total).toFixed(2)}</span>
               </div>
 
               {/* Método de pago */}
