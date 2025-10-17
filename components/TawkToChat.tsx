@@ -9,7 +9,12 @@ export default function TawkToChat() {
   useEffect(() => {
     // ⚠️ REEMPLAZAR CON TUS IDs REALES:
     const tawkToPropertyId = "68f245510524d4194f532156" // ← Pegar tu Property ID
-    const tawkToWidgetId = "1j7p5thtv"     // ← Pegar tu Widget ID (generalmente "default")
+    const tawkToWidgetId = "1j7p5thtv"     // ← Pegar tu Widget ID
+
+    // Prevenir múltiples cargas
+    if (document.querySelector('script[src*="embed.tawk.to"]')) {
+      return
+    }
 
     // Cargar script de Tawk.to
     const script = document.createElement("script")
@@ -54,11 +59,24 @@ export default function TawkToChat() {
     // Agregar script al DOM
     document.body.appendChild(script)
 
-    // Cleanup al desmontar
+    // Cleanup mejorado - FIX del error
     return () => {
-      const existingScript = document.querySelector(`script[src*="embed.tawk.to"]`)
-      if (existingScript) {
-        document.body.removeChild(existingScript)
+      // Método seguro: verificar parentNode antes de remover
+      const existingScript = document.querySelector('script[src*="embed.tawk.to"]')
+      if (existingScript?.parentNode) {
+        existingScript.parentNode.removeChild(existingScript)
+      }
+
+      // Limpiar widget del DOM si existe
+      const tawkWidget = document.getElementById("tawk-bubble")
+      if (tawkWidget?.parentNode) {
+        tawkWidget.parentNode.removeChild(tawkWidget)
+      }
+
+      // Limpiar iframe de Tawk.to si existe
+      const tawkIframe = document.querySelector('iframe[title*="chat widget"]')
+      if (tawkIframe?.parentNode) {
+        tawkIframe.parentNode.removeChild(tawkIframe)
       }
     }
   }, [pathname])
