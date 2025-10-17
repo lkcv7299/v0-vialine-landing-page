@@ -6,6 +6,7 @@ import type { Product } from "@/data/products"
 import { buildWhatsAppUrl } from "@/lib/contact"
 import { useCart } from "@/contexts/CartContext"
 import ProductGallery from "@/components/ProductGallery"
+import SizeGuideModal from "@/components/SizeGuideModal"
 
 // Función para obtener todas las imágenes disponibles del producto
 function getProductImages(product: Product): string[] {
@@ -58,7 +59,7 @@ export default function ProductDetailCard({ product }: { product: Product }) {
   return (
     <main className="mx-auto max-w-7xl px-4 py-8">
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-        {/* GALERÍA DE IMÁGENES - NUEVO */}
+        {/* GALERÍA DE IMÁGENES */}
         <ProductGallery images={productImages} productName={product.title} />
 
         {/* INFORMACIÓN DEL PRODUCTO */}
@@ -107,9 +108,12 @@ export default function ProductDetailCard({ product }: { product: Product }) {
             </div>
           </div>
 
-          {/* Selector de talla */}
+          {/* Selector de talla + Size Guide */}
           <div className="mt-6">
-            <h3 className="text-sm font-semibold text-neutral-900 mb-3">Talla</h3>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-neutral-900">Talla</h3>
+              <SizeGuideModal />
+            </div>
             <div className="flex flex-wrap gap-2">
               {product.sizes.map((size) => (
                 <button
