@@ -4,95 +4,93 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import Drawer from "@/components/ui/Drawer"
-import { Menu, X, User, ShoppingBag } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { buildWhatsAppUrl } from "@/lib/contact"
 
+// Categorías de navegación
 const mujer = [
-  { label: "Leggings", href: "/shop/mujer/leggings" },
-  { label: "Short", href: "/shop/mujer/short" },
-  { label: "Pescador", href: "/shop/mujer/pescador" },
-  { label: "Torero", href: "/shop/mujer/torero" },
-  { label: "Bodys", href: "/shop/mujer/bodys" },
-  { label: "Enterizos", href: "/shop/mujer/enterizos" },
-  { label: "Tops", href: "/shop/mujer/tops" },
-  { label: "Camisetas", href: "/shop/mujer/camisetas" },
+  { label: "Leggings", href: "/mujer?category=leggings" },
+  { label: "Shorts", href: "/mujer?category=short" },
+  { label: "Pescadores", href: "/mujer?category=pescador" },
+  { label: "Toreros", href: "/mujer?category=torero" },
+  { label: "Bodys", href: "/mujer?category=bodys" },
+  { label: "Enterizos", href: "/mujer?category=enterizos" },
+  { label: "Tops", href: "/mujer?category=tops" },
+  { label: "Camisetas", href: "/mujer?category=camisetas" },
 ]
 
 const nina = [
-  { label: "Cafarenas", href: "/shop/nina/cafarenas" },
-  { label: "Enterizos", href: "/shop/nina/enterizos" },
-  { label: "Leggings", href: "/shop/nina/leggings" },
-  { label: "Pantys", href: "/shop/nina/pantys" },
-  { label: "Shorts", href: "/shop/nina/shorts" },
-  { label: "Tops", href: "/shop/nina/tops" },
+  { label: "Cafarenas", href: "/nina?category=cafarenas" },
+  { label: "Enterizos", href: "/nina?category=enterizos" },
+  { label: "Leggings", href: "/nina?category=leggings" },
+  { label: "Pantys", href: "/nina?category=pantys" },
+  { label: "Shorts", href: "/nina?category=shorts" },
+  { label: "Tops", href: "/nina?category=tops" },
 ]
 
 export default function MobileMenu() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
 
-  // Close drawer on route change
+  // Cerrar drawer cuando cambia la ruta
   useEffect(() => {
     setOpen(false)
   }, [pathname])
 
   return (
     <>
-      {/* Icons group (mobile only) */}
-      <div className="flex items-center gap-2 lg:gap-3">
-        <Link
-          href="/account"
-          className="inline-flex lg:inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-slate-100 text-slate-900"
-          aria-label="Mi cuenta"
-        >
-          <User size={20} />
-        </Link>
-        <Link
-          href="/carrito"
-          className="inline-flex lg:inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-slate-100 text-slate-900"
-          aria-label="Carrito de compras"
-        >
-          <ShoppingBag size={20} />
-        </Link>
-        <button
-          aria-controls="mobile-menu"
-          aria-expanded={open}
-          aria-label="Abrir menú de navegación"
-          onClick={() => setOpen(true)}
-          className="inline-flex lg:hidden h-10 w-10 items-center justify-center rounded-full hover:bg-slate-100 text-slate-900"
-        >
-          <Menu size={24} />
-        </button>
-      </div>
+      {/* Botón Hamburguesa */}
+      <button
+        aria-controls="mobile-menu"
+        aria-expanded={open}
+        aria-label="Abrir menú de navegación"
+        onClick={() => setOpen(true)}
+        className="inline-flex h-10 w-10 items-center justify-center rounded-lg hover:bg-neutral-100 text-neutral-900 transition"
+      >
+        <Menu size={24} />
+      </button>
 
-      {/* ✅ Drawer con título para accesibilidad */}
+      {/* Drawer del Menú */}
       <Drawer 
         open={open} 
         onClose={() => setOpen(false)} 
         side="left"
         title="Menú de navegación Vialine"
       >
-        <div id="mobile-menu" className="flex h-full flex-col">
-          {/* Top bar */}
-          <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-200 bg-white/95 px-4 py-3">
-            <Link href="/" className="text-lg font-semibold" onClick={() => setOpen(false)}>
+        <div id="mobile-menu" className="flex h-full flex-col bg-white">
+          
+          {/* ========== HEADER DEL DRAWER ========== */}
+          <div className="sticky top-0 z-10 flex items-center justify-between border-b border-neutral-200 bg-white px-4 py-4">
+            <Link 
+              href="/" 
+              className="text-xl font-bold tracking-tight text-neutral-900"
+              onClick={() => setOpen(false)}
+            >
               Vialine
             </Link>
             <button
               aria-label="Cerrar menú"
               onClick={() => setOpen(false)}
-              className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100"
+              className="h-10 w-10 inline-flex items-center justify-center rounded-lg hover:bg-neutral-100 transition"
             >
               <X size={22} />
             </button>
           </div>
 
-          {/* Nav */}
-          <nav className="flex-1 overflow-y-auto px-4 py-3">
-            <Section title="Mujer" items={mujer} />
-            <div className="h-5" />
-            <Section title="Niña" items={nina} />
-            <div className="h-5" />
+          {/* ========== NAVEGACIÓN ========== */}
+          <nav className="flex-1 overflow-y-auto px-4 py-4">
+            
+            {/* Sección Mujer */}
+            <Section title="Mujer" items={mujer} onLinkClick={() => setOpen(false)} />
+            
+            <div className="h-6" /> {/* Espaciador */}
+            
+            {/* Sección Niña */}
+            <Section title="Niña" items={nina} onLinkClick={() => setOpen(false)} />
+            
+            <div className="h-6" /> {/* Espaciador */}
+            
+            {/* Sección Ayuda */}
             <Section
               title="Ayuda"
               items={[
@@ -100,24 +98,25 @@ export default function MobileMenu() {
                 { label: "Cambios y devoluciones", href: "/pages/envios-y-devoluciones" },
                 { label: "Soporte WhatsApp", href: buildWhatsAppUrl("Hola Vialine"), external: true },
               ]}
+              onLinkClick={() => setOpen(false)}
             />
           </nav>
 
-          {/* Footer buttons */}
-          <div className="border-t border-slate-200 p-4 space-y-3">
-            <Link
-              href="/shop/mujer/leggings"
-              className="block w-full rounded-xl bg-rose-600 text-white text-center py-3 font-medium hover:bg-rose-700"
-              onClick={() => setOpen(false)}
-            >
-              Comprar Suplex
-            </Link>
+          {/* ========== FOOTER CON BOTONES CTA ========== */}
+          <div className="border-t border-neutral-200 p-4 space-y-3 bg-white">
             <Link
               href="/mujer"
-              className="block w-full rounded-xl bg-slate-900 text-white text-center py-3 font-medium hover:bg-slate-800"
+              className="block w-full rounded-xl bg-rose-600 text-white text-center py-3 font-semibold hover:bg-rose-700 transition"
               onClick={() => setOpen(false)}
             >
-              Ver todo
+              Comprar Mujer
+            </Link>
+            <Link
+              href="/nina"
+              className="block w-full rounded-xl border-2 border-neutral-900 text-neutral-900 text-center py-3 font-semibold hover:bg-neutral-900 hover:text-white transition"
+              onClick={() => setOpen(false)}
+            >
+              Comprar Niña
             </Link>
           </div>
         </div>
@@ -126,36 +125,41 @@ export default function MobileMenu() {
   )
 }
 
+// ========== COMPONENTE SECTION ==========
 function Section({
   title,
   items,
+  onLinkClick,
 }: {
   title: string
   items: { label: string; href: string; external?: boolean }[]
+  onLinkClick: () => void
 }) {
   return (
     <div>
-      <div className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-2">
+      <div className="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-3">
         {title}
       </div>
       <ul className="space-y-1">
-        {items.map((it) => (
-          <li key={it.label}>
-            {it.external ? (
+        {items.map((item) => (
+          <li key={item.label}>
+            {item.external ? (
               <a
-                href={it.href}
+                href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block rounded-lg px-2 py-2 text-[15px] font-medium text-slate-900 hover:bg-slate-100"
+                className="block rounded-lg px-3 py-2.5 text-[15px] font-medium text-neutral-900 hover:bg-neutral-100 transition"
+                onClick={onLinkClick}
               >
-                {it.label}
+                {item.label}
               </a>
             ) : (
               <Link
-                href={it.href}
-                className="block rounded-lg px-2 py-2 text-[15px] font-medium text-slate-900 hover:bg-slate-100"
+                href={item.href}
+                className="block rounded-lg px-3 py-2.5 text-[15px] font-medium text-neutral-900 hover:bg-neutral-100 transition"
+                onClick={onLinkClick}
               >
-                {it.label}
+                {item.label}
               </Link>
             )}
           </li>
