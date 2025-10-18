@@ -26,9 +26,9 @@ type Order = {
   shipping_postal_code: string
   shipping_reference: string
   items: OrderItem[]
-  subtotal: number
-  shipping_cost: number
-  total: number
+  subtotal: number | string
+  shipping_cost: number | string
+  total: number | string
   payment_method: string
   payment_status: string
   notes: string
@@ -43,6 +43,12 @@ export default function OrderTrackingPage() {
   const [order, setOrder] = useState<Order | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+
+  // ✅ HELPER: Parsear números de forma segura
+  const parseNumber = (value: number | string): number => {
+    if (typeof value === 'number') return value
+    return parseFloat(value) || 0
+  }
 
   useEffect(() => {
     loadOrder()
@@ -295,7 +301,7 @@ export default function OrderTrackingPage() {
         <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6 mb-6">
           <h3 className="text-lg font-semibold mb-4">Productos</h3>
           <div className="space-y-4">
-            {order.items.map((item, index) => (
+            {order.items && order.items.map((item, index) => (
               <div key={index} className="flex justify-between items-start pb-4 border-b border-neutral-200 last:border-0">
                 <div className="flex-1">
                   <h4 className="font-medium text-neutral-900">{item.productTitle}</h4>
@@ -306,7 +312,7 @@ export default function OrderTrackingPage() {
                 </div>
                 <div className="text-right">
                   <p className="font-semibold text-neutral-900">
-                    S/ {(item.productPrice * item.quantity).toFixed(2)}
+                    S/ {(parseNumber(item.productPrice) * item.quantity).toFixed(2)}
                   </p>
                 </div>
               </div>
@@ -316,15 +322,15 @@ export default function OrderTrackingPage() {
           <div className="mt-6 pt-4 border-t border-neutral-200 space-y-2">
             <div className="flex justify-between text-neutral-600">
               <span>Subtotal</span>
-              <span>S/ {order.subtotal.toFixed(2)}</span>
+              <span>S/ {parseNumber(order.subtotal).toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-neutral-600">
               <span>Envío</span>
-              <span>{order.shipping_cost === 0 ? "GRATIS" : `S/ ${order.shipping_cost.toFixed(2)}`}</span>
+              <span>{parseNumber(order.shipping_cost) === 0 ? "GRATIS" : `S/ ${parseNumber(order.shipping_cost).toFixed(2)}`}</span>
             </div>
             <div className="flex justify-between text-lg font-bold text-neutral-900 pt-2 border-t border-neutral-200">
               <span>Total</span>
-              <span>S/ {order.total.toFixed(2)}</span>
+              <span>S/ {parseNumber(order.total).toFixed(2)}</span>
             </div>
           </div>
         </div>
