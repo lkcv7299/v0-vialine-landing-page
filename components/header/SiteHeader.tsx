@@ -66,17 +66,18 @@ export default function SiteHeader() {
             </form>
           </div>
 
-          {/* ========== DERECHA: Icons (Account + Cart + Hamburger en mobile) ========== */}
+          {/* ========== DERECHA: Icons ========== */}
           <div className="flex items-center gap-2">
             
-            {/* Account Icon - Siempre visible */}
+            {/* ✅ Account Icon - AHORA VISIBLE EN MOBILE Y DESKTOP */}
             <Link
               href="/account"
-              className="hidden lg:flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-neutral-100 transition"
+              className="flex items-center gap-2 p-2 rounded-lg hover:bg-neutral-100 transition"
               aria-label="Mi cuenta"
             >
               <User className="w-5 h-5 text-neutral-700" />
-              <span className="text-sm font-medium text-neutral-700">Cuenta</span>
+              {/* Texto solo visible en desktop */}
+              <span className="hidden lg:inline text-sm font-medium text-neutral-700">Cuenta</span>
             </Link>
 
             {/* Cart Icon con Mini Cart Dropdown */}

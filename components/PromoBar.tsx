@@ -6,9 +6,10 @@ import { useState, useEffect } from "react"
 export default function PromoBar() {
   const [isVisible, setIsVisible] = useState(true)
 
-  // Verificar si el usuario ya cerró el banner
+  // ✅ CAMBIO: Ahora usa sessionStorage en lugar de localStorage
+  // sessionStorage se borra cuando se cierra el navegador/pestaña
   useEffect(() => {
-    const dismissed = localStorage.getItem("promo-bar-dismissed")
+    const dismissed = sessionStorage.getItem("promo-bar-dismissed")
     if (dismissed === "true") {
       setIsVisible(false)
     }
@@ -16,7 +17,8 @@ export default function PromoBar() {
 
   const handleClose = () => {
     setIsVisible(false)
-    localStorage.setItem("promo-bar-dismissed", "true")
+    // ✅ Guarda en sessionStorage - solo dura la sesión actual
+    sessionStorage.setItem("promo-bar-dismissed", "true")
   }
 
   if (!isVisible) return null

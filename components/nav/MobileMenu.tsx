@@ -7,25 +7,25 @@ import Drawer from "@/components/ui/Drawer"
 import { Menu, X } from "lucide-react"
 import { buildWhatsAppUrl } from "@/lib/contact"
 
-// Categorías de navegación
+// ✅ RUTAS CORREGIDAS - Ahora usan /shop/gender/category igual que desktop
 const mujer = [
-  { label: "Leggings", href: "/mujer?category=leggings" },
-  { label: "Shorts", href: "/mujer?category=short" },
-  { label: "Pescadores", href: "/mujer?category=pescador" },
-  { label: "Toreros", href: "/mujer?category=torero" },
-  { label: "Bodys", href: "/mujer?category=bodys" },
-  { label: "Enterizos", href: "/mujer?category=enterizos" },
-  { label: "Tops", href: "/mujer?category=tops" },
-  { label: "Camisetas", href: "/mujer?category=camisetas" },
+  { label: "Leggings", href: "/shop/mujer/leggings" },
+  { label: "Shorts", href: "/shop/mujer/short" },
+  { label: "Pescadores", href: "/shop/mujer/pescador" },
+  { label: "Toreros", href: "/shop/mujer/torero" },
+  { label: "Bodys", href: "/shop/mujer/bodys" },
+  { label: "Enterizos", href: "/shop/mujer/enterizos" },
+  { label: "Tops", href: "/shop/mujer/tops" },
+  { label: "Camisetas", href: "/shop/mujer/camisetas" },
 ]
 
 const nina = [
-  { label: "Cafarenas", href: "/nina?category=cafarenas" },
-  { label: "Enterizos", href: "/nina?category=enterizos" },
-  { label: "Leggings", href: "/nina?category=leggings" },
-  { label: "Pantys", href: "/nina?category=pantys" },
-  { label: "Shorts", href: "/nina?category=shorts" },
-  { label: "Tops", href: "/nina?category=tops" },
+  { label: "Cafarenas", href: "/shop/nina/cafarenas" },
+  { label: "Enterizos", href: "/shop/nina/enterizos" },
+  { label: "Leggings", href: "/shop/nina/legging" },
+  { label: "Pantys", href: "/shop/nina/panty" },
+  { label: "Shorts", href: "/shop/nina/short" },
+  { label: "Tops", href: "/shop/nina/tops" },
 ]
 
 export default function MobileMenu() {
