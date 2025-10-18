@@ -48,6 +48,7 @@ declare global {
   interface Window {
     Culqi: any
     culqi: () => void
+    vialineOrderId?: string // ✅ Agregamos esta variable global
   }
 }
 
@@ -114,7 +115,10 @@ export default function CheckoutPage() {
   // PROCESAR PAGO CON CULQI
   // ====================================
   const processCulqiPayment = async (token: string) => {
-    if (!currentOrderId) {
+    // ✅ Obtener orderId desde window en lugar del estado
+    const orderId = window.vialineOrderId
+
+    if (!orderId) {
       console.error('❌ No hay orderId almacenado')
       toast.error('Error: No se pudo obtener el ID de la orden')
       setIsSubmitting(false)
@@ -122,7 +126,7 @@ export default function CheckoutPage() {
     }
 
     try {
-      console.log('💳 Procesando cargo en Culqi...')
+      console.log(`💳 Procesando cargo en Culqi para orden: ${orderId}`)
       
       const response = await fetch('/api/culqi/charge', {
         method: 'POST',
@@ -131,7 +135,7 @@ export default function CheckoutPage() {
           token,
           amount: Math.round(finalTotal * 100), // Culqi usa centavos
           email: watch('email'),
-          orderId: currentOrderId,
+          orderId: orderId,
         })
       })
 
@@ -146,7 +150,7 @@ export default function CheckoutPage() {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            orderId: currentOrderId,
+            orderId: orderId,
             paymentId: result.chargeId,
             status: 'paid'
           })
@@ -162,12 +166,15 @@ export default function CheckoutPage() {
         // Limpiar carrito
         clearCart()
         
+        // Limpiar orderId global
+        delete window.vialineOrderId
+        
         // Mostrar mensaje de éxito
         toast.success('¡Pago exitoso!')
         
         // Redirigir a página de confirmación
         console.log('🔄 Redirigiendo a confirmación...')
-        router.push(`/confirmacion?orderId=${currentOrderId}`)
+        router.push(`/confirmacion?orderId=${orderId}`)
       } else {
         throw new Error(result.error || 'Error al procesar el pago')
       }
@@ -192,11 +199,13 @@ export default function CheckoutPage() {
     console.log('🎨 Abriendo modal de Culqi...')
 
     // Configurar Culqi Checkout
+    // IMPORTANTE: Para pagos con tarjeta, NO se debe enviar el parámetro "order"
+    // El parámetro "order" solo es para Yape, PagoEfectivo, billeteras
     window.Culqi.settings({
       title: 'Vialine',
       currency: 'PEN',
       amount: Math.round(finalTotal * 100),
-      order: currentOrderId || generateOrderId(),
+      // NO incluir 'order' para pagos con tarjeta
     })
 
     // Abrir modal de Culqi
@@ -262,6 +271,9 @@ export default function CheckoutPage() {
 
       const orderId = createResult.orderId
       console.log(`✅ Orden creada: ${orderId}`)
+      
+      // ✅ Guardar orderId en variable global para que esté disponible en el callback de Culqi
+      window.vialineOrderId = orderId
       setCurrentOrderId(orderId)
 
       // ====================================
@@ -276,6 +288,9 @@ export default function CheckoutPage() {
       } else if (data.paymentMethod === "yape" || data.paymentMethod === "contraentrega") {
         // Para otros métodos: marcar como pendiente y redirigir
         console.log(`📱 Método ${data.paymentMethod} seleccionado`)
+        
+        // Limpiar orderId global ya que no se usará Culqi
+        delete window.vialineOrderId
         
         clearCart()
         toast.success('Orden creada exitosamente')
