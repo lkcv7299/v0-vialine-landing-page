@@ -71,7 +71,7 @@ export default function ConfirmacionContent() {
             ¡Gracias por tu compra!
           </h1>
           <p className="text-lg text-neutral-600">
-            Tu orden ha sido recibida y está siendo procesada
+            Tu orden ha sido recibida exitosamente
           </p>
         </div>
 
@@ -161,35 +161,19 @@ export default function ConfirmacionContent() {
 
         <div className="flex flex-col sm:flex-row gap-3">
           <Link
-            href="/mujer"
+            href={`/orden/${orderId}`}
             className="flex-1 text-center px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-700 transition"
+          >
+            Ver estado de mi pedido
+          </Link>
+          <Link
+            href="/mujer"
+            className="flex-1 text-center px-6 py-3 border-2 border-rose-600 text-rose-600 rounded-lg font-semibold hover:bg-rose-50 transition"
           >
             Seguir comprando
           </Link>
-          <a
-            href="https://wa.me/51972327236"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-1 text-center px-6 py-3 bg-white border-2 border-neutral-300 text-neutral-900 rounded-lg font-semibold hover:bg-neutral-50 transition"
-          >
-            Contactar por WhatsApp
-          </a>
         </div>
 
-        <div className="mt-8 text-center text-sm text-neutral-600">
-          <p className="mb-2">¿Tienes dudas sobre tu pedido?</p>
-          <div className="flex justify-center gap-6">
-            <Link href="/pages/envios-y-devoluciones" className="hover:text-rose-600 underline">
-              Envíos
-            </Link>
-            <Link href="/pages/envios-y-devoluciones" className="hover:text-rose-600 underline">
-              Cambios y devoluciones
-            </Link>
-            <Link href="https://wa.me/51972327236" className="hover:text-rose-600 underline">
-              Soporte
-            </Link>
-          </div>
-        </div>
       </div>
     </div>
   )
