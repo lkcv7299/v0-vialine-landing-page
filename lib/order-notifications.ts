@@ -37,15 +37,14 @@ type OrderData = {
  * Envía email de notificación al ADMIN (tú)
  */
 export async function sendAdminNotification(orderData: OrderData): Promise<boolean> {
-  const BREVO_API_KEY = process.env.NEXT_PUBLIC_BREVO_API_KEY
+  const BREVO_API_KEY = process.env.BREVO_API_KEY || process.env.NEXT_PUBLIC_BREVO_API_KEY
 
   if (!BREVO_API_KEY) {
-    console.error("❌ BREVO API KEY no configurada")
+    console.error("❌ BREVO_API_KEY no configurada")
     return false
   }
 
   try {
-    // Email HTML para el admin
     const adminEmailHTML = `
       <!DOCTYPE html>
       <html>
@@ -150,7 +149,8 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
       </html>
     `
 
-    // ⚠️ CAMBIAR ESTE EMAIL POR TU EMAIL REAL
+    console.log("📤 Enviando email al admin...")
+
     const response = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
       headers: {
@@ -160,12 +160,12 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
       },
       body: JSON.stringify({
         sender: {
-          name: "Vialine - Sistema de Órdenes",
-          email: "no-reply@trials.brevo.com"
+          name: "Vialine",
+          email: "no-reply@vialineperu.com"  // ✅ Dominio autenticado
         },
         to: [
           {
-            email: "osinpacha@gmail.com", // ⚠️ CAMBIAR POR TU EMAIL REAL
+            email: "osinpacha@gmail.com",
             name: "Admin Vialine"
           }
         ],
@@ -175,11 +175,11 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
     })
 
     if (response.ok) {
-      console.log("✅ Email enviado al admin correctamente")
+      console.log("✅ Email al admin enviado correctamente")
       return true
     } else {
-      const error = await response.text()
-      console.error("❌ Error enviando email al admin:", error)
+      const errorText = await response.text()
+      console.error("❌ Error enviando email al admin:", errorText)
       return false
     }
   } catch (error) {
@@ -192,10 +192,10 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
  * Envía email de confirmación al CLIENTE
  */
 export async function sendCustomerConfirmation(orderData: OrderData): Promise<boolean> {
-  const BREVO_API_KEY = process.env.NEXT_PUBLIC_BREVO_API_KEY
+  const BREVO_API_KEY = process.env.BREVO_API_KEY || process.env.NEXT_PUBLIC_BREVO_API_KEY
 
   if (!BREVO_API_KEY) {
-    console.error("❌ BREVO API KEY no configurada")
+    console.error("❌ BREVO_API_KEY no configurada")
     return false
   }
 
@@ -278,6 +278,8 @@ export async function sendCustomerConfirmation(orderData: OrderData): Promise<bo
       </html>
     `
 
+    console.log("📤 Enviando email al cliente...")
+
     const response = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
       headers: {
@@ -288,7 +290,7 @@ export async function sendCustomerConfirmation(orderData: OrderData): Promise<bo
       body: JSON.stringify({
         sender: {
           name: "Vialine",
-          email: "no-reply@trials.brevo.com"
+          email: "no-reply@vialineperu.com"  // ✅ Dominio autenticado
         },
         to: [
           {
@@ -302,11 +304,11 @@ export async function sendCustomerConfirmation(orderData: OrderData): Promise<bo
     })
 
     if (response.ok) {
-      console.log("✅ Email enviado al cliente correctamente")
+      console.log("✅ Email al cliente enviado correctamente")
       return true
     } else {
-      const error = await response.text()
-      console.error("❌ Error enviando email al cliente:", error)
+      const errorText = await response.text()
+      console.error("❌ Error enviando email al cliente:", errorText)
       return false
     }
   } catch (error) {
