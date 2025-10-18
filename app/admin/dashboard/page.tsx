@@ -11,7 +11,7 @@ type Order = {
   customer_last_name: string
   customer_email: string
   customer_phone: string
-  total: number
+  total: string | number  // ✅ Puede venir como string desde PostgreSQL
   status: string
   payment_method: string
   payment_status: string
@@ -75,7 +75,7 @@ export default function AdminDashboard() {
       })
 
       if (response.ok) {
-        loadOrders() // Recargar órdenes
+        loadOrders()
         alert("Estado actualizado exitosamente")
       } else {
         alert("Error al actualizar el estado")
@@ -84,6 +84,12 @@ export default function AdminDashboard() {
       console.error("Error actualizando estado:", error)
       alert("Error al actualizar el estado")
     }
+  }
+
+  // ✅ HELPER: Parsear número seguro
+  const parseNumber = (value: string | number): number => {
+    if (typeof value === 'number') return value
+    return parseFloat(value) || 0
   }
 
   // Filtrar órdenes
@@ -215,7 +221,6 @@ export default function AdminDashboard() {
         {/* Filtros */}
         <div className="bg-white rounded-xl shadow-sm border border-neutral-200 p-6 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Búsqueda */}
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
               <input
@@ -227,7 +232,6 @@ export default function AdminDashboard() {
               />
             </div>
 
-            {/* Filtro por estado */}
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
@@ -289,7 +293,10 @@ export default function AdminDashboard() {
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <p className="font-semibold text-neutral-900">S/ {order.total.toFixed(2)}</p>
+                        {/* ✅ PARSEANDO NÚMERO CORRECTAMENTE */}
+                        <p className="font-semibold text-neutral-900">
+                          S/ {parseNumber(order.total).toFixed(2)}
+                        </p>
                         <p className="text-xs text-neutral-600 capitalize">{order.payment_method}</p>
                       </td>
                       <td className="px-6 py-4">
@@ -349,8 +356,9 @@ export default function AdminDashboard() {
                             </p>
                             <p className="text-sm text-neutral-600">Cantidad: {item.quantity}</p>
                           </div>
+                          {/* ✅ PARSEANDO NÚMEROS CORRECTAMENTE */}
                           <p className="font-semibold text-neutral-900">
-                            S/ {(item.productPrice * item.quantity).toFixed(2)}
+                            S/ {(parseNumber(item.productPrice) * item.quantity).toFixed(2)}
                           </p>
                         </div>
                       ))}

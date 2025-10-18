@@ -34,7 +34,7 @@ type OrderData = {
 }
 
 /**
- * Envía email de notificación al ADMIN (tú)
+ * Envía email de notificación al ADMIN (orden PENDIENTE)
  */
 export async function sendAdminNotification(orderData: OrderData): Promise<boolean> {
   const BREVO_API_KEY = process.env.BREVO_API_KEY || process.env.NEXT_PUBLIC_BREVO_API_KEY
@@ -54,7 +54,7 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
         <style>
           body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
           .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-          .header { background: #e11d48; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+          .header { background: #f59e0b; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
           .content { background: #f9fafb; padding: 30px; border-radius: 0 0 8px 8px; }
           .order-info { background: white; padding: 20px; border-radius: 8px; margin: 20px 0; }
           .item { border-bottom: 1px solid #e5e7eb; padding: 15px 0; }
@@ -62,86 +62,87 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
           .total { font-size: 20px; font-weight: bold; color: #e11d48; margin-top: 20px; }
           .label { font-weight: bold; color: #6b7280; }
           .value { color: #111827; }
-          .urgent { background: #fef2f2; border-left: 4px solid #e11d48; padding: 15px; margin: 20px 0; }
+          .urgent { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; margin: 20px 0; }
           .button { display: inline-block; background: #e11d48; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; margin: 10px 0; }
         </style>
       </head>
       <body>
         <div class="container">
           <div class="header">
-            <h1>🎉 ¡NUEVA ORDEN RECIBIDA!</h1>
+            <h1>⏳ NUEVA ORDEN PENDIENTE</h1>
             <p style="margin: 0;">Orden #${orderData.orderId}</p>
           </div>
           
           <div class="content">
             <div class="urgent">
-              <h3 style="margin-top: 0;">⚡ ACCIÓN REQUERIDA</h3>
-              <p>Tienes una nueva orden que requiere atención inmediata.</p>
-              <a href="https://wa.me/${orderData.customer.phone.replace(/\D/g, '')}" class="button" style="color: white; text-decoration: none;">
-                📱 Contactar Cliente por WhatsApp
-              </a>
+              <h3 style="margin-top: 0;">⚠️ PENDIENTE DE PAGO</h3>
+              <p>Esta orden fue creada pero el cliente AÚN NO ha completado el pago. Recibirás otro email cuando el pago se confirme.</p>
             </div>
 
             <div class="order-info">
-              <h3 style="margin-top: 0;">👤 Información del Cliente</h3>
+              <h2 style="margin-top: 0; color: #e11d48;">Información del Cliente</h2>
               <p><span class="label">Nombre:</span> <span class="value">${orderData.customer.firstName} ${orderData.customer.lastName}</span></p>
               <p><span class="label">Email:</span> <span class="value">${orderData.customer.email}</span></p>
               <p><span class="label">Teléfono:</span> <span class="value">${orderData.customer.phone}</span></p>
             </div>
 
             <div class="order-info">
-              <h3 style="margin-top: 0;">📦 Dirección de Envío</h3>
-              <p><span class="label">Dirección:</span> <span class="value">${orderData.shippingAddress.address}</span></p>
-              <p><span class="label">Distrito:</span> <span class="value">${orderData.shippingAddress.district}</span></p>
-              <p><span class="label">Ciudad:</span> <span class="value">${orderData.shippingAddress.city}</span></p>
-              ${orderData.shippingAddress.postalCode ? `<p><span class="label">Código Postal:</span> <span class="value">${orderData.shippingAddress.postalCode}</span></p>` : ''}
-              ${orderData.shippingAddress.reference ? `<p><span class="label">Referencia:</span> <span class="value">${orderData.shippingAddress.reference}</span></p>` : ''}
+              <h2 style="margin-top: 0; color: #e11d48;">Dirección de Envío</h2>
+              <p class="value">
+                ${orderData.shippingAddress.address}<br>
+                ${orderData.shippingAddress.district}, ${orderData.shippingAddress.city}<br>
+                CP: ${orderData.shippingAddress.postalCode}
+              </p>
+              ${orderData.shippingAddress.reference ? `<p><span class="label">Referencia:</span> ${orderData.shippingAddress.reference}</p>` : ''}
             </div>
 
             <div class="order-info">
-              <h3 style="margin-top: 0;">🛍️ Productos</h3>
+              <h2 style="margin-top: 0; color: #e11d48;">Productos</h2>
               ${orderData.items.map(item => `
                 <div class="item">
                   <p style="margin: 0; font-weight: bold;">${item.productTitle}</p>
-                  <p style="margin: 5px 0; color: #6b7280; font-size: 14px;">
+                  <p style="margin: 5px 0 0 0; color: #6b7280; font-size: 14px;">
                     Color: ${item.selectedColor} | Talla: ${item.selectedSize} | Cantidad: ${item.quantity}
                   </p>
-                  <p style="margin: 0; color: #e11d48; font-weight: bold;">S/ ${item.productPrice.toFixed(2)} c/u</p>
+                  <p style="margin: 5px 0 0 0; font-weight: bold; color: #e11d48;">
+                    S/ ${(item.productPrice * item.quantity).toFixed(2)}
+                  </p>
                 </div>
               `).join('')}
-              
-              <p style="margin-top: 15px;"><span class="label">Subtotal:</span> <span class="value">S/ ${orderData.subtotal.toFixed(2)}</span></p>
-              <p><span class="label">Envío:</span> <span class="value">${orderData.shippingCost === 0 ? '¡GRATIS!' : `S/ ${orderData.shippingCost.toFixed(2)}`}</span></p>
-              <p class="total">TOTAL: S/ ${orderData.total.toFixed(2)}</p>
-              <p style="margin-top: 10px;">
-                <span class="label">Método de pago:</span> 
-                <span class="value" style="font-weight: bold;">
-                  ${orderData.paymentMethod === 'culqi' ? '💳 Tarjeta (Culqi)' : 
-                    orderData.paymentMethod === 'yape' ? '📱 Yape' : 
-                    '💵 Contra entrega'}
-                </span>
-              </p>
-              ${orderData.notes ? `<p style="background: #fef3c7; padding: 10px; border-radius: 4px; margin-top: 10px;"><span class="label">Notas:</span> ${orderData.notes}</p>` : ''}
+
+              <div style="margin-top: 20px; padding-top: 20px; border-top: 2px solid #e5e7eb;">
+                <p style="display: flex; justify-content: space-between; margin: 5px 0;">
+                  <span class="label">Subtotal:</span>
+                  <span class="value">S/ ${orderData.subtotal.toFixed(2)}</span>
+                </p>
+                <p style="display: flex; justify-content: space-between; margin: 5px 0;">
+                  <span class="label">Envío:</span>
+                  <span class="value">${orderData.shippingCost === 0 ? 'GRATIS' : `S/ ${orderData.shippingCost.toFixed(2)}`}</span>
+                </p>
+                <p class="total" style="display: flex; justify-content: space-between; margin: 15px 0 0 0;">
+                  <span>TOTAL:</span>
+                  <span>S/ ${orderData.total.toFixed(2)}</span>
+                </p>
+              </div>
             </div>
-            
-            <div class="urgent">
-              <h3 style="margin-top: 0;">📋 Siguiente paso:</h3>
-              <ol style="margin: 10px 0;">
-                <li>Contacta al cliente por WhatsApp (botón arriba)</li>
-                <li>Confirma la dirección y coordina entrega</li>
-                <li>Prepara el pedido</li>
-                <li>${orderData.paymentMethod === 'contraentrega' ? 'Cliente paga al recibir' : 
-                     orderData.paymentMethod === 'yape' ? 'Envía QR de Yape al cliente' : 
-                     'Pago con tarjeta ya procesado'}</li>
-              </ol>
+
+            <div class="order-info">
+              <h2 style="margin-top: 0; color: #e11d48;">Método de Pago</h2>
+              <p class="value" style="text-transform: capitalize;">${orderData.paymentMethod}</p>
+              ${orderData.notes ? `
+                <h2 style="margin-top: 20px; color: #e11d48;">Notas del Cliente</h2>
+                <p class="value">${orderData.notes}</p>
+              ` : ''}
             </div>
-            
-            <p style="text-align: center; color: #6b7280; margin-top: 30px; font-size: 14px;">
-              Orden recibida: ${new Date(orderData.createdAt).toLocaleString('es-PE', { 
-                dateStyle: 'full', 
-                timeStyle: 'short',
-                timeZone: 'America/Lima'
-              })}
+
+            <div style="text-align: center; margin: 30px 0;">
+              <a href="${process.env.NEXT_PUBLIC_SITE_URL || 'https://vialineperu.com'}/admin/dashboard" class="button" style="color: white; text-decoration: none;">
+                Ver en Dashboard Admin
+              </a>
+            </div>
+
+            <p style="text-align: center; color: #6b7280; font-size: 14px;">
+              Fecha de orden: ${new Date(orderData.createdAt).toLocaleString('es-PE')}
             </p>
           </div>
         </div>
@@ -149,7 +150,7 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
       </html>
     `
 
-    console.log("📤 Enviando email al admin...")
+    console.log("📤 Enviando email al admin (orden pendiente)...")
 
     const response = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
@@ -161,7 +162,7 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
       body: JSON.stringify({
         sender: {
           name: "Vialine",
-          email: "no-reply@vialineperu.com"  // ✅ Dominio autenticado
+          email: "no-reply@vialineperu.com"
         },
         to: [
           {
@@ -169,7 +170,7 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
             name: "Admin Vialine"
           }
         ],
-        subject: `🎉 Nueva Orden #${orderData.orderId} - S/ ${orderData.total.toFixed(2)}`,
+        subject: `⏳ Nueva Orden PENDIENTE #${orderData.orderId} - S/ ${orderData.total.toFixed(2)}`,
         htmlContent: adminEmailHTML,
       }),
     })
@@ -189,7 +190,7 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
 }
 
 /**
- * Envía email de confirmación al CLIENTE
+ * Envía email de confirmación al CLIENTE (cuando paga)
  */
 export async function sendCustomerConfirmation(orderData: OrderData): Promise<boolean> {
   const BREVO_API_KEY = process.env.BREVO_API_KEY || process.env.NEXT_PUBLIC_BREVO_API_KEY
@@ -225,44 +226,42 @@ export async function sendCustomerConfirmation(orderData: OrderData): Promise<bo
           
           <div class="content">
             <p>Hola <strong>${orderData.customer.firstName}</strong>,</p>
-            <p>¡Recibimos tu pedido correctamente! Nos pondremos en contacto contigo muy pronto para coordinar la entrega.</p>
+            <p>¡Recibimos tu pedido y tu pago fue confirmado exitosamente! 🎊</p>
             
             <div class="order-box">
-              <h3 style="margin-top: 0;">📦 Resumen de tu orden</h3>
+              <h2 style="color: #e11d48; margin-top: 0;">Resumen de tu Orden</h2>
               ${orderData.items.map(item => `
                 <div class="item">
                   <p style="margin: 0; font-weight: bold;">${item.productTitle}</p>
                   <p style="margin: 5px 0; color: #6b7280; font-size: 14px;">
-                    Color: ${item.selectedColor} | Talla: ${item.selectedSize} | Cantidad: ${item.quantity}
+                    ${item.selectedColor} | Talla ${item.selectedSize} | Cantidad: ${item.quantity}
                   </p>
-                  <p style="margin: 0;">S/ ${item.productPrice.toFixed(2)} c/u</p>
+                  <p style="margin: 5px 0; font-weight: bold;">S/ ${(item.productPrice * item.quantity).toFixed(2)}</p>
                 </div>
               `).join('')}
               
-              <p style="margin-top: 15px; padding-top: 15px; border-top: 2px solid #e5e7eb;">
-                Subtotal: S/ ${orderData.subtotal.toFixed(2)}
-              </p>
-              <p>Envío: ${orderData.shippingCost === 0 ? '¡GRATIS!' : `S/ ${orderData.shippingCost.toFixed(2)}`}</p>
-              <p class="total">TOTAL: S/ ${orderData.total.toFixed(2)}</p>
+              <div class="total">
+                TOTAL: S/ ${orderData.total.toFixed(2)}
+              </div>
             </div>
-            
-            <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
-              <h3 style="margin-top: 0;">📍 Envío a:</h3>
-              <p style="margin: 5px 0;">${orderData.shippingAddress.address}</p>
-              <p style="margin: 5px 0;">${orderData.shippingAddress.district}, ${orderData.shippingAddress.city}</p>
-              ${orderData.shippingAddress.reference ? `<p style="margin: 5px 0; color: #6b7280;">Ref: ${orderData.shippingAddress.reference}</p>` : ''}
-            </div>
-            
-            <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 15px; border-radius: 4px; margin: 20px 0;">
-              <h3 style="margin-top: 0;">⏱️ ¿Cuándo recibiré mi pedido?</h3>
-              <ul style="margin: 10px 0; padding-left: 20px;">
-                <li><strong>Lima Metropolitana:</strong> 24-48 horas</li>
-                <li><strong>Provincias:</strong> 3-7 días hábiles</li>
+
+            <div class="order-box">
+              <h2 style="color: #e11d48; margin-top: 0;">¿Qué sigue?</h2>
+              <ol style="padding-left: 20px;">
+                <li style="margin-bottom: 10px;">Preparamos tu pedido con mucho cuidado</li>
+                <li style="margin-bottom: 10px;">Te contactaremos para coordinar la entrega</li>
+                <li style="margin-bottom: 10px;">¡Recibirás tu pedido en la puerta de tu casa!</li>
+              </ol>
+              
+              <p><strong>Tiempo de entrega:</strong></p>
+              <ul style="list-style: none; padding: 0;">
+                <li>📍 Lima: 24-48 horas</li>
+                <li>📍 Provincias: 3-7 días hábiles</li>
               </ul>
             </div>
-            
-            <div style="text-align: center; margin: 30px 0;">
-              <a href="https://wa.me/51972327236?text=Hola! Tengo una consulta sobre mi orden ${orderData.orderId}" class="button" style="color: white; text-decoration: none;">
+
+            <div style="text-align: center;">
+              <a href="https://wa.me/51972327236?text=Hola, tengo una consulta sobre mi orden ${orderData.orderId}" class="button" style="color: white; text-decoration: none;">
                 💬 Contactar por WhatsApp
               </a>
             </div>
@@ -278,7 +277,7 @@ export async function sendCustomerConfirmation(orderData: OrderData): Promise<bo
       </html>
     `
 
-    console.log("📤 Enviando email al cliente...")
+    console.log("📤 Enviando email al cliente (pago confirmado)...")
 
     const response = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
@@ -290,7 +289,7 @@ export async function sendCustomerConfirmation(orderData: OrderData): Promise<bo
       body: JSON.stringify({
         sender: {
           name: "Vialine",
-          email: "no-reply@vialineperu.com"  // ✅ Dominio autenticado
+          email: "no-reply@vialineperu.com"
         },
         to: [
           {
@@ -298,7 +297,7 @@ export async function sendCustomerConfirmation(orderData: OrderData): Promise<bo
             name: `${orderData.customer.firstName} ${orderData.customer.lastName}`
           }
         ],
-        subject: `✅ Orden Confirmada #${orderData.orderId} - Vialine`,
+        subject: `✅ ¡Pago Confirmado! Orden #${orderData.orderId} - Vialine`,
         htmlContent: customerEmailHTML,
       }),
     })

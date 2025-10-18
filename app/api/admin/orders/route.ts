@@ -2,21 +2,45 @@ import { NextRequest, NextResponse } from "next/server"
 import { sql } from "@vercel/postgres"
 import { sendOrderStatusEmail } from "@/lib/order-status-email"
 
-// GET - Obtener todas las órdenes
+// GET - Obtener todas las órdenes CON sus items
 export async function GET(request: NextRequest) {
   try {
     console.log("📦 Consultando todas las órdenes...")
 
-    const result = await sql`
+    // Obtener órdenes
+    const ordersResult = await sql`
       SELECT * FROM orders
       ORDER BY created_at DESC
     `
 
-    console.log(`✅ Se encontraron ${result.rows.length} órdenes`)
+    // Para cada orden, obtener sus items
+    const ordersWithItems = await Promise.all(
+      ordersResult.rows.map(async (order) => {
+        const itemsResult = await sql`
+          SELECT * FROM order_items
+          WHERE order_id = ${order.order_id}
+        `
+        
+        return {
+          ...order,
+          items: itemsResult.rows.map((item: any) => ({
+            productTitle: item.product_title,
+            productPrice: parseFloat(item.product_price),
+            quantity: item.quantity,
+            selectedColor: item.selected_color,
+            selectedSize: item.selected_size,
+            productImage: item.product_image,
+            productSlug: item.product_slug
+          }))
+        }
+      })
+    )
+
+    console.log(`✅ Se encontraron ${ordersWithItems.length} órdenes`)
 
     return NextResponse.json({
       success: true,
-      orders: result.rows
+      orders: ordersWithItems
     })
 
   } catch (error) {

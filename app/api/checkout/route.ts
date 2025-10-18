@@ -92,7 +92,7 @@ async function saveOrderToDatabase(orderData: CheckoutRequest & { orderId: strin
       )
     `
 
-    // Insertar items de la orden
+    // Insertar items de la orden en tabla separada
     for (const item of orderData.items) {
       await sql`
         INSERT INTO order_items (
@@ -120,9 +120,8 @@ async function saveOrderToDatabase(orderData: CheckoutRequest & { orderId: strin
     }
 
     console.log(`✅ Orden ${orderData.orderId} guardada exitosamente`)
-    return true
   } catch (error) {
-    console.error("❌ Error guardando orden en base de datos:", error)
+    console.error(`❌ Error guardando orden ${orderData.orderId}:`, error)
     throw error
   }
 }
@@ -159,11 +158,10 @@ export async function POST(request: NextRequest) {
     await saveOrderToDatabase(orderData)
 
     // ====================================
-    // 📧 ENVIAR EMAILS AUTOMÁTICAMENTE
+    // 📧 SOLO EMAIL AL ADMIN (Nueva orden pendiente)
     // ====================================
-    console.log(`📧 Enviando notificaciones por email...`)
+    console.log(`📧 Enviando notificación al admin...`)
     
-    // Preparar datos para las funciones de email
     const emailData = {
       orderId: orderData.orderId,
       customer: orderData.customer,
@@ -183,7 +181,7 @@ export async function POST(request: NextRequest) {
       createdAt: orderData.createdAt,
     }
 
-    // Enviar emails de forma asíncrona (no bloquea la respuesta)
+    // ✅ Solo enviar email al admin (orden pendiente)
     sendAdminNotification(emailData)
       .then(success => {
         if (success) {
@@ -194,17 +192,9 @@ export async function POST(request: NextRequest) {
       })
       .catch(err => console.error(`❌ Error email admin:`, err))
 
-    sendCustomerConfirmation(emailData)
-      .then(success => {
-        if (success) {
-          console.log(`✅ Email al cliente enviado - Orden ${orderId}`)
-        } else {
-          console.log(`⚠️ No se pudo enviar email al cliente - Orden ${orderId}`)
-        }
-      })
-      .catch(err => console.error(`❌ Error email cliente:`, err))
+    // ❌ NO enviar email al cliente todavía (esperar confirmación de pago)
 
-    // Retornar respuesta inmediata (no esperar emails)
+    // Retornar respuesta inmediata
     return NextResponse.json({
       success: true,
       orderId: orderId,
@@ -221,7 +211,7 @@ export async function POST(request: NextRequest) {
 }
 
 // ====================================
-// PATCH - ACTUALIZAR ORDEN
+// PATCH - ACTUALIZAR ORDEN (Después del pago)
 // ====================================
 export async function PATCH(request: NextRequest) {
   try {
@@ -237,6 +227,29 @@ export async function PATCH(request: NextRequest) {
 
     console.log(`🔄 Actualizando orden ${orderId}...`)
 
+    // Obtener datos de la orden para enviar email
+    const orderResult = await sql`
+      SELECT * FROM orders
+      WHERE order_id = ${orderId}
+      LIMIT 1
+    `
+
+    if (orderResult.rows.length === 0) {
+      return NextResponse.json(
+        { error: "Orden no encontrada" },
+        { status: 404 }
+      )
+    }
+
+    const order = orderResult.rows[0]
+
+    // Obtener items de la orden
+    const itemsResult = await sql`
+      SELECT * FROM order_items
+      WHERE order_id = ${orderId}
+    `
+
+    // Actualizar estado en BD
     await sql`
       UPDATE orders
       SET 
@@ -247,7 +260,55 @@ export async function PATCH(request: NextRequest) {
       WHERE order_id = ${orderId}
     `
 
-    console.log(`✅ Orden ${orderId} actualizada`)
+    console.log(`✅ Orden ${orderId} actualizada a status: ${status || 'paid'}`)
+
+    // ====================================
+    // 📧 ENVIAR EMAIL AL CLIENTE (Pago confirmado)
+    // ====================================
+    if (status === 'paid' || !status) {
+      console.log(`📧 Enviando confirmación al cliente...`)
+      
+      const emailData = {
+        orderId: order.order_id,
+        customer: {
+          firstName: order.customer_first_name,
+          lastName: order.customer_last_name,
+          email: order.customer_email,
+          phone: order.customer_phone
+        },
+        shippingAddress: {
+          address: order.shipping_address,
+          district: order.shipping_district,
+          city: order.shipping_city,
+          postalCode: order.shipping_postal_code,
+          reference: order.shipping_reference
+        },
+        items: itemsResult.rows.map((item: any) => ({
+          productTitle: item.product_title,
+          productPrice: parseFloat(item.product_price),
+          quantity: item.quantity,
+          selectedColor: item.selected_color,
+          selectedSize: item.selected_size
+        })),
+        subtotal: parseFloat(order.subtotal),
+        shippingCost: parseFloat(order.shipping_cost),
+        total: parseFloat(order.total),
+        paymentMethod: order.payment_method,
+        notes: order.notes,
+        createdAt: order.created_at
+      }
+
+      // ✅ Ahora SÍ enviar email al cliente (pago confirmado)
+      sendCustomerConfirmation(emailData)
+        .then(success => {
+          if (success) {
+            console.log(`✅ Email de confirmación enviado al cliente - Orden ${orderId}`)
+          } else {
+            console.log(`⚠️ No se pudo enviar email al cliente - Orden ${orderId}`)
+          }
+        })
+        .catch(err => console.error(`❌ Error email cliente:`, err))
+    }
 
     return NextResponse.json({
       success: true,
