@@ -49,23 +49,28 @@ function applyFilters(items: Product[], q: { get: (k: string) => string | null; 
   return out
 }
 
-export default function FabricPage({
+// ✅ CAMBIO CRÍTICO: Hacer la función async y await params y searchParams
+export default async function FabricPage({
   params,
   searchParams,
 }: {
-  params: { slug: string }
-  searchParams?: Record<string, string | string[]>
+  params: Promise<{ slug: string }>
+  searchParams: Promise<Record<string, string | string[]> | undefined>
 }) {
-  const fabric = params.slug as FabricSlug
+  // ✅ AWAIT params y searchParams (Next.js 15)
+  const { slug } = await params
+  const search = await searchParams
+  
+  const fabric = slug as FabricSlug
   const fabricInfo = FABRIC_LOOKUP[fabric]
   if (!fabricInfo) return notFound()
 
   const baseProducts = byFabric(fabric)
 
   const filteredProducts = applyFilters(baseProducts, {
-    get: (k) => (searchParams?.[k] as string) ?? null,
+    get: (k) => (search?.[k] as string) ?? null,
     getAll: (k) => {
-      const v = searchParams?.[k]
+      const v = search?.[k]
       return Array.isArray(v) ? v : v ? [v] : []
     },
   })
@@ -83,7 +88,7 @@ export default function FabricPage({
 
       <div className="grid lg:grid-cols-4 gap-8">
         <aside className="lg:col-span-1">
-          <ProductFilters />
+          <ProductFilters totalProducts={0} filteredCount={0} />
         </aside>
         <div className="lg:col-span-3">
           <ProductGrid items={filteredProducts} />

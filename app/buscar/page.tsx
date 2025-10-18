@@ -1,8 +1,16 @@
 import ProductCard from "@/components/ProductCard"
 import { searchProducts } from "@/lib/search"
 
-export default function Page({ searchParams }: { searchParams: { q?: string } }) {
-  const q = (searchParams.q || "").toString().trim().toLowerCase()
+// ✅ CAMBIO CRÍTICO: Hacer la función async y await searchParams
+export default async function Page({ 
+  searchParams 
+}: { 
+  searchParams: Promise<{ q?: string }> 
+}) {
+  // ✅ AWAIT searchParams (Next.js 15)
+  const params = await searchParams
+  
+  const q = (params.q || "").toString().trim().toLowerCase()
   const list = q ? searchProducts(q) : []
 
   return (

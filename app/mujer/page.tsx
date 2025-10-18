@@ -60,9 +60,17 @@ function apply(items: Product[], q: Record<string, string | string[] | undefined
   return out
 }
 
-export default function Page({ searchParams }: { searchParams: Record<string, string | string[] | undefined> }) {
+// ✅ CAMBIO CRÍTICO: Hacer la función async y await searchParams
+export default async function Page({ 
+  searchParams 
+}: { 
+  searchParams: Promise<Record<string, string | string[] | undefined>> 
+}) {
+  // ✅ AWAIT searchParams (Next.js 15)
+  const params = await searchParams
+  
   const base = byAudience("mujer")
-  const items = apply(base, searchParams)
+  const items = apply(base, params)
   
   return (
     <main className="mx-auto max-w-7xl px-6 md:px-8 py-8">
