@@ -76,47 +76,42 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
           
           <div class="content">
             <div class="urgent">
-              <strong>⚡ ACCIÓN REQUERIDA:</strong> Contactar al cliente y preparar pedido
+              <h3 style="margin-top: 0;">⚡ ACCIÓN REQUERIDA</h3>
+              <p>Tienes una nueva orden que requiere atención inmediata.</p>
+              <a href="https://wa.me/${orderData.customer.phone.replace(/\D/g, '')}" class="button" style="color: white; text-decoration: none;">
+                📱 Contactar Cliente por WhatsApp
+              </a>
             </div>
-            
-            <!-- INFORMACIÓN DEL CLIENTE -->
+
             <div class="order-info">
-              <h2 style="margin-top: 0; color: #e11d48;">👤 Cliente</h2>
+              <h3 style="margin-top: 0;">👤 Información del Cliente</h3>
               <p><span class="label">Nombre:</span> <span class="value">${orderData.customer.firstName} ${orderData.customer.lastName}</span></p>
               <p><span class="label">Email:</span> <span class="value">${orderData.customer.email}</span></p>
               <p><span class="label">Teléfono:</span> <span class="value">${orderData.customer.phone}</span></p>
-              <a href="https://wa.me/51${orderData.customer.phone.replace(/\D/g, '')}" class="button" target="_blank">
-                📱 Contactar por WhatsApp
-              </a>
             </div>
-            
-            <!-- DIRECCIÓN DE ENVÍO -->
+
             <div class="order-info">
-              <h2 style="margin-top: 0; color: #e11d48;">🏠 Dirección de Envío</h2>
-              <p><span class="value">${orderData.shippingAddress.address}</span></p>
-              <p><span class="value">${orderData.shippingAddress.district}, ${orderData.shippingAddress.city}</span></p>
-              ${orderData.shippingAddress.postalCode ? `<p><span class="label">Código postal:</span> ${orderData.shippingAddress.postalCode}</p>` : ''}
-              ${orderData.shippingAddress.reference ? `<p><span class="label">Referencia:</span> ${orderData.shippingAddress.reference}</p>` : ''}
+              <h3 style="margin-top: 0;">📦 Dirección de Envío</h3>
+              <p><span class="label">Dirección:</span> <span class="value">${orderData.shippingAddress.address}</span></p>
+              <p><span class="label">Distrito:</span> <span class="value">${orderData.shippingAddress.district}</span></p>
+              <p><span class="label">Ciudad:</span> <span class="value">${orderData.shippingAddress.city}</span></p>
+              ${orderData.shippingAddress.postalCode ? `<p><span class="label">Código Postal:</span> <span class="value">${orderData.shippingAddress.postalCode}</span></p>` : ''}
+              ${orderData.shippingAddress.reference ? `<p><span class="label">Referencia:</span> <span class="value">${orderData.shippingAddress.reference}</span></p>` : ''}
             </div>
-            
-            <!-- PRODUCTOS -->
+
             <div class="order-info">
-              <h2 style="margin-top: 0; color: #e11d48;">🛍️ Productos (${orderData.items.length})</h2>
+              <h3 style="margin-top: 0;">🛍️ Productos</h3>
               ${orderData.items.map(item => `
                 <div class="item">
                   <p style="margin: 0; font-weight: bold;">${item.productTitle}</p>
-                  <p style="margin: 5px 0; color: #6b7280;">
+                  <p style="margin: 5px 0; color: #6b7280; font-size: 14px;">
                     Color: ${item.selectedColor} | Talla: ${item.selectedSize} | Cantidad: ${item.quantity}
                   </p>
-                  <p style="margin: 0; font-weight: bold; color: #e11d48;">S/ ${item.productPrice.toFixed(2)} × ${item.quantity} = S/ ${(item.productPrice * item.quantity).toFixed(2)}</p>
+                  <p style="margin: 0; color: #e11d48; font-weight: bold;">S/ ${item.productPrice.toFixed(2)} c/u</p>
                 </div>
               `).join('')}
-            </div>
-            
-            <!-- RESUMEN DE PAGO -->
-            <div class="order-info">
-              <h2 style="margin-top: 0; color: #e11d48;">💰 Resumen</h2>
-              <p><span class="label">Subtotal:</span> <span class="value">S/ ${orderData.subtotal.toFixed(2)}</span></p>
+              
+              <p style="margin-top: 15px;"><span class="label">Subtotal:</span> <span class="value">S/ ${orderData.subtotal.toFixed(2)}</span></p>
               <p><span class="label">Envío:</span> <span class="value">${orderData.shippingCost === 0 ? '¡GRATIS!' : `S/ ${orderData.shippingCost.toFixed(2)}`}</span></p>
               <p class="total">TOTAL: S/ ${orderData.total.toFixed(2)}</p>
               <p style="margin-top: 10px;">
@@ -130,7 +125,6 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
               ${orderData.notes ? `<p style="background: #fef3c7; padding: 10px; border-radius: 4px; margin-top: 10px;"><span class="label">Notas:</span> ${orderData.notes}</p>` : ''}
             </div>
             
-            <!-- SIGUIENTE PASO -->
             <div class="urgent">
               <h3 style="margin-top: 0;">📋 Siguiente paso:</h3>
               <ol style="margin: 10px 0;">
@@ -156,7 +150,7 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
       </html>
     `
 
-    // Enviar email al admin
+    // ⚠️ CAMBIAR ESTE EMAIL POR TU EMAIL REAL
     const response = await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
       headers: {
@@ -167,7 +161,7 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
       body: JSON.stringify({
         sender: {
           name: "Vialine - Sistema de Órdenes",
-          email: "no-reply@trials.brevo.com" // Email de prueba de Brevo (funciona siempre)
+          email: "no-reply@trials.brevo.com"
         },
         to: [
           {
@@ -231,45 +225,51 @@ export async function sendCustomerConfirmation(orderData: OrderData): Promise<bo
           
           <div class="content">
             <p>Hola <strong>${orderData.customer.firstName}</strong>,</p>
-            <p>¡Recibimos tu pedido correctamente! 🎊</p>
+            <p>¡Recibimos tu pedido correctamente! Nos pondremos en contacto contigo muy pronto para coordinar la entrega.</p>
             
             <div class="order-box">
-              <h2 style="color: #e11d48; margin-top: 0;">📦 Tu pedido:</h2>
+              <h3 style="margin-top: 0;">📦 Resumen de tu orden</h3>
               ${orderData.items.map(item => `
                 <div class="item">
                   <p style="margin: 0; font-weight: bold;">${item.productTitle}</p>
                   <p style="margin: 5px 0; color: #6b7280; font-size: 14px;">
-                    ${item.selectedColor} • ${item.selectedSize} • Cantidad: ${item.quantity}
+                    Color: ${item.selectedColor} | Talla: ${item.selectedSize} | Cantidad: ${item.quantity}
                   </p>
+                  <p style="margin: 0;">S/ ${item.productPrice.toFixed(2)} c/u</p>
                 </div>
               `).join('')}
               
-              <div class="total">
-                Total: S/ ${orderData.total.toFixed(2)}
-              </div>
+              <p style="margin-top: 15px; padding-top: 15px; border-top: 2px solid #e5e7eb;">
+                Subtotal: S/ ${orderData.subtotal.toFixed(2)}
+              </p>
+              <p>Envío: ${orderData.shippingCost === 0 ? '¡GRATIS!' : `S/ ${orderData.shippingCost.toFixed(2)}`}</p>
+              <p class="total">TOTAL: S/ ${orderData.total.toFixed(2)}</p>
             </div>
             
-            <div class="order-box" style="background: #fef3c7;">
-              <h3 style="margin-top: 0;">📍 Dirección de envío:</h3>
+            <div style="background: white; padding: 20px; border-radius: 8px; margin: 20px 0;">
+              <h3 style="margin-top: 0;">📍 Envío a:</h3>
               <p style="margin: 5px 0;">${orderData.shippingAddress.address}</p>
               <p style="margin: 5px 0;">${orderData.shippingAddress.district}, ${orderData.shippingAddress.city}</p>
+              ${orderData.shippingAddress.reference ? `<p style="margin: 5px 0; color: #6b7280;">Ref: ${orderData.shippingAddress.reference}</p>` : ''}
             </div>
             
-            <div class="order-box" style="background: #dcfce7;">
-              <h3 style="margin-top: 0;">⏱️ Tiempo de entrega:</h3>
-              <p><strong>Lima:</strong> 24-48 horas</p>
-              <p><strong>Provincias:</strong> 3-7 días hábiles</p>
+            <div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 15px; border-radius: 4px; margin: 20px 0;">
+              <h3 style="margin-top: 0;">⏱️ ¿Cuándo recibiré mi pedido?</h3>
+              <ul style="margin: 10px 0; padding-left: 20px;">
+                <li><strong>Lima Metropolitana:</strong> 24-48 horas</li>
+                <li><strong>Provincias:</strong> 3-7 días hábiles</li>
+              </ul>
             </div>
             
-            <div style="text-align: center;">
-              <p><strong>Te contactaremos pronto por WhatsApp para coordinar la entrega 📱</strong></p>
-              <a href="https://wa.me/51972327236" class="button" target="_blank">
-                💬 Contáctanos por WhatsApp
+            <div style="text-align: center; margin: 30px 0;">
+              <a href="https://wa.me/51972327236?text=Hola! Tengo una consulta sobre mi orden ${orderData.orderId}" class="button" style="color: white; text-decoration: none;">
+                💬 Contactar por WhatsApp
               </a>
             </div>
             
-            <p style="text-align: center; color: #6b7280; font-size: 14px; margin-top: 30px;">
-              ¿Dudas? Escríbenos al WhatsApp: +51 972 327 236<br>
+            <p style="text-align: center; color: #6b7280; font-size: 14px;">
+              ¿Tienes dudas?<br>
+              Escríbenos al WhatsApp: +51 972 327 236<br>
               O responde este email
             </p>
           </div>
@@ -288,7 +288,7 @@ export async function sendCustomerConfirmation(orderData: OrderData): Promise<bo
       body: JSON.stringify({
         sender: {
           name: "Vialine",
-          email: "no-reply@trials.brevo.com" // Email de prueba de Brevo (funciona siempre)
+          email: "no-reply@trials.brevo.com"
         },
         to: [
           {

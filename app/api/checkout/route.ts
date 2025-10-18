@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server"
 import { sql } from "@vercel/postgres"
+import { sendAdminNotification, sendCustomerConfirmation } from "@/lib/order-notifications"
 
 // ====================================
-// TYPES
+// TIPOS
 // ====================================
-interface CheckoutRequest {
+type CheckoutRequest = {
   customer: {
     firstName: string
     lastName: string
@@ -15,8 +16,8 @@ interface CheckoutRequest {
     address: string
     district: string
     city: string
-    postalCode?: string
-    reference?: string
+    postalCode: string
+    reference: string
   }
   items: Array<{
     productSlug: string
@@ -30,27 +31,27 @@ interface CheckoutRequest {
   subtotal: number
   shippingCost: number
   total: number
-  paymentMethod: string
-  notes?: string
+  paymentMethod: "culqi" | "yape" | "contraentrega"
+  notes: string
 }
 
 // ====================================
-// GENERAR ORDER ID
+// FUNCIÓN AUXILIAR: Generar Order ID
 // ====================================
 function generateOrderId(): string {
-  const timestamp = Date.now().toString()
-  const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0')
+  const timestamp = Date.now()
+  const random = Math.floor(Math.random() * 10000)
   return `VL${timestamp}${random}`
 }
 
 // ====================================
-// GUARDAR EN BASE DE DATOS
+// FUNCIÓN AUXILIAR: Guardar en BD
 // ====================================
-async function saveOrderToDatabase(orderData: any) {
+async function saveOrderToDatabase(orderData: CheckoutRequest & { orderId: string; createdAt: string; status: string }) {
   try {
     console.log(`💾 Guardando orden ${orderData.orderId} en base de datos...`)
 
-    // 1. Insertar orden principal
+    // Insertar orden principal
     await sql`
       INSERT INTO orders (
         order_id,
@@ -68,7 +69,8 @@ async function saveOrderToDatabase(orderData: any) {
         total,
         payment_method,
         notes,
-        status
+        status,
+        created_at
       ) VALUES (
         ${orderData.orderId},
         ${orderData.customer.firstName},
@@ -78,18 +80,19 @@ async function saveOrderToDatabase(orderData: any) {
         ${orderData.shippingAddress.address},
         ${orderData.shippingAddress.district},
         ${orderData.shippingAddress.city},
-        ${orderData.shippingAddress.postalCode || null},
-        ${orderData.shippingAddress.reference || null},
+        ${orderData.shippingAddress.postalCode},
+        ${orderData.shippingAddress.reference},
         ${orderData.subtotal},
         ${orderData.shippingCost},
         ${orderData.total},
         ${orderData.paymentMethod},
-        ${orderData.notes || null},
-        ${orderData.status}
+        ${orderData.notes},
+        ${orderData.status},
+        ${orderData.createdAt}
       )
     `
 
-    // 2. Insertar items de la orden
+    // Insertar items de la orden
     for (const item of orderData.items) {
       await sql`
         INSERT INTO order_items (
@@ -146,7 +149,7 @@ export async function POST(request: NextRequest) {
     const orderData = {
       ...body,
       orderId,
-      status: "pending_payment", // Estado inicial
+      status: "pending_payment",
       createdAt: new Date().toISOString(),
     }
 
@@ -155,7 +158,53 @@ export async function POST(request: NextRequest) {
     // Guardar en base de datos
     await saveOrderToDatabase(orderData)
 
-    // Retornar respuesta exitosa
+    // ====================================
+    // 📧 ENVIAR EMAILS AUTOMÁTICAMENTE
+    // ====================================
+    console.log(`📧 Enviando notificaciones por email...`)
+    
+    // Preparar datos para las funciones de email
+    const emailData = {
+      orderId: orderData.orderId,
+      customer: orderData.customer,
+      shippingAddress: orderData.shippingAddress,
+      items: orderData.items.map(item => ({
+        productTitle: item.productTitle,
+        productPrice: item.productPrice,
+        quantity: item.quantity,
+        selectedColor: item.selectedColor,
+        selectedSize: item.selectedSize,
+      })),
+      subtotal: orderData.subtotal,
+      shippingCost: orderData.shippingCost,
+      total: orderData.total,
+      paymentMethod: orderData.paymentMethod,
+      notes: orderData.notes,
+      createdAt: orderData.createdAt,
+    }
+
+    // Enviar emails de forma asíncrona (no bloquea la respuesta)
+    sendAdminNotification(emailData)
+      .then(success => {
+        if (success) {
+          console.log(`✅ Email al admin enviado - Orden ${orderId}`)
+        } else {
+          console.log(`⚠️ No se pudo enviar email al admin - Orden ${orderId}`)
+        }
+      })
+      .catch(err => console.error(`❌ Error email admin:`, err))
+
+    sendCustomerConfirmation(emailData)
+      .then(success => {
+        if (success) {
+          console.log(`✅ Email al cliente enviado - Orden ${orderId}`)
+        } else {
+          console.log(`⚠️ No se pudo enviar email al cliente - Orden ${orderId}`)
+        }
+      })
+      .catch(err => console.error(`❌ Error email cliente:`, err))
+
+    // Retornar respuesta inmediata (no esperar emails)
     return NextResponse.json({
       success: true,
       orderId: orderId,
@@ -172,14 +221,13 @@ export async function POST(request: NextRequest) {
 }
 
 // ====================================
-// PATCH - ACTUALIZAR ORDEN (después del pago)
+// PATCH - ACTUALIZAR ORDEN
 // ====================================
 export async function PATCH(request: NextRequest) {
   try {
     const body = await request.json()
     const { orderId, paymentId, status } = body
 
-    // Validar datos requeridos
     if (!orderId) {
       return NextResponse.json(
         { error: "orderId es requerido" },
@@ -188,10 +236,7 @@ export async function PATCH(request: NextRequest) {
     }
 
     console.log(`🔄 Actualizando orden ${orderId}...`)
-    console.log(`   - Payment ID: ${paymentId || 'N/A'}`)
-    console.log(`   - Nuevo status: ${status || 'N/A'}`)
 
-    // Actualizar orden en base de datos
     await sql`
       UPDATE orders
       SET 
@@ -202,7 +247,7 @@ export async function PATCH(request: NextRequest) {
       WHERE order_id = ${orderId}
     `
 
-    console.log(`✅ Orden ${orderId} actualizada exitosamente`)
+    console.log(`✅ Orden ${orderId} actualizada`)
 
     return NextResponse.json({
       success: true,
