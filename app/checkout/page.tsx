@@ -174,7 +174,7 @@ export default function CheckoutPage() {
         
         // Redirigir a página de confirmación
         console.log('🔄 Redirigiendo a confirmación...')
-        router.push(`/confirmacion?orderId=${orderId}`)
+        router.push(`/checkout/confirmacion?orderId=${orderId}`)
       } else {
         throw new Error(result.error || 'Error al procesar el pago')
       }
