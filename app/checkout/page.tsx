@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useCart } from "@/contexts/CartContext"
 import { useForm } from "react-hook-form"
@@ -10,11 +10,21 @@ import Image from "next/image"
 import Link from "next/link"
 import { toast } from "sonner"
 import { ShoppingBag, Truck, CreditCard, ArrowLeft } from "lucide-react"
+import Script from "next/script"
 
 // ====================================
-// SCHEMA DE VALIDACIÓN
+// DECLARACIÓN DE CULQI (TypeScript)
 // ====================================
+declare global {
+  interface Window {
+    Culqi: any
+    culqi: () => void
+  }
+}
 
+// ====================================
+// SCHEMA DE VALIDACIÓN - CORREGIDO
+// ====================================
 const checkoutSchema = z.object({
   // Información personal
   firstName: z.string().min(2, "Nombre debe tener al menos 2 caracteres"),
@@ -25,7 +35,7 @@ const checkoutSchema = z.object({
   // Dirección de envío
   address: z.string().min(10, "Dirección debe tener al menos 10 caracteres"),
   district: z.string().min(2, "Distrito es requerido"),
-  city: z.string().default("Lima"),
+  city: z.string(), // ✅ CORREGIDO: Removido .default() para evitar conflicto de tipos
   postalCode: z.string().optional(),
   reference: z.string().optional(),
   
@@ -43,22 +53,23 @@ type CheckoutFormData = z.infer<typeof checkoutSchema>
 // ====================================
 // COMPONENTE PRINCIPAL
 // ====================================
-
 export default function CheckoutPage() {
   const router = useRouter()
   const { items, total, clearCart } = useCart()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [culqiLoaded, setCulqiLoaded] = useState(false)
 
+  // ✅ CORREGIDO: Removido tipo genérico explícito, dejamos que TypeScript lo infiera
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm<CheckoutFormData>({
+  } = useForm({
     resolver: zodResolver(checkoutSchema),
     defaultValues: {
-      city: "Lima",
-      paymentMethod: "culqi",
+      city: "Lima", // ✅ Ahora el default está AQUÍ, no en el schema
+      paymentMethod: "culqi" as const,
     },
   })
 
@@ -67,6 +78,90 @@ export default function CheckoutPage() {
   // Calcular envío (gratis si > S/269)
   const shippingCost = total >= 269 ? 0 : 15
   const finalTotal = total + shippingCost
+
+  // ====================================
+  // CONFIGURAR CULQI CUANDO SE CARGUE
+  // ====================================
+  useEffect(() => {
+    if (culqiLoaded && window.Culqi) {
+      window.Culqi.publicKey = process.env.NEXT_PUBLIC_CULQI_PUBLIC_KEY || 'pk_test_TU_KEY_AQUI'
+      
+      // Configurar el callback de Culqi
+      window.culqi = function() {
+        if (window.Culqi.token) {
+          const token = window.Culqi.token.id
+          console.log('Token Culqi obtenido:', token)
+          
+          // Enviar token al backend para procesar el cargo
+          processCulqiPayment(token)
+        } else if (window.Culqi.error) {
+          console.error('Error Culqi:', window.Culqi.error)
+          toast.error(window.Culqi.error.user_message || 'Error al procesar el pago')
+          setIsSubmitting(false)
+        }
+      }
+    }
+  }, [culqiLoaded])
+
+  // ====================================
+  // PROCESAR PAGO CON CULQI
+  // ====================================
+  const processCulqiPayment = async (token: string) => {
+    try {
+      const response = await fetch('/api/culqi/charge', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          token,
+          amount: Math.round(finalTotal * 100), // Culqi usa centavos
+          email: watch('email'),
+          orderId: 'VL-' + Date.now(),
+        })
+      })
+
+      const result = await response.json()
+
+      if (result.success) {
+        toast.success('¡Pago exitoso!')
+        clearCart()
+        router.push(`/checkout/confirmacion?orderId=${result.orderId}`)
+      } else {
+        throw new Error(result.error || 'Error al procesar el pago')
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      toast.error('Error al procesar el pago. Por favor intenta nuevamente.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  // ====================================
+  // ABRIR FORMULARIO DE CULQI
+  // ====================================
+  const generateOrderId = () => {
+  const timestamp = Date.now().toString().slice(-8)
+  const random = Math.random().toString(36).substring(2, 6).toUpperCase()
+  return `VL${timestamp}${random}`
+}
+  const openCulqiCheckout = () => {
+    if (!window.Culqi) {
+      toast.error('Error al cargar Culqi. Por favor recarga la página.')
+      setIsSubmitting(false)
+      return
+    }
+
+    // Configurar Culqi Checkout
+    window.Culqi.settings({
+  title: 'Vialine',
+  currency: 'PEN',
+  amount: Math.round(finalTotal * 100),
+  order: generateOrderId(), // ✅ Formato válido
+})
+
+    // Abrir modal de Culqi
+    window.Culqi.open()
+  }
 
   // Si no hay items, redirigir
   if (items.length === 0) {
@@ -87,12 +182,14 @@ export default function CheckoutPage() {
     )
   }
 
-  // Handler del submit
+  // ====================================
+  // HANDLER DEL SUBMIT - ✅ CORREGIDO
+  // ====================================
   const onSubmit = async (data: CheckoutFormData) => {
     setIsSubmitting(true)
     
     try {
-      // Preparar datos de la orden usando TU estructura actual
+      // Preparar datos de la orden
       const orderData = {
         customer: {
           firstName: data.firstName,
@@ -124,65 +221,81 @@ export default function CheckoutPage() {
         createdAt: new Date().toISOString(),
       }
 
-      // Enviar orden al API
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(orderData),
-      })
-
-      if (!response.ok) {
-        throw new Error("Error al procesar la orden")
-      }
-
-      const result = await response.json()
-
-      // Dependiendo del método de pago, redirigir
       if (data.paymentMethod === "culqi") {
-        // Redirigir a Culqi checkout
-        window.location.href = result.paymentUrl
+        // Abrir Culqi Checkout
+        openCulqiCheckout()
       } else if (data.paymentMethod === "yape") {
-        // Mostrar QR de Yape
+        // Guardar orden y mostrar QR de Yape
+        const response = await fetch("/api/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(orderData),
+        })
+
+        if (!response.ok) throw new Error("Error al procesar la orden")
+        
+        const result = await response.json()
         router.push(`/checkout/yape?orderId=${result.orderId}`)
       } else {
-        // Pago contra entrega - ir directo a confirmación
+        // Contra entrega
+        const response = await fetch("/api/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(orderData),
+        })
+
+        if (!response.ok) throw new Error("Error al procesar la orden")
+        
+        const result = await response.json()
         clearCart()
         router.push(`/checkout/confirmacion?orderId=${result.orderId}`)
       }
     } catch (error) {
       console.error("Error:", error)
       toast.error("Hubo un error al procesar tu orden. Por favor intenta nuevamente.")
-    } finally {
       setIsSubmitting(false)
     }
   }
 
   return (
-    <div className="min-h-screen bg-neutral-50 py-8 px-4">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <Link
-            href="/mujer"
-            className="inline-flex items-center text-sm text-neutral-600 hover:text-neutral-900 mb-4"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Seguir comprando
-          </Link>
-          <h1 className="text-3xl font-bold">Checkout</h1>
-        </div>
+    <>
+      {/* CARGAR CULQI DESDE CDN */}
+      <Script
+        src="https://checkout.culqi.com/js/v4"
+        onLoad={() => {
+          console.log('Culqi cargado correctamente')
+          setCulqiLoaded(true)
+        }}
+        onError={() => {
+          console.error('Error al cargar Culqi')
+          toast.error('Error al cargar el sistema de pagos')
+        }}
+      />
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* FORMULARIO - 2 columnas */}
-          <div className="lg:col-span-2">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <div className="min-h-screen bg-neutral-50 py-8 px-4">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="mb-8">
+            <Link
+              href="/carrito"
+              className="inline-flex items-center text-neutral-600 hover:text-neutral-900 mb-4"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Volver al carrito
+            </Link>
+            <h1 className="text-3xl font-bold">Finalizar compra</h1>
+          </div>
+
+          <form onSubmit={handleSubmit(onSubmit)} className="grid lg:grid-cols-3 gap-8">
+            {/* Columna izquierda - Formulario */}
+            <div className="lg:col-span-2 space-y-6">
               {/* Información Personal */}
               <div className="bg-white rounded-xl p-6 shadow-sm border border-neutral-200">
                 <h2 className="text-xl font-semibold mb-4 flex items-center">
                   <span className="w-8 h-8 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center text-sm font-bold mr-3">
                     1
                   </span>
-                  Información personal
+                  Información de contacto
                 </h2>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
@@ -213,7 +326,7 @@ export default function CheckoutPage() {
                       {...register("email")}
                       type="email"
                       className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-                      placeholder="maria@example.com"
+                      placeholder="maria@ejemplo.com"
                     />
                     {errors.email && (
                       <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>
@@ -225,7 +338,7 @@ export default function CheckoutPage() {
                       {...register("phone")}
                       type="tel"
                       className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-                      placeholder="+51 972 327 236"
+                      placeholder="999 999 999"
                     />
                     {errors.phone && (
                       <p className="text-red-600 text-sm mt-1">{errors.phone.message}</p>
@@ -244,7 +357,7 @@ export default function CheckoutPage() {
                 </h2>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2">Dirección *</label>
+                    <label className="block text-sm font-medium mb-2">Dirección completa *</label>
                     <input
                       {...register("address")}
                       className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent"
@@ -358,13 +471,10 @@ export default function CheckoutPage() {
                     <Truck className="w-5 h-5 ml-3 mr-2 text-neutral-600" />
                     <div>
                       <p className="font-medium">Pago contra entrega</p>
-                      <p className="text-sm text-neutral-600">Paga en efectivo al recibir</p>
+                      <p className="text-sm text-neutral-600">Paga cuando recibas tu pedido</p>
                     </div>
                   </label>
                 </div>
-                {errors.paymentMethod && (
-                  <p className="text-red-600 text-sm mt-2">{errors.paymentMethod.message}</p>
-                )}
               </div>
 
               {/* Notas adicionales */}
@@ -375,100 +485,85 @@ export default function CheckoutPage() {
                 <textarea
                   {...register("notes")}
                   rows={3}
-                  className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent"
-                  placeholder="Ej: Horario preferido para entrega"
+                  className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent resize-none"
+                  placeholder="Ej: Tocar timbre, dejar con el portero, etc."
                 />
               </div>
+            </div>
 
-              {/* Botón Submit */}
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full py-4 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? "Procesando..." : `Finalizar compra - S/ ${finalTotal.toFixed(2)}`}
-              </button>
-            </form>
-          </div>
-
-          {/* RESUMEN - 1 columna */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl p-6 shadow-sm border border-neutral-200 sticky top-4">
-              <h2 className="text-xl font-semibold mb-4">Resumen de orden</h2>
-              
-              {/* Items */}
-              <div className="space-y-3 mb-4 max-h-64 overflow-y-auto">
-                {items.map((item, idx) => (
-                  <div key={idx} className="flex gap-3">
-                    <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-neutral-100 flex-shrink-0">
-                      <Image
-                        src={item.product.image || "/placeholder.svg"}
-                        alt={item.product.title}
-                        fill
-                        className="object-cover"
-                      />
-                      <div className="absolute top-0 right-0 bg-rose-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
-                        {item.quantity}
+            {/* Columna derecha - Resumen */}
+            <div className="lg:col-span-1">
+              <div className="bg-white rounded-xl p-6 shadow-sm border border-neutral-200 sticky top-4">
+                <h2 className="text-xl font-semibold mb-4">Resumen del pedido</h2>
+                
+                {/* Productos */}
+                <div className="space-y-3 mb-4 max-h-64 overflow-y-auto">
+                  {items.map((item) => (
+                    <div key={`${item.product.slug}-${item.selectedColor}-${item.selectedSize}`} className="flex gap-3">
+                      <div className="relative w-16 h-16 rounded-lg overflow-hidden bg-neutral-100 flex-shrink-0">
+                        <Image
+                          src={item.product.image}
+                          alt={item.product.title}
+                          fill
+                          className="object-cover"
+                        />
                       </div>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-sm truncate">{item.product.title}</p>
-                      <p className="text-xs text-neutral-600">
-                        {item.selectedColor} / {item.selectedSize}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium truncate">{item.product.title}</p>
+                        <p className="text-xs text-neutral-600">
+                          {item.selectedColor} · {item.selectedSize}
+                        </p>
+                        <p className="text-xs text-neutral-600">Cantidad: {item.quantity}</p>
+                      </div>
+                      <p className="text-sm font-semibold whitespace-nowrap">
+                        S/ {(item.product.price * item.quantity).toFixed(2)}
                       </p>
-                      <p className="text-sm font-semibold">S/ {item.product.price.toFixed(2)}</p>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
 
-              <div className="border-t border-neutral-200 pt-4 space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span>Subtotal</span>
-                  <span>S/ {total.toFixed(2)}</span>
+                {/* Totales */}
+                <div className="border-t border-neutral-200 pt-4 space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-neutral-600">Subtotal</span>
+                    <span className="font-medium">S/ {total.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-neutral-600">Envío</span>
+                    {shippingCost === 0 ? (
+                      <span className="font-medium text-green-600">¡GRATIS!</span>
+                    ) : (
+                      <span className="font-medium">S/ {shippingCost.toFixed(2)}</span>
+                    )}
+                  </div>
+                  <div className="border-t border-neutral-200 pt-2 flex justify-between">
+                    <span className="font-semibold">Total</span>
+                    <span className="text-xl font-bold text-rose-600">
+                      S/ {finalTotal.toFixed(2)}
+                    </span>
+                  </div>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span>Envío</span>
-                  <span className={shippingCost === 0 ? "text-green-600 font-semibold" : ""}>
-                    {shippingCost === 0 ? "¡GRATIS!" : `S/ ${shippingCost.toFixed(2)}`}
-                  </span>
-                </div>
-                {total < 269 && (
-                  <p className="text-xs text-neutral-600">
-                    Agrega S/ {(269 - total).toFixed(2)} más para envío gratis
+
+                {/* Botón de pago */}
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full mt-6 bg-rose-600 text-white py-3 rounded-lg font-semibold hover:bg-rose-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                >
+                  {isSubmitting ? "Procesando..." : "Finalizar compra"}
+                </button>
+
+                {/* Info envío gratis */}
+                {shippingCost > 0 && (
+                  <p className="text-xs text-center text-neutral-500 mt-3">
+                    Envío gratis en compras mayores a S/ 269
                   </p>
                 )}
-                <div className="border-t border-neutral-200 pt-2 flex justify-between font-bold text-lg">
-                  <span>Total</span>
-                  <span>S/ {finalTotal.toFixed(2)}</span>
-                </div>
-              </div>
-
-              {/* Trust badges */}
-              <div className="mt-6 pt-6 border-t border-neutral-200 space-y-3 text-sm">
-                <div className="flex items-center gap-2 text-neutral-600">
-                  <svg className="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span>Pago 100% seguro</span>
-                </div>
-                <div className="flex items-center gap-2 text-neutral-600">
-                  <svg className="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span>Envío 24-48h en Lima</span>
-                </div>
-                <div className="flex items-center gap-2 text-neutral-600">
-                  <svg className="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <span>Cambios y devoluciones fáciles</span>
-                </div>
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
-    </div>
+    </>
   )
 }
