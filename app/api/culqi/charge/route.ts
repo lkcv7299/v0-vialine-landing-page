@@ -1,47 +1,91 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-// IMPORTANTE: Esta es la URL de Culqi API
 const CULQI_API_URL = 'https://api.culqi.com/v2/charges'
 
 export async function POST(request: NextRequest) {
+  console.log('🔔 API /culqi/charge llamada')
+  
   try {
     const body = await request.json()
     const { token, amount, email, orderId } = body
 
-    // Validar datos requeridos
-    if (!token || !amount || !email) {
+    console.log('📥 Datos recibidos:', {
+      token: token ? token.substring(0, 20) + '...' : 'MISSING',
+      amount,
+      email,
+      orderId,
+    })
+
+    // ====================================
+    // VALIDACIONES
+    // ====================================
+    if (!token) {
+      console.error('❌ Token faltante')
       return NextResponse.json(
-        { success: false, error: 'Faltan datos requeridos' },
+        { success: false, error: 'Token de pago es requerido' },
         { status: 400 }
       )
     }
 
-    // Validar que exista la secret key
+    if (!amount || amount <= 0) {
+      console.error('❌ Monto inválido:', amount)
+      return NextResponse.json(
+        { success: false, error: 'Monto inválido' },
+        { status: 400 }
+      )
+    }
+
+    if (!email) {
+      console.error('❌ Email faltante')
+      return NextResponse.json(
+        { success: false, error: 'Email es requerido' },
+        { status: 400 }
+      )
+    }
+
+    // Validar Secret Key
     const secretKey = process.env.CULQI_SECRET_KEY
+    
     if (!secretKey) {
-      console.error('ERROR: CULQI_SECRET_KEY no configurada en .env.local')
+      console.error('❌ CULQI_SECRET_KEY no configurada en variables de entorno')
       return NextResponse.json(
         { success: false, error: 'Configuración de pagos incompleta' },
         { status: 500 }
       )
     }
 
-    // Preparar el cargo a Culqi
+    if (!secretKey.startsWith('sk_test_') && !secretKey.startsWith('sk_live_')) {
+      console.error('❌ Secret Key inválida (debe empezar con sk_test_ o sk_live_)')
+      return NextResponse.json(
+        { success: false, error: 'Configuración de pagos inválida' },
+        { status: 500 }
+      )
+    }
+
+    console.log('✅ Validaciones pasadas')
+    console.log('🔑 Secret Key:', secretKey.substring(0, 15) + '...')
+
+    // ====================================
+    // PREPARAR CARGO PARA CULQI
+    // ====================================
     const chargeData = {
-      amount: amount, // En centavos (ej: 10000 = S/ 100.00)
+      amount: amount,
       currency_code: 'PEN',
       email: email,
       source_id: token,
-      description: `Orden Vialine ${orderId}`,
+      description: `Vialine - Orden ${orderId || 'N/A'}`,
     }
 
-    console.log('Procesando cargo Culqi:', {
+    console.log('📤 Enviando cargo a Culqi:', {
       amount: amount / 100,
+      currency: 'PEN',
       email,
-      orderId,
+      description: chargeData.description,
     })
 
-    // Hacer el cargo a Culqi
+    // ====================================
+    // HACER CARGO A CULQI
+    // ====================================
     const culqiResponse = await fetch(CULQI_API_URL, {
       method: 'POST',
       headers: {
@@ -53,44 +97,80 @@ export async function POST(request: NextRequest) {
 
     const culqiResult = await culqiResponse.json()
 
-    // Si Culqi respondió con error
+    console.log('📥 Respuesta de Culqi:', {
+      status: culqiResponse.status,
+      statusText: culqiResponse.statusText,
+    })
+
+    // ====================================
+    // MANEJAR RESPUESTA DE CULQI
+    // ====================================
     if (!culqiResponse.ok) {
-      console.error('Error de Culqi:', culqiResult)
+      console.error('❌ Error de Culqi:', culqiResult)
+      
+      // Extraer mensaje de error
+      const errorMessage = culqiResult.user_message || 
+                          culqiResult.merchant_message || 
+                          culqiResult.message ||
+                          'Error al procesar el pago'
+      
+      const errorCode = culqiResult.type || 
+                       culqiResult.error_code || 
+                       'unknown_error'
+
+      console.error('❌ Error Code:', errorCode)
+      console.error('❌ Error Message:', errorMessage)
+
       return NextResponse.json(
         {
           success: false,
-          error: culqiResult.user_message || 'Error al procesar el pago',
+          error: errorMessage,
+          errorCode: errorCode,
         },
         { status: 400 }
       )
     }
 
-    // ✅ Pago exitoso
-    console.log('✅ Pago exitoso:', culqiResult.id)
-
-    // Aquí deberías guardar la orden en tu base de datos
-    // con el estado "paid" y el charge_id de Culqi
+    // ====================================
+    // PAGO EXITOSO
+    // ====================================
+    console.log('✅ Pago exitoso!')
+    console.log('🆔 Charge ID:', culqiResult.id)
+    console.log('💰 Monto:', culqiResult.amount / 100, 'PEN')
 
     // TODO: Guardar en base de datos
-    // await saveOrderToDatabase({
-    //   orderId,
-    //   chargeId: culqiResult.id,
-    //   amount,
-    //   email,
-    //   status: 'paid',
-    // })
+    // Aquí deberías guardar la transacción en tu DB
+    /*
+    await sql`
+      UPDATE orders 
+      SET 
+        status = 'paid',
+        payment_id = ${culqiResult.id},
+        updated_at = NOW()
+      WHERE order_id = ${orderId}
+    `
+    */
 
     return NextResponse.json({
       success: true,
       orderId: orderId,
       chargeId: culqiResult.id,
       amount: culqiResult.amount,
+      currency: culqiResult.currency_code,
+      email: culqiResult.email,
     })
 
   } catch (error) {
-    console.error('Error procesando pago:', error)
+    console.error('❌ Error fatal procesando pago:', error)
+    
+    const errorMessage = error instanceof Error ? error.message : 'Error desconocido'
+    
     return NextResponse.json(
-      { success: false, error: 'Error interno del servidor' },
+      { 
+        success: false, 
+        error: 'Error interno del servidor',
+        details: errorMessage,
+      },
       { status: 500 }
     )
   }

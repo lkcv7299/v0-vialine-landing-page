@@ -23,32 +23,35 @@ declare global {
 }
 
 // ====================================
-// SCHEMA DE VALIDACIÓN - CORREGIDO
+// SCHEMA DE VALIDACIÓN
 // ====================================
 const checkoutSchema = z.object({
-  // Información personal
   firstName: z.string().min(2, "Nombre debe tener al menos 2 caracteres"),
   lastName: z.string().min(2, "Apellido debe tener al menos 2 caracteres"),
   email: z.string().email("Email inválido"),
   phone: z.string().min(9, "Teléfono debe tener al menos 9 dígitos"),
-  
-  // Dirección de envío
   address: z.string().min(10, "Dirección debe tener al menos 10 caracteres"),
   district: z.string().min(2, "Distrito es requerido"),
-  city: z.string(), // ✅ CORREGIDO: Removido .default() para evitar conflicto de tipos
+  city: z.string(),
   postalCode: z.string().optional(),
   reference: z.string().optional(),
-  
-  // Método de pago
   paymentMethod: z.enum(["culqi", "yape", "contraentrega"], {
     required_error: "Selecciona un método de pago",
   }),
-  
-  // Notas adicionales
   notes: z.string().optional(),
 })
 
 type CheckoutFormData = z.infer<typeof checkoutSchema>
+
+// ====================================
+// UTILIDAD: Generar Order ID válido
+// ====================================
+const generateOrderId = () => {
+  // Formato: VL + timestamp(8) + random(4) = máx 14 chars
+  const timestamp = Date.now().toString().slice(-8)
+  const random = Math.random().toString(36).substring(2, 6).toUpperCase()
+  return `VL${timestamp}${random}`
+}
 
 // ====================================
 // COMPONENTE PRINCIPAL
@@ -58,8 +61,8 @@ export default function CheckoutPage() {
   const { items, total, clearCart } = useCart()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [culqiLoaded, setCulqiLoaded] = useState(false)
+  const [currentOrderId, setCurrentOrderId] = useState("")
 
-  // ✅ CORREGIDO: Removido tipo genérico explícito, dejamos que TypeScript lo infiera
   const {
     register,
     handleSubmit,
@@ -68,14 +71,14 @@ export default function CheckoutPage() {
   } = useForm({
     resolver: zodResolver(checkoutSchema),
     defaultValues: {
-      city: "Lima", // ✅ Ahora el default está AQUÍ, no en el schema
+      city: "Lima",
       paymentMethod: "culqi" as const,
     },
   })
 
   const selectedPaymentMethod = watch("paymentMethod")
 
-  // Calcular envío (gratis si > S/269)
+  // Calcular envío
   const shippingCost = total >= 269 ? 0 : 15
   const finalTotal = total + shippingCost
 
@@ -84,22 +87,42 @@ export default function CheckoutPage() {
   // ====================================
   useEffect(() => {
     if (culqiLoaded && window.Culqi) {
-      window.Culqi.publicKey = process.env.NEXT_PUBLIC_CULQI_PUBLIC_KEY || 'pk_test_TU_KEY_AQUI'
+      const publicKey = process.env.NEXT_PUBLIC_CULQI_PUBLIC_KEY
+      
+      if (!publicKey) {
+        console.error('❌ CULQI_PUBLIC_KEY no configurada')
+        toast.error('Error de configuración. Contacta al administrador.')
+        return
+      }
+
+      console.log('🔑 Configurando Culqi con public key:', publicKey.substring(0, 15) + '...')
+      window.Culqi.publicKey = publicKey
       
       // Configurar el callback de Culqi
       window.culqi = function() {
+        console.log('🎯 Callback de Culqi ejecutado')
+        
         if (window.Culqi.token) {
           const token = window.Culqi.token.id
-          console.log('Token Culqi obtenido:', token)
+          console.log('✅ Token Culqi obtenido:', token.substring(0, 20) + '...')
           
-          // Enviar token al backend para procesar el cargo
+          // Procesar el pago
           processCulqiPayment(token)
         } else if (window.Culqi.error) {
-          console.error('Error Culqi:', window.Culqi.error)
-          toast.error(window.Culqi.error.user_message || 'Error al procesar el pago')
+          console.error('❌ Error de Culqi:', window.Culqi.error)
+          const errorMsg = window.Culqi.error.user_message || 
+                          window.Culqi.error.merchant_message || 
+                          'Error al procesar el pago'
+          toast.error(errorMsg)
+          setIsSubmitting(false)
+        } else {
+          console.error('❌ Respuesta inesperada de Culqi')
+          toast.error('Error inesperado. Por favor intenta nuevamente.')
           setIsSubmitting(false)
         }
       }
+      
+      console.log('✅ Culqi configurado correctamente')
     }
   }, [culqiLoaded])
 
@@ -107,30 +130,57 @@ export default function CheckoutPage() {
   // PROCESAR PAGO CON CULQI
   // ====================================
   const processCulqiPayment = async (token: string) => {
+    console.log('💳 Procesando pago con Culqi...')
+    console.log('📊 Monto:', finalTotal, '→ Centavos:', Math.round(finalTotal * 100))
+    
     try {
+      const email = watch('email')
+      
+      if (!email) {
+        throw new Error('Email no disponible')
+      }
+
+      const chargeData = {
+        token,
+        amount: Math.round(finalTotal * 100),
+        email: email,
+        orderId: currentOrderId,
+      }
+
+      console.log('📤 Enviando cargo a /api/culqi/charge:', {
+        amount: chargeData.amount,
+        email: chargeData.email,
+        orderId: chargeData.orderId,
+      })
+
       const response = await fetch('/api/culqi/charge', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          token,
-          amount: Math.round(finalTotal * 100), // Culqi usa centavos
-          email: watch('email'),
-          orderId: 'VL-' + Date.now(),
-        })
+        body: JSON.stringify(chargeData)
       })
 
+      console.log('📥 Respuesta del servidor:', response.status, response.statusText)
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        console.error('❌ Error del servidor:', errorData)
+        throw new Error(errorData.error || `Error del servidor: ${response.status}`)
+      }
+
       const result = await response.json()
+      console.log('✅ Resultado exitoso:', result)
 
       if (result.success) {
-        toast.success('¡Pago exitoso!')
+        toast.success('¡Pago procesado exitosamente!')
         clearCart()
         router.push(`/checkout/confirmacion?orderId=${result.orderId}`)
       } else {
         throw new Error(result.error || 'Error al procesar el pago')
       }
     } catch (error) {
-      console.error('Error:', error)
-      toast.error('Error al procesar el pago. Por favor intenta nuevamente.')
+      console.error('❌ Error procesando pago:', error)
+      const errorMessage = error instanceof Error ? error.message : 'Error desconocido'
+      toast.error(`Error: ${errorMessage}`)
     } finally {
       setIsSubmitting(false)
     }
@@ -139,28 +189,55 @@ export default function CheckoutPage() {
   // ====================================
   // ABRIR FORMULARIO DE CULQI
   // ====================================
-  const generateOrderId = () => {
-  const timestamp = Date.now().toString().slice(-8)
-  const random = Math.random().toString(36).substring(2, 6).toUpperCase()
-  return `VL${timestamp}${random}`
-}
   const openCulqiCheckout = () => {
+    console.log('🚀 Abriendo checkout de Culqi...')
+    
     if (!window.Culqi) {
+      console.error('❌ Culqi no está cargado')
       toast.error('Error al cargar Culqi. Por favor recarga la página.')
       setIsSubmitting(false)
       return
     }
 
-    // Configurar Culqi Checkout
-    window.Culqi.settings({
+    // Generar order ID
+    const orderId = generateOrderId()
+    setCurrentOrderId(orderId)
+    
+    const amountInCents = Math.round(finalTotal * 100)
+    
+    console.log('⚙️ Configurando Culqi checkout:', {
+      title: 'Vialine',
+      currency: 'PEN',
+      amount: amountInCents,
+      description: `Orden ${orderId}`,
+    })
+
+    try {
+      // Configurar Culqi Checkout
+      window.Culqi.settings({
   title: 'Vialine',
   currency: 'PEN',
-  amount: Math.round(finalTotal * 100),
-  order: generateOrderId(), // ✅ Formato válido
+  amount: amountInCents,
+  description: `Orden ${orderId}`,
+  options: {
+    paymentMethods: {
+      tarjeta: true,   // Solo tarjetas ✅
+      yape: false,     // Sin Yape ❌
+    }
+  }
 })
 
-    // Abrir modal de Culqi
-    window.Culqi.open()
+      console.log('✅ Settings configurados, abriendo modal...')
+      
+      // Abrir modal de Culqi
+      window.Culqi.open()
+      
+      console.log('✅ Modal de Culqi abierto')
+    } catch (error) {
+      console.error('❌ Error al abrir Culqi:', error)
+      toast.error('Error al abrir el formulario de pago')
+      setIsSubmitting(false)
+    }
   }
 
   // Si no hay items, redirigir
@@ -183,9 +260,15 @@ export default function CheckoutPage() {
   }
 
   // ====================================
-  // HANDLER DEL SUBMIT - ✅ CORREGIDO
+  // HANDLER DEL SUBMIT
   // ====================================
   const onSubmit = async (data: CheckoutFormData) => {
+    console.log('📝 Formulario enviado:', {
+      paymentMethod: data.paymentMethod,
+      email: data.email,
+      total: finalTotal,
+    })
+    
     setIsSubmitting(true)
     
     try {
@@ -222,9 +305,11 @@ export default function CheckoutPage() {
       }
 
       if (data.paymentMethod === "culqi") {
+        console.log('💳 Método de pago: Culqi')
         // Abrir Culqi Checkout
         openCulqiCheckout()
       } else if (data.paymentMethod === "yape") {
+        console.log('📱 Método de pago: Yape')
         // Guardar orden y mostrar QR de Yape
         const response = await fetch("/api/checkout", {
           method: "POST",
@@ -237,6 +322,7 @@ export default function CheckoutPage() {
         const result = await response.json()
         router.push(`/checkout/yape?orderId=${result.orderId}`)
       } else {
+        console.log('💵 Método de pago: Contra entrega')
         // Contra entrega
         const response = await fetch("/api/checkout", {
           method: "POST",
@@ -251,7 +337,7 @@ export default function CheckoutPage() {
         router.push(`/checkout/confirmacion?orderId=${result.orderId}`)
       }
     } catch (error) {
-      console.error("Error:", error)
+      console.error("❌ Error en onSubmit:", error)
       toast.error("Hubo un error al procesar tu orden. Por favor intenta nuevamente.")
       setIsSubmitting(false)
     }
@@ -262,12 +348,13 @@ export default function CheckoutPage() {
       {/* CARGAR CULQI DESDE CDN */}
       <Script
         src="https://checkout.culqi.com/js/v4"
+        strategy="lazyOnload"
         onLoad={() => {
-          console.log('Culqi cargado correctamente')
+          console.log('✅ Script de Culqi cargado')
           setCulqiLoaded(true)
         }}
-        onError={() => {
-          console.error('Error al cargar Culqi')
+        onError={(e) => {
+          console.error('❌ Error al cargar script de Culqi:', e)
           toast.error('Error al cargar el sistema de pagos')
         }}
       />
