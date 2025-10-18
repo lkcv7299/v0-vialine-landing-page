@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useState, useRef, useEffect } from "react"
 import { ShoppingBag, X, Heart } from "lucide-react"
 import MegaMenu from "./MegaMenu"
-import MobileNav from "./MobileNav"
+import MobileMenu from "../nav/MobileMenu"
 import SearchBar from "@/components/SearchBar"
 import { useCart } from "@/contexts/CartContext"
 import { useWishlist } from "@/components/providers/WishlistContext"
@@ -36,7 +36,7 @@ export default function SiteHeader() {
           {/* IZQUIERDA - Logo + Mobile Menu */}
           <div className="flex items-center gap-2">
             <div className="lg:hidden">
-              <MobileNav />
+              <MobileMenu />
             </div>
             <Link href="/" className="font-semibold tracking-wide text-base whitespace-nowrap">
               Vialine

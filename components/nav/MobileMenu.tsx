@@ -4,112 +4,161 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import Drawer from "@/components/ui/Drawer"
-import { Menu, X, User, ShoppingBag } from "lucide-react"
+import { Menu, X, User, ShoppingBag, Heart } from "lucide-react"
 import { buildWhatsAppUrl } from "@/lib/contact"
+import { useCart } from "@/contexts/CartContext"
+import { useWishlist } from "@/components/providers/WishlistContext"
 
+// Categorías actualizadas con rutas correctas
 const mujer = [
-  { label: "Leggings", href: "/shop/mujer/leggings" },
-  { label: "Short", href: "/shop/mujer/short" },
-  { label: "Pescador", href: "/shop/mujer/pescador" },
-  { label: "Torero", href: "/shop/mujer/torero" },
-  { label: "Bodys", href: "/shop/mujer/bodys" },
-  { label: "Enterizos", href: "/shop/mujer/enterizos" },
-  { label: "Tops", href: "/shop/mujer/tops" },
-  { label: "Camisetas", href: "/shop/mujer/camisetas" },
+  { label: "Leggings", href: "/mujer?category=leggings" },
+  { label: "Shorts", href: "/mujer?category=short" },
+  { label: "Pescadores", href: "/mujer?category=pescador" },
+  { label: "Toreros", href: "/mujer?category=torero" },
+  { label: "Bodys", href: "/mujer?category=bodys" },
+  { label: "Enterizos", href: "/mujer?category=enterizos" },
+  { label: "Tops", href: "/mujer?category=tops" },
+  { label: "Camisetas", href: "/mujer?category=camisetas" },
 ]
 
 const nina = [
-  { label: "Cafarenas", href: "/shop/nina/cafarenas" },
-  { label: "Enterizos", href: "/shop/nina/enterizos" },
-  { label: "Leggings", href: "/shop/nina/leggings" },
-  { label: "Pantys", href: "/shop/nina/pantys" },
-  { label: "Shorts", href: "/shop/nina/shorts" },
-  { label: "Tops", href: "/shop/nina/tops" },
+  { label: "Cafarenas", href: "/nina?category=cafarenas" },
+  { label: "Enterizos", href: "/nina?category=enterizos" },
+  { label: "Leggings", href: "/nina?category=leggings" },
+  { label: "Pantys", href: "/nina?category=pantys" },
+  { label: "Shorts", href: "/nina?category=shorts" },
+  { label: "Tops", href: "/nina?category=tops" },
 ]
 
 export default function MobileMenu() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
+  const { itemCount } = useCart()
+  const { items: wishlistItems } = useWishlist()
+  const wishlistCount = wishlistItems.length
 
-  // Close drawer on route change
+  // Cerrar menú cuando cambia la ruta
   useEffect(() => {
     setOpen(false)
   }, [pathname])
 
   return (
     <>
-      {/* Icons group (mobile only) */}
-      <div className="flex items-center gap-2 lg:gap-3">
-        <Link
-          href="/account"
-          className="inline-flex lg:inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-slate-100 text-slate-900"
-          aria-label="Account"
-        >
-          <User size={20} />
-        </Link>
-        <Link
-          href="/cart"
-          className="inline-flex lg:inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-slate-100 text-slate-900"
-          aria-label="Cart"
-        >
-          <ShoppingBag size={20} />
-        </Link>
-        <button
-          aria-controls="mobile-menu"
-          aria-expanded={open}
-          aria-label="Open menu"
-          onClick={() => setOpen(true)}
-          className="inline-flex lg:hidden h-10 w-10 items-center justify-center rounded-full hover:bg-slate-100 text-slate-900"
-        >
-          <Menu size={24} />
-        </button>
-      </div>
+      {/* Botón hamburguesa */}
+      <button
+        aria-controls="mobile-menu"
+        aria-expanded={open}
+        aria-label="Abrir menú"
+        onClick={() => setOpen(true)}
+        className="inline-flex lg:hidden h-10 w-10 items-center justify-center rounded-full hover:bg-neutral-100 text-neutral-900 transition"
+      >
+        <Menu size={24} />
+      </button>
 
+      {/* Drawer con menú */}
       <Drawer open={open} onClose={() => setOpen(false)} side="left">
         <div id="mobile-menu" className="flex h-full flex-col">
-          {/* Top bar */}
-          <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-200 bg-white/95 px-4 py-3">
-            <Link href="/" className="text-lg font-semibold">
+          
+          {/* Header del menú */}
+          <div className="sticky top-0 z-10 flex items-center justify-between border-b border-neutral-200 bg-white px-4 py-4">
+            <Link 
+              href="/" 
+              className="text-xl font-bold tracking-tight"
+              onClick={() => setOpen(false)}
+            >
               Vialine
             </Link>
             <button
-              aria-label="Close menu"
+              aria-label="Cerrar menú"
               onClick={() => setOpen(false)}
-              className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-slate-100"
+              className="h-10 w-10 inline-flex items-center justify-center rounded-full hover:bg-neutral-100 transition"
             >
               <X size={22} />
             </button>
           </div>
 
-          {/* Nav */}
-          <nav className="flex-1 overflow-y-auto px-4 py-3">
-            <Section title="Mujer" items={mujer} />
-            <div className="h-5" />
-            <Section title="Niña" items={nina} />
-            <div className="h-5" />
+          {/* Links rápidos - Account, Wishlist, Cart */}
+          <div className="border-b border-neutral-200 px-4 py-3">
+            <div className="grid grid-cols-3 gap-2">
+              <Link
+                href="/account"
+                onClick={() => setOpen(false)}
+                className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-neutral-50 transition"
+              >
+                <User size={20} className="text-neutral-600" />
+                <span className="text-xs font-medium text-neutral-700">Cuenta</span>
+              </Link>
+              
+              <Link
+                href="/wishlist"
+                onClick={() => setOpen(false)}
+                className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-neutral-50 transition relative"
+              >
+                <Heart 
+                  size={20} 
+                  className={wishlistCount > 0 ? "text-rose-600 fill-rose-600" : "text-neutral-600"} 
+                />
+                <span className="text-xs font-medium text-neutral-700">Favoritos</span>
+                {wishlistCount > 0 && (
+                  <span className="absolute top-2 right-2 h-4 min-w-4 rounded-full bg-rose-600 px-1 text-[10px] font-medium text-white flex items-center justify-center">
+                    {wishlistCount}
+                  </span>
+                )}
+              </Link>
+
+              <Link
+                href="/carrito"
+                onClick={() => setOpen(false)}
+                className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-neutral-50 transition relative"
+              >
+                <ShoppingBag size={20} className="text-neutral-600" />
+                <span className="text-xs font-medium text-neutral-700">Carrito</span>
+                {itemCount > 0 && (
+                  <span className="absolute top-2 right-2 h-4 min-w-4 rounded-full bg-rose-600 px-1 text-[10px] font-medium text-white flex items-center justify-center">
+                    {itemCount}
+                  </span>
+                )}
+              </Link>
+            </div>
+          </div>
+
+          {/* Navegación principal */}
+          <nav className="flex-1 overflow-y-auto px-4 py-4">
+            <Section title="Mujer" items={mujer} onItemClick={() => setOpen(false)} />
+            
+            <div className="h-6" />
+            
+            <Section title="Niña" items={nina} onItemClick={() => setOpen(false)} />
+            
+            <div className="h-6" />
+            
             <Section
-              title="Ayuda"
+              title="Ayuda y Soporte"
               items={[
                 { label: "Guía de tallas", href: "/pages/guia-de-tallas" },
-                { label: "Cambios y devoluciones", href: "/pages/envios-y-devoluciones" },
-                { label: "Soporte WhatsApp", href: buildWhatsAppUrl("Hola Vialine"), external: true },
+                { label: "Envíos y devoluciones", href: "/pages/envios-y-devoluciones" },
+                { label: "Términos y condiciones", href: "/pages/terminos-y-condiciones" },
+                { label: "Contacto por WhatsApp", href: buildWhatsAppUrl("Hola Vialine, necesito ayuda"), external: true },
               ]}
+              onItemClick={() => setOpen(false)}
             />
           </nav>
 
-          {/* Footer buttons */}
-          <div className="border-t border-slate-200 p-4 space-y-3">
+          {/* Footer con botones CTA */}
+          <div className="border-t border-neutral-200 p-4 space-y-3 bg-neutral-50">
             <Link
-              href="/shop/mujer/leggings"
-              className="block w-full rounded-xl bg-rose-600 text-white text-center py-3 font-medium hover:bg-rose-700"
+              href="/mujer"
+              onClick={() => setOpen(false)}
+              className="block w-full rounded-xl bg-rose-600 text-white text-center py-3.5 font-semibold hover:bg-rose-700 transition"
             >
-              Comprar Suplex
+              Ver Colección Mujer
             </Link>
             <Link
-              href="/shop/mujer/leggings"
-              className="block w-full rounded-xl bg-slate-900 text-white text-center py-3 font-medium hover:bg-slate-800"
+              href="/nina"
+              onClick={() => setOpen(false)}
+              className="block w-full rounded-xl border-2 border-neutral-900 text-neutral-900 text-center py-3.5 font-semibold hover:bg-neutral-900 hover:text-white transition"
             >
-              Ver todo
+              Ver Colección Niña
             </Link>
           </div>
         </div>
@@ -118,34 +167,41 @@ export default function MobileMenu() {
   )
 }
 
+// Componente de sección reutilizable
 function Section({
   title,
   items,
+  onItemClick,
 }: {
   title: string
   items: { label: string; href: string; external?: boolean }[]
+  onItemClick: () => void
 }) {
   return (
     <div>
-      <div className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-2">{title}</div>
-      <ul className="space-y-1">
-        {items.map((it) => (
-          <li key={it.label}>
-            {it.external ? (
+      <div className="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-3 px-2">
+        {title}
+      </div>
+      <ul className="space-y-0.5">
+        {items.map((item) => (
+          <li key={item.label}>
+            {item.external ? (
               <a
-                href={it.href}
+                href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block rounded-lg px-2 py-2 text-[15px] font-medium text-slate-900 hover:bg-slate-100"
+                onClick={onItemClick}
+                className="block rounded-lg px-3 py-2.5 text-[15px] font-medium text-neutral-900 hover:bg-neutral-100 transition"
               >
-                {it.label}
+                {item.label}
               </a>
             ) : (
               <Link
-                href={it.href}
-                className="block rounded-lg px-2 py-2 text-[15px] font-medium text-slate-900 hover:bg-slate-100"
+                href={item.href}
+                onClick={onItemClick}
+                className="block rounded-lg px-3 py-2.5 text-[15px] font-medium text-neutral-900 hover:bg-neutral-100 transition"
               >
-                {it.label}
+                {item.label}
               </Link>
             )}
           </li>
