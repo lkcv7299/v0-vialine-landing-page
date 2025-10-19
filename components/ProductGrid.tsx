@@ -11,7 +11,8 @@ export default function ProductGrid({ items }: { items: Product[] }) {
   }
 
   return (
-    <div className="mt-8 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+    // ✅ FIX: Cambiar sm:grid-cols-2 → grid-cols-2 para mobile
+    <div className="mt-8 grid gap-6 grid-cols-2 md:grid-cols-3">
       {items.map((product) => (
         <ProductCard key={product.slug} product={product} />
       ))}

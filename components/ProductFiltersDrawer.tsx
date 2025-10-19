@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { X, SlidersHorizontal } from "lucide-react"
 import Drawer from "./ui/Drawer"
@@ -27,12 +27,47 @@ export default function ProductFiltersDrawer({ totalProducts, filteredCount }: P
   const router = useRouter()
   const pathname = usePathname()
   const params = useSearchParams()
+  const [localMinPrice, setLocalMinPrice] = useState("")
+  const [localMaxPrice, setLocalMaxPrice] = useState("")
+
+  // Sincronizar con URL params
+  useEffect(() => {
+    setLocalMinPrice(params?.get("minPrice") || "")
+    setLocalMaxPrice(params?.get("maxPrice") || "")
+  }, [params])
 
   function apply(fn: (sp: URLSearchParams) => void) {
     const sp = new URLSearchParams(params?.toString())
     fn(sp)
     router.replace(`${pathname}?${sp.toString()}`, { scroll: false })
   }
+
+  // ✅ Debouncing para precio (500ms después de dejar de escribir)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      apply((sp) => {
+        if (localMinPrice) {
+          sp.set("minPrice", localMinPrice)
+        } else {
+          sp.delete("minPrice")
+        }
+      })
+    }, 500)
+    return () => clearTimeout(timer)
+  }, [localMinPrice])
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      apply((sp) => {
+        if (localMaxPrice) {
+          sp.set("maxPrice", localMaxPrice)
+        } else {
+          sp.delete("maxPrice")
+        }
+      })
+    }, 500)
+    return () => clearTimeout(timer)
+  }, [localMaxPrice])
 
   const isOn = (k: string, v: string) => params?.getAll(k).includes(v)
   const fabricOn = params?.get("fabric")
@@ -209,13 +244,8 @@ export default function ProductFiltersDrawer({ totalProducts, filteredCount }: P
                   <input
                     type="number"
                     placeholder="Min"
-                    value={minPrice}
-                    onChange={(e) => {
-                      apply((sp) => {
-                        const val = e.target.value
-                        val ? sp.set("minPrice", val) : sp.delete("minPrice")
-                      })
-                    }}
+                    value={localMinPrice}
+                    onChange={(e) => setLocalMinPrice(e.target.value)}
                     className="w-full px-3 py-2 text-sm border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
                   />
                 </div>
@@ -225,13 +255,8 @@ export default function ProductFiltersDrawer({ totalProducts, filteredCount }: P
                   <input
                     type="number"
                     placeholder="Max"
-                    value={maxPrice}
-                    onChange={(e) => {
-                      apply((sp) => {
-                        const val = e.target.value
-                        val ? sp.set("maxPrice", val) : sp.delete("maxPrice")
-                      })
-                    }}
+                    value={localMaxPrice}
+                    onChange={(e) => setLocalMaxPrice(e.target.value)}
                     className="w-full px-3 py-2 text-sm border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
                   />
                 </div>
