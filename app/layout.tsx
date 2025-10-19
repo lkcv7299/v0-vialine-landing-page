@@ -11,6 +11,7 @@ import MetaPixel from "@/components/MetaPixel"
 import Clarity from "@/components/Clarity"
 import { WishlistProvider } from "@/components/providers/WishlistContext"
 import { CartProvider } from "@/contexts/CartContext"
+import SessionProvider from "@/components/providers/SessionProvider"
 
 export const metadata: Metadata = {
   title: "Vialine | Activewear & ropa interior para mujer – Hecho en Perú",
@@ -83,16 +84,20 @@ export default function RootLayout({
             }),
           }}
         />
-        <CartProvider>
-          <WishlistProvider>
-            <ClientWrapper>
-              <PromoBar />
-              <SiteHeader />
-              {children}
-              <WhatsAppFloat />
-            </ClientWrapper>
-          </WishlistProvider>
-        </CartProvider>
+        
+        {/* ✅ NUEVO: SessionProvider envuelve todo */}
+        <SessionProvider>
+          <CartProvider>
+            <WishlistProvider>
+              <ClientWrapper>
+                <PromoBar />
+                <SiteHeader />
+                {children}
+                <WhatsAppFloat />
+              </ClientWrapper>
+            </WishlistProvider>
+          </CartProvider>
+        </SessionProvider>
       </body>
     </html>
   )
