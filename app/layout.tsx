@@ -11,7 +11,6 @@ import MetaPixel from "@/components/MetaPixel"
 import Clarity from "@/components/Clarity"
 import { WishlistProvider } from "@/components/providers/WishlistContext"
 import { CartProvider } from "@/contexts/CartContext"
-// ❌ ELIMINADO: import TawkToChat from "@/components/TawkToChat"
 
 export const metadata: Metadata = {
   title: "Vialine | Activewear & ropa interior para mujer – Hecho en Perú",
@@ -51,19 +50,20 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  // ✅ SOLUCIÓN: Detectar si estamos en producción
+  const isProduction = process.env.NODE_ENV === "production"
+
   return (
     <html lang="es" className={`${heading.variable} ${body.variable} ${ui.variable}`}>
       <body className="antialiased text-neutral-900 bg-neutral-50">
-        {/* ANALYTICS: Google Analytics 4 */}
-        <GoogleAnalytics />
-        
-        {/* ANALYTICS: Meta Pixel (Facebook/Instagram) */}
-        <MetaPixel />
-        
-        {/* ANALYTICS: Microsoft Clarity (Heatmaps) */}
-        <Clarity />
-        
-        {/* ❌ ELIMINADO: <TawkToChat /> */}
+        {/* ANALYTICS: Solo cargar en producción para evitar ChunkLoadError en Codespaces */}
+        {isProduction && (
+          <>
+            <GoogleAnalytics />
+            <MetaPixel />
+            <Clarity />
+          </>
+        )}
 
         <script
           type="application/ld+json"
