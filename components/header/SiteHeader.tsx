@@ -2,14 +2,14 @@
 
 import Link from "next/link"
 import { useState, useRef, useEffect } from "react"
-import { ShoppingBag, X, User, Search } from "lucide-react"
+import { ShoppingBag, X, User } from "lucide-react"
 import MegaMenu from "./MegaMenu"
 import MobileMenu from "../nav/MobileMenu"
+import SearchBar from "../SearchBar"
 import { useCart } from "@/contexts/CartContext"
 
 export default function SiteHeader() {
   const [showMiniCart, setShowMiniCart] = useState(false)
-  const [searchQuery, setSearchQuery] = useState("")
   const { items, itemCount, total, removeItem } = useCart()
   const miniCartRef = useRef<HTMLDivElement>(null)
 
@@ -24,14 +24,6 @@ export default function SiteHeader() {
     document.addEventListener("mousedown", handleClickOutside)
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
-
-  // Manejar búsqueda
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (searchQuery.trim()) {
-      window.location.href = `/buscar?q=${encodeURIComponent(searchQuery.trim())}`
-    }
-  }
 
   return (
     <header className="sticky top-0 z-20 w-full bg-white/80 backdrop-blur border-b">
@@ -52,18 +44,9 @@ export default function SiteHeader() {
             </div>
           </div>
 
-          {/* ========== CENTRO: SearchBar Compacto (Desktop only) ========== */}
+          {/* ========== CENTRO: SearchBar con Autocompletado (Desktop only) ========== */}
           <div className="hidden lg:block flex-1 max-w-md">
-            <form onSubmit={handleSearch} className="relative">
-              <input
-                type="search"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Buscar productos..."
-                className="w-full pl-10 pr-4 py-2 text-sm border border-neutral-300 rounded-full bg-neutral-50 focus:bg-white focus:outline-none focus:border-neutral-400 transition"
-              />
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
-            </form>
+            <SearchBar />
           </div>
 
           {/* ========== DERECHA: Icons ========== */}
@@ -100,43 +83,52 @@ export default function SiteHeader() {
                 <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-lg shadow-xl border border-neutral-200 z-50">
                   {items.length === 0 ? (
                     <div className="p-6 text-center">
-                      <ShoppingBag className="w-12 h-12 mx-auto mb-3 text-neutral-300" />
-                      <p className="text-neutral-600 font-medium mb-1">Tu carrito está vacío</p>
-                      <p className="text-sm text-neutral-500">Agrega productos para comenzar</p>
+                      <ShoppingBag className="w-12 h-12 text-neutral-300 mx-auto mb-3" />
+                      <p className="text-neutral-600 mb-4">Tu carrito está vacío</p>
+                      <Link
+                        href="/mujer"
+                        onClick={() => setShowMiniCart(false)}
+                        className="inline-block px-4 py-2 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-700 transition"
+                      >
+                        Explorar productos
+                      </Link>
                     </div>
                   ) : (
                     <>
                       {/* Items */}
-                      <div className="max-h-96 overflow-y-auto p-4 space-y-3">
-                        {items.slice(0, 3).map((item) => (
+                      <div className="max-h-96 overflow-y-auto p-4 space-y-4">
+                        {items.map((item) => (
                           <div key={`${item.product.slug}-${item.selectedColor}-${item.selectedSize}`} className="flex gap-3">
-                            <img
-                              src={item.product.image}
-                              alt={item.product.title}
-                              className="w-16 h-16 object-cover rounded-md"
-                            />
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium text-neutral-900 truncate">
-                                {item.product.title}
-                              </p>
-                              <p className="text-xs text-neutral-600 mt-0.5">
-                                {item.selectedColor} • {item.selectedSize}
-                              </p>
-                              <p className="text-sm font-medium mt-1">
-                                S/ {item.product.price} × {item.quantity}
-                              </p>
+                            <div className="relative w-20 h-20 rounded-lg overflow-hidden bg-neutral-100 flex-shrink-0">
+                              <img
+                                src={item.product.image}
+                                alt={item.product.title}
+                                className="w-full h-full object-cover"
+                              />
                             </div>
-                            <button 
-                              onClick={() => removeItem(item.product.slug, item.selectedColor, item.selectedSize)} 
-                              className="text-neutral-400 hover:text-rose-600 transition"
-                              aria-label="Eliminar producto"
-                            >
-                              <X className="w-4 h-4" />
-                            </button>
+                            <div className="flex-1 min-w-0">
+                              <h4 className="text-sm font-medium text-neutral-900 truncate">{item.product.title}</h4>
+                              <p className="text-xs text-neutral-600 mt-1">
+                                {item.selectedColor} · {item.selectedSize}
+                              </p>
+                              <div className="flex items-center justify-between mt-2">
+                                <span className="text-sm font-semibold text-neutral-900">
+                                  S/ {item.product.price.toFixed(2)}
+                                </span>
+                                <button
+                                  onClick={() => removeItem(item.product.slug, item.selectedColor || "", item.selectedSize || "")}
+                                  className="text-neutral-400 hover:text-rose-600 transition"
+                                >
+                                  <X className="w-4 h-4" />
+                                </button>
+                              </div>
+                            </div>
                           </div>
                         ))}
+                        
+                        {/* Mensaje si hay más items */}
                         {items.length > 3 && (
-                          <p className="text-center py-2 text-sm text-neutral-600">
+                          <p className="text-xs text-neutral-600 text-center pt-2 border-t">
                             +{items.length - 3} producto{items.length - 3 !== 1 ? 's' : ''} más
                           </p>
                         )}
@@ -173,16 +165,7 @@ export default function SiteHeader() {
 
         {/* ========== SEGUNDA FILA: SearchBar Mobile ========== */}
         <div className="lg:hidden px-4 pb-3">
-          <form onSubmit={handleSearch} className="relative">
-            <input
-              type="search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Buscar productos..."
-              className="w-full pl-10 pr-4 py-2.5 text-sm border border-neutral-300 rounded-full bg-neutral-50 focus:bg-white focus:outline-none focus:border-neutral-400 transition"
-            />
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
-          </form>
+          <SearchBar />
         </div>
       </div>
     </header>
