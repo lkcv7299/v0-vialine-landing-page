@@ -1,5 +1,6 @@
 import { byAudience, type Product } from "@/data/products"
-import ProductFilters from "@/components/ProductFilters"
+import ProductFiltersDesktop from "@/components/ProductFiltersDesktop"
+import ProductFiltersDrawer from "@/components/ProductFiltersDrawer"
 import ProductGrid from "@/components/ProductGrid"
 import Hero from "@/components/Hero"
 
@@ -75,6 +76,7 @@ export default async function Page({
   
   return (
     <>
+      {/* Hero de niña */}
       <Hero
         image="/hero-girl.jpg"
         kicker="VIALINE · NIÑA"
@@ -85,16 +87,28 @@ export default async function Page({
         objectPositionMobile="58% 38%"
       />
 
-      <main className="mx-auto max-w-7xl px-6 md:px-8 py-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-neutral-900">Niña</h1>
-        <p className="text-neutral-600 mt-2">
-          Activewear cómodo y divertido para niñas
-        </p>
-        
-        <div className="mt-6 grid grid-cols-1 lg:grid-cols-[320px,1fr] gap-6">
-          <ProductFilters totalProducts={base.length} filteredCount={items.length} />
-          <ProductGrid items={items} />
+      <main className="mx-auto max-w-7xl px-4 md:px-6 py-8">
+        {/* Header de la página */}
+        <div className="mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-neutral-900">Niña</h1>
+          <p className="text-neutral-600 mt-2">
+            Activewear cómodo y divertido para niñas
+          </p>
         </div>
+        
+        {/* Layout desktop: Sidebar + Grid */}
+        <div className="flex gap-6">
+          {/* Sidebar desktop (solo visible lg+) */}
+          <ProductFiltersDesktop totalProducts={base.length} filteredCount={items.length} />
+          
+          {/* Grid de productos */}
+          <div className="flex-1">
+            <ProductGrid items={items} />
+          </div>
+        </div>
+
+        {/* Drawer mobile (solo visible mobile) */}
+        <ProductFiltersDrawer totalProducts={base.length} filteredCount={items.length} />
       </main>
     </>
   )
