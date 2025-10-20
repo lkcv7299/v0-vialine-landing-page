@@ -4,10 +4,20 @@ import { useSession, signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { User, Package, MapPin, Heart, LogOut, Mail, Calendar, Loader2 } from "lucide-react"
+import { useState, useEffect } from "react"
+import { useWishlist } from "@/components/providers/WishlistContext"
 
 export default function AccountDashboard() {
   const { data: session, status } = useSession()
   const router = useRouter()
+  const { items: wishlistItems } = useWishlist()
+  
+  const [stats, setStats] = useState({
+    orders: 0,
+    addresses: 0,
+    wishlist: 0
+  })
+  const [loading, setLoading] = useState(true)
 
   // Redirect si no está autenticado (backup, el middleware ya lo maneja)
   if (status === "unauthenticated") {
@@ -15,8 +25,38 @@ export default function AccountDashboard() {
     return null
   }
 
+  // Cargar estadísticas reales
+  useEffect(() => {
+    if (status === "authenticated") {
+      fetchStats()
+    }
+  }, [status])
+
+  // Actualizar contador de wishlist cuando cambia
+  useEffect(() => {
+    setStats(prev => ({ ...prev, wishlist: wishlistItems.length }))
+  }, [wishlistItems])
+
+  const fetchStats = async () => {
+    try {
+      const response = await fetch("/api/account/stats")
+      if (response.ok) {
+        const data = await response.json()
+        setStats(prev => ({
+          orders: data.stats.orders,
+          addresses: data.stats.addresses,
+          wishlist: prev.wishlist // Se cuenta del lado del cliente
+        }))
+      }
+    } catch (error) {
+      console.error("Error al cargar estadísticas:", error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   // Loading state
-  if (status === "loading") {
+  if (status === "loading" || loading) {
     return (
       <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-rose-600" />
@@ -25,7 +65,7 @@ export default function AccountDashboard() {
   }
 
   const handleSignOut = async () => {
-    await signOut({ callbackUrl: "/" })
+    await signOut({ callbackUrl: "/", redirect: true })
   }
 
   return (
@@ -116,8 +156,8 @@ export default function AccountDashboard() {
             {/* Welcome Card */}
             <div className="bg-gradient-to-r from-rose-600 to-rose-700 rounded-2xl shadow-sm p-8 text-white">
               <h2 className="text-2xl font-bold mb-2">
-  ¡Hola, {session?.user?.name?.split(" ")[0]}!
-</h2>
+                ¡Hola, {session?.user?.name?.split(" ")[0]}!
+              </h2>
               <p className="text-rose-100">
                 Estamos felices de tenerte aquí. Explora nuestras últimas colecciones de activewear.
               </p>
@@ -137,7 +177,7 @@ export default function AccountDashboard() {
                     <Package className="w-6 h-6 text-rose-600" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-neutral-900">0</p>
+                    <p className="text-2xl font-bold text-neutral-900">{stats.orders}</p>
                     <p className="text-sm text-neutral-600">Pedidos</p>
                   </div>
                 </div>
@@ -149,7 +189,7 @@ export default function AccountDashboard() {
                     <Heart className="w-6 h-6 text-rose-600" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-neutral-900">0</p>
+                    <p className="text-2xl font-bold text-neutral-900">{stats.wishlist}</p>
                     <p className="text-sm text-neutral-600">Favoritos</p>
                   </div>
                 </div>
@@ -161,7 +201,7 @@ export default function AccountDashboard() {
                     <MapPin className="w-6 h-6 text-rose-600" />
                   </div>
                   <div>
-                    <p className="text-2xl font-bold text-neutral-900">0</p>
+                    <p className="text-2xl font-bold text-neutral-900">{stats.addresses}</p>
                     <p className="text-sm text-neutral-600">Direcciones</p>
                   </div>
                 </div>
@@ -197,23 +237,45 @@ export default function AccountDashboard() {
               </div>
             </div>
 
-            {/* Recent Orders Empty State */}
+            {/* Recent Orders or Empty State */}
             <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-8 text-center">
-              <div className="w-16 h-16 mx-auto bg-neutral-100 rounded-full flex items-center justify-center mb-4">
-                <Package className="w-8 h-8 text-neutral-400" />
-              </div>
-              <h3 className="text-lg font-semibold text-neutral-900 mb-2">
-                Aún no tienes pedidos
-              </h3>
-              <p className="text-neutral-600 mb-4">
-                Descubre nuestra colección de activewear y haz tu primera compra
-              </p>
-              <Link
-                href="/mujer"
-                className="inline-block px-6 py-3 bg-rose-600 text-white rounded-lg font-medium hover:bg-rose-700 transition"
-              >
-                Explorar productos
-              </Link>
+              {stats.orders === 0 ? (
+                <>
+                  <div className="w-16 h-16 mx-auto bg-neutral-100 rounded-full flex items-center justify-center mb-4">
+                    <Package className="w-8 h-8 text-neutral-400" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-neutral-900 mb-2">
+                    Aún no tienes pedidos
+                  </h3>
+                  <p className="text-neutral-600 mb-4">
+                    Descubre nuestra colección de activewear y haz tu primera compra
+                  </p>
+                  <Link
+                    href="/mujer"
+                    className="inline-block px-6 py-3 bg-rose-600 text-white rounded-lg font-medium hover:bg-rose-700 transition"
+                  >
+                    Explorar productos
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <div className="w-16 h-16 mx-auto bg-rose-100 rounded-full flex items-center justify-center mb-4">
+                    <Package className="w-8 h-8 text-rose-600" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-neutral-900 mb-2">
+                    Tienes {stats.orders} {stats.orders === 1 ? 'pedido' : 'pedidos'}
+                  </h3>
+                  <p className="text-neutral-600 mb-4">
+                    Revisa el estado de tus pedidos
+                  </p>
+                  <Link
+                    href="/account/pedidos"
+                    className="inline-block px-6 py-3 bg-rose-600 text-white rounded-lg font-medium hover:bg-rose-700 transition"
+                  >
+                    Ver mis pedidos
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

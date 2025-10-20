@@ -27,12 +27,14 @@ export default function PedidosPage() {
     }
   }, [status])
 
-  const fetchOrders = async () => {
-    try {
-      // TODO: Implementar API endpoint real
-      // Por ahora mostramos empty state
-      setOrders([])
-    } catch (error) {
+const fetchOrders = async () => {
+  try {
+    const response = await fetch("/api/account/orders")
+    if (response.ok) {
+      const data = await response.json()
+      setOrders(data.orders)
+    }
+  } catch (error) {
       console.error("Error fetching orders:", error)
     } finally {
       setLoading(false)

@@ -1,13 +1,14 @@
 "use client"
 
-import { useSession } from "next-auth/react"
+import { useSession, signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { useState, useEffect } from "react"
-import { MapPin, User, Package, Heart, LogOut, Loader2, Plus, Edit2, Trash2, Home, Briefcase } from "lucide-react"
+import { MapPin, User, Package, Heart, LogOut, Loader2, Plus, Edit2, Trash2, Home, Briefcase, X } from "lucide-react"
+import { toast } from "sonner"
 
 interface Address {
-  id: string
+  id: number
   label: string
   full_name: string
   phone: string
@@ -24,6 +25,19 @@ export default function DireccionesPage() {
   const [addresses, setAddresses] = useState<Address[]>([])
   const [loading, setLoading] = useState(true)
   const [showAddForm, setShowAddForm] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+
+  // Form state
+  const [formData, setFormData] = useState({
+    full_name: "",
+    phone: "",
+    street: "",
+    city: "",
+    state: "",
+    postal_code: "",
+    label: "home" as "home" | "work" | "other",
+    is_default: false
+  })
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -31,24 +45,102 @@ export default function DireccionesPage() {
     }
   }, [status])
 
-  const fetchAddresses = async () => {
-    try {
-      // TODO: Implementar API endpoint real
-      // Por ahora mostramos empty state
-      setAddresses([])
-    } catch (error) {
-      console.error("Error fetching addresses:", error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   if (status === "unauthenticated") {
     router.push("/login")
     return null
   }
 
-  if (status === "loading") {
+  const fetchAddresses = async () => {
+    try {
+      const response = await fetch("/api/account/addresses")
+      if (response.ok) {
+        const data = await response.json()
+        setAddresses(data.addresses)
+      }
+    } catch (error) {
+      console.error("Error al cargar direcciones:", error)
+      toast.error("Error al cargar direcciones")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setSubmitting(true)
+
+    try {
+      const response = await fetch("/api/account/addresses", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      })
+
+      if (response.ok) {
+        toast.success("Dirección agregada exitosamente")
+        setShowAddForm(false)
+        setFormData({
+          full_name: "",
+          phone: "",
+          street: "",
+          city: "",
+          state: "",
+          postal_code: "",
+          label: "home",
+          is_default: false
+        })
+        fetchAddresses()
+      } else {
+        toast.error("Error al agregar dirección")
+      }
+    } catch (error) {
+      toast.error("Error al agregar dirección")
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  const handleDelete = async (id: number) => {
+    if (!confirm("¿Estás seguro de eliminar esta dirección?")) return
+
+    try {
+      const response = await fetch(`/api/account/addresses?id=${id}`, {
+        method: "DELETE"
+      })
+
+      if (response.ok) {
+        toast.success("Dirección eliminada")
+        fetchAddresses()
+      } else {
+        toast.error("Error al eliminar dirección")
+      }
+    } catch (error) {
+      toast.error("Error al eliminar dirección")
+    }
+  }
+
+  const handleSetDefault = async (id: number) => {
+    try {
+      const response = await fetch(`/api/account/addresses?id=${id}`, {
+        method: "PATCH"
+      })
+
+      if (response.ok) {
+        toast.success("Dirección predeterminada actualizada")
+        fetchAddresses()
+      } else {
+        toast.error("Error al actualizar dirección")
+      }
+    } catch (error) {
+      toast.error("Error al actualizar dirección")
+    }
+  }
+
+  const handleSignOut = async () => {
+    await signOut({ callbackUrl: "/", redirect: true })
+  }
+
+  if (status === "loading" || loading) {
     return (
       <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-rose-600" />
@@ -139,7 +231,7 @@ export default function DireccionesPage() {
               </nav>
 
               <button
-                onClick={() => router.push("/")}
+                onClick={handleSignOut}
                 className="w-full mt-6 flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-neutral-300 text-neutral-700 hover:bg-neutral-50 transition"
               >
                 <LogOut className="w-5 h-5" />
@@ -150,12 +242,7 @@ export default function DireccionesPage() {
 
           {/* Main Content */}
           <div className="lg:col-span-2">
-            {loading ? (
-              <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-12 text-center">
-                <Loader2 className="w-8 h-8 animate-spin text-rose-600 mx-auto" />
-                <p className="mt-4 text-neutral-600">Cargando direcciones...</p>
-              </div>
-            ) : addresses.length === 0 ? (
+            {addresses.length === 0 ? (
               // Empty State
               <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-12 text-center">
                 <div className="w-24 h-24 mx-auto bg-neutral-100 rounded-full flex items-center justify-center mb-6">
@@ -176,7 +263,7 @@ export default function DireccionesPage() {
                 </button>
               </div>
             ) : (
-              // Addresses List (cuando haya direcciones)
+              // Addresses List
               <div className="space-y-4">
                 {/* Add New Button */}
                 <button
@@ -211,10 +298,10 @@ export default function DireccionesPage() {
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
-                        <button className="p-2 hover:bg-neutral-100 rounded-lg transition">
-                          <Edit2 className="w-4 h-4 text-neutral-600" />
-                        </button>
-                        <button className="p-2 hover:bg-red-50 rounded-lg transition">
+                        <button 
+                          onClick={() => handleDelete(address.id)}
+                          className="p-2 hover:bg-red-50 rounded-lg transition"
+                        >
                           <Trash2 className="w-4 h-4 text-red-600" />
                         </button>
                       </div>
@@ -224,13 +311,16 @@ export default function DireccionesPage() {
                       <p className="font-medium">{address.full_name}</p>
                       <p>{address.street}</p>
                       <p>
-                        {address.city}, {address.state} {address.postal_code}
+                        {address.city}{address.state && `, ${address.state}`} {address.postal_code}
                       </p>
                       <p className="text-neutral-600">Tel: {address.phone}</p>
                     </div>
 
                     {!address.is_default && (
-                      <button className="mt-4 text-sm text-rose-600 hover:text-rose-700 font-medium">
+                      <button 
+                        onClick={() => handleSetDefault(address.id)}
+                        className="mt-4 text-sm text-rose-600 hover:text-rose-700 font-medium"
+                      >
                         Establecer como predeterminada
                       </button>
                     )}
@@ -239,7 +329,7 @@ export default function DireccionesPage() {
               </div>
             )}
 
-            {/* Add Address Form Modal (placeholder) */}
+            {/* Add Address Form Modal */}
             {showAddForm && (
               <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
                 <div className="bg-white rounded-2xl max-w-2xl w-full p-8 max-h-[90vh] overflow-y-auto">
@@ -250,29 +340,36 @@ export default function DireccionesPage() {
                     <button
                       onClick={() => setShowAddForm(false)}
                       className="p-2 hover:bg-neutral-100 rounded-lg transition"
+                      disabled={submitting}
                     >
-                      ✕
+                      <X className="w-5 h-5" />
                     </button>
                   </div>
 
-                  <form className="space-y-4">
+                  <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-neutral-700 mb-2">
-                          Nombre completo
+                          Nombre completo *
                         </label>
                         <input
                           type="text"
+                          value={formData.full_name}
+                          onChange={(e) => setFormData({...formData, full_name: e.target.value})}
+                          required
                           className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-600"
                           placeholder="María García"
                         />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-neutral-700 mb-2">
-                          Teléfono
+                          Teléfono *
                         </label>
                         <input
                           type="tel"
+                          value={formData.phone}
+                          onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                          required
                           className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-600"
                           placeholder="999 999 999"
                         />
@@ -281,10 +378,13 @@ export default function DireccionesPage() {
 
                     <div>
                       <label className="block text-sm font-medium text-neutral-700 mb-2">
-                        Dirección completa
+                        Dirección completa *
                       </label>
                       <input
                         type="text"
+                        value={formData.street}
+                        onChange={(e) => setFormData({...formData, street: e.target.value})}
+                        required
                         className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-600"
                         placeholder="Av. Javier Prado 123, San Isidro"
                       />
@@ -293,10 +393,13 @@ export default function DireccionesPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-neutral-700 mb-2">
-                          Ciudad
+                          Ciudad *
                         </label>
                         <input
                           type="text"
+                          value={formData.city}
+                          onChange={(e) => setFormData({...formData, city: e.target.value})}
+                          required
                           className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-600"
                           placeholder="Lima"
                         />
@@ -307,6 +410,8 @@ export default function DireccionesPage() {
                         </label>
                         <input
                           type="text"
+                          value={formData.state}
+                          onChange={(e) => setFormData({...formData, state: e.target.value})}
                           className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-600"
                           placeholder="San Isidro"
                         />
@@ -317,6 +422,8 @@ export default function DireccionesPage() {
                         </label>
                         <input
                           type="text"
+                          value={formData.postal_code}
+                          onChange={(e) => setFormData({...formData, postal_code: e.target.value})}
                           className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-600"
                           placeholder="15073"
                         />
@@ -330,21 +437,36 @@ export default function DireccionesPage() {
                       <div className="flex gap-3">
                         <button
                           type="button"
-                          className="flex-1 px-4 py-3 border-2 border-rose-600 bg-rose-50 text-rose-600 rounded-lg font-medium"
+                          onClick={() => setFormData({...formData, label: "home"})}
+                          className={`flex-1 px-4 py-3 border-2 rounded-lg font-medium ${
+                            formData.label === "home" 
+                              ? "border-rose-600 bg-rose-50 text-rose-600" 
+                              : "border-neutral-300 hover:bg-neutral-50"
+                          }`}
                         >
                           <Home className="w-4 h-4 inline mr-2" />
                           Casa
                         </button>
                         <button
                           type="button"
-                          className="flex-1 px-4 py-3 border border-neutral-300 rounded-lg font-medium hover:bg-neutral-50"
+                          onClick={() => setFormData({...formData, label: "work"})}
+                          className={`flex-1 px-4 py-3 border-2 rounded-lg font-medium ${
+                            formData.label === "work" 
+                              ? "border-rose-600 bg-rose-50 text-rose-600" 
+                              : "border-neutral-300 hover:bg-neutral-50"
+                          }`}
                         >
                           <Briefcase className="w-4 h-4 inline mr-2" />
                           Trabajo
                         </button>
                         <button
                           type="button"
-                          className="flex-1 px-4 py-3 border border-neutral-300 rounded-lg font-medium hover:bg-neutral-50"
+                          onClick={() => setFormData({...formData, label: "other"})}
+                          className={`flex-1 px-4 py-3 border-2 rounded-lg font-medium ${
+                            formData.label === "other" 
+                              ? "border-rose-600 bg-rose-50 text-rose-600" 
+                              : "border-neutral-300 hover:bg-neutral-50"
+                          }`}
                         >
                           <MapPin className="w-4 h-4 inline mr-2" />
                           Otro
@@ -356,6 +478,8 @@ export default function DireccionesPage() {
                       <input
                         type="checkbox"
                         id="is_default"
+                        checked={formData.is_default}
+                        onChange={(e) => setFormData({...formData, is_default: e.target.checked})}
                         className="w-5 h-5 text-rose-600 border-neutral-300 rounded focus:ring-2 focus:ring-rose-600"
                       />
                       <label htmlFor="is_default" className="text-sm text-neutral-700">
@@ -367,15 +491,24 @@ export default function DireccionesPage() {
                       <button
                         type="button"
                         onClick={() => setShowAddForm(false)}
+                        disabled={submitting}
                         className="flex-1 px-6 py-3 border border-neutral-300 rounded-lg font-medium hover:bg-neutral-50 transition"
                       >
                         Cancelar
                       </button>
                       <button
                         type="submit"
-                        className="flex-1 px-6 py-3 bg-rose-600 text-white rounded-lg font-medium hover:bg-rose-700 transition"
+                        disabled={submitting}
+                        className="flex-1 px-6 py-3 bg-rose-600 text-white rounded-lg font-medium hover:bg-rose-700 transition disabled:opacity-50 flex items-center justify-center gap-2"
                       >
-                        Guardar dirección
+                        {submitting ? (
+                          <>
+                            <Loader2 className="w-5 h-5 animate-spin" />
+                            Guardando...
+                          </>
+                        ) : (
+                          "Guardar dirección"
+                        )}
                       </button>
                     </div>
                   </form>
