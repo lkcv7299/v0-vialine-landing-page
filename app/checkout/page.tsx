@@ -294,7 +294,7 @@ export default function CheckoutPage() {
         
         clearCart()
         toast.success('Orden creada exitosamente')
-        router.push(`/confirmacion?orderId=${orderId}`)
+        router.push(`/checkout/confirmacion?orderId=${orderId}`)
         setIsSubmitting(false)
       }
 

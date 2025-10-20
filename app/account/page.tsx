@@ -116,8 +116,8 @@ export default function AccountDashboard() {
             {/* Welcome Card */}
             <div className="bg-gradient-to-r from-rose-600 to-rose-700 rounded-2xl shadow-sm p-8 text-white">
               <h2 className="text-2xl font-bold mb-2">
-                ¡Bienvenida, {session?.user?.name?.split(" ")[0]}!
-              </h2>
+  ¡Hola, {session?.user?.name?.split(" ")[0]}!
+</h2>
               <p className="text-rose-100">
                 Estamos felices de tenerte aquí. Explora nuestras últimas colecciones de activewear.
               </p>

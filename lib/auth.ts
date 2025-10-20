@@ -140,7 +140,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 
   // ===================================
-  // PAGES CUSTOMIZADAS
+  // PAGES CUSTOMIZADAS - ✅ FIX: URLs RELATIVAS
   // ===================================
   pages: {
     signIn: "/login",
@@ -158,4 +158,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   // SECRET (Para producción)
   // ===================================
   secret: process.env.NEXTAUTH_SECRET,
+
+  // ===================================
+  // ✅ FIX: CONFIGURACIÓN PARA CODESPACES
+  // ===================================
+  trustHost: true, // Confiar en el host del request
 })
