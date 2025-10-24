@@ -76,6 +76,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   // ===================================
   callbacks: {
     async signIn({ user, account }) {
+      // Al hacer login, LIMPIAR blacklist para permitir nueva sesión
+      if (user?.id) {
+        try {
+          await sql`
+            DELETE FROM session_blacklist 
+            WHERE user_id = ${parseInt(user.id)}
+          `
+          console.log("✅ Blacklist limpiada para usuario:", user.id)
+        } catch (error) {
+          console.error("Error limpiando blacklist:", error)
+        }
+      }
+
       // Para OAuth (Google), crear/actualizar usuario
       if (account?.provider === "google") {
         try {
@@ -192,20 +205,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async signOut(message: any) {
       console.log("✅ SignOut event triggered")
       
-      // ✅ NUEVO: Agregar token a blacklist
+      // ✅ Agregar USER_ID a blacklist (no JTI)
       const token = message.token
-      if (token?.jti && token?.id) {
+      if (token?.id) {
         try {
           await sql`
-            INSERT INTO session_blacklist (jti, user_id, expires_at)
+            INSERT INTO session_blacklist (user_id, blacklisted_at)
             VALUES (
-              ${token.jti},
-              ${token.id},
-              NOW() + INTERVAL '24 hours'
+              ${parseInt(token.id)},
+              NOW()
             )
-            ON CONFLICT (jti) DO NOTHING
           `
-          console.log("🚫 Token agregado a blacklist:", token.jti)
+          console.log("🚫 Usuario agregado a blacklist:", token.id)
         } catch (error) {
           console.error("Error adding to blacklist:", error)
         }

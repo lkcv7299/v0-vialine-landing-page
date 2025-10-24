@@ -8,38 +8,21 @@ export default function AccountSidebar() {
   const pathname = usePathname()
   const router = useRouter()
 
-  // ✅ Logout con blacklist + espera antes de redirect
+  // ✅ Logout simplificado - el middleware maneja todo
   const handleSignOut = async () => {
     try {
-      console.log("🔄 Iniciando logout...")
+      console.log("🔄 Cerrando sesión...")
       
-      // 1. NextAuth ejecuta signOut y agrega token a blacklist
-      await signOut({ 
-        redirect: false
-      })
+      // Ejecutar signOut (agrega user a blacklist)
+      await signOut({ redirect: false })
       
-      console.log("✅ SignOut ejecutado, esperando inserción en blacklist...")
+      console.log("✅ SignOut completado, redirigiendo...")
       
-      // 2. Esperar 500ms para asegurar que el token se agregó a blacklist
-      await new Promise(resolve => setTimeout(resolve, 500))
-      
-      console.log("✅ Token en blacklist, borrando cookies...")
-      
-      // 3. Borrar TODAS las cookies de next-auth manualmente
-      document.cookie.split(";").forEach((c) => {
-        document.cookie = c
-          .replace(/^ +/, "")
-          .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/")
-      })
-      
-      console.log("✅ Cookies borradas, redirigiendo...")
-      
-      // 4. Hard navigation (limpia todo el cache)
+      // Hard navigation para limpiar cache
       window.location.href = "/"
       
     } catch (error) {
-      console.error("❌ Error al cerrar sesión:", error)
-      // Forzar redirect aunque haya error
+      console.error("❌ Error:", error)
       window.location.href = "/"
     }
   }
