@@ -1,264 +1,196 @@
 "use client"
 
-import { useSession, signOut } from "next-auth/react"
+import { useSession } from "next-auth/react"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
-import { User, Package, MapPin, Heart, LogOut, Mail, Calendar, Loader2 } from "lucide-react"
 import { useState, useEffect } from "react"
-import { useWishlist } from "@/components/providers/WishlistContext"
+import AccountSidebar from "@/components/AccountSidebar"
+import { Package, MapPin, Heart, User, TrendingUp } from "lucide-react"
 
-export default function AccountDashboard() {
+interface AccountStats {
+  totalOrders: number
+  totalSpent: number
+  savedAddresses: number
+  wishlistItems: number
+}
+
+export default function AccountPage() {
   const { data: session, status } = useSession()
   const router = useRouter()
-  const { items: wishlistItems } = useWishlist()
-  
-  const [stats, setStats] = useState({
-    orders: 0,
-    addresses: 0,
-    wishlist: 0
+  const [stats, setStats] = useState<AccountStats>({
+    totalOrders: 0,
+    totalSpent: 0,
+    savedAddresses: 0,
+    wishlistItems: 0,
   })
   const [loading, setLoading] = useState(true)
 
-  // Redirect si no está autenticado
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/login")
     }
   }, [status, router])
 
-  // Cargar estadísticas reales
   useEffect(() => {
-    if (status === "authenticated") {
+    const fetchStats = async () => {
+      try {
+        const response = await fetch("/api/account/stats")
+        if (response.ok) {
+          const data = await response.json()
+          setStats(data)
+        }
+      } catch (error) {
+        console.error("Error fetching stats:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    if (session?.user?.id) {
       fetchStats()
     }
-  }, [status])
+  }, [session])
 
-  // Actualizar contador de wishlist cuando cambia
-  useEffect(() => {
-    setStats(prev => ({ ...prev, wishlist: wishlistItems.length }))
-  }, [wishlistItems])
+  // ✅ Ya no necesitamos handleSignOut aquí
+  // AccountSidebar maneja el logout por sí mismo
 
-  const fetchStats = async () => {
-    try {
-      const response = await fetch("/api/account/stats")
-      if (response.ok) {
-        const data = await response.json()
-        setStats(prev => ({
-          orders: data.stats.orders,
-          addresses: data.stats.addresses,
-          wishlist: prev.wishlist
-        }))
-      }
-    } catch (error) {
-      console.error("Error al cargar estadísticas:", error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // Loading state
   if (status === "loading" || loading) {
     return (
-      <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-rose-600" />
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-rose-600"></div>
       </div>
     )
   }
 
-  // ✅ FIX DEFINITIVO: Borrar cookies manualmente + signOut
-  const handleSignOut = async () => {
-    try {
-      // PASO 1: Borrar TODAS las cookies de next-auth manualmente
-      const cookiesToDelete = [
-        'next-auth.session-token',
-        '__Secure-next-auth.session-token',
-        'next-auth.csrf-token',
-        '__Host-next-auth.csrf-token',
-        'next-auth.callback-url',
-        '__Secure-next-auth.callback-url'
-      ]
-
-      cookiesToDelete.forEach(cookieName => {
-        // Borrar en todos los paths posibles
-        document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
-        document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname};`
-      })
-
-      // PASO 2: Llamar a signOut de NextAuth
-      await signOut({ 
-        redirect: false  // No redirect automático
-      })
-
-      // PASO 3: Limpiar localStorage/sessionStorage
-      if (typeof window !== 'undefined') {
-        sessionStorage.clear()
-      }
-
-      // PASO 4: Forzar redirect con window.location (hard navigation)
-      window.location.href = "/"
-      
-    } catch (error) {
-      console.error("Error en signOut:", error)
-      // Fallback: forzar redirect de todas formas
-      window.location.href = "/"
-    }
-  }
-
-  if (status === "unauthenticated") {
+  if (!session) {
     return null
   }
 
+  const userName = session.user?.name || "Usuario"
+
+  const quickStats = [
+    {
+      icon: Package,
+      label: "Pedidos realizados",
+      value: stats.totalOrders || 0,
+      color: "text-blue-600",
+      bgColor: "bg-blue-50",
+    },
+    {
+      icon: TrendingUp,
+      label: "Total gastado",
+      value: `S/ ${(stats.totalSpent || 0).toFixed(2)}`,
+      color: "text-green-600",
+      bgColor: "bg-green-50",
+    },
+    {
+      icon: MapPin,
+      label: "Direcciones guardadas",
+      value: stats.savedAddresses || 0,
+      color: "text-purple-600",
+      bgColor: "bg-purple-50",
+    },
+    {
+      icon: Heart,
+      label: "Productos favoritos",
+      value: stats.wishlistItems || 0,
+      color: "text-rose-600",
+      bgColor: "bg-rose-50",
+    },
+  ]
+
   return (
-    <div className="min-h-screen bg-neutral-50 py-12">
-      <div className="container mx-auto px-4 max-w-6xl">
+    <div className="min-h-screen bg-gray-50 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-neutral-900 mb-2">Mi Cuenta</h1>
-          <p className="text-neutral-600">Gestiona tu información y pedidos</p>
+          <h1 className="text-3xl font-bold text-gray-900">Mi Cuenta</h1>
+          <p className="mt-2 text-gray-600">
+            Bienvenida de vuelta, {userName}
+          </p>
         </div>
 
-        {/* Main Content */}
-        <div className="grid lg:grid-cols-4 gap-6">
+        {/* Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl border border-neutral-200 p-6">
-              {/* User Info */}
-              <div className="mb-6">
-                <div className="w-20 h-20 bg-rose-100 rounded-full flex items-center justify-center mb-4">
-                  <User className="w-10 h-10 text-rose-600" />
-                </div>
-                <h2 className="text-lg font-semibold text-neutral-900 mb-1">
-                  {session?.user?.name || "Usuario"}
-                </h2>
-                <p className="text-sm text-neutral-600 flex items-center gap-2">
-                  <Mail className="w-4 h-4" />
-                  {session?.user?.email}
-                </p>
-              </div>
-
-              {/* Navigation */}
-              <nav className="space-y-1 mb-6">
-                <Link
-                  href="/account"
-                  className="flex items-center gap-3 px-4 py-3 rounded-lg bg-rose-50 text-rose-600 font-medium"
-                >
-                  <User className="w-5 h-5" />
-                  Inicio
-                </Link>
-                <Link
-                  href="/account/pedidos"
-                  className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-700 hover:bg-neutral-50 transition"
-                >
-                  <Package className="w-5 h-5" />
-                  Mis pedidos
-                </Link>
-                <Link
-                  href="/account/direcciones"
-                  className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-700 hover:bg-neutral-50 transition"
-                >
-                  <MapPin className="w-5 h-5" />
-                  Direcciones
-                </Link>
-                <Link
-                  href="/wishlist"
-                  className="flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-700 hover:bg-neutral-50 transition"
-                >
-                  <Heart className="w-5 h-5" />
-                  Lista de deseos
-                </Link>
-              </nav>
-
-              {/* Logout */}
-              <button
-                onClick={handleSignOut}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-700 hover:bg-neutral-50 transition border-t border-neutral-200 pt-4"
-              >
-                <LogOut className="w-5 h-5" />
-                Cerrar sesión
-              </button>
-            </div>
+            <AccountSidebar />
           </div>
 
           {/* Main Content */}
           <div className="lg:col-span-3 space-y-6">
             {/* Welcome Card */}
-            <div className="bg-gradient-to-br from-rose-600 to-rose-700 rounded-xl p-8 text-white">
-              <h2 className="text-2xl font-bold mb-2">
-                ¡Hola, {session?.user?.name?.split(" ")[0] || "Usuario"}!
-              </h2>
-              <p className="text-rose-100 mb-4">
-                Estamos felices de tenerte aquí. Explora nuestras últimas colecciones de activewear.
-              </p>
-              <Link
-                href="/mujer"
-                className="inline-block bg-white text-rose-600 px-6 py-3 rounded-lg font-medium hover:bg-rose-50 transition"
-              >
-                Ver productos
-              </Link>
+            <div className="bg-gradient-to-r from-rose-500 to-pink-500 rounded-lg p-6 text-white">
+              <div className="flex items-center space-x-4">
+                <div className="bg-white/20 rounded-full p-3">
+                  <User className="h-8 w-8" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold">{userName}</h2>
+                  <p className="text-rose-100">{session.user?.email}</p>
+                </div>
+              </div>
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-3 gap-4">
-              {/* Orders */}
-              <div className="bg-white rounded-xl border border-neutral-200 p-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center">
-                    <Package className="w-6 h-6 text-rose-600" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {quickStats.map((stat, index) => {
+                const Icon = stat.icon
+                return (
+                  <div
+                    key={index}
+                    className="bg-white rounded-lg p-6 shadow-sm border border-gray-200"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-gray-600 mb-1">
+                          {stat.label}
+                        </p>
+                        <p className="text-2xl font-bold text-gray-900">
+                          {stat.value}
+                        </p>
+                      </div>
+                      <div className={`${stat.bgColor} rounded-full p-3`}>
+                        <Icon className={`h-6 w-6 ${stat.color}`} />
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-2xl font-bold text-neutral-900">{stats.orders}</p>
-                    <p className="text-sm text-neutral-600">Pedidos</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Favorites */}
-              <div className="bg-white rounded-xl border border-neutral-200 p-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center">
-                    <Heart className="w-6 h-6 text-rose-600" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold text-neutral-900">{stats.wishlist}</p>
-                    <p className="text-sm text-neutral-600">Favoritos</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Addresses */}
-              <div className="bg-white rounded-xl border border-neutral-200 p-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center">
-                    <MapPin className="w-6 h-6 text-rose-600" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold text-neutral-900">{stats.addresses}</p>
-                    <p className="text-sm text-neutral-600">Direcciones</p>
-                  </div>
-                </div>
-              </div>
+                )
+              })}
             </div>
 
-            {/* Account Info */}
-            <div className="bg-white rounded-xl border border-neutral-200 p-6">
-              <h3 className="text-lg font-semibold text-neutral-900 mb-4">
-                Información de la cuenta
-              </h3>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <Mail className="w-5 h-5 text-neutral-400 mt-0.5" />
-                  <div>
-                    <p className="text-sm text-neutral-600 mb-1">Email</p>
-                    <p className="font-medium text-neutral-900">{session?.user?.email}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Calendar className="w-5 h-5 text-neutral-400 mt-0.5" />
-                  <div>
-                    <p className="text-sm text-neutral-600 mb-1">Miembro desde</p>
-                    <p className="font-medium text-neutral-900">24 de octubre de 2025</p>
-                  </div>
-                </div>
+            {/* Quick Actions */}
+            <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
+              <h3 className="text-lg font-semibold mb-4">Accesos Rápidos</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <button
+                  onClick={() => router.push("/mujer")}
+                  className="p-4 border border-gray-200 rounded-lg hover:border-rose-300 hover:bg-rose-50 transition-colors"
+                >
+                  <p className="font-medium text-gray-900">Seguir comprando</p>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Explora nuestros productos
+                  </p>
+                </button>
+
+                <button
+                  onClick={() => router.push("/account/pedidos")}
+                  className="p-4 border border-gray-200 rounded-lg hover:border-rose-300 hover:bg-rose-50 transition-colors"
+                >
+                  <p className="font-medium text-gray-900">Mis Pedidos</p>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Ver historial completo
+                  </p>
+                </button>
+
+                <button
+                  onClick={() => router.push("/wishlist")}
+                  className="p-4 border border-gray-200 rounded-lg hover:border-rose-300 hover:bg-rose-50 transition-colors"
+                >
+                  <p className="font-medium text-gray-900">Favoritos</p>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Productos guardados
+                  </p>
+                </button>
               </div>
             </div>
           </div>

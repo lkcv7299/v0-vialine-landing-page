@@ -1,81 +1,108 @@
 "use client"
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { signOut } from "next-auth/react"
 import { User, Package, MapPin, Heart, LogOut } from "lucide-react"
 
 export default function AccountSidebar() {
   const pathname = usePathname()
+  const router = useRouter()
 
-  // ✅ SOLUCIÓN DEFINITIVA: Simple y efectivo
+  // ✅ Logout con blacklist + espera antes de redirect
   const handleSignOut = async () => {
-    await signOut({ 
-      callbackUrl: "/",
-      redirect: true 
-    })
+    try {
+      console.log("🔄 Iniciando logout...")
+      
+      // 1. NextAuth ejecuta signOut y agrega token a blacklist
+      await signOut({ 
+        redirect: false
+      })
+      
+      console.log("✅ SignOut ejecutado, esperando inserción en blacklist...")
+      
+      // 2. Esperar 500ms para asegurar que el token se agregó a blacklist
+      await new Promise(resolve => setTimeout(resolve, 500))
+      
+      console.log("✅ Token en blacklist, borrando cookies...")
+      
+      // 3. Borrar TODAS las cookies de next-auth manualmente
+      document.cookie.split(";").forEach((c) => {
+        document.cookie = c
+          .replace(/^ +/, "")
+          .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/")
+      })
+      
+      console.log("✅ Cookies borradas, redirigiendo...")
+      
+      // 4. Hard navigation (limpia todo el cache)
+      window.location.href = "/"
+      
+    } catch (error) {
+      console.error("❌ Error al cerrar sesión:", error)
+      // Forzar redirect aunque haya error
+      window.location.href = "/"
+    }
   }
 
   const menuItems = [
     {
-      href: "/account",
-      label: "Inicio",
       icon: User,
-      active: pathname === "/account",
+      label: "Mi Cuenta",
+      href: "/account",
     },
     {
-      href: "/account/pedidos",
-      label: "Mis pedidos",
       icon: Package,
-      active: pathname === "/account/pedidos",
+      label: "Mis Pedidos",
+      href: "/account/pedidos",
     },
     {
-      href: "/account/direcciones",
-      label: "Direcciones",
       icon: MapPin,
-      active: pathname === "/account/direcciones",
+      label: "Direcciones",
+      href: "/account/direcciones",
     },
     {
-      href: "/wishlist",
-      label: "Lista de deseos",
       icon: Heart,
-      active: pathname === "/wishlist",
+      label: "Lista de Deseos",
+      href: "/wishlist",
     },
   ]
 
   return (
-    <aside className="w-full lg:w-64 bg-white rounded-lg border border-neutral-200 p-6">
-      <nav className="space-y-1">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+      <div className="p-4 bg-gray-50 border-b border-gray-200">
+        <h3 className="font-semibold text-gray-900">Mi Cuenta</h3>
+      </div>
+
+      <nav className="p-2">
         {menuItems.map((item) => {
           const Icon = item.icon
+          const isActive = pathname === item.href
+
           return (
-            <Link
+            <button
               key={item.href}
-              href={item.href}
-              className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
-                item.active
-                  ? "bg-rose-50 text-rose-600 font-medium"
-                  : "text-neutral-700 hover:bg-neutral-50"
+              onClick={() => router.push(item.href)}
+              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                isActive
+                  ? "bg-rose-50 text-rose-600"
+                  : "text-gray-700 hover:bg-gray-50"
               }`}
             >
-              <Icon className="w-5 h-5" />
-              {item.label}
-            </Link>
+              <Icon className="h-5 w-5" />
+              <span className="font-medium">{item.label}</span>
+            </button>
           )
         })}
-
-        {/* Divider */}
-        <div className="my-4 border-t border-neutral-200"></div>
 
         {/* Logout Button */}
         <button
           onClick={handleSignOut}
-          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-700 hover:bg-neutral-50 transition"
+          className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition-colors mt-2"
         >
-          <LogOut className="w-5 h-5" />
-          Cerrar sesión
+          <LogOut className="h-5 w-5" />
+          <span className="font-medium">Cerrar Sesión</span>
         </button>
       </nav>
-    </aside>
+    </div>
   )
 }

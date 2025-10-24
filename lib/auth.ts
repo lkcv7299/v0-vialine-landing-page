@@ -132,11 +132,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         token.id = user.id
       }
+      
+      // ✅ La verificación de blacklist ahora está en middleware
+      // Esto es más confiable porque se ejecuta en CADA request
+      
       return token
     },
 
     async session({ session, token }) {
-      // ✅ FIX: Verificar que el token tenga id
       if (token.id && session.user) {
         session.user.id = token.id as string
       }
@@ -153,16 +156,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 
   // ===================================
-  // SESSION CONFIGURATION - ✅ FIX CRÍTICO
+  // SESSION CONFIGURATION - ✅ JWT (requerido por Credentials)
   // ===================================
   session: {
     strategy: "jwt",
-    maxAge: 24 * 60 * 60, // ✅ 24 horas (antes era 30 días)
-    updateAge: 60 * 60,   // ✅ Update cada hora
+    maxAge: 24 * 60 * 60, // 24 horas
   },
 
   // ===================================
-  // COOKIES CONFIGURATION - ✅ FIX CRÍTICO
+  // JWT CONFIGURATION - ✅ Generar JTI para blacklist
+  // ===================================
+  jwt: {
+    maxAge: 24 * 60 * 60, // 24 horas
+  },
+
+  // ===================================
+  // COOKIES CONFIGURATION
   // ===================================
   cookies: {
     sessionToken: {
@@ -171,25 +180,41 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         httpOnly: true,
         sameSite: 'lax',
         path: '/',
-        secure: process.env.NODE_ENV === "production", // false en dev, true en prod
+        secure: process.env.NODE_ENV === "production",
       },
     },
   },
 
   // ===================================
-  // EVENTOS - ✅ NUEVO: Logging para debugging
+  // EVENTOS - Logging
   // ===================================
   events: {
-    async signOut(message) {
-      console.log("✅ SignOut event triggered:", message)
-    },
-    async session(message) {
-      console.log("📋 Session event:", message.session.user?.email)
+    async signOut(message: any) {
+      console.log("✅ SignOut event triggered")
+      
+      // ✅ NUEVO: Agregar token a blacklist
+      const token = message.token
+      if (token?.jti && token?.id) {
+        try {
+          await sql`
+            INSERT INTO session_blacklist (jti, user_id, expires_at)
+            VALUES (
+              ${token.jti},
+              ${token.id},
+              NOW() + INTERVAL '24 hours'
+            )
+            ON CONFLICT (jti) DO NOTHING
+          `
+          console.log("🚫 Token agregado a blacklist:", token.jti)
+        } catch (error) {
+          console.error("Error adding to blacklist:", error)
+        }
+      }
     },
   },
 
   // ===================================
-  // SECRET (Para producción)
+  // SECRET
   // ===================================
   secret: process.env.NEXTAUTH_SECRET,
 
@@ -199,7 +224,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   trustHost: true,
 
   // ===================================
-  // DEBUG MODE - ✅ Activar para ver qué pasa
+  // DEBUG MODE
   // ===================================
   debug: process.env.NODE_ENV === "development",
 })

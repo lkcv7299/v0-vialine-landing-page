@@ -1,81 +1,88 @@
 import { auth } from "@/lib/auth"
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
+import { sql } from "@vercel/postgres"
+import { decode } from "next-auth/jwt"
 
-// Función helper para convertir a slug (del middleware original)
-const toSlug = (s: string) =>
-  s
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/\s+/g, "-")
-    .replace(/[^a-z0-9-]/g, "")
+export default async function middleware(req: NextRequest) {
+  // ===================================
+  // PASO 1: Verificar si el token está blacklisted
+  // ===================================
+  const token = req.cookies.get("next-auth.session-token")?.value
 
-export default auth((req) => {
-  const { pathname, searchParams } = req.nextUrl
-  const isLoggedIn = !!req.auth
+  if (token) {
+    try {
+      // Decodificar el JWT para obtener el jti
+      const decoded = await decode({
+        token,
+        secret: process.env.NEXTAUTH_SECRET!,
+        salt: "authjs.session-token", // ✅ AGREGADO: salt requerido
+      })
 
-  // ====================================
-  // ✅ FIX: EXCLUIR RUTAS DE NEXTAUTH
-  // ====================================
-  // NextAuth.js maneja estas rutas internamente
-  // No debemos procesarlas en el middleware
-  if (pathname.startsWith("/api/auth")) {
-    return NextResponse.next()
-  }
+      if (decoded?.jti) {
+        // Verificar si está en la blacklist
+        const result = await sql`
+          SELECT * FROM session_blacklist 
+          WHERE jti = ${decoded.jti}
+          AND expires_at > NOW()
+          LIMIT 1
+        `
 
-  // ====================================
-  // FUNCIONALIDAD 1: Redirects de productos
-  // ====================================
-  if (pathname === "/productos") {
-    const genero = toSlug(searchParams.get("genero") ?? "")
-    const categoria = toSlug(searchParams.get("categoria") ?? "")
-    if (genero && categoria) {
-      const url = req.nextUrl.clone()
-      url.pathname = `/shop/${genero}/${categoria}`
-      url.search = ""
-      return NextResponse.redirect(url, 308)
+        if (result.rows.length > 0) {
+          console.log("🚫 Token blacklisted detectado en middleware:", decoded.jti)
+          
+          // Token está blacklisted - borrar cookie y redirigir
+          const response = NextResponse.redirect(new URL("/login", req.url))
+          
+          // Borrar TODAS las cookies de next-auth
+          response.cookies.delete("next-auth.session-token")
+          response.cookies.delete("next-auth.csrf-token")
+          response.cookies.delete("next-auth.callback-url")
+          
+          return response
+        }
+      }
+    } catch (error) {
+      console.error("Error verificando blacklist en middleware:", error)
     }
   }
 
-  // ====================================
-  // FUNCIONALIDAD 2: Protección de rutas con Auth
-  // ====================================
-  
-  // Rutas protegidas que requieren autenticación
-  const protectedRoutes = ["/account", "/account/pedidos", "/account/direcciones"]
-  const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route))
+  // ===================================
+  // PASO 2: Verificar autenticación normal
+  // ===================================
+  const session = await auth()
 
-  // Si la ruta es protegida y el usuario NO está logueado → redirect a login
-  if (isProtectedRoute && !isLoggedIn) {
-    const loginUrl = new URL("/login", req.url)
-    // Opcional: guardar la URL original para redirect después del login
-    loginUrl.searchParams.set("callbackUrl", pathname)
-    return NextResponse.redirect(loginUrl)
+  const isAuthPage =
+    req.nextUrl.pathname === "/login" ||
+    req.nextUrl.pathname === "/registro"
+
+  const isProtectedPage =
+    req.nextUrl.pathname.startsWith("/account") ||
+    req.nextUrl.pathname === "/checkout"
+
+  // Si está en página de auth y tiene sesión, redirigir a home
+  if (isAuthPage && session) {
+    return NextResponse.redirect(new URL("/", req.url))
   }
 
-  // Si el usuario está logueado y trata de ir a /login o /registro → redirect a account
-  if (isLoggedIn && (pathname === "/login" || pathname === "/registro")) {
-    return NextResponse.redirect(new URL("/account", req.url))
+  // Si está en página protegida y NO tiene sesión, redirigir a login
+  if (isProtectedPage && !session) {
+    return NextResponse.redirect(new URL("/login", req.url))
   }
 
-  // Continuar normalmente
   return NextResponse.next()
-})
+}
 
-// ====================================
-// ✅ FIX: MATCHER MEJORADO
-// ====================================
 export const config = {
   matcher: [
     /*
-     * Match all request paths except for the ones starting with:
-     * - api/auth (NextAuth.js routes - EXCLUIDO EXPLÍCITAMENTE)
+     * Match all request paths except:
+     * - api (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
-     * - public files (images, etc)
+     * - public files (public folder)
      */
-    "/((?!api/auth|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 }
