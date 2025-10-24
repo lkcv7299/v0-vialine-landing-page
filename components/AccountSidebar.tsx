@@ -1,57 +1,77 @@
-// components/AccountSidebar.tsx
 "use client"
 
-import { signOut, useSession } from "next-auth/react"
 import Link from "next/link"
+import { usePathname, useRouter } from "next/navigation"
+import { signOut } from "next-auth/react"
 import { User, Package, MapPin, Heart, LogOut } from "lucide-react"
 
-interface AccountSidebarProps {
-  currentPage: "inicio" | "pedidos" | "direcciones" | "wishlist"
-}
-
-export default function AccountSidebar({ currentPage }: AccountSidebarProps) {
-  const { data: session } = useSession()
+export default function AccountSidebar() {
+  const pathname = usePathname()
+  const router = useRouter()
 
   const handleSignOut = async () => {
-    await signOut({ callbackUrl: "/" })
+    try {
+      // ✅ FIX: signOut con redirect explícito
+      await signOut({ 
+        redirect: false,
+        callbackUrl: "/" 
+      })
+      
+      // ✅ FIX: Forzar redirect a home y limpiar cache
+      router.push("/")
+      router.refresh()
+      
+      // ✅ FIX: Recargar la página para limpiar todas las cookies
+      setTimeout(() => {
+        window.location.href = "/"
+      }, 100)
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error)
+      // Fallback: forzar recarga completa
+      window.location.href = "/"
+    }
   }
 
-  const navItems = [
-    { id: "inicio", href: "/account", icon: User, label: "Inicio" },
-    { id: "pedidos", href: "/account/pedidos", icon: Package, label: "Mis pedidos" },
-    { id: "direcciones", href: "/account/direcciones", icon: MapPin, label: "Direcciones" },
-    { id: "wishlist", href: "/wishlist", icon: Heart, label: "Lista de deseos" },
+  const menuItems = [
+    {
+      href: "/account",
+      label: "Inicio",
+      icon: User,
+      active: pathname === "/account",
+    },
+    {
+      href: "/account/pedidos",
+      label: "Mis pedidos",
+      icon: Package,
+      active: pathname === "/account/pedidos",
+    },
+    {
+      href: "/account/direcciones",
+      label: "Direcciones",
+      icon: MapPin,
+      active: pathname === "/account/direcciones",
+    },
+    {
+      href: "/wishlist",
+      label: "Lista de deseos",
+      icon: Heart,
+      active: pathname === "/wishlist",
+    },
   ]
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6">
-      {/* User Info */}
-      <div className="flex items-center gap-4 pb-6 border-b border-neutral-200">
-        <div className="w-16 h-16 rounded-full bg-rose-100 flex items-center justify-center">
-          <User className="w-8 h-8 text-rose-600" />
-        </div>
-        <div>
-          <h2 className="font-semibold text-neutral-900">
-            {session?.user?.name || "Usuario"}
-          </h2>
-          <p className="text-sm text-neutral-600">{session?.user?.email}</p>
-        </div>
-      </div>
-
-      {/* Navigation */}
-      <nav className="mt-6 space-y-2">
-        {navItems.map((item) => {
+    <aside className="w-full lg:w-64 bg-white rounded-lg border border-neutral-200 p-6">
+      <nav className="space-y-1">
+        {menuItems.map((item) => {
           const Icon = item.icon
-          const isActive = currentPage === item.id
-
           return (
             <Link
-              key={item.id}
+              key={item.href}
               href={item.href}
               className={`flex items-center gap-3 px-4 py-3 rounded-lg transition ${
-                isActive
+                item.active
                   ? "bg-rose-50 text-rose-600 font-medium"
-                  : "hover:bg-neutral-50 text-neutral-700"
+                  : "text-neutral-700 hover:bg-neutral-50"
               }`}
             >
               <Icon className="w-5 h-5" />
@@ -59,16 +79,19 @@ export default function AccountSidebar({ currentPage }: AccountSidebarProps) {
             </Link>
           )
         })}
-      </nav>
 
-      {/* Sign Out Button */}
-      <button
-        onClick={handleSignOut}
-        className="w-full mt-6 flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-neutral-300 text-neutral-700 hover:bg-neutral-50 transition"
-      >
-        <LogOut className="w-5 h-5" />
-        Cerrar sesión
-      </button>
-    </div>
+        {/* Divider */}
+        <div className="my-4 border-t border-neutral-200"></div>
+
+        {/* Logout Button */}
+        <button
+          onClick={handleSignOut}
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-neutral-700 hover:bg-neutral-50 transition"
+        >
+          <LogOut className="w-5 h-5" />
+          Cerrar sesión
+        </button>
+      </nav>
+    </aside>
   )
 }
