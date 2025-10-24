@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation"
 import { byFabric, type Product } from "@/data/products"
 import ProductGrid from "@/components/ProductGrid"
-import ProductFilters from "@/components/ProductFilters"
+import ProductFiltersDesktop from "@/components/ProductFiltersDesktop"
+import ProductFiltersDrawer from "@/components/ProductFiltersDrawer"
 import { FABRIC_LOOKUP, type FabricSlug } from "@/data/fabrics"
 
 function applyFilters(items: Product[], q: { get: (k: string) => string | null; getAll: (k: string) => string[] }) {
@@ -49,7 +50,6 @@ function applyFilters(items: Product[], q: { get: (k: string) => string | null; 
   return out
 }
 
-// ✅ CAMBIO CRÍTICO: Hacer la función async y await params y searchParams
 export default async function FabricPage({
   params,
   searchParams,
@@ -77,6 +77,7 @@ export default async function FabricPage({
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10">
+      {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl md:text-4xl font-bold text-neutral-900">{fabricInfo.name}</h1>
         <p className="mt-2 text-neutral-700">{fabricInfo.summary}</p>
@@ -86,11 +87,19 @@ export default async function FabricPage({
         </p>
       </div>
 
-      <div className="grid lg:grid-cols-4 gap-8">
-        <aside className="lg:col-span-1">
-          <ProductFilters totalProducts={0} filteredCount={0} />
-        </aside>
-        <div className="lg:col-span-3">
+      {/* Layout con filtros */}
+      <div className="grid lg:grid-cols-[280px_1fr] gap-8">
+        {/* Sidebar Desktop - Solo visible en lg+ */}
+        <ProductFiltersDesktop totalProducts={baseProducts.length} filteredCount={filteredProducts.length} />
+
+        {/* Main Content */}
+        <div className="min-w-0">
+          {/* Drawer Mobile - Solo visible en móvil */}
+          <div className="lg:hidden mb-6">
+            <ProductFiltersDrawer totalProducts={baseProducts.length} filteredCount={filteredProducts.length} />
+          </div>
+
+          {/* Product Grid */}
           <ProductGrid items={filteredProducts} />
         </div>
       </div>
