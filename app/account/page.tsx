@@ -19,11 +19,12 @@ export default function AccountDashboard() {
   })
   const [loading, setLoading] = useState(true)
 
-  // Redirect si no está autenticado (backup, el middleware ya lo maneja)
-  if (status === "unauthenticated") {
-    router.push("/login")
-    return null
-  }
+  // Redirect si no está autenticado
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login")
+    }
+  }, [status, router])
 
   // Cargar estadísticas reales
   useEffect(() => {
@@ -45,7 +46,7 @@ export default function AccountDashboard() {
         setStats(prev => ({
           orders: data.stats.orders,
           addresses: data.stats.addresses,
-          wishlist: prev.wishlist // Se cuenta del lado del cliente
+          wishlist: prev.wishlist
         }))
       }
     } catch (error) {
@@ -64,28 +65,47 @@ export default function AccountDashboard() {
     )
   }
 
-  // ✅ FIX: Mejorar función de signOut
+  // ✅ FIX DEFINITIVO: Borrar cookies manualmente + signOut
   const handleSignOut = async () => {
     try {
-      // signOut con redirect explícito
-      await signOut({ 
-        redirect: false,
-        callbackUrl: "/" 
+      // PASO 1: Borrar TODAS las cookies de next-auth manualmente
+      const cookiesToDelete = [
+        'next-auth.session-token',
+        '__Secure-next-auth.session-token',
+        'next-auth.csrf-token',
+        '__Host-next-auth.csrf-token',
+        'next-auth.callback-url',
+        '__Secure-next-auth.callback-url'
+      ]
+
+      cookiesToDelete.forEach(cookieName => {
+        // Borrar en todos los paths posibles
+        document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
+        document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname};`
       })
+
+      // PASO 2: Llamar a signOut de NextAuth
+      await signOut({ 
+        redirect: false  // No redirect automático
+      })
+
+      // PASO 3: Limpiar localStorage/sessionStorage
+      if (typeof window !== 'undefined') {
+        sessionStorage.clear()
+      }
+
+      // PASO 4: Forzar redirect con window.location (hard navigation)
+      window.location.href = "/"
       
-      // Forzar redirect a home y limpiar cache
-      router.push("/")
-      router.refresh()
-      
-      // Recargar la página para limpiar todas las cookies
-      setTimeout(() => {
-        window.location.href = "/"
-      }, 100)
     } catch (error) {
-      console.error("Error al cerrar sesión:", error)
-      // Fallback: forzar recarga completa
+      console.error("Error en signOut:", error)
+      // Fallback: forzar redirect de todas formas
       window.location.href = "/"
     }
+  }
+
+  if (status === "unauthenticated") {
+    return null
   }
 
   return (

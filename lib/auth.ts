@@ -60,7 +60,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
     // ===================================
     // PROVIDER 2: Google OAuth (CONDICIONAL)
-    // ✅ FIX #1: Solo se activa si las credenciales existen
     // ===================================
     ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
       ? [
@@ -137,7 +136,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
 
     async session({ session, token }) {
-      if (session.user) {
+      // ✅ FIX: Verificar que el token tenga id
+      if (token.id && session.user) {
         session.user.id = token.id as string
       }
       return session
@@ -153,10 +153,39 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 
   // ===================================
-  // SESSION STRATEGY
+  // SESSION CONFIGURATION - ✅ FIX CRÍTICO
   // ===================================
   session: {
     strategy: "jwt",
+    maxAge: 24 * 60 * 60, // ✅ 24 horas (antes era 30 días)
+    updateAge: 60 * 60,   // ✅ Update cada hora
+  },
+
+  // ===================================
+  // COOKIES CONFIGURATION - ✅ FIX CRÍTICO
+  // ===================================
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: process.env.NODE_ENV === "production", // false en dev, true en prod
+      },
+    },
+  },
+
+  // ===================================
+  // EVENTOS - ✅ NUEVO: Logging para debugging
+  // ===================================
+  events: {
+    async signOut(message) {
+      console.log("✅ SignOut event triggered:", message)
+    },
+    async session(message) {
+      console.log("📋 Session event:", message.session.user?.email)
+    },
   },
 
   // ===================================
@@ -168,4 +197,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   // TRUST HOST
   // ===================================
   trustHost: true,
+
+  // ===================================
+  // DEBUG MODE - ✅ Activar para ver qué pasa
+  // ===================================
+  debug: process.env.NODE_ENV === "development",
 })

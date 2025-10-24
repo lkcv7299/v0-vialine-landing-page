@@ -1,35 +1,19 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import { usePathname } from "next/navigation"
 import { signOut } from "next-auth/react"
 import { User, Package, MapPin, Heart, LogOut } from "lucide-react"
 
 export default function AccountSidebar() {
   const pathname = usePathname()
-  const router = useRouter()
 
+  // ✅ SOLUCIÓN DEFINITIVA: Simple y efectivo
   const handleSignOut = async () => {
-    try {
-      // ✅ FIX: signOut con redirect explícito
-      await signOut({ 
-        redirect: false,
-        callbackUrl: "/" 
-      })
-      
-      // ✅ FIX: Forzar redirect a home y limpiar cache
-      router.push("/")
-      router.refresh()
-      
-      // ✅ FIX: Recargar la página para limpiar todas las cookies
-      setTimeout(() => {
-        window.location.href = "/"
-      }, 100)
-    } catch (error) {
-      console.error("Error al cerrar sesión:", error)
-      // Fallback: forzar recarga completa
-      window.location.href = "/"
-    }
+    await signOut({ 
+      callbackUrl: "/",
+      redirect: true 
+    })
   }
 
   const menuItems = [
