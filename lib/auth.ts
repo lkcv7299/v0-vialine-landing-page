@@ -52,7 +52,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             image: user.image,
           }
         } catch (error) {
-          console.error("❌ Auth error:", error)
+          console.error("Auth error:", error)
           return null
         }
       },
@@ -60,20 +60,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
     // ===================================
     // PROVIDER 2: Google OAuth (CONDICIONAL)
-    // ✅ FIX: Solo habilitar si existen credenciales
+    // ✅ FIX #1: Solo se activa si las credenciales existen
     // ===================================
     ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
       ? [
           Google({
             clientId: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            authorization: {
-              params: {
-                prompt: "consent",
-                access_type: "offline",
-                response_type: "code",
-              },
-            },
           }),
         ]
       : []),
@@ -87,87 +80,56 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // Para OAuth (Google), crear/actualizar usuario
       if (account?.provider === "google") {
         try {
-          // ✅ FIX: Usar UPSERT para evitar race conditions
-          const userResult = await sql`
-            INSERT INTO users (
-              name, 
-              email, 
-              email_verified, 
-              image, 
-              created_at, 
-              updated_at
-            )
-            VALUES (
-              ${user.name || "Usuario Google"},
-              ${user.email},
-              NOW(),
-              ${user.image || null},
-              NOW(),
-              NOW()
-            )
-            ON CONFLICT (email) 
-            DO UPDATE SET
-              name = COALESCE(EXCLUDED.name, users.name),
-              image = COALESCE(EXCLUDED.image, users.image),
-              email_verified = EXCLUDED.email_verified,
-              updated_at = NOW()
-            RETURNING id
+          // Verificar si usuario existe
+          const existingUser = await sql`
+            SELECT * FROM users 
+            WHERE email = ${user.email}
+            LIMIT 1
           `
 
-          const userId = userResult.rows[0].id
-          user.id = userId.toString()
+          if (existingUser.rows.length === 0) {
+            // Crear nuevo usuario
+            const newUser = await sql`
+              INSERT INTO users (name, email, email_verified, image)
+              VALUES (${user.name}, ${user.email}, NOW(), ${user.image})
+              RETURNING *
+            `
 
-          // ✅ FIX: UPSERT en accounts table también
-          // ✅ FIX: Incluir refresh_token
-          await sql`
-            INSERT INTO accounts (
-              user_id,
-              type,
-              provider,
-              provider_account_id,
-              access_token,
-              expires_at,
-              token_type,
-              scope,
-              id_token,
-              refresh_token
-            )
-            VALUES (
-              ${userId},
-              'oauth',
-              ${account.provider},
-              ${account.providerAccountId},
-              ${account.access_token || null},
-              ${account.expires_at || null},
-              ${account.token_type || null},
-              ${account.scope || null},
-              ${account.id_token || null},
-              ${account.refresh_token || null}
-            )
-            ON CONFLICT (provider, provider_account_id)
-            DO UPDATE SET
-              access_token = EXCLUDED.access_token,
-              expires_at = EXCLUDED.expires_at,
-              token_type = EXCLUDED.token_type,
-              scope = EXCLUDED.scope,
-              id_token = EXCLUDED.id_token,
-              refresh_token = EXCLUDED.refresh_token,
-              updated_at = NOW()
-          `
+            user.id = newUser.rows[0].id.toString()
+
+            // Crear account record
+            await sql`
+              INSERT INTO accounts (
+                user_id, type, provider, provider_account_id,
+                access_token, expires_at, token_type, scope, id_token
+              )
+              VALUES (
+                ${newUser.rows[0].id},
+                'oauth',
+                ${account.provider},
+                ${account.providerAccountId},
+                ${account.access_token || null},
+                ${account.expires_at || null},
+                ${account.token_type || null},
+                ${account.scope || null},
+                ${account.id_token || null}
+              )
+            `
+          } else {
+            user.id = existingUser.rows[0].id.toString()
+          }
 
           return true
         } catch (error) {
-          console.error("❌ Google signIn error:", error)
+          console.error("Google signIn error:", error)
           return false
         }
       }
 
-      // Para credentials provider, continuar normalmente
       return true
     },
 
     async jwt({ token, user }) {
-      // En primer login, agregar id al token
       if (user) {
         token.id = user.id
       }
@@ -175,8 +137,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
 
     async session({ session, token }) {
-      // Agregar id del usuario a la session
-      if (session.user && token.id) {
+      if (session.user) {
         session.user.id = token.id as string
       }
       return session
@@ -196,7 +157,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   // ===================================
   session: {
     strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 días
   },
 
   // ===================================
@@ -205,12 +165,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
 
   // ===================================
-  // ✅ CONFIGURACIÓN PARA DESARROLLO Y PRODUCCIÓN
+  // TRUST HOST
   // ===================================
   trustHost: true,
-
-  // ===================================
-  // DEBUG (solo en desarrollo)
-  // ===================================
-  debug: process.env.NODE_ENV === "development",
 })

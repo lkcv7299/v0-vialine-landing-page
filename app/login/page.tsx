@@ -28,13 +28,17 @@ export default function LoginPage() {
 
       if (result?.error) {
         setError("Email o contraseña incorrectos")
-      } else {
-        router.push("/account")
-        router.refresh()
+        return
       }
+
+      // Login exitoso
+      router.push("/account")
+      router.refresh()
     } catch (err) {
+      console.error("Login error:", err)
       setError("Ocurrió un error. Por favor intenta de nuevo.")
     } finally {
+      // ✅ FIX #11: SIEMPRE desactivar loading
       setLoading(false)
     }
   }
@@ -46,6 +50,8 @@ export default function LoginPage() {
       await signIn("google", { callbackUrl: "/account" })
     } catch (err) {
       setError("Error al iniciar sesión con Google")
+    } finally {
+      // ✅ FIX #11: SIEMPRE desactivar loading
       setLoading(false)
     }
   }
@@ -121,16 +127,6 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {/* Forgot Password */}
-            <div className="flex justify-end">
-              <Link
-                href="/recuperar-password"
-                className="text-sm text-rose-600 hover:text-rose-700"
-              >
-                ¿Olvidaste tu contraseña?
-              </Link>
-            </div>
-
             {/* Submit Button */}
             <button
               type="submit"
@@ -151,7 +147,7 @@ export default function LoginPage() {
           {/* Divider */}
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-neutral-200" />
+              <div className="w-full border-t border-neutral-200"></div>
             </div>
             <div className="relative flex justify-center text-sm">
               <span className="px-4 bg-white text-neutral-500">O continúa con</span>
@@ -163,7 +159,7 @@ export default function LoginPage() {
             type="button"
             onClick={handleGoogleSignIn}
             disabled={loading}
-            className="w-full border border-neutral-300 py-3 rounded-lg font-medium hover:bg-neutral-50 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+            className="w-full bg-white border border-neutral-300 text-neutral-700 py-3 rounded-lg font-medium hover:bg-neutral-50 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -189,17 +185,10 @@ export default function LoginPage() {
           {/* Register Link */}
           <p className="mt-6 text-center text-sm text-neutral-600">
             ¿No tienes cuenta?{" "}
-            <Link href="/registro" className="text-rose-600 hover:text-rose-700 font-medium">
-              Regístrate aquí
+            <Link href="/registro" className="text-rose-600 font-medium hover:text-rose-700">
+              Regístrate
             </Link>
           </p>
-        </div>
-
-        {/* Back to Home */}
-        <div className="mt-6 text-center">
-          <Link href="/" className="text-sm text-neutral-600 hover:text-neutral-900">
-            ← Volver a la tienda
-          </Link>
         </div>
       </div>
     </div>

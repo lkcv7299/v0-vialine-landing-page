@@ -48,7 +48,6 @@ export default function RegistroPage() {
 
       if (!res.ok) {
         setError(data.error || "Error al crear la cuenta")
-        setLoading(false)
         return
       }
 
@@ -71,8 +70,13 @@ export default function RegistroPage() {
         }
       }, 1500)
     } catch (err) {
+      console.error("Registration error:", err)
       setError("Ocurrió un error. Por favor intenta de nuevo.")
-      setLoading(false)
+    } finally {
+      // ✅ FIX #11: SIEMPRE desactivar loading (excepto en success)
+      if (!success) {
+        setLoading(false)
+      }
     }
   }
 
@@ -83,6 +87,8 @@ export default function RegistroPage() {
       await signIn("google", { callbackUrl: "/account" })
     } catch (err) {
       setError("Error al registrarse con Google")
+    } finally {
+      // ✅ FIX #11: SIEMPRE desactivar loading
       setLoading(false)
     }
   }
@@ -102,7 +108,7 @@ export default function RegistroPage() {
             <p className="text-neutral-600 mb-6">
               Iniciando sesión automáticamente...
             </p>
-            <Loader2 className="w-6 h-6 animate-spin mx-auto text-rose-600" />
+            <Loader2 className="w-6 h-6 animate-spin text-rose-600 mx-auto" />
           </div>
         </div>
       </div>
@@ -120,7 +126,7 @@ export default function RegistroPage() {
             </h1>
           </Link>
           <p className="mt-2 text-sm text-neutral-600">
-            Crea tu cuenta y empieza a comprar
+            Crea tu cuenta
           </p>
         </div>
 
@@ -245,10 +251,10 @@ export default function RegistroPage() {
           {/* Divider */}
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-neutral-200" />
+              <div className="w-full border-t border-neutral-200"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-white text-neutral-500">O regístrate con</span>
+              <span className="px-4 bg-white text-neutral-500">O continúa con</span>
             </div>
           </div>
 
@@ -257,7 +263,7 @@ export default function RegistroPage() {
             type="button"
             onClick={handleGoogleSignIn}
             disabled={loading}
-            className="w-full border border-neutral-300 py-3 rounded-lg font-medium hover:bg-neutral-50 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+            className="w-full bg-white border border-neutral-300 text-neutral-700 py-3 rounded-lg font-medium hover:bg-neutral-50 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path
@@ -283,17 +289,10 @@ export default function RegistroPage() {
           {/* Login Link */}
           <p className="mt-6 text-center text-sm text-neutral-600">
             ¿Ya tienes cuenta?{" "}
-            <Link href="/login" className="text-rose-600 hover:text-rose-700 font-medium">
-              Inicia sesión aquí
+            <Link href="/login" className="text-rose-600 font-medium hover:text-rose-700">
+              Inicia sesión
             </Link>
           </p>
-        </div>
-
-        {/* Back to Home */}
-        <div className="mt-6 text-center">
-          <Link href="/" className="text-sm text-neutral-600 hover:text-neutral-900">
-            ← Volver a la tienda
-          </Link>
         </div>
       </div>
     </div>
