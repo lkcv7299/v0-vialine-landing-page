@@ -46,15 +46,18 @@ export async function GET() {
     const userId = userResult.rows[0].id
 
     // ====================================
-    // PASO 3: CONTAR ÓRDENES DEL USUARIO
+    // PASO 3: CONTAR ÓRDENES Y CALCULAR TOTAL GASTADO
     // ====================================
     const ordersResult = await sql`
-      SELECT COUNT(*) as total
+      SELECT
+        COUNT(*) as total_orders,
+        COALESCE(SUM(total), 0) as total_spent
       FROM orders
       WHERE user_id = ${userId}
     `
 
-    const ordersCount = parseInt(ordersResult.rows[0].total) || 0
+    const totalOrders = parseInt(ordersResult.rows[0].total_orders) || 0
+    const totalSpent = parseFloat(ordersResult.rows[0].total_spent) || 0
 
     // ====================================
     // PASO 4: CONTAR DIRECCIONES DEL USUARIO
@@ -65,18 +68,27 @@ export async function GET() {
       WHERE user_id = ${userId}
     `
 
-    const addressesCount = parseInt(addressesResult.rows[0].total) || 0
+    const savedAddresses = parseInt(addressesResult.rows[0].total) || 0
 
     // ====================================
-    // PASO 5: RETORNAR ESTADÍSTICAS
+    // PASO 5: CONTAR ITEMS EN WISHLIST
+    // ====================================
+    const wishlistResult = await sql`
+      SELECT COUNT(*) as total
+      FROM wishlist
+      WHERE user_id = ${userId}
+    `
+
+    const wishlistItems = parseInt(wishlistResult.rows[0].total) || 0
+
+    // ====================================
+    // PASO 6: RETORNAR ESTADÍSTICAS
     // ====================================
     return NextResponse.json({
-      success: true,
-      stats: {
-        orders: ordersCount,
-        addresses: addressesCount,
-        // wishlist se cuenta del lado del cliente (WishlistContext)
-      },
+      totalOrders,
+      totalSpent,
+      savedAddresses,
+      wishlistItems,
     })
   } catch (error) {
     console.error("❌ Error en GET /api/account/stats:", error)

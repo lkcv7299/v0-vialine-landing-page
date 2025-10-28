@@ -4,6 +4,37 @@ import { auth } from "@/lib/auth"
 import { sql } from "@vercel/postgres"
 
 // ====================================
+// HELPER: Transform DB to Frontend
+// ====================================
+function transformToFrontend(dbAddress: any) {
+  return {
+    id: dbAddress.id.toString(),
+    label: dbAddress.label || 'home',
+    full_name: `${dbAddress.first_name} ${dbAddress.last_name}`.trim(),
+    phone: dbAddress.phone,
+    street: dbAddress.address,
+    city: dbAddress.district,
+    state: dbAddress.city,
+    postal_code: dbAddress.postal_code,
+    reference: dbAddress.reference,
+    is_default: dbAddress.is_default,
+  }
+}
+
+// ====================================
+// HELPER: Parse full_name into first/last
+// ====================================
+function parseFullName(fullName: string) {
+  const parts = fullName.trim().split(' ')
+  if (parts.length === 1) {
+    return { first_name: parts[0], last_name: '' }
+  }
+  const last_name = parts.pop() || ''
+  const first_name = parts.join(' ')
+  return { first_name, last_name }
+}
+
+// ====================================
 // GET - OBTENER DIRECCIONES DEL USUARIO
 // ====================================
 export async function GET(request: NextRequest) {
@@ -19,11 +50,11 @@ export async function GET(request: NextRequest) {
 
     const userId = session.user.id
 
-    // ✅ CORREGIDO: Columnas reales de la tabla user_addresses
     const result = await sql`
-      SELECT 
+      SELECT
         id,
         user_id,
+        label,
         first_name,
         last_name,
         phone,
@@ -40,9 +71,12 @@ export async function GET(request: NextRequest) {
       ORDER BY is_default DESC, created_at DESC
     `
 
+    // Transform to frontend format
+    const addresses = result.rows.map(transformToFrontend)
+
     return NextResponse.json({
       success: true,
-      addresses: result.rows,
+      addresses,
     })
   } catch (error) {
     console.error("❌ Error en GET /api/addresses:", error)
@@ -70,8 +104,8 @@ export async function POST(request: NextRequest) {
     const userId = session.user.id
     const body = await request.json()
 
-    // ✅ CORREGIDO: Validar campos reales
-    const requiredFields = ["first_name", "last_name", "phone", "address", "district", "city", "postal_code"]
+    // Validar campos requeridos del frontend
+    const requiredFields = ["full_name", "phone", "street", "city", "postal_code"]
     for (const field of requiredFields) {
       if (!body[field]) {
         return NextResponse.json(
@@ -80,6 +114,9 @@ export async function POST(request: NextRequest) {
         )
       }
     }
+
+    // Parse full_name into first_name and last_name
+    const { first_name, last_name } = parseFullName(body.full_name)
 
     // Si es la primera dirección O se marca como default, actualizar otras
     if (body.is_default) {
@@ -98,10 +135,10 @@ export async function POST(request: NextRequest) {
     `
     const isFirstAddress = existingAddresses.rows[0].count === "0"
 
-    // ✅ CORREGIDO: Columnas reales de la tabla
     const result = await sql`
       INSERT INTO user_addresses (
         user_id,
+        label,
         first_name,
         last_name,
         phone,
@@ -115,12 +152,13 @@ export async function POST(request: NextRequest) {
         updated_at
       ) VALUES (
         ${userId},
-        ${body.first_name},
-        ${body.last_name},
+        ${body.label || 'home'},
+        ${first_name},
+        ${last_name},
         ${body.phone},
-        ${body.address},
-        ${body.district},
+        ${body.street},
         ${body.city},
+        ${body.state || 'Lima'},
         ${body.postal_code},
         ${body.reference || ""},
         ${body.is_default || isFirstAddress},
@@ -132,7 +170,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      address: result.rows[0],
+      address: transformToFrontend(result.rows[0]),
       message: "Dirección agregada exitosamente",
     })
   } catch (error) {
@@ -190,19 +228,37 @@ export async function PATCH(request: NextRequest) {
       `
     }
 
-    // ✅ CORREGIDO: Columnas reales
+    // Parse full_name if provided
+    let updateFields: any = {}
+
+    if (body.full_name) {
+      const { first_name, last_name } = parseFullName(body.full_name)
+      updateFields.first_name = first_name
+      updateFields.last_name = last_name
+    }
+
+    if (body.label) updateFields.label = body.label
+    if (body.phone) updateFields.phone = body.phone
+    if (body.street) updateFields.address = body.street
+    if (body.city) updateFields.district = body.city
+    if (body.state) updateFields.city = body.state
+    if (body.postal_code) updateFields.postal_code = body.postal_code
+    if (body.reference !== undefined) updateFields.reference = body.reference
+    if (body.is_default !== undefined) updateFields.is_default = body.is_default
+
     const result = await sql`
       UPDATE user_addresses
       SET
-        first_name = COALESCE(${body.first_name}, first_name),
-        last_name = COALESCE(${body.last_name}, last_name),
-        phone = COALESCE(${body.phone}, phone),
-        address = COALESCE(${body.address}, address),
-        district = COALESCE(${body.district}, district),
-        city = COALESCE(${body.city}, city),
-        postal_code = COALESCE(${body.postal_code}, postal_code),
-        reference = COALESCE(${body.reference}, reference),
-        is_default = COALESCE(${body.is_default}, is_default),
+        label = COALESCE(${updateFields.label}, label),
+        first_name = COALESCE(${updateFields.first_name}, first_name),
+        last_name = COALESCE(${updateFields.last_name}, last_name),
+        phone = COALESCE(${updateFields.phone}, phone),
+        address = COALESCE(${updateFields.address}, address),
+        district = COALESCE(${updateFields.district}, district),
+        city = COALESCE(${updateFields.city}, city),
+        postal_code = COALESCE(${updateFields.postal_code}, postal_code),
+        reference = COALESCE(${updateFields.reference}, reference),
+        is_default = COALESCE(${updateFields.is_default}, is_default),
         updated_at = NOW()
       WHERE id = ${body.id} AND user_id = ${userId}
       RETURNING *
@@ -210,7 +266,7 @@ export async function PATCH(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      address: result.rows[0],
+      address: transformToFrontend(result.rows[0]),
       message: "Dirección actualizada exitosamente",
     })
   } catch (error) {
