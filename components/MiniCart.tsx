@@ -45,7 +45,7 @@ export default function MiniCart({ onClose }: MiniCartProps) {
               <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-md bg-gray-100">
                 <Image
                   src={imagePath || "/placeholder.svg"}
-                  alt={item.product.name}
+                  alt={item.product.title}
                   fill
                   className="object-cover"
                   sizes="80px"
@@ -58,7 +58,8 @@ export default function MiniCart({ onClose }: MiniCartProps) {
                   onClick={onClose}
                   className="font-medium text-sm text-gray-900 hover:text-rose-600 line-clamp-1"
                 >
-                  {item.product.name}
+                  {/* ✅ FIXED: Use title instead of name */}
+                  {item.product.title}
                 </Link>
                 <p className="text-xs text-gray-500 mt-1">
                   {item.selectedColor} · {item.selectedSize}

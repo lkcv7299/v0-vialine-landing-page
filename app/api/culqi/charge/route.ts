@@ -3,18 +3,24 @@ import { NextRequest, NextResponse } from 'next/server'
 const CULQI_API_URL = 'https://api.culqi.com/v2/charges'
 
 export async function POST(request: NextRequest) {
-  console.log('🔔 API /culqi/charge llamada')
-  
+  // ✅ FIXED: Solo log en desarrollo
+  if (process.env.NODE_ENV === 'development') {
+    console.log('🔔 API /culqi/charge llamada')
+  }
+
   try {
     const body = await request.json()
     const { token, amount, email, orderId } = body
 
-    console.log('📥 Datos recibidos:', {
-      token: token ? token.substring(0, 20) + '...' : 'MISSING',
-      amount,
-      email,
-      orderId,
-    })
+    // ✅ FIXED: Solo log en desarrollo
+    if (process.env.NODE_ENV === 'development') {
+      console.log('📥 Datos recibidos:', {
+        token: token ? token.substring(0, 20) + '...' : 'MISSING',
+        amount,
+        email,
+        orderId,
+      })
+    }
 
     // ====================================
     // VALIDACIONES
@@ -62,8 +68,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    console.log('✅ Validaciones pasadas')
-    console.log('🔑 Secret Key:', secretKey.substring(0, 15) + '...')
+    // ✅ FIXED: No exponer Secret Key en logs de producción
+    if (process.env.NODE_ENV === 'development') {
+      console.log('✅ Validaciones pasadas')
+      console.log('🔑 Secret Key:', secretKey.substring(0, 15) + '...')
+    }
 
     // ====================================
     // PREPARAR CARGO PARA CULQI
@@ -76,12 +85,15 @@ export async function POST(request: NextRequest) {
       description: `Vialine - Orden ${orderId || 'N/A'}`,
     }
 
-    console.log('📤 Enviando cargo a Culqi:', {
-      amount: amount / 100,
-      currency: 'PEN',
-      email,
-      description: chargeData.description,
-    })
+    // ✅ FIXED: Solo log en desarrollo
+    if (process.env.NODE_ENV === 'development') {
+      console.log('📤 Enviando cargo a Culqi:', {
+        amount: amount / 100,
+        currency: 'PEN',
+        email,
+        description: chargeData.description,
+      })
+    }
 
     // ====================================
     // HACER CARGO A CULQI
@@ -97,10 +109,13 @@ export async function POST(request: NextRequest) {
 
     const culqiResult = await culqiResponse.json()
 
-    console.log('📥 Respuesta de Culqi:', {
-      status: culqiResponse.status,
-      statusText: culqiResponse.statusText,
-    })
+    // ✅ FIXED: Solo log en desarrollo
+    if (process.env.NODE_ENV === 'development') {
+      console.log('📥 Respuesta de Culqi:', {
+        status: culqiResponse.status,
+        statusText: culqiResponse.statusText,
+      })
+    }
 
     // ====================================
     // MANEJAR RESPUESTA DE CULQI
@@ -134,9 +149,12 @@ export async function POST(request: NextRequest) {
     // ====================================
     // PAGO EXITOSO
     // ====================================
-    console.log('✅ Pago exitoso!')
-    console.log('🆔 Charge ID:', culqiResult.id)
-    console.log('💰 Monto:', culqiResult.amount / 100, 'PEN')
+    // ✅ FIXED: Solo log en desarrollo
+    if (process.env.NODE_ENV === 'development') {
+      console.log('✅ Pago exitoso!')
+      console.log('🆔 Charge ID:', culqiResult.id)
+      console.log('💰 Monto:', culqiResult.amount / 100, 'PEN')
+    }
 
     // TODO: Guardar en base de datos
     // Aquí deberías guardar la transacción en tu DB

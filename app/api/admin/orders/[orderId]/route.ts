@@ -3,10 +3,11 @@ import { sql } from "@vercel/postgres"
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { orderId: string } }
+  { params }: { params: Promise<{ orderId: string }> }
 ) {
   try {
-    const orderId = params.orderId
+    // ✅ FIXED: Await params (Next.js 15 requirement)
+    const { orderId } = await params
 
     // Obtener orden principal
     const orderResult = await sql`

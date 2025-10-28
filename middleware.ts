@@ -3,6 +3,31 @@ import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 import { sql } from "@vercel/postgres"
 
+// ✅ OPTIMIZATION: In-memory cache para blacklist checks
+// Evita queries SQL en cada request
+const blacklistCache = new Map<string, { isBlacklisted: boolean; timestamp: number }>()
+const CACHE_TTL_MS = 60000 // 60 segundos
+
+function isBlacklistedCached(userId: string): boolean | null {
+  const cached = blacklistCache.get(userId)
+  if (!cached) return null
+
+  const isExpired = Date.now() - cached.timestamp > CACHE_TTL_MS
+  if (isExpired) {
+    blacklistCache.delete(userId)
+    return null
+  }
+
+  return cached.isBlacklisted
+}
+
+function cacheBlacklistStatus(userId: string, isBlacklisted: boolean) {
+  blacklistCache.set(userId, {
+    isBlacklisted,
+    timestamp: Date.now(),
+  })
+}
+
 export default async function middleware(req: NextRequest) {
   // ===================================
   // PASO 1: Obtener sesión
@@ -14,19 +39,38 @@ export default async function middleware(req: NextRequest) {
   // ===================================
   if (session?.user?.id) {
     try {
-      const result = await sql`
-        SELECT * FROM session_blacklist 
-        WHERE user_id = ${parseInt(session.user.id)}
-        ORDER BY blacklisted_at DESC
-        LIMIT 1
-      `
+      // ✅ OPTIMIZATION: Check cache first
+      const cachedStatus = isBlacklistedCached(session.user.id)
 
-      if (result.rows.length > 0) {
-        console.log("🚫 Usuario blacklisted detectado:", session.user.id)
-        
+      let isBlacklisted: boolean
+
+      if (cachedStatus !== null) {
+        // Cache hit - no SQL query needed
+        isBlacklisted = cachedStatus
+      } else {
+        // Cache miss - query database
+        const result = await sql`
+          SELECT * FROM session_blacklist
+          WHERE user_id = ${parseInt(session.user.id)}
+          ORDER BY blacklisted_at DESC
+          LIMIT 1
+        `
+
+        isBlacklisted = result.rows.length > 0
+
+        // Store in cache
+        cacheBlacklistStatus(session.user.id, isBlacklisted)
+      }
+
+      if (isBlacklisted) {
+        // ✅ FIXED: Only log in development
+        if (process.env.NODE_ENV === 'development') {
+          console.log("🚫 Usuario blacklisted detectado:", session.user.id)
+        }
+
         // Usuario está blacklisted - borrar cookie y redirigir
         const response = NextResponse.redirect(new URL("/login", req.url))
-        
+
         // Borrar TODAS las cookies de next-auth
         response.cookies.delete("next-auth.session-token")
         response.cookies.delete("__Secure-next-auth.session-token")
@@ -34,7 +78,7 @@ export default async function middleware(req: NextRequest) {
         response.cookies.delete("__Secure-next-auth.csrf-token")
         response.cookies.delete("next-auth.callback-url")
         response.cookies.delete("__Secure-next-auth.callback-url")
-        
+
         return response
       }
     } catch (error) {

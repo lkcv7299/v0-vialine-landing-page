@@ -49,7 +49,10 @@ function generateOrderId(): string {
 // ====================================
 async function saveOrderToDatabase(orderData: CheckoutRequest & { orderId: string; createdAt: string; status: string }) {
   try {
-    console.log(`💾 Guardando orden ${orderData.orderId} en base de datos...`)
+    // ✅ FIXED: Solo log en desarrollo
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`💾 Guardando orden ${orderData.orderId} en base de datos...`)
+    }
 
     // Insertar orden principal
     await sql`
@@ -119,7 +122,10 @@ async function saveOrderToDatabase(orderData: CheckoutRequest & { orderId: strin
       `
     }
 
-    console.log(`✅ Orden ${orderData.orderId} guardada exitosamente`)
+    // ✅ FIXED: Solo log en desarrollo
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`✅ Orden ${orderData.orderId} guardada exitosamente`)
+    }
   } catch (error) {
     console.error(`❌ Error guardando orden ${orderData.orderId}:`, error)
     throw error
@@ -143,7 +149,7 @@ export async function POST(request: NextRequest) {
 
     // Generar ID único para la orden
     const orderId = generateOrderId()
-    
+
     // Preparar datos de la orden
     const orderData = {
       ...body,
@@ -152,7 +158,10 @@ export async function POST(request: NextRequest) {
       createdAt: new Date().toISOString(),
     }
 
-    console.log(`🆕 Creando nueva orden: ${orderId}`)
+    // ✅ FIXED: Solo log en desarrollo
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`🆕 Creando nueva orden: ${orderId}`)
+    }
 
     // Guardar en base de datos
     await saveOrderToDatabase(orderData)
@@ -160,7 +169,10 @@ export async function POST(request: NextRequest) {
     // ====================================
     // 📧 SOLO EMAIL AL ADMIN (Nueva orden pendiente)
     // ====================================
-    console.log(`📧 Enviando notificación al admin...`)
+    // ✅ FIXED: Solo log en desarrollo
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`📧 Enviando notificación al admin...`)
+    }
     
     const emailData = {
       orderId: orderData.orderId,
@@ -225,7 +237,10 @@ export async function PATCH(request: NextRequest) {
       )
     }
 
-    console.log(`🔄 Actualizando orden ${orderId}...`)
+    // ✅ FIXED: Solo log en desarrollo
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`🔄 Actualizando orden ${orderId}...`)
+    }
 
     // Obtener datos de la orden para enviar email
     const orderResult = await sql`
@@ -260,13 +275,19 @@ export async function PATCH(request: NextRequest) {
       WHERE order_id = ${orderId}
     `
 
-    console.log(`✅ Orden ${orderId} actualizada a status: ${status || 'paid'}`)
+    // ✅ FIXED: Solo log en desarrollo
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`✅ Orden ${orderId} actualizada a status: ${status || 'paid'}`)
+    }
 
     // ====================================
     // 📧 ENVIAR EMAIL AL CLIENTE (Pago confirmado)
     // ====================================
     if (status === 'paid' || !status) {
-      console.log(`📧 Enviando confirmación al cliente...`)
+      // ✅ FIXED: Solo log en desarrollo
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`📧 Enviando confirmación al cliente...`)
+      }
       
       const emailData = {
         orderId: order.order_id,

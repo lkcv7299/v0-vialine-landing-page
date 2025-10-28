@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server"
 import { sql } from "@vercel/postgres"
-import bcrypt from "bcryptjs"
+
+// ✅ OPTIMIZATION: Dynamic import for consistency and tree-shaking
+async function hashPassword(password: string): Promise<string> {
+  const bcrypt = await import("bcryptjs")
+  return bcrypt.default.hash(password, 10)
+}
 
 export async function POST(request: Request) {
   try {
@@ -33,8 +38,8 @@ export async function POST(request: Request) {
       )
     }
 
-    // Hash de la contraseña
-    const passwordHash = await bcrypt.hash(password, 10)
+    // ✅ FIXED: Use dynamic import
+    const passwordHash = await hashPassword(password)
 
     // Crear usuario
     const result = await sql`

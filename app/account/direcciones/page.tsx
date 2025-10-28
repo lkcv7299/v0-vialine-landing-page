@@ -236,7 +236,8 @@ export default function DireccionesPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            <AccountSidebar currentPage="direcciones" />
+            {/* ✅ FIXED: Removed currentPage prop - component uses usePathname() */}
+            <AccountSidebar />
           </div>
 
           {/* Main Content */}

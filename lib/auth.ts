@@ -2,7 +2,23 @@ import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import Google from "next-auth/providers/google"
 import { sql } from "@vercel/postgres"
-import bcrypt from "bcryptjs"
+
+// ✅ OPTIMIZATION: Dynamic import to avoid Edge Runtime warnings
+// bcryptjs uses Node.js APIs that aren't available in Edge Runtime
+// By lazy loading it, middleware.ts won't trigger runtime errors
+//
+// ⚠️ NOTE: Build warnings about bcryptjs/Edge Runtime are EXPECTED and SAFE
+// These warnings appear because Next.js analyzes imports at build time,
+// but the dynamic imports prevent actual runtime issues in Edge Runtime
+async function compareBcrypt(password: string, hash: string): Promise<boolean> {
+  const bcrypt = await import("bcryptjs")
+  return bcrypt.default.compare(password, hash)
+}
+
+async function hashBcrypt(password: string): Promise<string> {
+  const bcrypt = await import("bcryptjs")
+  return bcrypt.default.hash(password, 10)
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
@@ -34,8 +50,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return null
           }
 
-          // Verificar password
-          const isValid = await bcrypt.compare(
+          // ✅ FIXED: Use dynamic import to avoid Edge Runtime warnings
+          const isValid = await compareBcrypt(
             credentials.password as string,
             user.password_hash
           )

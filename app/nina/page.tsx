@@ -78,7 +78,7 @@ export default async function Page({
     <>
       {/* Hero de niña */}
       <Hero
-        image="/hero-girl.jpg"
+        image="/hero-nina.jpg"
         kicker="VIALINE · NIÑA"
         title="Niña"
         description="Comodidad para moverse, diseños que les encantan."

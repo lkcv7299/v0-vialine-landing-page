@@ -140,14 +140,16 @@ const collections = {
   },
 }
 
-export default function CollectionPage({ params }: { params: { slug: string } }) {
-  const collection = collections[params.slug as keyof typeof collections]
+export default async function CollectionPage({ params }: { params: Promise<{ slug: string }> }) {
+  // ✅ FIXED: Await params (Next.js 15 requirement)
+  const { slug } = await params
+  const collection = collections[slug as keyof typeof collections]
 
   if (!collection) {
     notFound()
   }
 
-  return <CollectionClientPage collection={collection} slug={params.slug} />
+  return <CollectionClientPage collection={collection} slug={slug} />
 }
 
 export function generateStaticParams() {

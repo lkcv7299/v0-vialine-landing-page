@@ -1,10 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // ⚠️ KNOWN ISSUE: ESLint circular dependency bug in Next.js 15 + eslint-config-next@16
+  // See: https://github.com/vercel/next.js/issues/64103
+  // Workaround: Disabled temporarily until Next.js releases fix
+  // TypeScript strict mode is ENABLED as primary code quality check
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: true, // TODO: Re-enable when Next.js fixes circular dep bug
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false, // Detectar errores de TypeScript
   },
   images: {
     // ✅ CAMBIADO: Habilitar optimización de imágenes
