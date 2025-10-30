@@ -55,12 +55,20 @@ export default function MegaMenu() {
   return (
     <div ref={wrapRef} className="relative" onMouseLeave={() => setOpen(null)}>
       <nav className="flex items-center gap-6">
-        <button className={`font-medium ${open === "w" ? "text-pink-600" : ""}`} onMouseEnter={() => setOpen("w")}>
+        <Link
+          href="/mujer"
+          className={`font-medium hover:text-pink-600 transition ${open === "w" ? "text-pink-600" : ""}`}
+          onMouseEnter={() => setOpen("w")}
+        >
           Mujer
-        </button>
-        <button className={`font-medium ${open === "g" ? "text-pink-600" : ""}`} onMouseEnter={() => setOpen("g")}>
+        </Link>
+        <Link
+          href="/nina"
+          className={`font-medium hover:text-pink-600 transition ${open === "g" ? "text-pink-600" : ""}`}
+          onMouseEnter={() => setOpen("g")}
+        >
           Niña
-        </button>
+        </Link>
       </nav>
 
       <div className={`${open ? "opacity-100 scale-100" : "opacity-0 scale-95 pointer-events-none"} mega-animate`}>
