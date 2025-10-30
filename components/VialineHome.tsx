@@ -31,8 +31,8 @@ export default function VialineHome() {
         kicker="VIALINE · LÍNEA SUPLEX"
         title="Básicos que rinden"
         description="Set suplex: top soporte medio + legging tiro alto. Ajuste que estiliza, opacidad total."
-        primary={{ href: "/sets", label: "Comprar sets" }}
-        secondary={{ href: "/coleccion/suplex", label: "Ver Suplex" }}
+        primary={{ href: "/mujer", label: "Comprar Mujer" }}
+        secondary={{ href: "/tejido/suplex", label: "Ver Tejidos" }}
         objectPositionDesktop="78% 42%"
         objectPositionMobile="68% 36%"
       />
