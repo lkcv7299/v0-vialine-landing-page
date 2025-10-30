@@ -3,14 +3,23 @@
 import Link from "next/link"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { useCart } from "@/contexts/CartContext"
 import { Trash2, ShoppingBag, Minus, Plus, ArrowRight } from "lucide-react"
 
 const FREE_SHIPPING_THRESHOLD = 269
 
+type ItemToDelete = {
+  slug: string
+  color: string
+  size: string
+  title: string
+} | null
+
 export default function CarritoPage() {
   const router = useRouter()
   const { items, total, updateQuantity, removeItem } = useCart()
+  const [itemToDelete, setItemToDelete] = useState<ItemToDelete>(null)
 
   const shippingCost = total >= FREE_SHIPPING_THRESHOLD ? 0 : 15
   const finalTotal = total + shippingCost
@@ -78,7 +87,12 @@ export default function CarritoPage() {
                   {/* Acciones */}
                   <div className="flex flex-col items-end justify-between">
                     <button
-                      onClick={() => removeItem(item.product.slug, item.selectedColor, item.selectedSize)}
+                      onClick={() => setItemToDelete({
+                        slug: item.product.slug,
+                        color: item.selectedColor,
+                        size: item.selectedSize,
+                        title: item.product.title
+                      })}
                       className="text-neutral-400 hover:text-rose-600 transition"
                       aria-label="Eliminar del carrito"
                     >
@@ -224,6 +238,35 @@ export default function CarritoPage() {
           </div>
         </div>
       </div>
+
+      {/* Modal de confirmación de eliminación */}
+      {itemToDelete && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl max-w-md w-full p-6 shadow-2xl animate-in fade-in zoom-in duration-200">
+            <h3 className="text-xl font-bold mb-2">¿Estás seguro?</h3>
+            <p className="text-neutral-600 mb-6">
+              ¿Deseas eliminar <span className="font-semibold">{itemToDelete.title}</span> ({itemToDelete.color} · {itemToDelete.size}) de tu carrito?
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setItemToDelete(null)}
+                className="flex-1 bg-neutral-100 text-neutral-900 py-3 px-4 rounded-lg font-semibold hover:bg-neutral-200 transition"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={() => {
+                  removeItem(itemToDelete.slug, itemToDelete.color, itemToDelete.size)
+                  setItemToDelete(null)
+                }}
+                className="flex-1 bg-rose-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-rose-700 transition"
+              >
+                Sí, eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   )
 }
