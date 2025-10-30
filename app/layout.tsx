@@ -12,6 +12,7 @@ import Clarity from "@/components/Clarity"
 import { WishlistProvider } from "@/components/providers/WishlistContext"
 import { CartProvider } from "@/contexts/CartContext"
 import SessionProvider from "@/components/providers/SessionProvider"
+import { Toaster } from "sonner"
 
 export const metadata: Metadata = {
   title: "Vialine | Activewear & ropa interior para mujer – Hecho en Perú",
@@ -94,6 +95,7 @@ export default function RootLayout({
                 <SiteHeader />
                 {children}
                 <WhatsAppFloat />
+                <Toaster position="bottom-right" richColors />
               </ClientWrapper>
             </WishlistProvider>
           </CartProvider>
