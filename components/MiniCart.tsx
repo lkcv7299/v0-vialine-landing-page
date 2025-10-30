@@ -64,9 +64,14 @@ export default function MiniCart({ onClose }: MiniCartProps) {
                 <p className="text-xs text-gray-500 mt-1">
                   {item.selectedColor} · {item.selectedSize}
                 </p>
-                <p className="text-sm font-medium text-gray-900 mt-1">
-                  ${item.product.price.toLocaleString()} × {item.quantity}
-                </p>
+                <div className="mt-1">
+                  <p className="text-xs text-gray-600">
+                    {item.quantity} × S/ {item.product.price.toLocaleString()}
+                  </p>
+                  <p className="text-sm font-semibold text-gray-900">
+                    S/ {(item.product.price * item.quantity).toLocaleString()}
+                  </p>
+                </div>
               </div>
 
               <button
@@ -88,7 +93,7 @@ export default function MiniCart({ onClose }: MiniCartProps) {
       <div className="p-4 border-t border-gray-200 bg-gray-50">
         <div className="flex justify-between items-center mb-3">
           <span className="font-semibold text-gray-900">Total</span>
-          <span className="text-lg font-bold text-gray-900">${total.toLocaleString()}</span>
+          <span className="text-lg font-bold text-gray-900">S/ {total.toLocaleString()}</span>
         </div>
 
         <Link
