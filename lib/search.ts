@@ -65,8 +65,19 @@ export function searchProducts(query: string): Product[] {
 
   if (!terms.length) return []
 
-  return IDX.filter((row) => {
-    // cada término debe estar en el haystack
+  // Primero: resultados exactos (todos los términos)
+  const exact = IDX.filter((row) => {
     return terms.every((t) => row._haystack.includes(t))
   })
+
+  // Si hay resultados exactos, devolver solo esos
+  if (exact.length > 0) return exact
+
+  // Si no hay exactos, buscar parciales (al menos un término)
+  // Útil para búsquedas como "leg" que debería encontrar "legging"
+  const partial = IDX.filter((row) => {
+    return terms.some((t) => row._haystack.includes(t))
+  })
+
+  return partial
 }
