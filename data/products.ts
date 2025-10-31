@@ -15,7 +15,9 @@ export type Product = {
     detalles: string[]
     beneficios: string[]
   }
-  inventory?: number // ← AGREGAR ESTA LÍNEA
+  inventory?: number
+  badge?: "nuevo" | "oferta" // Badge visual para el producto
+  originalPrice?: number // Precio original (para mostrar tachado en ofertas)
 }
 
 export const products: Product[] = [
@@ -30,6 +32,7 @@ export const products: Product[] = [
     colors: ["Negro", "Gris", "Blanco", "Rojo"],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
+    badge: "nuevo",
     attributes: {
   material: "Algodón Premium",
   detalles: [
@@ -98,6 +101,8 @@ export const products: Product[] = [
     slug: "camiseta-tropical",
     title: "Camiseta tropical",
     price: 25,
+    originalPrice: 35,
+    badge: "oferta",
     image: "/productos/mujer/camisetas/camiseta-tropical.webp",
     category: "camisetas",
     fabric: "algodon",

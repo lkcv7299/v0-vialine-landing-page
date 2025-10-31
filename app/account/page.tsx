@@ -11,6 +11,7 @@ interface AccountStats {
   totalSpent: number
   savedAddresses: number
   wishlistItems: number
+  pendingOrders: number
 }
 
 export default function AccountPage() {
@@ -21,6 +22,7 @@ export default function AccountPage() {
     totalSpent: 0,
     savedAddresses: 0,
     wishlistItems: 0,
+    pendingOrders: 0,
   })
   const [loading, setLoading] = useState(true)
 
@@ -70,8 +72,8 @@ export default function AccountPage() {
   const quickStats = [
     {
       icon: Package,
-      label: "Pedidos realizados",
-      value: stats.totalOrders || 0,
+      label: "Pedidos pendientes",
+      value: stats.pendingOrders || 0,
       color: "text-blue-600",
       bgColor: "bg-blue-50",
     },

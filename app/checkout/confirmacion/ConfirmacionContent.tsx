@@ -3,13 +3,28 @@
 import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import Link from "next/link"
-import { CheckCircle2, Package, Mail, Phone } from "lucide-react"
+import { CheckCircle2, Package, Mail, Phone, Calendar, FileText } from "lucide-react"
 import confetti from "canvas-confetti"
 
 export default function ConfirmacionContent() {
   const searchParams = useSearchParams()
   const orderId = searchParams.get("orderId")
   const [showConfetti, setShowConfetti] = useState(false)
+
+  // Calcular fecha estimada de entrega (2-3 días hábiles desde hoy)
+  const getEstimatedDeliveryDate = () => {
+    const today = new Date()
+    const daysToAdd = 3 // 2-3 días
+    const estimatedDate = new Date(today)
+    estimatedDate.setDate(today.getDate() + daysToAdd)
+
+    return estimatedDate.toLocaleDateString("es-PE", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    })
+  }
 
   useEffect(() => {
     if (orderId && !showConfetti) {
@@ -96,12 +111,14 @@ export default function ConfirmacionContent() {
             </div>
 
             <div className="flex items-start gap-3 p-4 bg-green-50 rounded-lg">
-              <Package className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+              <Calendar className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
               <div>
-                <p className="font-medium text-green-900">Tiempo de entrega</p>
-                <p className="text-sm text-green-700">
-                  <strong>Lima:</strong> 24-48 horas<br />
-                  <strong>Provincias:</strong> 3-7 días hábiles
+                <p className="font-medium text-green-900">Fecha estimada de entrega</p>
+                <p className="text-sm text-green-700 capitalize">
+                  {getEstimatedDeliveryDate()}
+                </p>
+                <p className="text-xs text-green-600 mt-1">
+                  <strong>Lima:</strong> 24-48 horas • <strong>Provincias:</strong> 3-7 días hábiles
                 </p>
               </div>
             </div>
@@ -159,19 +176,27 @@ export default function ConfirmacionContent() {
           </ol>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <Link
-            href={`/orden/${orderId}`}
-            className="flex-1 text-center px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-700 transition"
+            href={`/account/pedidos`}
+            className="flex items-center justify-center gap-2 px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-700 transition"
           >
-            Ver estado de mi pedido
+            <Package className="w-4 h-4" />
+            Ver detalles del pedido
           </Link>
           <Link
             href="/mujer"
-            className="flex-1 text-center px-6 py-3 border-2 border-rose-600 text-rose-600 rounded-lg font-semibold hover:bg-rose-50 transition"
+            className="flex items-center justify-center gap-2 px-6 py-3 border-2 border-rose-600 text-rose-600 rounded-lg font-semibold hover:bg-rose-50 transition"
           >
             Seguir comprando
           </Link>
+          <button
+            onClick={() => window.print()}
+            className="flex items-center justify-center gap-2 px-6 py-3 border-2 border-neutral-300 text-neutral-700 rounded-lg font-semibold hover:bg-neutral-50 transition"
+          >
+            <FileText className="w-4 h-4" />
+            Descargar comprobante
+          </button>
         </div>
 
       </div>

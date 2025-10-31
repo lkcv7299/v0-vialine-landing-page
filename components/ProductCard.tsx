@@ -20,7 +20,9 @@ export default function ProductCard({ product }: { product: Product }) {
       image={imageSrc}
       fallbackImage={fallbackSrc}
       slug={product.slug}
-      badge={(product as any).badge}
+      badge={product.badge}
+      originalPrice={product.originalPrice}
+      inventory={product.inventory}
     />
   )
 }

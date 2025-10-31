@@ -20,10 +20,63 @@ export default function CarritoPage() {
   const router = useRouter()
   const { items, total, updateQuantity, removeItem } = useCart()
   const [itemToDelete, setItemToDelete] = useState<ItemToDelete>(null)
+  const [couponCode, setCouponCode] = useState("")
+  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number; type: "percentage" | "fixed" } | null>(null)
+  const [couponError, setCouponError] = useState("")
+  const [loadingCoupon, setLoadingCoupon] = useState(false)
 
-  const shippingCost = total >= FREE_SHIPPING_THRESHOLD ? 0 : 15
-  const finalTotal = total + shippingCost
-  const remainingForFreeShipping = FREE_SHIPPING_THRESHOLD - total
+  // Calcular descuento
+  const discount = appliedCoupon
+    ? appliedCoupon.type === "percentage"
+      ? total * (appliedCoupon.discount / 100)
+      : appliedCoupon.discount
+    : 0
+
+  const subtotalAfterDiscount = total - discount
+  const shippingCost = subtotalAfterDiscount >= FREE_SHIPPING_THRESHOLD ? 0 : 15
+  const finalTotal = subtotalAfterDiscount + shippingCost
+  const remainingForFreeShipping = FREE_SHIPPING_THRESHOLD - subtotalAfterDiscount
+
+  const handleApplyCoupon = async () => {
+    if (!couponCode.trim()) {
+      setCouponError("Por favor ingresa un código de cupón")
+      return
+    }
+
+    setLoadingCoupon(true)
+    setCouponError("")
+
+    try {
+      const response = await fetch("/api/validate-coupon", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: couponCode }),
+      })
+
+      const data = await response.json()
+
+      if (data.valid) {
+        setAppliedCoupon({
+          code: couponCode,
+          discount: data.discount,
+          type: data.type,
+        })
+        setCouponError("")
+      } else {
+        setCouponError(data.error || "Cupón inválido")
+      }
+    } catch (error) {
+      setCouponError("Error al validar el cupón")
+    } finally {
+      setLoadingCoupon(false)
+    }
+  }
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null)
+    setCouponCode("")
+    setCouponError("")
+  }
 
   const handleGoToCheckout = () => {
     router.push("/checkout")
@@ -56,6 +109,8 @@ export default function CarritoPage() {
         <div className="lg:col-span-2 space-y-4">
           {items.map((item) => {
             const itemSubtotal = item.product.price * item.quantity
+            const stockLimit = item.product.inventory || 999
+            const isAtStockLimit = item.quantity >= stockLimit
 
             return (
               <div
@@ -100,22 +155,34 @@ export default function CarritoPage() {
                     </button>
 
                     {/* Controles de cantidad */}
-                    <div className="flex items-center gap-2 bg-neutral-100 rounded-lg">
-                      <button
-                        onClick={() => updateQuantity(item.product.slug, item.selectedColor, item.selectedSize, Math.max(1, item.quantity - 1))}
-                        className="p-2 hover:bg-neutral-200 rounded-lg transition"
-                        aria-label="Disminuir cantidad"
-                      >
-                        <Minus className="w-4 h-4" />
-                      </button>
-                      <span className="w-8 text-center font-semibold">{item.quantity}</span>
-                      <button
-                        onClick={() => updateQuantity(item.product.slug, item.selectedColor, item.selectedSize, item.quantity + 1)}
-                        className="p-2 hover:bg-neutral-200 rounded-lg transition"
-                        aria-label="Aumentar cantidad"
-                      >
-                        <Plus className="w-4 h-4" />
-                      </button>
+                    <div className="flex flex-col items-end gap-2">
+                      <div className="flex items-center gap-2 bg-neutral-100 rounded-lg">
+                        <button
+                          onClick={() => updateQuantity(item.product.slug, item.selectedColor, item.selectedSize, Math.max(1, item.quantity - 1))}
+                          className="p-2 hover:bg-neutral-200 rounded-lg transition"
+                          aria-label="Disminuir cantidad"
+                        >
+                          <Minus className="w-4 h-4" />
+                        </button>
+                        <span className="w-8 text-center font-semibold">{item.quantity}</span>
+                        <button
+                          onClick={() => updateQuantity(item.product.slug, item.selectedColor, item.selectedSize, item.quantity + 1)}
+                          disabled={isAtStockLimit}
+                          className={`p-2 rounded-lg transition ${
+                            isAtStockLimit
+                              ? "bg-neutral-100 text-neutral-300 cursor-not-allowed"
+                              : "hover:bg-neutral-200"
+                          }`}
+                          aria-label="Aumentar cantidad"
+                        >
+                          <Plus className="w-4 h-4" />
+                        </button>
+                      </div>
+                      {stockLimit < 999 && (
+                        <span className="text-xs text-neutral-500">
+                          Stock: {stockLimit}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -137,11 +204,73 @@ export default function CarritoPage() {
           <div className="bg-white rounded-xl p-6 shadow-lg border border-neutral-200 sticky top-4">
             <h2 className="text-xl font-bold mb-6">Resumen de orden</h2>
 
+            {/* Cupón de descuento */}
+            <div className="mb-6">
+              <label className="text-sm font-medium text-neutral-700 mb-2 block">
+                Código de cupón
+              </label>
+              {appliedCoupon ? (
+                <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-semibold text-green-700">
+                        {appliedCoupon.code}
+                      </p>
+                      <p className="text-xs text-green-600">
+                        Cupón aplicado -
+                        {appliedCoupon.type === "percentage"
+                          ? ` ${appliedCoupon.discount}% de descuento`
+                          : ` S/ ${appliedCoupon.discount} de descuento`}
+                      </p>
+                    </div>
+                    <button
+                      onClick={handleRemoveCoupon}
+                      className="text-green-600 hover:text-green-700 text-sm font-medium"
+                    >
+                      Quitar
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={couponCode}
+                    onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                    placeholder="Ej: DESCUENTO10"
+                    className="flex-1 px-3 py-2 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-600 text-sm"
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") {
+                        handleApplyCoupon()
+                      }
+                    }}
+                  />
+                  <button
+                    onClick={handleApplyCoupon}
+                    disabled={loadingCoupon}
+                    className="px-4 py-2 bg-neutral-800 text-white rounded-lg hover:bg-neutral-900 transition text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {loadingCoupon ? "..." : "Aplicar"}
+                  </button>
+                </div>
+              )}
+              {couponError && (
+                <p className="text-xs text-rose-600 mt-1">{couponError}</p>
+              )}
+            </div>
+
             <div className="space-y-3 mb-6">
               <div className="flex justify-between text-sm">
                 <span className="text-neutral-600">Subtotal ({items.length} {items.length === 1 ? "producto" : "productos"})</span>
                 <span className="font-semibold">S/ {total.toFixed(2)}</span>
               </div>
+
+              {appliedCoupon && discount > 0 && (
+                <div className="flex justify-between text-sm">
+                  <span className="text-green-600">Descuento ({appliedCoupon.code})</span>
+                  <span className="font-semibold text-green-600">- S/ {discount.toFixed(2)}</span>
+                </div>
+              )}
 
               <div className="flex justify-between text-sm">
                 <span className="text-neutral-600">Envío</span>

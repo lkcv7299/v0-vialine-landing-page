@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import { useSession } from "next-auth/react"
 import { useCart } from "@/contexts/CartContext"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -20,6 +21,9 @@ import {
   User,
   Package,
   ArrowLeft,
+  Home,
+  Briefcase,
+  Check,
 } from "lucide-react"
 
 // ====================================
@@ -28,6 +32,9 @@ import {
 const checkoutSchema = z.object({
   firstName: z.string().min(2, "Nombre debe tener al menos 2 caracteres"),
   lastName: z.string().min(2, "Apellido debe tener al menos 2 caracteres"),
+  dni: z.string()
+    .length(8, "El DNI debe tener exactamente 8 dígitos")
+    .regex(/^\d+$/, "El DNI solo debe contener números"),
   email: z.string().email("Email inválido"),
   phone: z.string().min(9, "Teléfono inválido"),
   address: z.string().min(5, "Dirección inválida"),
@@ -37,6 +44,9 @@ const checkoutSchema = z.object({
   reference: z.string().optional(),
   paymentMethod: z.enum(["culqi", "yape", "contraentrega"]),
   notes: z.string().optional(),
+  acceptTerms: z.boolean().refine((val) => val === true, {
+    message: "Debes aceptar los términos y condiciones",
+  }),
 })
 
 type CheckoutFormData = z.infer<typeof checkoutSchema>
@@ -52,12 +62,29 @@ declare global {
   }
 }
 
+interface SavedAddress {
+  id: string
+  label: string
+  full_name: string
+  phone: string
+  street: string
+  city: string
+  state: string
+  postal_code: string
+  reference?: string
+  is_default: boolean
+}
+
 export default function CheckoutPage() {
   const router = useRouter()
+  const { data: session } = useSession()
   const { items, total, clearCart } = useCart()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [culqiLoaded, setCulqiLoaded] = useState(false)
   const [currentOrderId, setCurrentOrderId] = useState<string | null>(null)
+  const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>([])
+  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null)
+  const [loadingAddresses, setLoadingAddresses] = useState(false)
 
   // React Hook Form
   const {
@@ -65,6 +92,7 @@ export default function CheckoutPage() {
     handleSubmit,
     formState: { errors },
     watch,
+    setValue,
   } = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutSchema),
     defaultValues: {
@@ -76,7 +104,78 @@ export default function CheckoutPage() {
 
   // Calcular costos
   const shippingCost = total > 269 ? 0 : 15
-  const finalTotal = total + shippingCost
+  const cashOnDeliverySurcharge = paymentMethod === "contraentrega" ? 5 : 0
+  const finalTotal = total + shippingCost + cashOnDeliverySurcharge
+
+  // ====================================
+  // PRE-LLENAR EMAIL Y NOMBRE SI HAY SESIÓN
+  // ====================================
+  useEffect(() => {
+    if (session?.user?.email) {
+      setValue("email", session.user.email)
+    }
+    if (session?.user?.name) {
+      const nameParts = session.user.name.split(" ")
+      setValue("firstName", nameParts[0] || "")
+      setValue("lastName", nameParts.slice(1).join(" ") || "")
+    }
+  }, [session, setValue])
+
+  // ====================================
+  // CARGAR DIRECCIONES GUARDADAS SI HAY SESIÓN
+  // ====================================
+  useEffect(() => {
+    if (session?.user) {
+      loadSavedAddresses()
+    }
+  }, [session])
+
+  const loadSavedAddresses = async () => {
+    setLoadingAddresses(true)
+    try {
+      const res = await fetch('/api/addresses')
+      const data = await res.json()
+
+      if (data.success && data.addresses) {
+        setSavedAddresses(data.addresses)
+
+        // Auto-seleccionar la dirección predeterminada
+        const defaultAddress = data.addresses.find((addr: SavedAddress) => addr.is_default)
+        if (defaultAddress) {
+          setSelectedAddressId(defaultAddress.id)
+          fillFormWithAddress(defaultAddress)
+        }
+      }
+    } catch (error) {
+      console.error('Error loading addresses:', error)
+    } finally {
+      setLoadingAddresses(false)
+    }
+  }
+
+  const fillFormWithAddress = (address: SavedAddress) => {
+    // Separar nombre completo en firstName y lastName
+    const nameParts = address.full_name.trim().split(' ')
+    const firstName = nameParts[0] || ''
+    const lastName = nameParts.slice(1).join(' ') || ''
+
+    setValue('firstName', firstName)
+    setValue('lastName', lastName)
+    setValue('phone', address.phone)
+    setValue('address', address.street)
+    setValue('city', address.city)
+    setValue('district', address.state)
+    setValue('postalCode', address.postal_code)
+    setValue('reference', address.reference || '')
+  }
+
+  const handleAddressSelect = (addressId: string) => {
+    setSelectedAddressId(addressId)
+    const address = savedAddresses.find(addr => addr.id === addressId)
+    if (address) {
+      fillFormWithAddress(address)
+    }
+  }
 
   // ====================================
   // CONFIGURAR CULQI CUANDO SE CARGUE
@@ -354,6 +453,34 @@ export default function CheckoutPage() {
             <p className="text-neutral-600">Completa tu información para finalizar la compra</p>
           </div>
 
+          {/* Stepper / Breadcrumb */}
+          <div className="mb-8">
+            <div className="flex items-center justify-center gap-2 sm:gap-4">
+              {/* Paso 1: Envío y Pago (Activo) */}
+              <div className="flex items-center">
+                <div className="flex flex-col items-center">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-rose-600 text-white font-semibold shadow-md">
+                    <Package className="w-5 h-5" />
+                  </div>
+                  <span className="mt-2 text-sm font-semibold text-rose-600">Envío y Pago</span>
+                </div>
+              </div>
+
+              {/* Línea divisoria */}
+              <div className="h-[2px] w-12 sm:w-24 bg-neutral-300"></div>
+
+              {/* Paso 2: Confirmación (Inactivo) */}
+              <div className="flex items-center">
+                <div className="flex flex-col items-center">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-neutral-200 text-neutral-500 font-semibold">
+                    <Check className="w-5 h-5" />
+                  </div>
+                  <span className="mt-2 text-sm text-neutral-500">Confirmación</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Columna izquierda - Formulario */}
@@ -391,6 +518,21 @@ export default function CheckoutPage() {
                       />
                       {errors.lastName && (
                         <p className="text-red-500 text-sm mt-1">{errors.lastName.message}</p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-neutral-700 mb-2">
+                        DNI *
+                      </label>
+                      <input
+                        {...register("dni")}
+                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
+                        placeholder="12345678"
+                        maxLength={8}
+                      />
+                      {errors.dni && (
+                        <p className="text-red-500 text-sm mt-1">{errors.dni.message}</p>
                       )}
                     </div>
 
@@ -434,6 +576,53 @@ export default function CheckoutPage() {
                     <MapPin className="w-5 h-5 text-rose-600" />
                     <h2 className="text-xl font-semibold">Dirección de Envío</h2>
                   </div>
+
+                  {/* Selector de direcciones guardadas */}
+                  {session?.user && savedAddresses.length > 0 && (
+                    <div className="mb-6 p-4 bg-neutral-50 rounded-lg border border-neutral-200">
+                      <label className="block text-sm font-medium text-neutral-700 mb-3">
+                        Usar dirección guardada
+                      </label>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {savedAddresses.map((addr) => (
+                          <button
+                            key={addr.id}
+                            type="button"
+                            onClick={() => handleAddressSelect(addr.id)}
+                            className={`p-3 border-2 rounded-lg text-left transition ${
+                              selectedAddressId === addr.id
+                                ? 'border-rose-600 bg-rose-50'
+                                : 'border-neutral-300 bg-white hover:border-neutral-400'
+                            }`}
+                          >
+                            <div className="flex items-start gap-2">
+                              {addr.label === 'home' ? (
+                                <Home className="w-4 h-4 text-neutral-600 mt-1" />
+                              ) : (
+                                <Briefcase className="w-4 h-4 text-neutral-600 mt-1" />
+                              )}
+                              <div className="flex-1">
+                                <p className="font-medium text-sm text-neutral-900">
+                                  {addr.full_name}
+                                  {addr.is_default && (
+                                    <span className="ml-2 text-xs bg-rose-100 text-rose-600 px-2 py-0.5 rounded">
+                                      Principal
+                                    </span>
+                                  )}
+                                </p>
+                                <p className="text-xs text-neutral-600 mt-1">
+                                  {addr.street}, {addr.state}
+                                </p>
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                      <p className="text-xs text-neutral-500 mt-3">
+                        O completa manualmente una nueva dirección abajo
+                      </p>
+                    </div>
+                  )}
 
                   <div className="space-y-4">
                     <div>
@@ -534,6 +723,32 @@ export default function CheckoutPage() {
                       <span className="font-medium">📱 Yape</span>
                     </label>
 
+                    {/* Instrucciones de Yape */}
+                    {paymentMethod === "yape" && (
+                      <div className="mt-3 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                        <p className="text-sm font-semibold text-purple-900 mb-2">
+                          Instrucciones de pago por Yape:
+                        </p>
+                        <ol className="text-sm text-purple-800 space-y-2 mb-3">
+                          <li>1. Abre tu app de Yape</li>
+                          <li>2. Yapea a: <strong>972 327 236</strong></li>
+                          <li>3. Monto: <strong>S/ {finalTotal.toFixed(2)}</strong></li>
+                          <li>4. Envía el comprobante por WhatsApp</li>
+                        </ol>
+                        <a
+                          href={`https://wa.me/51972327236?text=${encodeURIComponent(`Hola, he realizado el pago por Yape de S/ ${finalTotal.toFixed(2)}. Adjunto comprobante.`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition text-sm font-medium"
+                        >
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                          </svg>
+                          Enviar comprobante por WhatsApp
+                        </a>
+                      </div>
+                    )}
+
                     <label className="flex items-center gap-3 p-4 border-2 border-neutral-200 rounded-lg cursor-pointer hover:border-rose-500 transition">
                       <input
                         {...register("paymentMethod")}
@@ -544,6 +759,39 @@ export default function CheckoutPage() {
                       <span className="font-medium">💵 Pago contra entrega</span>
                     </label>
                   </div>
+                </div>
+
+                {/* Información sobre contra entrega */}
+                {paymentMethod === "contraentrega" && (
+                  <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                    <p className="text-sm text-amber-800">
+                      <strong>💵 Pago contra entrega:</strong> Pagarás en efectivo al recibir tu pedido. Se aplica un recargo de S/ 5.00 por este servicio.
+                    </p>
+                  </div>
+                )}
+
+                {/* Checkbox términos y condiciones */}
+                <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6">
+                  <label className="flex items-start gap-3 cursor-pointer">
+                    <input
+                      {...register("acceptTerms")}
+                      type="checkbox"
+                      className="mt-1 w-4 h-4 text-rose-600 border-neutral-300 rounded focus:ring-rose-600"
+                    />
+                    <span className="text-sm text-neutral-700">
+                      Acepto los{" "}
+                      <Link href="/terminos" target="_blank" className="text-rose-600 hover:text-rose-700 font-medium underline">
+                        términos y condiciones
+                      </Link>
+                      {" "}y la{" "}
+                      <Link href="/privacidad" target="_blank" className="text-rose-600 hover:text-rose-700 font-medium underline">
+                        política de privacidad
+                      </Link>
+                    </span>
+                  </label>
+                  {errors.acceptTerms && (
+                    <p className="text-red-500 text-sm mt-2">{errors.acceptTerms.message}</p>
+                  )}
                 </div>
 
                 {/* Notas adicionales */}
@@ -604,6 +852,12 @@ export default function CheckoutPage() {
                       </span>
                       <span>{shippingCost === 0 ? "GRATIS" : `S/ ${shippingCost.toFixed(2)}`}</span>
                     </div>
+                    {cashOnDeliverySurcharge > 0 && (
+                      <div className="flex justify-between text-amber-700">
+                        <span className="text-sm">Recargo contra entrega</span>
+                        <span className="text-sm">S/ {cashOnDeliverySurcharge.toFixed(2)}</span>
+                      </div>
+                    )}
                     {total <= 269 && (
                       <p className="text-sm text-green-600">
                         Te faltan S/ {(269 - total).toFixed(2)} para envío gratis

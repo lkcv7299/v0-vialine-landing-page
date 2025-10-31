@@ -359,6 +359,8 @@ export default function ProductFiltersDrawer({ totalProducts, filteredCount }: P
                 <option value="">Más recientes</option>
                 <option value="price-asc">Precio: menor a mayor</option>
                 <option value="price-desc">Precio: mayor a menor</option>
+                <option value="name-asc">Nombre: A-Z</option>
+                <option value="name-desc">Nombre: Z-A</option>
                 <option value="popular">Más populares</option>
               </select>
             </div>

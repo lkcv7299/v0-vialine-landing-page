@@ -88,13 +88,13 @@ export async function GET(request: Request) {
     
     if (statusFilter) {
       ordersQuery = sql`
-        SELECT 
+        SELECT
           id,
-          order_number,
+          order_id,
           user_id,
           customer_email,
-          customer_name,
-          customer_lastname,
+          customer_first_name,
+          customer_last_name,
           customer_phone,
           shipping_address,
           shipping_district,
@@ -106,8 +106,8 @@ export async function GET(request: Request) {
           shipping_cost,
           total,
           status,
-          culqi_charge_id,
-          culqi_payment_code,
+          payment_id,
+          payment_status,
           notes,
           created_at,
           updated_at
@@ -119,13 +119,13 @@ export async function GET(request: Request) {
       `
     } else {
       ordersQuery = sql`
-        SELECT 
+        SELECT
           id,
-          order_number,
+          order_id,
           user_id,
           customer_email,
-          customer_name,
-          customer_lastname,
+          customer_first_name,
+          customer_last_name,
           customer_phone,
           shipping_address,
           shipping_district,
@@ -137,8 +137,8 @@ export async function GET(request: Request) {
           shipping_cost,
           total,
           status,
-          culqi_charge_id,
-          culqi_payment_code,
+          payment_id,
+          payment_status,
           notes,
           created_at,
           updated_at

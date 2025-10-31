@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
       SELECT product_slug
       FROM wishlist
       WHERE user_id = ${userId}
-      ORDER BY created_at DESC
+      ORDER BY added_at DESC
     `
 
     const items = result.rows.map((row) => row.product_slug)
@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
 
     // Agregar a wishlist
     await sql`
-      INSERT INTO wishlist (user_id, product_slug, created_at)
+      INSERT INTO wishlist (user_id, product_slug, added_at)
       VALUES (${userId}, ${productSlug}, NOW())
     `
 

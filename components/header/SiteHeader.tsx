@@ -2,7 +2,8 @@
 
 import Link from "next/link"
 import { useState, useRef, useEffect } from "react"
-import { ShoppingBag, X, User } from "lucide-react"
+import { ShoppingBag, X, User, LogOut, Package, MapPin, Settings, Heart } from "lucide-react"
+import { useSession, signOut } from "next-auth/react"
 import MegaMenu from "./MegaMenu"
 import MobileMenu from "../nav/MobileMenu"
 import SearchBar from "../SearchBar"
@@ -10,14 +11,20 @@ import { useCart } from "@/contexts/CartContext"
 
 export default function SiteHeader() {
   const [showMiniCart, setShowMiniCart] = useState(false)
+  const [showAccountMenu, setShowAccountMenu] = useState(false)
+  const { data: session } = useSession()
   const { items, itemCount, total, removeItem } = useCart()
   const miniCartRef = useRef<HTMLDivElement>(null)
+  const accountMenuRef = useRef<HTMLDivElement>(null)
 
-  // Cerrar mini cart al hacer click fuera
+  // Cerrar mini cart y account menu al hacer click fuera
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (miniCartRef.current && !miniCartRef.current.contains(event.target as Node)) {
         setShowMiniCart(false)
+      }
+      if (accountMenuRef.current && !accountMenuRef.current.contains(event.target as Node)) {
+        setShowAccountMenu(false)
       }
     }
 
@@ -51,17 +58,107 @@ export default function SiteHeader() {
 
           {/* ========== DERECHA: Icons ========== */}
           <div className="flex items-center gap-2">
-            
-            {/* ✅ Account Icon - AHORA VISIBLE EN MOBILE Y DESKTOP */}
-            <Link
-              href="/account"
-              className="flex items-center gap-2 p-2 rounded-lg hover:bg-neutral-100 transition"
-              aria-label="Mi cuenta"
-            >
-              <User className="w-5 h-5 text-neutral-700" />
-              {/* Texto solo visible en desktop */}
-              <span className="hidden lg:inline text-sm font-medium text-neutral-700">Cuenta</span>
-            </Link>
+
+            {/* ✅ Account Dropdown Menu */}
+            <div className="relative" ref={accountMenuRef}>
+              <button
+                onClick={() => setShowAccountMenu(!showAccountMenu)}
+                className="flex items-center gap-2 p-2 rounded-lg hover:bg-neutral-100 transition"
+                aria-label="Mi cuenta"
+              >
+                <User className="w-5 h-5 text-neutral-700" />
+                {/* Texto solo visible en desktop */}
+                <span className="hidden lg:inline text-sm font-medium text-neutral-700">
+                  {session?.user?.name || 'Cuenta'}
+                </span>
+              </button>
+
+              {/* Account Dropdown */}
+              {showAccountMenu && (
+                <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-lg shadow-xl border border-neutral-200 z-50 py-2">
+                  {session?.user ? (
+                    <>
+                      {/* User Info */}
+                      <div className="px-4 py-3 border-b border-neutral-200">
+                        <p className="text-sm font-semibold text-neutral-900 truncate">
+                          {session.user.name || 'Usuario'}
+                        </p>
+                        <p className="text-xs text-neutral-600 truncate">
+                          {session.user.email}
+                        </p>
+                      </div>
+
+                      {/* Menu Items */}
+                      <Link
+                        href="/account"
+                        onClick={() => setShowAccountMenu(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition"
+                      >
+                        <Settings className="w-4 h-4" />
+                        Mi cuenta
+                      </Link>
+
+                      <Link
+                        href="/account/pedidos"
+                        onClick={() => setShowAccountMenu(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition"
+                      >
+                        <Package className="w-4 h-4" />
+                        Mis pedidos
+                      </Link>
+
+                      <Link
+                        href="/account/direcciones"
+                        onClick={() => setShowAccountMenu(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition"
+                      >
+                        <MapPin className="w-4 h-4" />
+                        Mis direcciones
+                      </Link>
+
+                      <Link
+                        href="/account/favoritos"
+                        onClick={() => setShowAccountMenu(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition"
+                      >
+                        <Heart className="w-4 h-4" />
+                        Favoritos
+                      </Link>
+
+                      <div className="border-t border-neutral-200 mt-2 pt-2">
+                        <button
+                          onClick={() => {
+                            setShowAccountMenu(false)
+                            signOut({ callbackUrl: '/' })
+                          }}
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-rose-600 hover:bg-rose-50 transition w-full"
+                        >
+                          <LogOut className="w-4 h-4" />
+                          Cerrar sesión
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        href="/login"
+                        onClick={() => setShowAccountMenu(false)}
+                        className="block px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition"
+                      >
+                        Iniciar sesión
+                      </Link>
+                      <Link
+                        href="/registro"
+                        onClick={() => setShowAccountMenu(false)}
+                        className="block px-4 py-2.5 text-sm text-neutral-700 hover:bg-neutral-50 transition"
+                      >
+                        Crear cuenta
+                      </Link>
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
 
             {/* Cart Icon con Mini Cart Dropdown */}
             <div className="relative" ref={miniCartRef}>

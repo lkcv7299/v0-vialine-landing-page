@@ -60,6 +60,18 @@ export async function GET() {
     const totalSpent = parseFloat(ordersResult.rows[0].total_spent) || 0
 
     // ====================================
+    // PASO 3.5: CONTAR PEDIDOS PENDIENTES
+    // ====================================
+    const pendingOrdersResult = await sql`
+      SELECT COUNT(*) as pending_orders
+      FROM orders
+      WHERE user_id = ${userId}
+        AND status IN ('pending_payment', 'pending')
+    `
+
+    const pendingOrders = parseInt(pendingOrdersResult.rows[0].pending_orders) || 0
+
+    // ====================================
     // PASO 4: CONTAR DIRECCIONES DEL USUARIO
     // ====================================
     const addressesResult = await sql`
@@ -89,6 +101,7 @@ export async function GET() {
       totalSpent,
       savedAddresses,
       wishlistItems,
+      pendingOrders,
     })
   } catch (error) {
     console.error("❌ Error en GET /api/account/stats:", error)

@@ -14,6 +14,7 @@ export default function RegistroPage() {
   const [confirmPassword, setConfirmPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [acceptedTerms, setAcceptedTerms] = useState(false)
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -24,6 +25,31 @@ export default function RegistroPage() {
     setLoading(true)
 
     // Validaciones
+    if (!acceptedTerms) {
+      setError("Debes aceptar los términos y condiciones")
+      setLoading(false)
+      return
+    }
+
+    // Validar dominio de email
+    const emailDomain = email.split('@')[1]?.toLowerCase()
+    const invalidDomains = ['cum', 'test', 'example', 'localhost']
+    const validTLDs = ['com', 'net', 'org', 'edu', 'pe', 'es', 'mx', 'ar', 'cl', 'co', 'ec', 'bo', 'py', 'uy', 've']
+
+    if (!emailDomain) {
+      setError("Por favor ingresa un email válido")
+      setLoading(false)
+      return
+    }
+
+    // Verificar que tenga un TLD válido
+    const tld = emailDomain.split('.').pop()
+    if (!tld || invalidDomains.includes(tld) || !validTLDs.includes(tld)) {
+      setError("Por favor ingresa un email con un dominio válido (ej: @gmail.com, @outlook.com, @hotmail.com)")
+      setLoading(false)
+      return
+    }
+
     if (password !== confirmPassword) {
       setError("Las contraseñas no coinciden")
       setLoading(false)
@@ -229,6 +255,27 @@ export default function RegistroPage() {
                   {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
+            </div>
+
+            {/* Terms and Conditions */}
+            <div className="flex items-start gap-3">
+              <input
+                id="terms"
+                type="checkbox"
+                checked={acceptedTerms}
+                onChange={(e) => setAcceptedTerms(e.target.checked)}
+                className="mt-1 w-4 h-4 text-rose-600 border-neutral-300 rounded focus:ring-rose-600"
+              />
+              <label htmlFor="terms" className="text-sm text-neutral-600">
+                Acepto los{" "}
+                <Link href="/terminos" className="text-rose-600 hover:text-rose-700 font-medium">
+                  términos y condiciones
+                </Link>{" "}
+                y la{" "}
+                <Link href="/privacidad" className="text-rose-600 hover:text-rose-700 font-medium">
+                  política de privacidad
+                </Link>
+              </label>
             </div>
 
             {/* Submit Button */}

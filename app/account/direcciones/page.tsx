@@ -157,6 +157,13 @@ export default function DireccionesPage() {
 
   // Eliminar dirección
   const handleDelete = async (id: string) => {
+    // Verificar si es la dirección predeterminada
+    const addressToDelete = addresses.find(addr => addr.id === id)
+    if (addressToDelete?.is_default) {
+      toast.error("No puedes eliminar tu dirección principal. Por favor, establece otra dirección como predeterminada primero.")
+      return
+    }
+
     if (!confirm("¿Estás seguro de eliminar esta dirección?")) return
 
     try {

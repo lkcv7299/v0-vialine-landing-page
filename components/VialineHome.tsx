@@ -2,7 +2,7 @@ import Link from "next/link"
 import { byAudience } from "@/data/products"
 import GymRail from "@/components/GymRail"
 import Hero from "@/components/Hero"
-import HeroNina from "@/components/hero/HeroNina"
+import HeroNina from "@/components/Hero/HeroNina"
 import { FABRICS } from "@/data/fabrics"
 
 export default function VialineHome() {
