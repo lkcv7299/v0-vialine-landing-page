@@ -108,23 +108,29 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // Para OAuth (Google), crear/actualizar usuario
       if (account?.provider === "google") {
         try {
+          console.log("🔵 [OAuth] Iniciando flujo Google OAuth para:", user.email)
+
           // Verificar si usuario existe
           const existingUser = await sql`
-            SELECT * FROM users 
+            SELECT * FROM users
             WHERE email = ${user.email}
             LIMIT 1
           `
+          console.log("🔍 [OAuth] Usuario existente encontrado:", existingUser.rows.length > 0)
 
           if (existingUser.rows.length === 0) {
+            console.log("➕ [OAuth] Creando nuevo usuario...")
             // Crear nuevo usuario
             const newUser = await sql`
               INSERT INTO users (name, email, email_verified, image)
               VALUES (${user.name}, ${user.email}, NOW(), ${user.image})
               RETURNING *
             `
+            console.log("✅ [OAuth] Usuario creado con ID:", newUser.rows[0].id)
 
             user.id = newUser.rows[0].id.toString()
 
+            console.log("➕ [OAuth] Creando registro en accounts...")
             // Crear account record
             await sql`
               INSERT INTO accounts (
@@ -143,13 +149,55 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 ${account.id_token || null}
               )
             `
+            console.log("✅ [OAuth] Account record creado")
           } else {
+            console.log("🔄 [OAuth] Usuario existente, usando ID:", existingUser.rows[0].id)
             user.id = existingUser.rows[0].id.toString()
+
+            // Verificar si ya existe el account record
+            console.log("🔍 [OAuth] Verificando account record...")
+            const existingAccount = await sql`
+              SELECT * FROM accounts
+              WHERE user_id = ${existingUser.rows[0].id}
+              AND provider = ${account.provider}
+              LIMIT 1
+            `
+
+            if (existingAccount.rows.length === 0) {
+              console.log("➕ [OAuth] Account record no existe, creándolo...")
+              await sql`
+                INSERT INTO accounts (
+                  user_id, type, provider, provider_account_id,
+                  access_token, expires_at, token_type, scope, id_token
+                )
+                VALUES (
+                  ${existingUser.rows[0].id},
+                  'oauth',
+                  ${account.provider},
+                  ${account.providerAccountId},
+                  ${account.access_token || null},
+                  ${account.expires_at || null},
+                  ${account.token_type || null},
+                  ${account.scope || null},
+                  ${account.id_token || null}
+                )
+              `
+              console.log("✅ [OAuth] Account record creado para usuario existente")
+            } else {
+              console.log("✅ [OAuth] Account record ya existe")
+            }
           }
 
+          console.log("✅ [OAuth] Flujo completado exitosamente, retornando true")
           return true
         } catch (error) {
-          console.error("Google signIn error:", error)
+          console.error("❌ [OAuth] Error en signIn callback:", error)
+          console.error("❌ [OAuth] Detalles del error:", {
+            message: error instanceof Error ? error.message : 'Unknown error',
+            stack: error instanceof Error ? error.stack : undefined,
+            user: user.email,
+            provider: account?.provider
+          })
           return false
         }
       }
