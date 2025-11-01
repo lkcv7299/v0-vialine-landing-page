@@ -68,16 +68,14 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Verificar si el usuario compró el producto
+    // Verificar si el usuario compró el producto (con orden pagada)
     const purchaseCheck = await sql`
       SELECT o.id
       FROM orders o
+      INNER JOIN order_items oi ON o.id = oi.order_id
       WHERE o.user_id = ${userId}
-        AND o.status = 'paid'
-        AND EXISTS (
-          SELECT 1 FROM jsonb_array_elements(o.items) AS item
-          WHERE item->>'productSlug' = ${productSlug}
-        )
+        AND (o.status = 'paid' OR o.payment_status = 'paid')
+        AND oi.product_slug = ${productSlug}
       LIMIT 1
     `
 

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { sql } from "@vercel/postgres"
 import { sendAdminNotification, sendCustomerConfirmation } from "@/lib/order-notifications"
+import { auth } from "@/lib/auth"
 
 // ====================================
 // TIPOS
@@ -47,17 +48,18 @@ function generateOrderId(): string {
 // ====================================
 // FUNCIÓN AUXILIAR: Guardar en BD
 // ====================================
-async function saveOrderToDatabase(orderData: CheckoutRequest & { orderId: string; createdAt: string; status: string }) {
+async function saveOrderToDatabase(orderData: CheckoutRequest & { orderId: string; createdAt: string; status: string; userId?: number }) {
   try {
     // ✅ FIXED: Solo log en desarrollo
     if (process.env.NODE_ENV === 'development') {
       console.log(`💾 Guardando orden ${orderData.orderId} en base de datos...`)
     }
 
-    // Insertar orden principal
+    // Insertar orden principal (con user_id si está logueado)
     await sql`
       INSERT INTO orders (
         order_id,
+        user_id,
         customer_first_name,
         customer_last_name,
         customer_email,
@@ -76,6 +78,7 @@ async function saveOrderToDatabase(orderData: CheckoutRequest & { orderId: strin
         created_at
       ) VALUES (
         ${orderData.orderId},
+        ${orderData.userId || null},
         ${orderData.customer.firstName},
         ${orderData.customer.lastName},
         ${orderData.customer.email},
@@ -147,6 +150,31 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // ====================================
+    // OBTENER USER_ID si está logueado
+    // ====================================
+    const session = await auth()
+    let userId: number | undefined = undefined
+
+    if (session?.user?.email) {
+      try {
+        const userResult = await sql`
+          SELECT id FROM users
+          WHERE email = ${session.user.email}
+          LIMIT 1
+        `
+        if (userResult.rows.length > 0) {
+          userId = userResult.rows[0].id
+          if (process.env.NODE_ENV === 'development') {
+            console.log(`👤 Orden para usuario ID: ${userId}`)
+          }
+        }
+      } catch (error) {
+        console.error('Error obteniendo user_id:', error)
+        // Continuar sin user_id (compra como invitado)
+      }
+    }
+
     // Generar ID único para la orden
     const orderId = generateOrderId()
 
@@ -154,6 +182,7 @@ export async function POST(request: NextRequest) {
     const orderData = {
       ...body,
       orderId,
+      userId, // ✅ Incluir user_id
       status: "pending_payment",
       createdAt: new Date().toISOString(),
     }
