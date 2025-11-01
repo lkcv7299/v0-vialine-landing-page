@@ -1,7 +1,7 @@
 import { byAudience, type Product } from "@/data/products"
 import ProductFiltersDesktop from "@/components/ProductFiltersDesktop"
 import ProductFiltersDrawer from "@/components/ProductFiltersDrawer"
-import ProductGrid from "@/components/ProductGrid"
+import ProductListWithLoadMore from "@/components/ProductListWithLoadMore"
 import Hero from "@/components/Hero"
 
 function apply(items: Product[], q: Record<string, string | string[] | undefined>) {
@@ -76,32 +76,9 @@ export default async function Page({
   const base = byAudience("nina")
   const allItems = apply(base, params)
 
-  // Paginación
-  const requestedPage = parseInt((params.page as string) || "1")
+  // Load More: mostrar primeros 24 productos inicialmente
   const itemsPerPage = 24
-  const totalPages = Math.ceil(allItems.length / itemsPerPage)
-
-  // ✅ FIX: Si página solicitada > totalPages, usar página 1
-  const page = requestedPage > totalPages && totalPages > 0 ? 1 : requestedPage
-
-  const startIndex = (page - 1) * itemsPerPage
-  const endIndex = startIndex + itemsPerPage
-  const items = allItems.slice(startIndex, endIndex)
-
-  // ✅ Helper para construir URLs de paginación correctamente
-  const buildPaginationUrl = (pageNum: number) => {
-    const urlParams = new URLSearchParams()
-    Object.entries(params).forEach(([key, value]) => {
-      if (key === 'page') return // Skip, lo agregamos manualmente
-      if (Array.isArray(value)) {
-        value.forEach(v => urlParams.append(key, v))
-      } else if (value) {
-        urlParams.set(key, value)
-      }
-    })
-    urlParams.set('page', String(pageNum))
-    return `/nina?${urlParams.toString()}`
-  }
+  const initialItems = allItems.slice(0, itemsPerPage)
 
   return (
     <>
@@ -125,87 +102,25 @@ export default async function Page({
           </p>
         </div>
 
+        {/* Mobile: Filtros arriba */}
+        <div className="lg:hidden mb-6">
+          <ProductFiltersDrawer totalProducts={base.length} filteredCount={allItems.length} />
+        </div>
+
         {/* Layout desktop: Sidebar + Grid */}
         <div className="flex gap-6">
           {/* Sidebar desktop (solo visible lg+) */}
           <ProductFiltersDesktop totalProducts={base.length} filteredCount={allItems.length} />
 
-          {/* Grid de productos */}
+          {/* Grid de productos con Load More */}
           <div className="flex-1">
-            <ProductGrid items={items} />
-
-            {/* Paginación */}
-            {totalPages > 1 && (
-              <div className="mt-12 flex justify-center items-center gap-2">
-                {/* Botón Anterior */}
-                {page > 1 ? (
-                  <a
-                    href={buildPaginationUrl(page - 1)}
-                    className="px-4 py-2 border border-neutral-300 rounded-lg hover:bg-neutral-50 transition font-medium text-neutral-700"
-                  >
-                    Anterior
-                  </a>
-                ) : (
-                  <button
-                    disabled
-                    className="px-4 py-2 border border-neutral-200 rounded-lg bg-neutral-100 text-neutral-400 cursor-not-allowed"
-                  >
-                    Anterior
-                  </button>
-                )}
-
-                {/* Números de página */}
-                <div className="flex gap-1">
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => {
-                    // Mostrar solo algunas páginas alrededor de la actual
-                    if (
-                      pageNum === 1 ||
-                      pageNum === totalPages ||
-                      (pageNum >= page - 1 && pageNum <= page + 1)
-                    ) {
-                      return (
-                        <a
-                          key={pageNum}
-                          href={buildPaginationUrl(pageNum)}
-                          className={`px-4 py-2 rounded-lg font-medium transition ${
-                            pageNum === page
-                              ? "bg-rose-600 text-white"
-                              : "border border-neutral-300 hover:bg-neutral-50 text-neutral-700"
-                          }`}
-                        >
-                          {pageNum}
-                        </a>
-                      )
-                    } else if (pageNum === page - 2 || pageNum === page + 2) {
-                      return <span key={pageNum} className="px-2 py-2 text-neutral-400">...</span>
-                    }
-                    return null
-                  })}
-                </div>
-
-                {/* Botón Siguiente */}
-                {page < totalPages ? (
-                  <a
-                    href={buildPaginationUrl(page + 1)}
-                    className="px-4 py-2 border border-neutral-300 rounded-lg hover:bg-neutral-50 transition font-medium text-neutral-700"
-                  >
-                    Siguiente
-                  </a>
-                ) : (
-                  <button
-                    disabled
-                    className="px-4 py-2 border border-neutral-200 rounded-lg bg-neutral-100 text-neutral-400 cursor-not-allowed"
-                  >
-                    Siguiente
-                  </button>
-                )}
-              </div>
-            )}
+            <ProductListWithLoadMore
+              initialItems={initialItems}
+              allItems={allItems}
+              itemsPerPage={itemsPerPage}
+            />
           </div>
         </div>
-
-        {/* Drawer mobile (solo visible mobile) */}
-        <ProductFiltersDrawer totalProducts={base.length} filteredCount={allItems.length} />
       </main>
     </>
   )
