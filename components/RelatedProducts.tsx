@@ -60,7 +60,7 @@ export default function RelatedProducts({ currentProduct, limit = 4 }: RelatedPr
       </div>
 
       {/* Grid de productos */}
-      <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
+      <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {relatedProducts.map((product) => (
           <ProductCard key={product.slug} product={product} />
         ))}

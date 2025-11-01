@@ -1,9 +1,38 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
+import dynamic from "next/dynamic"
 import ProductDetailCard from "@/components/product/ProductDetailCard"
 import { findProduct, products } from "@/data/products"
-import ReviewList from "@/components/ReviewList"
-import RelatedProducts from "@/components/RelatedProducts"
+
+// ✅ PERFORMANCE: Lazy load below-the-fold components
+// These components are not visible on initial page load
+// Loading them dynamically reduces initial bundle size
+const ReviewList = dynamic(() => import("@/components/ReviewList"), {
+  loading: () => (
+    <div className="mt-12 pt-12 border-t">
+      <div className="animate-pulse space-y-4">
+        <div className="h-8 bg-neutral-200 rounded w-1/3"></div>
+        <div className="h-4 bg-neutral-200 rounded w-1/4"></div>
+      </div>
+    </div>
+  ),
+  ssr: false, // Client-side only for reviews (they need session)
+})
+
+const RelatedProducts = dynamic(() => import("@/components/RelatedProducts"), {
+  loading: () => (
+    <div className="mt-16 pt-12 border-t">
+      <div className="animate-pulse space-y-4">
+        <div className="h-8 bg-neutral-200 rounded w-1/3"></div>
+        <div className="grid gap-6 grid-cols-2 md:grid-cols-4 mt-6">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="aspect-square bg-neutral-200 rounded-xl"></div>
+          ))}
+        </div>
+      </div>
+    </div>
+  ),
+})
 
 type ProductPageProps = {
   params: Promise<{ slug: string }>
