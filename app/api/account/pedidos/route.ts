@@ -176,9 +176,20 @@ export async function GET(request: Request) {
           ORDER BY id ASC
         `
 
+        // Parse numeric values from strings to numbers
+        const itemsWithParsedNumbers = itemsResult.rows.map(item => ({
+          ...item,
+          unit_price: parseFloat(item.unit_price) || 0,
+          total_price: parseFloat(item.total_price) || 0,
+          quantity: parseInt(item.quantity) || 0,
+        }))
+
         return {
           ...order,
-          items: itemsResult.rows,
+          subtotal: parseFloat(order.subtotal) || 0,
+          shipping_cost: parseFloat(order.shipping_cost) || 0,
+          total: parseFloat(order.total) || 0,
+          items: itemsWithParsedNumbers,
         }
       })
     )
