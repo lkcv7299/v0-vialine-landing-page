@@ -15,7 +15,10 @@
     "images:audit": "npm run images:unused && npm run images:missing",
     "images:unused": "node scripts/find-unused-images.js",
     "images:missing": "node scripts/find-missing-images.js",
-    "images:webp": "node scripts/convert-to-webp.mjs public/products"
+    "images:webp": "node scripts/convert-to-webp.mjs public/products",
+    "scrape": "node scripts/scrape-vialine.js",
+    "map": "node scripts/map-folders-to-products.js",
+    "auto-import": "npm run scrape && npm run map"
   },
   "dependencies": {
     "@auth/pg-adapter": "^1.11.0",
