@@ -823,12 +823,6 @@ export default function CheckoutPage() {
                       </span>
                       <span>{shippingCost === 0 ? "GRATIS" : `S/ ${shippingCost.toFixed(2)}`}</span>
                     </div>
-                    {cashOnDeliverySurcharge > 0 && (
-                      <div className="flex justify-between text-amber-700">
-                        <span className="text-sm">Recargo contra entrega</span>
-                        <span className="text-sm">S/ {cashOnDeliverySurcharge.toFixed(2)}</span>
-                      </div>
-                    )}
                     {total <= 269 && (
                       <p className="text-sm text-green-600">
                         Te faltan S/ {(269 - total).toFixed(2)} para envío gratis
