@@ -181,48 +181,48 @@ export default function OrderTrackingPage() {
   const StatusIcon = statusConfig.icon
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white pt-24 pb-16">
+    <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white pt-16 md:pt-24 pb-16">
       <div className="max-w-4xl mx-auto px-4">
-        
+
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-6 md:mb-8">
           <Link
             href="/"
             className="text-rose-600 hover:text-rose-700 font-medium mb-4 inline-block"
           >
             ← Volver al inicio
           </Link>
-          <h1 className="text-3xl font-bold text-neutral-900 mb-2">
+          <h1 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-2">
             Seguimiento de Orden
           </h1>
-          <p className="text-neutral-600">
+          <p className="text-sm md:text-base text-neutral-600">
             Orden #{order.order_id}
           </p>
         </div>
 
         {/* Estado actual */}
-        <div className={`${statusConfig.bg} rounded-2xl p-6 mb-6 border border-${statusConfig.color.replace('text-', '')}-200`}>
-          <div className="flex items-center gap-4">
-            <div className={`w-12 h-12 ${statusConfig.bg} rounded-full flex items-center justify-center`}>
-              <StatusIcon className={`w-6 h-6 ${statusConfig.color}`} />
+        <div className={`${statusConfig.bg} rounded-2xl p-4 md:p-6 mb-6 border border-${statusConfig.color.replace('text-', '')}-200`}>
+          <div className="flex items-center gap-3 md:gap-4">
+            <div className={`w-10 h-10 md:w-12 md:h-12 ${statusConfig.bg} rounded-full flex items-center justify-center flex-shrink-0`}>
+              <StatusIcon className={`w-5 h-5 md:w-6 md:h-6 ${statusConfig.color}`} />
             </div>
-            <div>
-              <h2 className={`text-xl font-semibold ${statusConfig.color}`}>
+            <div className="min-w-0">
+              <h2 className={`text-base md:text-xl font-semibold ${statusConfig.color}`}>
                 {statusConfig.label}
               </h2>
-              <p className="text-neutral-600">{statusConfig.description}</p>
+              <p className="text-sm md:text-base text-neutral-600">{statusConfig.description}</p>
             </div>
           </div>
         </div>
 
         {/* Timeline - Solo si no está cancelada */}
         {order.status !== "cancelled" && order.status !== "pending_payment" && (
-          <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6 mb-6">
-            <h3 className="text-lg font-semibold mb-6">Progreso del Pedido</h3>
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-4 md:p-6 mb-6">
+            <h3 className="text-base md:text-lg font-semibold mb-4 md:mb-6">Progreso del Pedido</h3>
             <div className="relative">
               {/* Línea de progreso */}
-              <div className="absolute top-5 left-0 right-0 h-1 bg-neutral-200">
-                <div 
+              <div className="absolute top-4 md:top-5 left-0 right-0 h-0.5 md:h-1 bg-neutral-200">
+                <div
                   className="h-full bg-rose-600 transition-all duration-500"
                   style={{ width: `${(getTimeline().filter(s => s.completed).length - 1) / (getTimeline().length - 1) * 100}%` }}
                 />
@@ -233,17 +233,17 @@ export default function OrderTrackingPage() {
                 {getTimeline().map((step, index) => {
                   const StepIcon = step.icon
                   return (
-                    <div key={step.key} className="flex flex-col items-center">
+                    <div key={step.key} className="flex flex-col items-center flex-1 max-w-[80px]">
                       <div
-                        className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 transition-all ${
+                        className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center mb-2 transition-all ${
                           step.completed
                             ? "bg-rose-600 text-white"
                             : "bg-neutral-200 text-neutral-400"
-                        } ${step.active ? "ring-4 ring-rose-200" : ""}`}
+                        } ${step.active ? "ring-2 md:ring-4 ring-rose-200" : ""}`}
                       >
-                        <StepIcon className="w-5 h-5" />
+                        <StepIcon className="w-4 h-4 md:w-5 md:h-5" />
                       </div>
-                      <span className={`text-xs text-center font-medium ${
+                      <span className={`text-[10px] md:text-xs text-center font-medium leading-tight ${
                         step.completed ? "text-neutral-900" : "text-neutral-400"
                       }`}>
                         {step.label}
@@ -256,39 +256,39 @@ export default function OrderTrackingPage() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-6">
           {/* Información del cliente */}
-          <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6">
-            <h3 className="text-lg font-semibold mb-4">Información de Contacto</h3>
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-4 md:p-6">
+            <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4">Información de Contacto</h3>
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <Mail className="w-5 h-5 text-neutral-400 mt-0.5" />
-                <div>
-                  <p className="text-sm text-neutral-600">Email</p>
-                  <p className="font-medium">{order.customer_email}</p>
+                <Mail className="w-4 h-4 md:w-5 md:h-5 text-neutral-400 mt-0.5 flex-shrink-0" />
+                <div className="min-w-0">
+                  <p className="text-xs md:text-sm text-neutral-600">Email</p>
+                  <p className="font-medium text-sm md:text-base break-all">{order.customer_email}</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <Phone className="w-5 h-5 text-neutral-400 mt-0.5" />
-                <div>
-                  <p className="text-sm text-neutral-600">Teléfono</p>
-                  <p className="font-medium">{order.customer_phone}</p>
+                <Phone className="w-4 h-4 md:w-5 md:h-5 text-neutral-400 mt-0.5 flex-shrink-0" />
+                <div className="min-w-0">
+                  <p className="text-xs md:text-sm text-neutral-600">Teléfono</p>
+                  <p className="font-medium text-sm md:text-base">{order.customer_phone}</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Dirección de envío */}
-          <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6">
-            <h3 className="text-lg font-semibold mb-4">Dirección de Envío</h3>
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-4 md:p-6">
+            <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4">Dirección de Envío</h3>
             <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-neutral-400 mt-0.5" />
-              <div>
-                <p className="font-medium">{order.shipping_address}</p>
-                <p className="text-neutral-600">{order.shipping_district}</p>
-                <p className="text-neutral-600">{order.shipping_city} - {order.shipping_postal_code}</p>
+              <MapPin className="w-4 h-4 md:w-5 md:h-5 text-neutral-400 mt-0.5 flex-shrink-0" />
+              <div className="min-w-0">
+                <p className="font-medium text-sm md:text-base">{order.shipping_address}</p>
+                <p className="text-sm md:text-base text-neutral-600">{order.shipping_district}</p>
+                <p className="text-sm md:text-base text-neutral-600">{order.shipping_city} - {order.shipping_postal_code}</p>
                 {order.shipping_reference && (
-                  <p className="text-sm text-neutral-500 mt-2">
+                  <p className="text-xs md:text-sm text-neutral-500 mt-2">
                     Referencia: {order.shipping_reference}
                   </p>
                 )}
@@ -298,20 +298,27 @@ export default function OrderTrackingPage() {
         </div>
 
         {/* Productos */}
-        <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6 mb-6">
-          <h3 className="text-lg font-semibold mb-4">Productos</h3>
+        <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-4 md:p-6 mb-6">
+          <h3 className="text-base md:text-lg font-semibold mb-4">Productos</h3>
           <div className="space-y-4">
             {order.items && order.items.map((item, index) => (
-              <div key={index} className="flex justify-between items-start pb-4 border-b border-neutral-200 last:border-0">
-                <div className="flex-1">
-                  <h4 className="font-medium text-neutral-900">{item.productTitle}</h4>
-                  <p className="text-sm text-neutral-600">
-                    Color: {item.selectedColor} | Talla: {item.selectedSize}
-                  </p>
-                  <p className="text-sm text-neutral-600">Cantidad: {item.quantity}</p>
+              <div key={index} className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 pb-4 border-b border-neutral-200 last:border-0">
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-medium text-neutral-900 text-sm md:text-base break-words">{item.productTitle}</h4>
+                  <div className="flex flex-wrap gap-x-3 gap-y-1 mt-1">
+                    <p className="text-xs md:text-sm text-neutral-600">
+                      Color: {item.selectedColor}
+                    </p>
+                    <p className="text-xs md:text-sm text-neutral-600">
+                      Talla: {item.selectedSize}
+                    </p>
+                    <p className="text-xs md:text-sm text-neutral-600">
+                      Cantidad: {item.quantity}
+                    </p>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <p className="font-semibold text-neutral-900">
+                <div className="text-left sm:text-right flex-shrink-0">
+                  <p className="font-semibold text-neutral-900 text-sm md:text-base">
                     S/ {(parseNumber(item.productPrice) * item.quantity).toFixed(2)}
                   </p>
                 </div>
@@ -319,16 +326,16 @@ export default function OrderTrackingPage() {
             ))}
           </div>
 
-          <div className="mt-6 pt-4 border-t border-neutral-200 space-y-2">
-            <div className="flex justify-between text-neutral-600">
+          <div className="mt-4 md:mt-6 pt-4 border-t border-neutral-200 space-y-2">
+            <div className="flex justify-between text-sm md:text-base text-neutral-600">
               <span>Subtotal</span>
               <span>S/ {parseNumber(order.subtotal).toFixed(2)}</span>
             </div>
-            <div className="flex justify-between text-neutral-600">
+            <div className="flex justify-between text-sm md:text-base text-neutral-600">
               <span>Envío</span>
               <span>{parseNumber(order.shipping_cost) === 0 ? "GRATIS" : `S/ ${parseNumber(order.shipping_cost).toFixed(2)}`}</span>
             </div>
-            <div className="flex justify-between text-lg font-bold text-neutral-900 pt-2 border-t border-neutral-200">
+            <div className="flex justify-between text-base md:text-lg font-bold text-neutral-900 pt-2 border-t border-neutral-200">
               <span>Total</span>
               <span>S/ {parseNumber(order.total).toFixed(2)}</span>
             </div>
@@ -336,21 +343,21 @@ export default function OrderTrackingPage() {
         </div>
 
         {/* Información adicional */}
-        <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6">
-          <h3 className="text-lg font-semibold mb-4">Información Adicional</h3>
+        <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-4 md:p-6">
+          <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4">Información Adicional</h3>
           <div className="space-y-3">
             <div className="flex items-start gap-3">
-              <CreditCard className="w-5 h-5 text-neutral-400 mt-0.5" />
-              <div>
-                <p className="text-sm text-neutral-600">Método de pago</p>
-                <p className="font-medium capitalize">{order.payment_method}</p>
+              <CreditCard className="w-4 h-4 md:w-5 md:h-5 text-neutral-400 mt-0.5 flex-shrink-0" />
+              <div className="min-w-0">
+                <p className="text-xs md:text-sm text-neutral-600">Método de pago</p>
+                <p className="font-medium text-sm md:text-base capitalize">{order.payment_method}</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <Clock className="w-5 h-5 text-neutral-400 mt-0.5" />
-              <div>
-                <p className="text-sm text-neutral-600">Fecha de orden</p>
-                <p className="font-medium">
+              <Clock className="w-4 h-4 md:w-5 md:h-5 text-neutral-400 mt-0.5 flex-shrink-0" />
+              <div className="min-w-0">
+                <p className="text-xs md:text-sm text-neutral-600">Fecha de orden</p>
+                <p className="font-medium text-sm md:text-base">
                   {new Date(order.created_at).toLocaleDateString("es-PE", {
                     year: "numeric",
                     month: "long",
@@ -363,10 +370,10 @@ export default function OrderTrackingPage() {
             </div>
             {order.notes && (
               <div className="flex items-start gap-3">
-                <MessageSquare className="w-5 h-5 text-neutral-400 mt-0.5" />
-                <div>
-                  <p className="text-sm text-neutral-600">Notas</p>
-                  <p className="font-medium">{order.notes}</p>
+                <MessageSquare className="w-4 h-4 md:w-5 md:h-5 text-neutral-400 mt-0.5 flex-shrink-0" />
+                <div className="min-w-0">
+                  <p className="text-xs md:text-sm text-neutral-600">Notas</p>
+                  <p className="font-medium text-sm md:text-base break-words">{order.notes}</p>
                 </div>
               </div>
             )}
