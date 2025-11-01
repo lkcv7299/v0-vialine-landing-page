@@ -10,7 +10,12 @@
     "test": "playwright test",
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",
-    "test:report": "playwright show-report"
+    "test:report": "playwright show-report",
+    "images": "node scripts/image-wizard.js",
+    "images:audit": "npm run images:unused && npm run images:missing",
+    "images:unused": "node scripts/find-unused-images.js",
+    "images:missing": "node scripts/find-missing-images.js",
+    "images:webp": "node scripts/convert-to-webp.mjs public/products"
   },
   "dependencies": {
     "@auth/pg-adapter": "^1.11.0",
