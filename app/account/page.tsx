@@ -101,25 +101,29 @@ export default function AccountPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Mi Cuenta</h1>
-          <p className="mt-2 text-gray-600">
-            Bienvenida de vuelta, {userName}
-          </p>
-        </div>
+    <div className="min-h-screen bg-gray-50">
+      {/* Mobile Navigation - Sticky at top */}
+      <AccountSidebar />
 
-        {/* Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <AccountSidebar />
+      <div className="py-8 lg:py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header - Hidden on mobile to save space */}
+          <div className="mb-8 hidden lg:block">
+            <h1 className="text-3xl font-bold text-gray-900">Mi Cuenta</h1>
+            <p className="mt-2 text-gray-600">
+              Bienvenida de vuelta, {userName}
+            </p>
           </div>
 
-          {/* Main Content */}
-          <div className="lg:col-span-3 space-y-6">
+          {/* Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            {/* Desktop Sidebar - Hidden on mobile (handled by AccountSidebar) */}
+            <div className="lg:col-span-1">
+              <AccountSidebar />
+            </div>
+
+            {/* Main Content */}
+            <div className="lg:col-span-3 space-y-6">
             {/* Welcome Card */}
             <div className="bg-gradient-to-r from-rose-500 to-pink-500 rounded-lg p-6 text-white">
               <div className="flex items-center space-x-4">
