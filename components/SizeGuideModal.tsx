@@ -4,8 +4,26 @@ import { useState } from "react"
 import { X, Ruler } from "lucide-react"
 import Link from "next/link"
 
-export default function SizeGuideModal() {
+type ProductCategory = "leggings" | "bikers" | "shorts" | "tops" | "bodys" | "camisetas" | "enterizos" | "pescador" | "torero"
+
+interface SizeGuideModalProps {
+  category?: ProductCategory
+}
+
+// ✅ Mapear categorías a tipos de tabla
+function getSizeGuideType(category: ProductCategory): "bottoms" | "tops" | "all" {
+  const bottomsCategories: ProductCategory[] = ["leggings", "bikers", "shorts", "pescador", "torero"]
+  const topsCategories: ProductCategory[] = ["tops", "bodys", "camisetas"]
+
+  if (bottomsCategories.includes(category)) return "bottoms"
+  if (topsCategories.includes(category)) return "tops"
+  return "all" // enterizos u otros
+}
+
+export default function SizeGuideModal({ category }: SizeGuideModalProps) {
   const [isOpen, setIsOpen] = useState(false)
+
+  const guideType = category ? getSizeGuideType(category) : "all"
 
   if (!isOpen) {
     return (
@@ -63,9 +81,17 @@ export default function SizeGuideModal() {
             </div>
           </div>
 
-          {/* Tabla Leggings */}
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-3">Leggings</h3>
+          {/* ✅ Tabla Leggings y Bottoms */}
+          {(guideType === "bottoms" || guideType === "all") && (
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                Leggings, Bikers, Shorts
+                {guideType === "bottoms" && (
+                  <span className="text-xs font-normal bg-rose-100 text-rose-700 px-2 py-1 rounded">
+                    Para este producto
+                  </span>
+                )}
+              </h3>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -110,11 +136,20 @@ export default function SizeGuideModal() {
                 </tbody>
               </table>
             </div>
-          </div>
+            </div>
+          )}
 
-          {/* Tabla Tops */}
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-3">Tops y Bras</h3>
+          {/* ✅ Tabla Tops */}
+          {(guideType === "tops" || guideType === "all") && (
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                Tops, Bodys y Camisetas
+                {guideType === "tops" && (
+                  <span className="text-xs font-normal bg-rose-100 text-rose-700 px-2 py-1 rounded">
+                    Para este producto
+                  </span>
+                )}
+              </h3>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -159,7 +194,8 @@ export default function SizeGuideModal() {
                 </tbody>
               </table>
             </div>
-          </div>
+            </div>
+          )}
 
           {/* Link a página completa */}
           <div className="mt-6 text-center">

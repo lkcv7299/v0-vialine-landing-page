@@ -34,6 +34,7 @@ type ReviewStats = {
 export default function ReviewList({ productSlug }: ReviewListProps) {
   const { data: session } = useSession()
   const [reviews, setReviews] = useState<Review[]>([])
+  const [allReviews, setAllReviews] = useState<Review[]>([]) // ✅ Guardamos todas las reviews
   const [stats, setStats] = useState<ReviewStats>({
     total_reviews: 0,
     average_rating: 0,
@@ -50,6 +51,7 @@ export default function ReviewList({ productSlug }: ReviewListProps) {
   const [hoverRating, setHoverRating] = useState(0)
   const [title, setTitle] = useState("")
   const [comment, setComment] = useState("")
+  const [filterStars, setFilterStars] = useState<number | null>(null) // ✅ Filtro activo
 
   // Fetch reviews
   useEffect(() => {
@@ -58,7 +60,8 @@ export default function ReviewList({ productSlug }: ReviewListProps) {
         const response = await fetch(`/api/reviews/${productSlug}`)
         if (response.ok) {
           const data = await response.json()
-          setReviews(data.reviews || [])
+          setAllReviews(data.reviews || []) // ✅ Guardamos todas
+          setReviews(data.reviews || []) // ✅ Mostramos todas inicialmente
           setStats(data.stats || {
             total_reviews: 0,
             average_rating: 0,
@@ -78,6 +81,15 @@ export default function ReviewList({ productSlug }: ReviewListProps) {
 
     fetchReviews()
   }, [productSlug])
+
+  // ✅ Filtrar reviews cuando cambia el filtro
+  useEffect(() => {
+    if (filterStars === null) {
+      setReviews(allReviews)
+    } else {
+      setReviews(allReviews.filter(r => r.rating === filterStars))
+    }
+  }, [filterStars, allReviews])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -124,8 +136,10 @@ export default function ReviewList({ productSlug }: ReviewListProps) {
         const refreshResponse = await fetch(`/api/reviews/${productSlug}`)
         if (refreshResponse.ok) {
           const refreshData = await refreshResponse.json()
+          setAllReviews(refreshData.reviews || [])
           setReviews(refreshData.reviews || [])
           setStats(refreshData.stats)
+          setFilterStars(null) // Reset filter
         }
       } else {
         toast.error(data.error || "Error al enviar la reseña")
@@ -182,19 +196,67 @@ export default function ReviewList({ productSlug }: ReviewListProps) {
         </div>
 
         {reviewCount > 0 && (
-          <div className="flex items-center gap-4">
-            <ReviewStars rating={averageRating} size="lg" />
-            <div className="text-sm text-neutral-600">
-              <span className="font-semibold text-neutral-900">
-                {averageRating.toFixed(1)}
-              </span>{" "}
-              de 5 estrellas
-              <span className="mx-2">•</span>
-              <span>
-                {reviewCount} {reviewCount === 1 ? "opinión" : "opiniones"}
-              </span>
+          <>
+            <div className="flex items-center gap-4 mb-6">
+              <ReviewStars rating={averageRating} size="lg" />
+              <div className="text-sm text-neutral-600">
+                <span className="font-semibold text-neutral-900">
+                  {averageRating.toFixed(1)}
+                </span>{" "}
+                de 5 estrellas
+                <span className="mx-2">•</span>
+                <span>
+                  {reviewCount} {reviewCount === 1 ? "opinión" : "opiniones"}
+                </span>
+              </div>
             </div>
-          </div>
+
+            {/* ✅ GRÁFICO DE DISTRIBUCIÓN DE ESTRELLAS */}
+            <div className="space-y-2 mb-6">
+              {[5, 4, 3, 2, 1].map((stars) => {
+                const count = stats[`${['five', 'four', 'three', 'two', 'one'][5 - stars]}_star` as keyof ReviewStats] as number
+                const percentage = reviewCount > 0 ? (count / reviewCount) * 100 : 0
+
+                return (
+                  <button
+                    key={stars}
+                    onClick={() => setFilterStars(filterStars === stars ? null : stars)}
+                    className={`w-full flex items-center gap-3 p-2 rounded-lg transition hover:bg-neutral-100 ${
+                      filterStars === stars ? 'bg-rose-50 border border-rose-200' : ''
+                    }`}
+                  >
+                    <span className="text-sm font-medium text-neutral-700 w-12">
+                      {stars} ★
+                    </span>
+                    <div className="flex-1 h-2 bg-neutral-200 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-yellow-400 transition-all"
+                        style={{ width: `${percentage}%` }}
+                      />
+                    </div>
+                    <span className="text-sm text-neutral-600 w-12 text-right">
+                      {count}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* ✅ INDICADOR DE FILTRO ACTIVO */}
+            {filterStars && (
+              <div className="mb-4 flex items-center gap-2 text-sm">
+                <span className="text-neutral-600">
+                  Mostrando reseñas de {filterStars} estrellas
+                </span>
+                <button
+                  onClick={() => setFilterStars(null)}
+                  className="text-rose-600 hover:text-rose-700 font-medium"
+                >
+                  Ver todas
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
 

@@ -177,7 +177,7 @@ export default function ProductDetailCard({ product }: { product: Product }) {
           <div className="mt-6">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-semibold text-neutral-900">Talla</h3>
-              <SizeGuideModal />
+              <SizeGuideModal category={product.category} />
             </div>
             <div className="flex flex-wrap gap-2">
               {product.sizes.map((size) => (
