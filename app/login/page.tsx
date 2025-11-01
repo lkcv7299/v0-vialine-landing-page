@@ -1,18 +1,22 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { signIn } from "next-auth/react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { Mail, Lock, Eye, EyeOff, Loader2 } from "lucide-react"
 
 export default function LoginPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
+
+  // Get callback URL from search params or default to /account
+  const callbackUrl = searchParams.get("callbackUrl") || "/account"
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -31,8 +35,8 @@ export default function LoginPage() {
         return
       }
 
-      // Login exitoso
-      router.push("/account")
+      // Login exitoso - redirigir a la página solicitada
+      router.push(callbackUrl)
       router.refresh()
     } catch (err) {
       console.error("Login error:", err)
@@ -47,7 +51,7 @@ export default function LoginPage() {
     setError("")
     setLoading(true)
     try {
-      await signIn("google", { callbackUrl: "/account" })
+      await signIn("google", { callbackUrl })
     } catch (err) {
       setError("Error al iniciar sesión con Google")
     } finally {

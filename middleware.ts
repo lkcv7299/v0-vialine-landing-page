@@ -69,7 +69,9 @@ export default async function middleware(req: NextRequest) {
         }
 
         // Usuario está blacklisted - borrar cookie y redirigir
-        const response = NextResponse.redirect(new URL("/login", req.url))
+        const loginUrl = new URL("/login", req.url)
+        loginUrl.searchParams.set("callbackUrl", req.nextUrl.pathname)
+        const response = NextResponse.redirect(loginUrl)
 
         // Borrar TODAS las cookies de next-auth
         response.cookies.delete("next-auth.session-token")
@@ -104,7 +106,9 @@ export default async function middleware(req: NextRequest) {
 
   // Si está en página protegida y NO tiene sesión, redirigir a login
   if (isProtectedPage && !session) {
-    return NextResponse.redirect(new URL("/login", req.url))
+    const loginUrl = new URL("/login", req.url)
+    loginUrl.searchParams.set("callbackUrl", req.nextUrl.pathname)
+    return NextResponse.redirect(loginUrl)
   }
 
   return NextResponse.next()
