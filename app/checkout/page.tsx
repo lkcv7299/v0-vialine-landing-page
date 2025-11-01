@@ -46,7 +46,7 @@ const checkoutSchema = z.object({
     .regex(/^\d*$/, "El código postal solo debe contener números")
     .optional(),
   reference: z.string().optional(),
-  paymentMethod: z.enum(["culqi", "contraentrega"]),
+  paymentMethod: z.enum(["culqi"]),
   notes: z.string().optional(),
   acceptTerms: z.boolean().refine((val) => val === true, {
     message: "Debes aceptar los términos y condiciones",
@@ -89,6 +89,7 @@ export default function CheckoutPage() {
   const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>([])
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null)
   const [loadingAddresses, setLoadingAddresses] = useState(false)
+  const [useNewAddress, setUseNewAddress] = useState(false)
 
   // React Hook Form
   const {
@@ -108,8 +109,7 @@ export default function CheckoutPage() {
 
   // Calcular costos
   const shippingCost = total > 269 ? 0 : 15
-  const cashOnDeliverySurcharge = paymentMethod === "contraentrega" ? 5 : 0
-  const finalTotal = total + shippingCost + cashOnDeliverySurcharge
+  const finalTotal = total + shippingCost
 
   // ====================================
   // PRE-LLENAR EMAIL Y NOMBRE SI HAY SESIÓN
@@ -380,26 +380,12 @@ export default function CheckoutPage() {
       setCurrentOrderId(orderId)
 
       // ====================================
-      // PASO 2: PROCESAR SEGÚN MÉTODO DE PAGO
+      // PASO 2: PROCESAR PAGO CON CULQI
       // ====================================
-      if (data.paymentMethod === "culqi") {
-        // Para Culqi: Abrir modal (incluye tarjetas y Yape)
-        console.log('💳 Método Culqi seleccionado, abriendo modal...')
-        openCulqiCheckout()
-        // El flujo continúa en processCulqiPayment()
-
-      } else if (data.paymentMethod === "contraentrega") {
-        // Para contra entrega: marcar como pendiente y redirigir
-        console.log(`💵 Método ${data.paymentMethod} seleccionado`)
-
-        // Limpiar orderId global ya que no se usará Culqi
-        delete window.vialineOrderId
-
-        clearCart()
-        toast.success('Orden creada exitosamente')
-        router.push(`/checkout/confirmacion?orderId=${orderId}`)
-        setIsSubmitting(false)
-      }
+      // Abrir modal de Culqi (incluye tarjetas y Yape)
+      console.log('💳 Método Culqi seleccionado, abriendo modal...')
+      openCulqiCheckout()
+      // El flujo continúa en processCulqiPayment()
 
     } catch (error) {
       console.error('❌ Error en checkout:', error)
@@ -586,50 +572,77 @@ export default function CheckoutPage() {
                     <h2 className="text-xl font-semibold">Dirección de Envío</h2>
                   </div>
 
-                  {/* Selector de direcciones guardadas */}
+                  {/* Toggle: Dirección guardada vs Nueva */}
                   {session?.user && savedAddresses.length > 0 && (
-                    <div className="mb-6 p-4 bg-neutral-50 rounded-lg border border-neutral-200">
-                      <label className="block text-sm font-medium text-neutral-700 mb-3">
-                        Usar dirección guardada
-                      </label>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {savedAddresses.map((addr) => (
-                          <button
-                            key={addr.id}
-                            type="button"
-                            onClick={() => handleAddressSelect(addr.id)}
-                            className={`p-3 border-2 rounded-lg text-left transition ${
-                              selectedAddressId === addr.id
-                                ? 'border-rose-600 bg-rose-50'
-                                : 'border-neutral-300 bg-white hover:border-neutral-400'
-                            }`}
-                          >
-                            <div className="flex items-start gap-2">
-                              {addr.label === 'home' ? (
-                                <Home className="w-4 h-4 text-neutral-600 mt-1" />
-                              ) : (
-                                <Briefcase className="w-4 h-4 text-neutral-600 mt-1" />
-                              )}
-                              <div className="flex-1">
-                                <p className="font-medium text-sm text-neutral-900">
-                                  {addr.full_name}
-                                  {addr.is_default && (
-                                    <span className="ml-2 text-xs bg-rose-100 text-rose-600 px-2 py-0.5 rounded">
-                                      Principal
-                                    </span>
-                                  )}
-                                </p>
-                                <p className="text-xs text-neutral-600 mt-1">
-                                  {addr.street}, {addr.state}
-                                </p>
-                              </div>
-                            </div>
-                          </button>
-                        ))}
+                    <div className="mb-6">
+                      <div className="flex gap-3 mb-4">
+                        <button
+                          type="button"
+                          onClick={() => setUseNewAddress(false)}
+                          className={`flex-1 py-3 px-4 rounded-lg font-medium transition ${
+                            !useNewAddress
+                              ? 'bg-rose-600 text-white'
+                              : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
+                          }`}
+                        >
+                          Usar dirección guardada
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setUseNewAddress(true)
+                            setSelectedAddressId(null)
+                          }}
+                          className={`flex-1 py-3 px-4 rounded-lg font-medium transition ${
+                            useNewAddress
+                              ? 'bg-rose-600 text-white'
+                              : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
+                          }`}
+                        >
+                          Usar nueva dirección
+                        </button>
                       </div>
-                      <p className="text-xs text-neutral-500 mt-3">
-                        O completa manualmente una nueva dirección abajo
-                      </p>
+
+                      {/* Direcciones guardadas */}
+                      {!useNewAddress && (
+                        <div className="p-4 bg-neutral-50 rounded-lg border border-neutral-200">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {savedAddresses.map((addr) => (
+                              <button
+                                key={addr.id}
+                                type="button"
+                                onClick={() => handleAddressSelect(addr.id)}
+                                className={`p-3 border-2 rounded-lg text-left transition ${
+                                  selectedAddressId === addr.id
+                                    ? 'border-rose-600 bg-rose-50'
+                                    : 'border-neutral-300 bg-white hover:border-neutral-400'
+                                }`}
+                              >
+                                <div className="flex items-start gap-2">
+                                  {addr.label === 'home' ? (
+                                    <Home className="w-4 h-4 text-neutral-600 mt-1" />
+                                  ) : (
+                                    <Briefcase className="w-4 h-4 text-neutral-600 mt-1" />
+                                  )}
+                                  <div className="flex-1">
+                                    <p className="font-medium text-sm text-neutral-900">
+                                      {addr.full_name}
+                                      {addr.is_default && (
+                                        <span className="ml-2 text-xs bg-rose-100 text-rose-600 px-2 py-0.5 rounded">
+                                          Principal
+                                        </span>
+                                      )}
+                                    </p>
+                                    <p className="text-xs text-neutral-600 mt-1">
+                                      {addr.street}, {addr.state}
+                                    </p>
+                                  </div>
+                                </div>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
 
@@ -725,26 +738,8 @@ export default function CheckoutPage() {
                       </div>
                     </label>
 
-                    <label className="flex items-center gap-3 p-4 border-2 border-neutral-200 rounded-lg cursor-pointer hover:border-rose-500 transition">
-                      <input
-                        {...register("paymentMethod")}
-                        type="radio"
-                        value="contraentrega"
-                        className="w-4 h-4 text-rose-600"
-                      />
-                      <span className="font-medium">💵 Pago contra entrega</span>
-                    </label>
                   </div>
                 </div>
-
-                {/* Información sobre contra entrega */}
-                {paymentMethod === "contraentrega" && (
-                  <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
-                    <p className="text-sm text-amber-800">
-                      <strong>💵 Pago contra entrega:</strong> Pagarás en efectivo al recibir tu pedido. Se aplica un recargo de S/ 5.00 por este servicio.
-                    </p>
-                  </div>
-                )}
 
                 {/* Checkbox términos y condiciones */}
                 <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6">
