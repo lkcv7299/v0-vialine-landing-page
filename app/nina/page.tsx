@@ -84,6 +84,21 @@ export default async function Page({
   const endIndex = startIndex + itemsPerPage
   const items = allItems.slice(startIndex, endIndex)
 
+  // ✅ Helper para construir URLs de paginación correctamente
+  const buildPaginationUrl = (pageNum: number) => {
+    const urlParams = new URLSearchParams()
+    Object.entries(params).forEach(([key, value]) => {
+      if (key === 'page') return // Skip, lo agregamos manualmente
+      if (Array.isArray(value)) {
+        value.forEach(v => urlParams.append(key, v))
+      } else if (value) {
+        urlParams.set(key, value)
+      }
+    })
+    urlParams.set('page', String(pageNum))
+    return `/nina?${urlParams.toString()}`
+  }
+
   return (
     <>
       {/* Hero de niña */}
@@ -121,7 +136,7 @@ export default async function Page({
                 {/* Botón Anterior */}
                 {page > 1 ? (
                   <a
-                    href={`/nina?${new URLSearchParams({ ...params as Record<string, string>, page: String(page - 1) }).toString()}`}
+                    href={buildPaginationUrl(page - 1)}
                     className="px-4 py-2 border border-neutral-300 rounded-lg hover:bg-neutral-50 transition font-medium text-neutral-700"
                   >
                     Anterior
@@ -147,7 +162,7 @@ export default async function Page({
                       return (
                         <a
                           key={pageNum}
-                          href={`/nina?${new URLSearchParams({ ...params as Record<string, string>, page: String(pageNum) }).toString()}`}
+                          href={buildPaginationUrl(pageNum)}
                           className={`px-4 py-2 rounded-lg font-medium transition ${
                             pageNum === page
                               ? "bg-rose-600 text-white"
@@ -167,7 +182,7 @@ export default async function Page({
                 {/* Botón Siguiente */}
                 {page < totalPages ? (
                   <a
-                    href={`/nina?${new URLSearchParams({ ...params as Record<string, string>, page: String(page + 1) }).toString()}`}
+                    href={buildPaginationUrl(page + 1)}
                     className="px-4 py-2 border border-neutral-300 rounded-lg hover:bg-neutral-50 transition font-medium text-neutral-700"
                   >
                     Siguiente

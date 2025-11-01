@@ -46,6 +46,21 @@ async function checkSchema() {
       });
     }
 
+    console.log('\n=== USERS TABLE SCHEMA ===');
+    const usersSchema = await sql`
+      SELECT column_name, data_type, is_nullable
+      FROM information_schema.columns
+      WHERE table_name = 'users'
+      ORDER BY ordinal_position
+    `;
+    if (usersSchema.rows.length === 0) {
+      console.log('  TABLE DOES NOT EXIST!');
+    } else {
+      usersSchema.rows.forEach(row => {
+        console.log(`  - ${row.column_name} (${row.data_type})`);
+      });
+    }
+
     process.exit(0);
   } catch (error) {
     console.error('Error:', error);
