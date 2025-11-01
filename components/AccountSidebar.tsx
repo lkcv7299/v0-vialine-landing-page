@@ -45,8 +45,8 @@ export default function AccountSidebar() {
     },
     {
       icon: Heart,
-      label: "Lista de Deseos",
-      href: "/wishlist",
+      label: "Favoritos",
+      href: "/account/favoritos",
     },
   ]
 

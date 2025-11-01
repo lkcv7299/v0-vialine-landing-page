@@ -60,17 +60,29 @@ export async function GET(
       WHERE product_slug = ${slug}
     `
 
+    // ✅ FIX: Convertir tipos de PostgreSQL a number
+    const rawStats = stats.rows[0]
+    const cleanStats = rawStats ? {
+      total_reviews: parseInt(rawStats.total_reviews) || 0,
+      average_rating: parseFloat(rawStats.average_rating) || 0,
+      five_star: parseInt(rawStats.five_star) || 0,
+      four_star: parseInt(rawStats.four_star) || 0,
+      three_star: parseInt(rawStats.three_star) || 0,
+      two_star: parseInt(rawStats.two_star) || 0,
+      one_star: parseInt(rawStats.one_star) || 0,
+    } : {
+      total_reviews: 0,
+      average_rating: 0,
+      five_star: 0,
+      four_star: 0,
+      three_star: 0,
+      two_star: 0,
+      one_star: 0,
+    }
+
     return NextResponse.json({
       reviews: reviews.rows,
-      stats: stats.rows[0] || {
-        total_reviews: 0,
-        average_rating: 0,
-        five_star: 0,
-        four_star: 0,
-        three_star: 0,
-        two_star: 0,
-        one_star: 0,
-      },
+      stats: cleanStats,
     })
   } catch (error) {
     console.error("Error fetching reviews:", error)

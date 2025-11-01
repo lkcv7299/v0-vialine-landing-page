@@ -77,9 +77,13 @@ export default async function Page({
   const allItems = apply(base, params)
 
   // Paginación
-  const page = parseInt((params.page as string) || "1")
+  const requestedPage = parseInt((params.page as string) || "1")
   const itemsPerPage = 24
   const totalPages = Math.ceil(allItems.length / itemsPerPage)
+
+  // ✅ FIX: Si página solicitada > totalPages, usar página 1
+  const page = requestedPage > totalPages && totalPages > 0 ? 1 : requestedPage
+
   const startIndex = (page - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
   const items = allItems.slice(startIndex, endIndex)

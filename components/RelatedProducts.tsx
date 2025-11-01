@@ -14,11 +14,13 @@ function getRelatedProducts(currentProduct: Product, limit: number = 4): Product
   // 1. Misma categoría
   // 2. Misma audiencia
   // 3. Excluir el producto actual
+  // 4. ✅ FIX: Solo productos con stock (inventory > 0)
   const candidates = products.filter(
     (p) =>
       p.slug !== currentProduct.slug &&
       p.category === currentProduct.category &&
-      p.audience === currentProduct.audience
+      p.audience === currentProduct.audience &&
+      (p.inventory ?? 0) > 0
   )
 
   // Si no hay suficientes de la misma categoría, agregar de la misma audiencia
@@ -27,7 +29,8 @@ function getRelatedProducts(currentProduct: Product, limit: number = 4): Product
       (p) =>
         p.slug !== currentProduct.slug &&
         p.audience === currentProduct.audience &&
-        !candidates.includes(p)
+        !candidates.includes(p) &&
+        (p.inventory ?? 0) > 0
     )
     candidates.push(...extraProducts)
   }
