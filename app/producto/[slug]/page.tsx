@@ -16,7 +16,6 @@ const ReviewList = dynamic(() => import("@/components/ReviewList"), {
       </div>
     </div>
   ),
-  ssr: false, // Client-side only for reviews (they need session)
 })
 
 const RelatedProducts = dynamic(() => import("@/components/RelatedProducts"), {
