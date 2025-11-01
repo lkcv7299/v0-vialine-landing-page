@@ -13,7 +13,7 @@ export type CartItem = {
 
 type CartContextType = {
   items: CartItem[]
-  addItem: (product: Product, color: string, size: string) => void
+  addItem: (product: Product, color: string, size: string, quantity?: number) => void
   removeItem: (productSlug: string, color: string, size: string) => void
   updateQuantity: (productSlug: string, color: string, size: string, quantity: number) => void
   clearCart: () => void
@@ -47,7 +47,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, [items, mounted])
 
-  const addItem = (product: Product, color: string, size: string) => {
+  const addItem = (product: Product, color: string, size: string, quantity: number = 1) => {
     setItems(current => {
       const existing = current.find(
         item => item.product.slug === product.slug &&
@@ -57,7 +57,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
       if (existing) {
         // Check stock limit before adding more
-        const newQuantity = existing.quantity + 1
+        const newQuantity = existing.quantity + quantity
         const stockLimit = product.inventory || 999
 
         if (newQuantity > stockLimit) {
@@ -65,7 +65,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           return current // Don't add if exceeds stock
         }
 
-        toast.success('Producto actualizado en el carrito')
+        toast.success(`Producto actualizado en el carrito (${newQuantity})`)
         return current.map(item =>
           item.product.slug === product.slug &&
           item.selectedColor === color &&
@@ -75,8 +75,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
         )
       }
 
-      toast.success('Producto agregado al carrito')
-      return [...current, { product, quantity: 1, selectedColor: color, selectedSize: size }]
+      toast.success(`${quantity > 1 ? `${quantity} productos agregados` : 'Producto agregado'} al carrito`)
+      return [...current, { product, quantity, selectedColor: color, selectedSize: size }]
     })
   }
 

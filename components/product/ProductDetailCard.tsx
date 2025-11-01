@@ -24,6 +24,7 @@ function getProductImages(product: Product): string[] {
 export default function ProductDetailCard({ product }: { product: Product }) {
   const [selectedColor, setSelectedColor] = useState("")
   const [selectedSize, setSelectedSize] = useState("")
+  const [quantity, setQuantity] = useState(1)
   const [added, setAdded] = useState(false)
   const [activeTab, setActiveTab] = useState<"cuidados" | "envios">("cuidados")
   const [currentImages, setCurrentImages] = useState<string[]>([])
@@ -57,11 +58,26 @@ export default function ProductDetailCard({ product }: { product: Product }) {
 
   const handleAddToCart = () => {
     if (!selectedColor || !selectedSize || isOutOfStock) return
-    
-    addItem(product, selectedColor, selectedSize)
+
+    addItem(product, selectedColor, selectedSize, quantity)
     setAdded(true)
-    
+
     setTimeout(() => setAdded(false), 2000)
+  }
+
+  const incrementQuantity = () => {
+    const stockLimit = product.inventory || 999
+    if (quantity < stockLimit) {
+      setQuantity(prev => prev + 1)
+    } else {
+      toast.error(`Stock máximo: ${stockLimit} unidades`)
+    }
+  }
+
+  const decrementQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(prev => prev - 1)
+    }
   }
 
   const handleBuyNow = () => {
@@ -196,6 +212,45 @@ export default function ProductDetailCard({ product }: { product: Product }) {
                   {size}
                 </button>
               ))}
+            </div>
+          </div>
+
+          {/* Quantity Selector */}
+          <div className="mt-6">
+            <h3 className="text-sm font-semibold text-neutral-900 mb-3">Cantidad</h3>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={decrementQuantity}
+                disabled={isOutOfStock || quantity <= 1}
+                className={`w-10 h-10 rounded-full border-2 flex items-center justify-center font-semibold transition ${
+                  isOutOfStock || quantity <= 1
+                    ? "border-neutral-200 text-neutral-300 cursor-not-allowed"
+                    : "border-neutral-300 text-neutral-900 hover:border-rose-600 hover:text-rose-600"
+                }`}
+              >
+                -
+              </button>
+              <span className="text-lg font-semibold text-neutral-900 min-w-[40px] text-center">
+                {quantity}
+              </span>
+              <button
+                onClick={incrementQuantity}
+                disabled={isOutOfStock}
+                className={`w-10 h-10 rounded-full border-2 flex items-center justify-center font-semibold transition ${
+                  isOutOfStock
+                    ? "border-neutral-200 text-neutral-300 cursor-not-allowed"
+                    : "border-neutral-300 text-neutral-900 hover:border-rose-600 hover:text-rose-600"
+                }`}
+              >
+                +
+              </button>
+              {!isOutOfStock && (
+                <span className="text-xs text-neutral-500 ml-2">
+                  {product.inventory && product.inventory < 10
+                    ? `Solo ${product.inventory} disponibles`
+                    : "Disponible"}
+                </span>
+              )}
             </div>
           </div>
 
