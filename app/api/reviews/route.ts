@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
     const purchaseCheck = await sql`
       SELECT o.id
       FROM orders o
-      INNER JOIN order_items oi ON o.id = oi.order_id
+      INNER JOIN order_items oi ON o.order_id = oi.order_id
       WHERE o.user_id = ${userId}
         AND (o.status = 'paid' OR o.payment_status = 'paid')
         AND oi.product_slug = ${productSlug}

@@ -90,11 +90,11 @@ export async function GET(request: Request) {
       ordersQuery = sql`
         SELECT
           id,
-          order_id,
+          order_id AS order_number,
           user_id,
           customer_email,
-          customer_first_name,
-          customer_last_name,
+          customer_first_name AS customer_name,
+          customer_last_name AS customer_lastname,
           customer_phone,
           shipping_address,
           shipping_district,
@@ -110,7 +110,8 @@ export async function GET(request: Request) {
           payment_status,
           notes,
           created_at,
-          updated_at
+          updated_at,
+          order_id
         FROM orders
         WHERE user_id = ${userId} AND status = ${statusFilter}
         ORDER BY created_at DESC
@@ -121,11 +122,11 @@ export async function GET(request: Request) {
       ordersQuery = sql`
         SELECT
           id,
-          order_id,
+          order_id AS order_number,
           user_id,
           customer_email,
-          customer_first_name,
-          customer_last_name,
+          customer_first_name AS customer_name,
+          customer_last_name AS customer_lastname,
           customer_phone,
           shipping_address,
           shipping_district,
@@ -141,7 +142,8 @@ export async function GET(request: Request) {
           payment_status,
           notes,
           created_at,
-          updated_at
+          updated_at,
+          order_id
         FROM orders
         WHERE user_id = ${userId}
         ORDER BY created_at DESC
@@ -158,20 +160,19 @@ export async function GET(request: Request) {
     const ordersWithItems = await Promise.all(
       ordersResult.rows.map(async (order) => {
         const itemsResult = await sql`
-          SELECT 
+          SELECT
             id,
             order_id,
-            product_id,
-            product_name,
             product_slug,
+            product_title AS product_name,
+            product_price AS unit_price,
             product_image,
-            variant_color,
-            variant_size,
+            selected_color AS variant_color,
+            selected_size AS variant_size,
             quantity,
-            unit_price,
-            total_price
+            item_total AS total_price
           FROM order_items
-          WHERE order_id = ${order.id}
+          WHERE order_id = ${order.order_id}
           ORDER BY id ASC
         `
 
