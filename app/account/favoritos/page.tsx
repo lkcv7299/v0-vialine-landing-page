@@ -40,11 +40,14 @@ export default function FavoritosPage() {
   const handleShare = () => {
     if (wishlistProducts.length === 0) return
 
+    // ✅ FIX: Usar dominio actual en lugar de hardcoded vialine.pe
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://vialineperu.com'
+
     let message = "🩷 Hola! Me interesan estos productos de Vialine:\n\n"
 
     wishlistProducts.forEach((product, index) => {
       message += `${index + 1}. ${product!.title} - S/ ${product!.price}\n`
-      message += `   https://vialine.pe/producto/${product!.slug}\n\n`
+      message += `   ${baseUrl}/producto/${product!.slug}\n\n`
     })
 
     message += "¿Me puedes dar más información?"

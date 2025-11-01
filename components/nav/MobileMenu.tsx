@@ -94,8 +94,9 @@ export default function MobileMenu() {
             <Section
               title="Ayuda"
               items={[
-                { label: "Guía de tallas", href: "/pages/guia-de-tallas" },
-                { label: "Cambios y devoluciones", href: "/pages/envios-y-devoluciones" },
+                { label: "Guía de tallas", href: "/tallas" },
+                { label: "Cambios y devoluciones", href: "/cambios" },
+                { label: "Envíos", href: "/envios" },
                 { label: "Soporte WhatsApp", href: buildWhatsAppUrl("Hola Vialine"), external: true },
               ]}
               onLinkClick={() => setOpen(false)}
