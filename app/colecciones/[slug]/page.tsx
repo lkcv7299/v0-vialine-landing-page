@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation"
+import { Suspense } from "react"
 import CollectionClientPage from "./CollectionClientPage"
 
 const collections = {
@@ -149,7 +150,17 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
     notFound()
   }
 
-  return <CollectionClientPage collection={collection} slug={slug} />
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-rose-600"></div>
+        </div>
+      }
+    >
+      <CollectionClientPage collection={collection} slug={slug} />
+    </Suspense>
+  )
 }
 
 export function generateStaticParams() {
