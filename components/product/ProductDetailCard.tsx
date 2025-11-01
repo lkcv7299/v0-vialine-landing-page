@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Check, Share2 } from "lucide-react"
 import type { Product } from "@/data/products"
 import { buildWhatsAppUrl } from "@/lib/contact"
@@ -33,6 +33,11 @@ export default function ProductDetailCard({ product }: { product: Product }) {
   const productImages = getProductImages(product)
   const isOutOfStock = product.inventory === 0
 
+  // ✅ FIX: Initialize images correctly on mount using useEffect
+  useEffect(() => {
+    setCurrentImages(productImages)
+  }, []) // Empty deps = run once on mount
+
   // Update images when color changes
   const handleColorChange = (colorName: string) => {
     setSelectedColor(colorName)
@@ -49,11 +54,6 @@ export default function ProductDetailCard({ product }: { product: Product }) {
       // Reset to default images
       setCurrentImages(productImages)
     }
-  }
-
-  // Initialize current images on mount
-  if (currentImages.length === 0 && productImages.length > 0) {
-    setCurrentImages(productImages)
   }
 
   const handleAddToCart = () => {
