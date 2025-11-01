@@ -102,9 +102,6 @@ export default function AccountPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Mobile Navigation - Sticky at top */}
-      <AccountSidebar />
-
       <div className="py-8 lg:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header - Hidden on mobile to save space */}
@@ -117,7 +114,7 @@ export default function AccountPage() {
 
           {/* Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {/* Desktop Sidebar - Hidden on mobile (handled by AccountSidebar) */}
+            {/* Sidebar - Handles mobile tabs (sticky top) and desktop sidebar internally */}
             <div className="lg:col-span-1">
               <AccountSidebar />
             </div>
