@@ -92,19 +92,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   // ===================================
   callbacks: {
     async signIn({ user, account }) {
-      // Al hacer login, LIMPIAR blacklist para permitir nueva sesión
-      if (user?.id) {
-        try {
-          await sql`
-            DELETE FROM session_blacklist 
-            WHERE user_id = ${parseInt(user.id)}
-          `
-          console.log("✅ Blacklist limpiada para usuario:", user.id)
-        } catch (error) {
-          console.error("Error limpiando blacklist:", error)
-        }
-      }
-
       // Para OAuth (Google), crear/actualizar usuario
       if (account?.provider === "google") {
         try {
@@ -188,7 +175,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             }
           }
 
-          console.log("✅ [OAuth] Flujo completado exitosamente, retornando true")
+          console.log("✅ [OAuth] Flujo completado exitosamente")
+
+          // ✅ LIMPIAR blacklist DESPUÉS de crear/verificar usuario
+          // Esto permite nueva sesión después de logout
+          if (user?.id) {
+            try {
+              await sql`
+                DELETE FROM session_blacklist
+                WHERE user_id = ${parseInt(user.id)}
+              `
+              console.log("✅ [OAuth] Blacklist limpiada para usuario:", user.id)
+            } catch (error) {
+              console.error("⚠️ [OAuth] Error limpiando blacklist:", error)
+              // No bloqueamos el login si falla la limpieza
+            }
+          }
+
           return true
         } catch (error) {
           console.error("❌ [OAuth] Error en signIn callback:", error)
@@ -199,6 +202,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             provider: account?.provider
           })
           return false
+        }
+      }
+
+      // ✅ Para login con Credentials, limpiar blacklist
+      // En OAuth el user.id ya está asignado en el bloque anterior
+      if (user?.id && account?.provider === "credentials") {
+        try {
+          await sql`
+            DELETE FROM session_blacklist
+            WHERE user_id = ${parseInt(user.id)}
+          `
+          console.log("✅ Blacklist limpiada para usuario credentials:", user.id)
+        } catch (error) {
+          console.error("Error limpiando blacklist:", error)
         }
       }
 
