@@ -21,9 +21,11 @@ import {
   User,
   Package,
   ArrowLeft,
+  ArrowRight,
   Home,
   Briefcase,
   Check,
+  ChevronLeft,
 } from "lucide-react"
 
 // ====================================
@@ -62,7 +64,7 @@ declare global {
   interface Window {
     Culqi: any
     culqi: () => void
-    vialineOrderId?: string // ✅ Agregamos esta variable global
+    vialineOrderId?: string
   }
 }
 
@@ -91,6 +93,10 @@ export default function CheckoutPage() {
   const [loadingAddresses, setLoadingAddresses] = useState(false)
   const [useNewAddress, setUseNewAddress] = useState(false)
 
+  // ✅ NUEVO: Estado para controlar el paso actual
+  const [currentStep, setCurrentStep] = useState(1)
+  const totalSteps = 3
+
   // React Hook Form
   const {
     register,
@@ -98,6 +104,7 @@ export default function CheckoutPage() {
     formState: { errors },
     watch,
     setValue,
+    trigger,
   } = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutSchema),
     defaultValues: {
@@ -143,7 +150,6 @@ export default function CheckoutPage() {
       if (data.success && data.addresses) {
         setSavedAddresses(data.addresses)
 
-        // Auto-seleccionar la dirección predeterminada
         const defaultAddress = data.addresses.find((addr: SavedAddress) => addr.is_default)
         if (defaultAddress) {
           setSelectedAddressId(defaultAddress.id)
@@ -158,7 +164,6 @@ export default function CheckoutPage() {
   }
 
   const fillFormWithAddress = (address: SavedAddress) => {
-    // Separar nombre completo en firstName y lastName
     const nameParts = address.full_name.trim().split(' ')
     const firstName = nameParts[0] || ''
     const lastName = nameParts.slice(1).join(' ') || ''
@@ -187,14 +192,11 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (culqiLoaded && window.Culqi) {
       window.Culqi.publicKey = process.env.NEXT_PUBLIC_CULQI_PUBLIC_KEY || ''
-      
-      // Configurar el callback de Culqi
+
       window.culqi = async function() {
         if (window.Culqi.token) {
           const token = window.Culqi.token.id
           console.log('🎫 Token Culqi obtenido:', token)
-          
-          // Procesar pago con Culqi
           await processCulqiPayment(token)
         } else if (window.Culqi.error) {
           console.error('❌ Error Culqi:', window.Culqi.error)
@@ -218,7 +220,6 @@ export default function CheckoutPage() {
   // PROCESAR PAGO CON CULQI
   // ====================================
   const processCulqiPayment = async (token: string) => {
-    // ✅ Obtener orderId desde window en lugar del estado
     const orderId = window.vialineOrderId
 
     if (!orderId) {
@@ -230,13 +231,13 @@ export default function CheckoutPage() {
 
     try {
       console.log(`💳 Procesando cargo en Culqi para orden: ${orderId}`)
-      
+
       const response = await fetch('/api/culqi/charge', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           token,
-          amount: Math.round(finalTotal * 100), // Culqi usa centavos
+          amount: Math.round(finalTotal * 100),
           email: watch('email'),
           orderId: orderId,
         })
@@ -246,8 +247,7 @@ export default function CheckoutPage() {
 
       if (result.success) {
         console.log('✅ Pago exitoso! Charge ID:', result.chargeId)
-        
-        // Actualizar orden en base de datos con payment_id
+
         console.log('🔄 Actualizando orden en base de datos...')
         await fetch('/api/checkout', {
           method: 'PATCH',
@@ -260,22 +260,14 @@ export default function CheckoutPage() {
         })
 
         console.log('✅ Orden actualizada exitosamente')
-        
-        // Cerrar modal de Culqi
+
         if (window.Culqi && window.Culqi.close) {
           window.Culqi.close()
         }
 
-        // Limpiar carrito
         clearCart()
-        
-        // Limpiar orderId global
         delete window.vialineOrderId
-        
-        // Mostrar mensaje de éxito
         toast.success('¡Pago exitoso!')
-        
-        // Redirigir a página de confirmación
         console.log('🔄 Redirigiendo a confirmación...')
         router.push(`/checkout/confirmacion?orderId=${orderId}`)
       } else {
@@ -301,30 +293,53 @@ export default function CheckoutPage() {
 
     console.log('🎨 Abriendo modal de Culqi...')
 
-    // Configurar Culqi Checkout
-    // IMPORTANTE: Para pagos con tarjeta, NO se debe enviar el parámetro "order"
-    // El parámetro "order" solo es para Yape, PagoEfectivo, billeteras
     window.Culqi.settings({
       title: 'Vialine',
       currency: 'PEN',
       amount: Math.round(finalTotal * 100),
-      // NO incluir 'order' para pagos con tarjeta
     })
 
-    // Abrir modal de Culqi
     window.Culqi.open()
   }
 
   // ====================================
-  // HANDLER DEL SUBMIT - ✅ FLUJO CORREGIDO
+  // NAVEGACIÓN ENTRE PASOS
+  // ====================================
+  const nextStep = async () => {
+    let fieldsToValidate: (keyof CheckoutFormData)[] = []
+
+    // Validar solo los campos del paso actual
+    if (currentStep === 1) {
+      fieldsToValidate = ['firstName', 'lastName', 'dni', 'email', 'phone']
+    } else if (currentStep === 2) {
+      fieldsToValidate = ['address', 'district', 'city']
+    }
+
+    const isValid = await trigger(fieldsToValidate)
+
+    if (isValid) {
+      setCurrentStep(prev => Math.min(prev + 1, totalSteps))
+      // Scroll to top en móvil
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      toast.error('Por favor completa todos los campos requeridos')
+    }
+  }
+
+  const prevStep = () => {
+    setCurrentStep(prev => Math.max(prev - 1, 1))
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  // ====================================
+  // HANDLER DEL SUBMIT
   // ====================================
   const onSubmit = async (data: CheckoutFormData) => {
     setIsSubmitting(true)
-    
+
     try {
       console.log('📝 Iniciando proceso de checkout...')
 
-      // Preparar datos de la orden
       const orderData = {
         customer: {
           firstName: data.firstName,
@@ -355,11 +370,8 @@ export default function CheckoutPage() {
         notes: data.notes || "",
       }
 
-      // ====================================
-      // PASO 1: GUARDAR ORDEN EN BD (SIEMPRE)
-      // ====================================
       console.log('💾 Guardando orden en base de datos...')
-      
+
       const createResponse = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -374,18 +386,12 @@ export default function CheckoutPage() {
 
       const orderId = createResult.orderId
       console.log(`✅ Orden creada: ${orderId}`)
-      
-      // ✅ Guardar orderId en variable global para que esté disponible en el callback de Culqi
+
       window.vialineOrderId = orderId
       setCurrentOrderId(orderId)
 
-      // ====================================
-      // PASO 2: PROCESAR PAGO CON CULQI
-      // ====================================
-      // Abrir modal de Culqi (incluye tarjetas y Yape)
       console.log('💳 Método Culqi seleccionado, abriendo modal...')
       openCulqiCheckout()
-      // El flujo continúa en processCulqiPayment()
 
     } catch (error) {
       console.error('❌ Error en checkout:', error)
@@ -411,6 +417,325 @@ export default function CheckoutPage() {
         </div>
       </div>
     )
+  }
+
+  // ====================================
+  // RENDERIZADO DEL PASO ACTUAL
+  // ====================================
+  const renderStep = () => {
+    switch (currentStep) {
+      case 1:
+        return (
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6">
+            <div className="flex items-center gap-2 mb-6">
+              <User className="w-5 h-5 text-rose-600" />
+              <h2 className="text-xl font-semibold">Información Personal</h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-neutral-700 mb-2">
+                  Nombre *
+                </label>
+                <input
+                  {...register("firstName")}
+                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
+                  placeholder="Juan"
+                />
+                {errors.firstName && (
+                  <p className="text-red-500 text-sm mt-1">{errors.firstName.message}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-neutral-700 mb-2">
+                  Apellido *
+                </label>
+                <input
+                  {...register("lastName")}
+                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
+                  placeholder="Pérez"
+                />
+                {errors.lastName && (
+                  <p className="text-red-500 text-sm mt-1">{errors.lastName.message}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-neutral-700 mb-2">
+                  DNI *
+                </label>
+                <input
+                  {...register("dni")}
+                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
+                  placeholder="12345678"
+                  maxLength={8}
+                />
+                {errors.dni && (
+                  <p className="text-red-500 text-sm mt-1">{errors.dni.message}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-neutral-700 mb-2">
+                  <Mail className="w-4 h-4 inline mr-2" />
+                  Email *
+                </label>
+                <input
+                  {...register("email")}
+                  type="email"
+                  readOnly={!!session?.user?.email}
+                  className={`w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none ${
+                    session?.user?.email ? 'bg-neutral-50 cursor-not-allowed' : ''
+                  }`}
+                  placeholder="juan@ejemplo.com"
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-neutral-700 mb-2">
+                  <Phone className="w-4 h-4 inline mr-2" />
+                  Teléfono *
+                </label>
+                <input
+                  {...register("phone")}
+                  type="tel"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
+                  placeholder="999 999 999"
+                />
+                {errors.phone && (
+                  <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
+                )}
+              </div>
+            </div>
+          </div>
+        )
+
+      case 2:
+        return (
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6">
+            <div className="flex items-center gap-2 mb-6">
+              <MapPin className="w-5 h-5 text-rose-600" />
+              <h2 className="text-xl font-semibold">Dirección de Envío</h2>
+            </div>
+
+            {/* Toggle: Dirección guardada vs Nueva */}
+            {session?.user && savedAddresses.length > 0 && (
+              <div className="mb-6">
+                <div className="flex gap-3 mb-4">
+                  <button
+                    type="button"
+                    onClick={() => setUseNewAddress(false)}
+                    className={`flex-1 py-3 px-4 rounded-lg font-medium transition ${
+                      !useNewAddress
+                        ? 'bg-rose-600 text-white'
+                        : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
+                    }`}
+                  >
+                    Usar dirección guardada
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setUseNewAddress(true)
+                      setSelectedAddressId(null)
+                    }}
+                    className={`flex-1 py-3 px-4 rounded-lg font-medium transition ${
+                      useNewAddress
+                        ? 'bg-rose-600 text-white'
+                        : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
+                    }`}
+                  >
+                    Usar nueva dirección
+                  </button>
+                </div>
+
+                {/* Direcciones guardadas */}
+                {!useNewAddress && (
+                  <div className="p-4 bg-neutral-50 rounded-lg border border-neutral-200 mb-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {savedAddresses.map((addr) => (
+                        <button
+                          key={addr.id}
+                          type="button"
+                          onClick={() => handleAddressSelect(addr.id)}
+                          className={`p-3 border-2 rounded-lg text-left transition ${
+                            selectedAddressId === addr.id
+                              ? 'border-rose-600 bg-rose-50'
+                              : 'border-neutral-300 bg-white hover:border-neutral-400'
+                          }`}
+                        >
+                          <div className="flex items-start gap-2">
+                            {addr.label === 'home' ? (
+                              <Home className="w-4 h-4 text-neutral-600 mt-1" />
+                            ) : (
+                              <Briefcase className="w-4 h-4 text-neutral-600 mt-1" />
+                            )}
+                            <div className="flex-1">
+                              <p className="font-medium text-sm text-neutral-900">
+                                {addr.full_name}
+                                {addr.is_default && (
+                                  <span className="ml-2 text-xs bg-rose-100 text-rose-600 px-2 py-0.5 rounded">
+                                    Principal
+                                  </span>
+                                )}
+                              </p>
+                              <p className="text-xs text-neutral-600 mt-1">
+                                {addr.street}, {addr.state}
+                              </p>
+                            </div>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-neutral-700 mb-2">
+                  Dirección *
+                </label>
+                <input
+                  {...register("address")}
+                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
+                  placeholder="Av. Principal 123"
+                />
+                {errors.address && (
+                  <p className="text-red-500 text-sm mt-1">{errors.address.message}</p>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-neutral-700 mb-2">
+                    Distrito *
+                  </label>
+                  <input
+                    {...register("district")}
+                    className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
+                    placeholder="Miraflores"
+                  />
+                  {errors.district && (
+                    <p className="text-red-500 text-sm mt-1">{errors.district.message}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-neutral-700 mb-2">
+                    Ciudad *
+                  </label>
+                  <input
+                    {...register("city")}
+                    className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
+                    placeholder="Lima"
+                  />
+                  {errors.city && (
+                    <p className="text-red-500 text-sm mt-1">{errors.city.message}</p>
+                  )}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-neutral-700 mb-2">
+                    Código Postal (opcional)
+                  </label>
+                  <input
+                    {...register("postalCode")}
+                    className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
+                    placeholder="15074"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-neutral-700 mb-2">
+                    Referencia (opcional)
+                  </label>
+                  <input
+                    {...register("reference")}
+                    className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
+                    placeholder="Casa verde, 2do piso"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+
+      case 3:
+        return (
+          <div className="space-y-6">
+            {/* Método de pago */}
+            <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6">
+              <div className="flex items-center gap-2 mb-6">
+                <CreditCard className="w-5 h-5 text-rose-600" />
+                <h2 className="text-xl font-semibold">Método de Pago</h2>
+              </div>
+
+              <div className="space-y-3">
+                <label className="flex items-center gap-3 p-4 border-2 border-neutral-200 rounded-lg cursor-pointer hover:border-rose-500 transition">
+                  <input
+                    {...register("paymentMethod")}
+                    type="radio"
+                    value="culqi"
+                    className="w-4 h-4 text-rose-600"
+                  />
+                  <div className="flex-1">
+                    <span className="font-medium">💳 Tarjeta de crédito/débito / Yape</span>
+                    <p className="text-xs text-neutral-500 mt-1">Pago seguro con Culqi (incluye Yape)</p>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            {/* Checkbox términos y condiciones */}
+            <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6">
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  {...register("acceptTerms")}
+                  type="checkbox"
+                  className="mt-1 w-4 h-4 text-rose-600 border-neutral-300 rounded focus:ring-rose-600"
+                />
+                <span className="text-sm text-neutral-700">
+                  Acepto los{" "}
+                  <Link href="/terminos" target="_blank" className="text-rose-600 hover:text-rose-700 font-medium underline">
+                    términos y condiciones
+                  </Link>
+                  {" "}y la{" "}
+                  <Link href="/privacidad" target="_blank" className="text-rose-600 hover:text-rose-700 font-medium underline">
+                    política de privacidad
+                  </Link>
+                </span>
+              </label>
+              {errors.acceptTerms && (
+                <p className="text-red-500 text-sm mt-2">{errors.acceptTerms.message}</p>
+              )}
+            </div>
+
+            {/* Notas adicionales */}
+            <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6">
+              <h2 className="text-lg font-semibold mb-4">Notas adicionales (opcional)</h2>
+              <textarea
+                {...register("notes")}
+                rows={4}
+                className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none resize-none"
+                placeholder="Instrucciones especiales para la entrega..."
+              />
+            </div>
+          </div>
+        )
+
+      default:
+        return null
+    }
   }
 
   return (
@@ -440,32 +765,73 @@ export default function CheckoutPage() {
               Volver al carrito
             </Link>
             <h1 className="text-3xl font-bold text-neutral-900">Checkout</h1>
-            <p className="text-neutral-600">Completa tu información para finalizar la compra</p>
+            <p className="text-neutral-600">Paso {currentStep} de {totalSteps}</p>
           </div>
 
           {/* Stepper / Breadcrumb */}
           <div className="mb-8">
             <div className="flex items-center justify-center gap-2 sm:gap-4">
-              {/* Paso 1: Envío y Pago (Activo) */}
+              {/* Paso 1 */}
               <div className="flex items-center">
                 <div className="flex flex-col items-center">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-rose-600 text-white font-semibold shadow-md">
-                    <Package className="w-5 h-5" />
+                  <div className={`flex items-center justify-center w-10 h-10 rounded-full font-semibold shadow-md transition ${
+                    currentStep >= 1
+                      ? 'bg-rose-600 text-white'
+                      : 'bg-neutral-200 text-neutral-500'
+                  }`}>
+                    {currentStep > 1 ? <Check className="w-5 h-5" /> : <User className="w-5 h-5" />}
                   </div>
-                  <span className="mt-2 text-sm font-semibold text-rose-600">Envío y Pago</span>
+                  <span className={`mt-2 text-xs sm:text-sm font-medium ${
+                    currentStep >= 1 ? 'text-rose-600' : 'text-neutral-500'
+                  }`}>
+                    Información
+                  </span>
                 </div>
               </div>
 
               {/* Línea divisoria */}
-              <div className="h-[2px] w-12 sm:w-24 bg-neutral-300"></div>
+              <div className={`h-[2px] w-12 sm:w-24 transition ${
+                currentStep > 1 ? 'bg-rose-600' : 'bg-neutral-300'
+              }`}></div>
 
-              {/* Paso 2: Confirmación (Inactivo) */}
+              {/* Paso 2 */}
               <div className="flex items-center">
                 <div className="flex flex-col items-center">
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-neutral-200 text-neutral-500 font-semibold">
-                    <Check className="w-5 h-5" />
+                  <div className={`flex items-center justify-center w-10 h-10 rounded-full font-semibold shadow-md transition ${
+                    currentStep >= 2
+                      ? 'bg-rose-600 text-white'
+                      : 'bg-neutral-200 text-neutral-500'
+                  }`}>
+                    {currentStep > 2 ? <Check className="w-5 h-5" /> : <MapPin className="w-5 h-5" />}
                   </div>
-                  <span className="mt-2 text-sm text-neutral-500">Confirmación</span>
+                  <span className={`mt-2 text-xs sm:text-sm font-medium ${
+                    currentStep >= 2 ? 'text-rose-600' : 'text-neutral-500'
+                  }`}>
+                    Dirección
+                  </span>
+                </div>
+              </div>
+
+              {/* Línea divisoria */}
+              <div className={`h-[2px] w-12 sm:w-24 transition ${
+                currentStep > 2 ? 'bg-rose-600' : 'bg-neutral-300'
+              }`}></div>
+
+              {/* Paso 3 */}
+              <div className="flex items-center">
+                <div className="flex flex-col items-center">
+                  <div className={`flex items-center justify-center w-10 h-10 rounded-full font-semibold shadow-md transition ${
+                    currentStep >= 3
+                      ? 'bg-rose-600 text-white'
+                      : 'bg-neutral-200 text-neutral-500'
+                  }`}>
+                    <Package className="w-5 h-5" />
+                  </div>
+                  <span className={`mt-2 text-xs sm:text-sm font-medium ${
+                    currentStep >= 3 ? 'text-rose-600' : 'text-neutral-500'
+                  }`}>
+                    Pago
+                  </span>
                 </div>
               </div>
             </div>
@@ -475,305 +841,50 @@ export default function CheckoutPage() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Columna izquierda - Formulario */}
               <div className="lg:col-span-2 space-y-6">
-                {/* Información personal */}
-                <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6">
-                  <div className="flex items-center gap-2 mb-6">
-                    <User className="w-5 h-5 text-rose-600" />
-                    <h2 className="text-xl font-semibold">Información Personal</h2>
-                  </div>
+                {/* Renderizar paso actual */}
+                {renderStep()}
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-neutral-700 mb-2">
-                        Nombre *
-                      </label>
-                      <input
-                        {...register("firstName")}
-                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
-                        placeholder="Juan"
-                      />
-                      {errors.firstName && (
-                        <p className="text-red-500 text-sm mt-1">{errors.firstName.message}</p>
-                      )}
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-neutral-700 mb-2">
-                        Apellido *
-                      </label>
-                      <input
-                        {...register("lastName")}
-                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
-                        placeholder="Pérez"
-                      />
-                      {errors.lastName && (
-                        <p className="text-red-500 text-sm mt-1">{errors.lastName.message}</p>
-                      )}
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-neutral-700 mb-2">
-                        DNI *
-                      </label>
-                      <input
-                        {...register("dni")}
-                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
-                        placeholder="12345678"
-                        maxLength={8}
-                      />
-                      {errors.dni && (
-                        <p className="text-red-500 text-sm mt-1">{errors.dni.message}</p>
-                      )}
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-neutral-700 mb-2">
-                        <Mail className="w-4 h-4 inline mr-2" />
-                        Email *
-                      </label>
-                      <input
-                        {...register("email")}
-                        type="email"
-                        readOnly={!!session?.user?.email}
-                        className={`w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none ${
-                          session?.user?.email ? 'bg-neutral-50 cursor-not-allowed' : ''
-                        }`}
-                        placeholder="juan@ejemplo.com"
-                      />
-                      {errors.email && (
-                        <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-                      )}
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-neutral-700 mb-2">
-                        <Phone className="w-4 h-4 inline mr-2" />
-                        Teléfono *
-                      </label>
-                      <input
-                        {...register("phone")}
-                        type="tel"
-                        inputMode="numeric"
-                        pattern="[0-9]*"
-                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
-                        placeholder="999 999 999"
-                      />
-                      {errors.phone && (
-                        <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Dirección de envío */}
-                <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6">
-                  <div className="flex items-center gap-2 mb-6">
-                    <MapPin className="w-5 h-5 text-rose-600" />
-                    <h2 className="text-xl font-semibold">Dirección de Envío</h2>
-                  </div>
-
-                  {/* Toggle: Dirección guardada vs Nueva */}
-                  {session?.user && savedAddresses.length > 0 && (
-                    <div className="mb-6">
-                      <div className="flex gap-3 mb-4">
-                        <button
-                          type="button"
-                          onClick={() => setUseNewAddress(false)}
-                          className={`flex-1 py-3 px-4 rounded-lg font-medium transition ${
-                            !useNewAddress
-                              ? 'bg-rose-600 text-white'
-                              : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
-                          }`}
-                        >
-                          Usar dirección guardada
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setUseNewAddress(true)
-                            setSelectedAddressId(null)
-                          }}
-                          className={`flex-1 py-3 px-4 rounded-lg font-medium transition ${
-                            useNewAddress
-                              ? 'bg-rose-600 text-white'
-                              : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
-                          }`}
-                        >
-                          Usar nueva dirección
-                        </button>
-                      </div>
-
-                      {/* Direcciones guardadas */}
-                      {!useNewAddress && (
-                        <div className="p-4 bg-neutral-50 rounded-lg border border-neutral-200">
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            {savedAddresses.map((addr) => (
-                              <button
-                                key={addr.id}
-                                type="button"
-                                onClick={() => handleAddressSelect(addr.id)}
-                                className={`p-3 border-2 rounded-lg text-left transition ${
-                                  selectedAddressId === addr.id
-                                    ? 'border-rose-600 bg-rose-50'
-                                    : 'border-neutral-300 bg-white hover:border-neutral-400'
-                                }`}
-                              >
-                                <div className="flex items-start gap-2">
-                                  {addr.label === 'home' ? (
-                                    <Home className="w-4 h-4 text-neutral-600 mt-1" />
-                                  ) : (
-                                    <Briefcase className="w-4 h-4 text-neutral-600 mt-1" />
-                                  )}
-                                  <div className="flex-1">
-                                    <p className="font-medium text-sm text-neutral-900">
-                                      {addr.full_name}
-                                      {addr.is_default && (
-                                        <span className="ml-2 text-xs bg-rose-100 text-rose-600 px-2 py-0.5 rounded">
-                                          Principal
-                                        </span>
-                                      )}
-                                    </p>
-                                    <p className="text-xs text-neutral-600 mt-1">
-                                      {addr.street}, {addr.state}
-                                    </p>
-                                  </div>
-                                </div>
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
+                {/* Botones de navegación */}
+                <div className="flex gap-4">
+                  {currentStep > 1 && (
+                    <button
+                      type="button"
+                      onClick={prevStep}
+                      className="flex-1 px-6 py-3 border-2 border-neutral-300 text-neutral-700 rounded-lg font-semibold hover:border-neutral-400 hover:bg-neutral-50 transition flex items-center justify-center gap-2"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                      Atrás
+                    </button>
                   )}
 
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-neutral-700 mb-2">
-                        Dirección *
-                      </label>
-                      <input
-                        {...register("address")}
-                        className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
-                        placeholder="Av. Principal 123"
-                      />
-                      {errors.address && (
-                        <p className="text-red-500 text-sm mt-1">{errors.address.message}</p>
+                  {currentStep < totalSteps ? (
+                    <button
+                      type="button"
+                      onClick={nextStep}
+                      className="flex-1 px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-700 transition flex items-center justify-center gap-2"
+                    >
+                      Siguiente
+                      <ArrowRight className="w-5 h-5" />
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="flex-1 px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-700 transition disabled:bg-neutral-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                          Procesando...
+                        </>
+                      ) : (
+                        <>
+                          <Package className="w-5 h-5" />
+                          Realizar Pedido
+                        </>
                       )}
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-neutral-700 mb-2">
-                          Distrito *
-                        </label>
-                        <input
-                          {...register("district")}
-                          className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
-                          placeholder="Miraflores"
-                        />
-                        {errors.district && (
-                          <p className="text-red-500 text-sm mt-1">{errors.district.message}</p>
-                        )}
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-neutral-700 mb-2">
-                          Ciudad *
-                        </label>
-                        <input
-                          {...register("city")}
-                          className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
-                          placeholder="Lima"
-                        />
-                        {errors.city && (
-                          <p className="text-red-500 text-sm mt-1">{errors.city.message}</p>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-neutral-700 mb-2">
-                          Código Postal (opcional)
-                        </label>
-                        <input
-                          {...register("postalCode")}
-                          className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
-                          placeholder="15074"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-medium text-neutral-700 mb-2">
-                          Referencia (opcional)
-                        </label>
-                        <input
-                          {...register("reference")}
-                          className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
-                          placeholder="Casa verde, 2do piso"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Método de pago */}
-                <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6">
-                  <div className="flex items-center gap-2 mb-6">
-                    <CreditCard className="w-5 h-5 text-rose-600" />
-                    <h2 className="text-xl font-semibold">Método de Pago</h2>
-                  </div>
-
-                  <div className="space-y-3">
-                    <label className="flex items-center gap-3 p-4 border-2 border-neutral-200 rounded-lg cursor-pointer hover:border-rose-500 transition">
-                      <input
-                        {...register("paymentMethod")}
-                        type="radio"
-                        value="culqi"
-                        className="w-4 h-4 text-rose-600"
-                      />
-                      <div className="flex-1">
-                        <span className="font-medium">💳 Tarjeta de crédito/débito / Yape</span>
-                        <p className="text-xs text-neutral-500 mt-1">Pago seguro con Culqi (incluye Yape)</p>
-                      </div>
-                    </label>
-
-                  </div>
-                </div>
-
-                {/* Checkbox términos y condiciones */}
-                <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6">
-                  <label className="flex items-start gap-3 cursor-pointer">
-                    <input
-                      {...register("acceptTerms")}
-                      type="checkbox"
-                      className="mt-1 w-4 h-4 text-rose-600 border-neutral-300 rounded focus:ring-rose-600"
-                    />
-                    <span className="text-sm text-neutral-700">
-                      Acepto los{" "}
-                      <Link href="/terminos" target="_blank" className="text-rose-600 hover:text-rose-700 font-medium underline">
-                        términos y condiciones
-                      </Link>
-                      {" "}y la{" "}
-                      <Link href="/privacidad" target="_blank" className="text-rose-600 hover:text-rose-700 font-medium underline">
-                        política de privacidad
-                      </Link>
-                    </span>
-                  </label>
-                  {errors.acceptTerms && (
-                    <p className="text-red-500 text-sm mt-2">{errors.acceptTerms.message}</p>
+                    </button>
                   )}
-                </div>
-
-                {/* Notas adicionales */}
-                <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6">
-                  <h2 className="text-lg font-semibold mb-4">Notas adicionales (opcional)</h2>
-                  <textarea
-                    {...register("notes")}
-                    rows={4}
-                    className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none resize-none"
-                    placeholder="Instrucciones especiales para la entrega..."
-                  />
                 </div>
               </div>
 
@@ -833,32 +944,6 @@ export default function CheckoutPage() {
                       <span>S/ {finalTotal.toFixed(2)}</span>
                     </div>
                   </div>
-
-                  {/* Botón de pago */}
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full mt-6 px-6 py-4 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-700 transition disabled:bg-neutral-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                        Procesando...
-                      </>
-                    ) : (
-                      <>
-                        <Package className="w-5 h-5" />
-                        Realizar Pedido
-                      </>
-                    )}
-                  </button>
-
-                  <p className="text-xs text-neutral-600 text-center mt-4">
-                    Al realizar el pedido, aceptas nuestros{" "}
-                    <Link href="/pages/terminos-y-condiciones" className="underline">
-                      términos y condiciones
-                    </Link>
-                  </p>
                 </div>
               </div>
             </div>
