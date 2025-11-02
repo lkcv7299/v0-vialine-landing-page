@@ -26,21 +26,21 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
 
   // Determinar object-position PRECISO basado en la categoría del producto
   // Enfoque quirúrgico para mostrar el producto correcto
-  const getObjectPosition = () => {
+  const getObjectPosition = (): string => {
     const imagePath = displayImage.toLowerCase()
 
     // Camisetas y tops: Enfoque en torso superior + cara (15% desde arriba)
     if (imagePath.includes('camiseta') || imagePath.includes('top')) {
-      return 'object-[center_15%]'
+      return 'center 15%'
     }
 
     // Bodys y enterizos: Un poco más de cuerpo (25% desde arriba)
     if (imagePath.includes('body') || imagePath.includes('enterizo')) {
-      return 'object-[center_25%]'
+      return 'center 25%'
     }
 
     // Productos inferiores: Centro balanceado
-    return 'object-center'
+    return 'center center'
   }
 
   return (
@@ -56,7 +56,8 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
             ;(e.currentTarget as HTMLImageElement).src = fallbackImage || "/placeholder.svg"
           }}
           alt={title}
-          className={`h-full w-full object-cover ${getObjectPosition()} scale-[1.02] transition-all duration-500 ease-out group-hover:scale-110`}
+          className="h-full w-full object-cover scale-[1.02] transition-all duration-500 ease-out group-hover:scale-110"
+          style={{ objectPosition: getObjectPosition() }}
           loading="lazy"
         />
 
