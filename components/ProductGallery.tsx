@@ -14,12 +14,19 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
   const [isZoomOpen, setIsZoomOpen] = useState(false) // ✅ Modal de zoom
   const [zoomLevel, setZoomLevel] = useState(1) // ✅ Nivel de zoom (1 = 100%, 2 = 200%, etc.)
 
-  // Reset selected index cuando cambien las imágenes
+  // ✅ HOOKS ANTES DEL EARLY RETURN (orden consistente)
+  const goToPrevious = useCallback(() => {
+    setSelectedIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))
+  }, [images.length])
+
+  const goToNext = useCallback(() => {
+    setSelectedIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))
+  }, [images.length])
+
+  // Reset selected index solo cuando cambien las imágenes (no cuando cambie selectedIndex)
   useEffect(() => {
-    if (selectedIndex >= images.length) {
-      setSelectedIndex(0)
-    }
-  }, [images, selectedIndex])
+    setSelectedIndex(prev => prev >= images.length ? 0 : prev)
+  }, [images.length])
 
   // Si solo hay una imagen, mostrar vista simple
   if (images.length === 1) {
@@ -36,14 +43,6 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
       </div>
     )
   }
-
-  const goToPrevious = useCallback(() => {
-    setSelectedIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))
-  }, [images.length])
-
-  const goToNext = useCallback(() => {
-    setSelectedIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))
-  }, [images.length])
 
   // ✅ Controles de zoom
   const handleZoomIn = () => {
