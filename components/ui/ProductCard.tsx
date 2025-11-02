@@ -25,12 +25,14 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
   const currentImage = isHovering && hoverImage ? hoverImage : displayImage
 
   // Determinar object-position para mostrar CARA + PRODUCTO
-  // Las imágenes de Vialine son cuerpo completo, necesitamos mostrar desde arriba
+  // Las imágenes de Vialine son cuerpo completo (cabeza hasta pies)
+  // Necesitamos ajustar qué parte se muestra en el recorte vertical
   const getObjectPosition = (): string => {
     const productSlug = slug.toLowerCase()
     const imagePath = displayImage.toLowerCase()
 
-    // Camisetas, tops, bodys: Mostrar desde la CARA hacia abajo
+    // Camisetas, tops, bodys: Mostrar desde cara hacia abajo (parte superior del cuerpo)
+    // 0% = empieza desde el tope de la imagen (cabeza), muestra cara + torso
     if (productSlug.includes('camiseta') ||
         productSlug.includes('top') ||
         productSlug.includes('body') ||
@@ -39,10 +41,14 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
         imagePath.includes('top') ||
         imagePath.includes('body') ||
         imagePath.includes('enterizo')) {
-      return 'center top'  // Muestra desde arriba (cara visible)
+      if (typeof window !== 'undefined') {
+        console.log('[CROP DEBUG] Producto SUPERIOR:', slug, '→ usando center 0%')
+      }
+      return 'center 0%'  // Alinea al tope - muestra cara + producto superior
     }
 
-    // Leggings, shorts, bikers: Centro o ligeramente abajo
+    // Leggings, shorts, bikers: Parte inferior del cuerpo
+    // 70% = enfoca en piernas/producto inferior
     if (productSlug.includes('legging') ||
         productSlug.includes('short') ||
         productSlug.includes('biker') ||
@@ -51,11 +57,11 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
         imagePath.includes('short') ||
         imagePath.includes('biker') ||
         imagePath.includes('pantalon')) {
-      return 'center center'
+      return 'center 70%'
     }
 
-    // Por defecto: Centro
-    return 'center center'
+    // Por defecto: Centro balanceado
+    return 'center 50%'
   }
 
   return (
