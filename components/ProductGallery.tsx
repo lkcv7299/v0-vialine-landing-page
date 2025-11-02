@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut, Maximize2 } from "lucide-react"
 
@@ -13,6 +13,13 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [isZoomOpen, setIsZoomOpen] = useState(false) // ✅ Modal de zoom
   const [zoomLevel, setZoomLevel] = useState(1) // ✅ Nivel de zoom (1 = 100%, 2 = 200%, etc.)
+
+  // Reset selected index cuando cambien las imágenes
+  useEffect(() => {
+    if (selectedIndex >= images.length) {
+      setSelectedIndex(0)
+    }
+  }, [images, selectedIndex])
 
   // Si solo hay una imagen, mostrar vista simple
   if (images.length === 1) {
@@ -30,13 +37,13 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
     )
   }
 
-  const goToPrevious = () => {
+  const goToPrevious = useCallback(() => {
     setSelectedIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))
-  }
+  }, [images.length])
 
-  const goToNext = () => {
+  const goToNext = useCallback(() => {
     setSelectedIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))
-  }
+  }, [images.length])
 
   // ✅ Controles de zoom
   const handleZoomIn = () => {
@@ -81,7 +88,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
     }
     document.addEventListener('keydown', handleKeys)
     return () => document.removeEventListener('keydown', handleKeys)
-  }, [isZoomOpen])
+  }, [isZoomOpen, goToPrevious, goToNext])
 
   return (
     <>

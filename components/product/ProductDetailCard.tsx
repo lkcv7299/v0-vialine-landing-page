@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { Check, Share2 } from "lucide-react"
 import type { Product } from "@/data/products"
 import { buildWhatsAppUrl } from "@/lib/contact"
@@ -22,7 +22,7 @@ function getProductImages(product: Product): string[] {
 }
 
 export default function ProductDetailCard({ product }: { product: Product }) {
-  const productImages = getProductImages(product)
+  const productImages = useMemo(() => getProductImages(product), [product])
 
   const [selectedColor, setSelectedColor] = useState("")
   const [selectedSize, setSelectedSize] = useState("")
