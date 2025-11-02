@@ -71,8 +71,8 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
                 const productSlug = item.slug.toLowerCase()
                 const imagePath = item.image.toLowerCase()
 
-                // Scale base para zoom (más agresivo en carruseles porque son cuadrados)
-                const baseScale = 1.3
+                // Scale MÁS agresivo en carruseles (cuadrados necesitan más zoom)
+                const baseScale = 1.5
 
                 // Productos superiores (camisetas, tops): ZOOM hacia arriba (cara + producto)
                 if (productSlug.includes('camiseta') ||
@@ -85,7 +85,7 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
                     imagePath.includes('enterizo')) {
                   return {
                     transform: `scale(${baseScale})`,
-                    objectPosition: 'center 20%'  // Enfoque en parte superior
+                    objectPosition: 'center 30%'  // Enfoque en parte superior (más abajo para no cortar)
                   }
                 }
 
@@ -100,13 +100,13 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
                     imagePath.includes('pantalon')) {
                   return {
                     transform: `scale(${baseScale})`,
-                    objectPosition: 'center 75%'  // Enfoque en parte inferior
+                    objectPosition: 'center 70%'  // Enfoque en parte inferior
                   }
                 }
 
-                // Por defecto: Solo scale centrado
+                // Por defecto: Ligero zoom centrado
                 return {
-                  transform: 'scale(1)',
+                  transform: 'scale(1.15)',
                   objectPosition: 'center center'
                 }
               }
@@ -122,7 +122,7 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="w-full h-full object-cover transition-transform duration-300"
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover/card:scale-110"
                         style={getImageStyle()}
                       />
 

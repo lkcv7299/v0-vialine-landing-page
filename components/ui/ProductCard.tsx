@@ -29,8 +29,8 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
     const productSlug = slug.toLowerCase()
     const imagePath = displayImage.toLowerCase()
 
-    // Scale base para zoom
-    const baseScale = 1.25
+    // Scale base para zoom (más que antes)
+    const baseScale = 1.35
     const hoverScale = isHovering ? 1.05 : 1
     const finalScale = baseScale * hoverScale
 
@@ -45,7 +45,7 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
         imagePath.includes('enterizo')) {
       return {
         transform: `scale(${finalScale})`,
-        objectPosition: 'center 20%'  // Enfoque en parte superior
+        objectPosition: 'center 35%'  // Enfoque en parte superior (ajustado para no cortar cabeza)
       }
     }
 
@@ -60,13 +60,13 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
         imagePath.includes('pantalon')) {
       return {
         transform: `scale(${finalScale})`,
-        objectPosition: 'center 75%'  // Enfoque en parte inferior
+        objectPosition: 'center 70%'  // Enfoque en parte inferior
       }
     }
 
-    // Por defecto: Solo hover scale, centrado normal
+    // Por defecto: Ligero zoom con hover
     return {
-      transform: isHovering ? 'scale(1.05)' : 'scale(1)',
+      transform: isHovering ? 'scale(1.15)' : 'scale(1.05)',
       objectPosition: 'center center'
     }
   }
