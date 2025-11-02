@@ -86,11 +86,15 @@ export const products: Product[] = [
       ]
     },
       {
-        name: "Turquesa",
-        slug: "turquesa",
-        hex: "#40E0D0",
-        image: "/productos/mujer/camisetas/camiseta-cuello-alto-turquesa-cuello-alto-turquesa.webp",
-      },
+      name: "Turquesa",
+      slug: "turquesa",
+      hex: "#40E0D0",
+      images: [
+        "/productos/mujer/camisetas/camiseta-cuello-alto-turquesa-cuello-alto-turquesa1.webp",
+        "/productos/mujer/camisetas/camiseta-cuello-alto-turquesa-cuello-alto-turquesa3.webp",
+        "/productos/mujer/camisetas/camiseta-cuello-alto-turquesa-cuello-alto-tuquesa4.webp"
+      ]
+    },
       {
       name: "Verde Petróleo",
       slug: "petroleo",
@@ -708,11 +712,17 @@ export const products: Product[] = [
       ]
     },
       {
-        name: "Blanco",
-        slug: "blanco",
-        hex: "#FFFFFF",
-        image: "/productos/mujer/short/maxi-short-blanco-MAXI-SHORT-BLANCO.webp",
-      },
+      name: "Blanco",
+      slug: "blanco",
+      hex: "#FFFFFF",
+      images: [
+        "/productos/mujer/short/maxi-short-blanco-MAXI-SHORT-BLANCO.webp",
+        "/productos/mujer/short/maxi-short-blanco-MAXI-SHORT-BLANCO2.webp",
+        "/productos/mujer/short/maxi-short-blanco-MAXI-SHORT-BLANCO3.webp",
+        "/productos/mujer/short/maxi-short-blanco-MAXI-SHORT-BLANCO4.webp",
+        "/productos/mujer/short/maxi-short-blanco-MAXI-SHORT-BLANCO5.webp"
+      ]
+    },
       {
       name: "Negro",
       slug: "negro",
@@ -850,23 +860,39 @@ export const products: Product[] = [
         image: "/productos/mujer/bodys/body-manga-corta-suplex-blanco.webp",
       },
       {
-        name: "Azul Marino",
-        slug: "azulmarino",
-        hex: "#1E3A8A",
-        image: "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex-1.webp",
-      },
+      name: "Azul Marino",
+      slug: "azulmarino",
+      hex: "#1E3A8A",
+      images: [
+        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex-1.webp",
+        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex2.webp",
+        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex3.webp"
+      ]
+    },
       {
-        name: "Negro",
-        slug: "negro",
-        hex: "#000000",
-        image: "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-negro-Body-mc-negro1.webp",
-      },
+      name: "Negro",
+      slug: "negro",
+      hex: "#000000",
+      images: [
+        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-negro-Body-mc-negro1.webp",
+        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-negro-body-mc-negro2.webp",
+        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-negro-body-mc-negro3.webp",
+        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-negro-body-mc-negro4.webp",
+        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-negro-body-mc-negro5.webp"
+      ]
+    },
       {
-        name: "Rojo",
-        slug: "rojo",
-        hex: "#D22B2B",
-        image: "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex-4.webp",
-      },
+      name: "Rojo",
+      slug: "rojo",
+      hex: "#D22B2B",
+      images: [
+        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex1.webp",
+        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex2.webp",
+        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex3.webp",
+        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex-4.webp",
+        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex5.webp"
+      ]
+    },
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
@@ -899,11 +925,17 @@ export const products: Product[] = [
         image: "/productos/mujer/bodys/body-manga-corta-amarillo.webp",
       },
       {
-        name: "Beige",
-        slug: "beige",
-        hex: "#F5F5DC",
-        image: "/productos/mujer/bodys/body-manga-corta-beige-manga-corta-beige-5.webp",
-      },
+      name: "Beige",
+      slug: "beige",
+      hex: "#F5F5DC",
+      images: [
+        "/productos/mujer/bodys/body-manga-corta-beige-manga-corta-beige1.webp",
+        "/productos/mujer/bodys/body-manga-corta-beige-manga-corta-beige2.webp",
+        "/productos/mujer/bodys/body-manga-corta-beige-manga-corta-beige3.webp",
+        "/productos/mujer/bodys/body-manga-corta-beige-manga-corta-beige4.webp",
+        "/productos/mujer/bodys/body-manga-corta-beige-manga-corta-beige-5.webp"
+      ]
+    },
       {
       name: "Blanco",
       slug: "blanco",
@@ -956,11 +988,15 @@ export const products: Product[] = [
         image: "/productos/mujer/bodys/body-manga-corta-suplex-azul-marino.webp",
       },
       {
-        name: "Azul",
-        slug: "azul",
-        hex: "#1E3A8A",
-        image: "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex-1.webp",
-      },
+      name: "Azul",
+      slug: "azul",
+      hex: "#1E3A8A",
+      images: [
+        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex-1.webp",
+        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex2.webp",
+        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex3.webp"
+      ]
+    },
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
@@ -1800,11 +1836,18 @@ export const products: Product[] = [
         image: "/productos/mujer/enterizo/enterizo-manga-cero-rojo.webp",
       },
       {
-        name: "Azulino",
-        slug: "azulino",
-        hex: "#3A53A4",
-        image: "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-Manga-cero-azulino1.webp",
-      },
+      name: "Azulino",
+      slug: "azulino",
+      hex: "#3A53A4",
+      images: [
+        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-Manga-cero-azulino1.webp",
+        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino2.webp",
+        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino3.webp",
+        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino4.webp",
+        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino5.webp",
+        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino6.webp"
+      ]
+    },
       {
       name: "Blanco",
       slug: "blanco",

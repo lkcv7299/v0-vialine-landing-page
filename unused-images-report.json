@@ -1,13 +1,18 @@
 {
   "summary": {
     "totalImages": 711,
-    "referenced": 142,
-    "unused": 569,
-    "unusedSizeMB": 224.37
+    "referenced": 86,
+    "unused": 625,
+    "unusedSizeMB": 243.12
   },
   "byProduct": {
     "body-manga-corta": {
       "images": [
+        {
+          "filename": "body-manga-corta-beige-manga-corta-beige-5.webp",
+          "relativePath": "productos/mujer/bodys/body-manga-corta-beige-manga-corta-beige-5.webp",
+          "size": 228030
+        },
         {
           "filename": "body-manga-corta-beige-manga-corta-beige1.webp",
           "relativePath": "productos/mujer/bodys/body-manga-corta-beige-manga-corta-beige1.webp",
@@ -34,6 +39,11 @@
           "size": 228030
         },
         {
+          "filename": "body-manga-corta-blanco-manga-corta-blanco1.webp",
+          "relativePath": "productos/mujer/bodys/body-manga-corta-blanco-manga-corta-blanco1.webp",
+          "size": 220728
+        },
+        {
           "filename": "body-manga-corta-blanco-manga-corta-blanco2.webp",
           "relativePath": "productos/mujer/bodys/body-manga-corta-blanco-manga-corta-blanco2.webp",
           "size": 597144
@@ -52,6 +62,11 @@
           "filename": "body-manga-corta-blanco.webp",
           "relativePath": "productos/mujer/bodys/body-manga-corta-blanco.webp",
           "size": 220728
+        },
+        {
+          "filename": "body-manga-corta-negro-manga-corta-negro1.webp",
+          "relativePath": "productos/mujer/bodys/body-manga-corta-negro-manga-corta-negro1.webp",
+          "size": 293192
         },
         {
           "filename": "body-manga-corta-negro-manga-corta-negro2.webp",
@@ -74,6 +89,11 @@
           "size": 293192
         },
         {
+          "filename": "body-manga-corta-rojo-manga-corta-rojo1.webp",
+          "relativePath": "productos/mujer/bodys/body-manga-corta-rojo-manga-corta-rojo1.webp",
+          "size": 228136
+        },
+        {
           "filename": "body-manga-corta-rojo-manga-corta-rojo2.webp",
           "relativePath": "productos/mujer/bodys/body-manga-corta-rojo-manga-corta-rojo2.webp",
           "size": 613806
@@ -92,6 +112,11 @@
           "filename": "body-manga-corta-rojo.webp",
           "relativePath": "productos/mujer/bodys/body-manga-corta-rojo.webp",
           "size": 228136
+        },
+        {
+          "filename": "body-manga-corta-rosado-body-mc-rosado1.webp",
+          "relativePath": "productos/mujer/bodys/body-manga-corta-rosado-body-mc-rosado1.webp",
+          "size": 212770
         },
         {
           "filename": "body-manga-corta-rosado-body-mc-rosado2.webp",
@@ -117,6 +142,11 @@
           "filename": "body-manga-corta-rosado.webp",
           "relativePath": "productos/mujer/bodys/body-manga-corta-rosado.webp",
           "size": 212770
+        },
+        {
+          "filename": "body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex-1.webp",
+          "relativePath": "productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex-1.webp",
+          "size": 209002
         },
         {
           "filename": "body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex2.webp",
@@ -164,6 +194,11 @@
           "size": 236288
         },
         {
+          "filename": "body-manga-corta-suplex-liso-premium-negro-Body-mc-negro1.webp",
+          "relativePath": "productos/mujer/bodys/body-manga-corta-suplex-liso-premium-negro-Body-mc-negro1.webp",
+          "size": 307920
+        },
+        {
           "filename": "body-manga-corta-suplex-liso-premium-negro-body-mc-negro2.webp",
           "relativePath": "productos/mujer/bodys/body-manga-corta-suplex-liso-premium-negro-body-mc-negro2.webp",
           "size": 159080
@@ -187,6 +222,11 @@
           "filename": "body-manga-corta-suplex-liso-premium-negro.webp",
           "relativePath": "productos/mujer/bodys/body-manga-corta-suplex-liso-premium-negro.webp",
           "size": 307920
+        },
+        {
+          "filename": "body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex-4.webp",
+          "relativePath": "productos/mujer/bodys/body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex-4.webp",
+          "size": 295472
         },
         {
           "filename": "body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex1.webp",
@@ -224,7 +264,7 @@
           "size": 80296
         }
       ],
-      "totalSize": 14135792
+      "totalSize": 16131042
     },
     "body-manga-larga": {
       "images": [
@@ -254,6 +294,11 @@
           "size": 292996
         },
         {
+          "filename": "body-manga-larga-blanco-Body-manga-larga-blanco-1.webp",
+          "relativePath": "productos/mujer/bodys/body-manga-larga-blanco-Body-manga-larga-blanco-1.webp",
+          "size": 146102
+        },
+        {
           "filename": "body-manga-larga-blanco-Body-manga-larga-blanco-2.webp",
           "relativePath": "productos/mujer/bodys/body-manga-larga-blanco-Body-manga-larga-blanco-2.webp",
           "size": 148770
@@ -272,6 +317,11 @@
           "filename": "body-manga-larga-blanco.webp",
           "relativePath": "productos/mujer/bodys/body-manga-larga-blanco.webp",
           "size": 146102
+        },
+        {
+          "filename": "body-manga-larga-negro-body-ml-negro1.webp",
+          "relativePath": "productos/mujer/bodys/body-manga-larga-negro-body-ml-negro1.webp",
+          "size": 251682
         },
         {
           "filename": "body-manga-larga-negro-body-ml-negro2.webp",
@@ -299,6 +349,11 @@
           "size": 251682
         },
         {
+          "filename": "body-manga-larga-rojo-body-ml-rojo1.webp",
+          "relativePath": "productos/mujer/bodys/body-manga-larga-rojo-body-ml-rojo1.webp",
+          "size": 258936
+        },
+        {
           "filename": "body-manga-larga-rojo-body-ml-rojo2.webp",
           "relativePath": "productos/mujer/bodys/body-manga-larga-rojo-body-ml-rojo2.webp",
           "size": 430964
@@ -319,6 +374,11 @@
           "size": 258936
         },
         {
+          "filename": "body-manga-larga-rosado-body-ml-rosado1.webp",
+          "relativePath": "productos/mujer/bodys/body-manga-larga-rosado-body-ml-rosado1.webp",
+          "size": 189780
+        },
+        {
           "filename": "body-manga-larga-rosado-body-ml-rosado2.webp",
           "relativePath": "productos/mujer/bodys/body-manga-larga-rosado-body-ml-rosado2.webp",
           "size": 636152
@@ -337,6 +397,11 @@
           "filename": "body-manga-larga-rosado.webp",
           "relativePath": "productos/mujer/bodys/body-manga-larga-rosado.webp",
           "size": 189780
+        },
+        {
+          "filename": "body-manga-larga-suplex-liso-premium-azul-marino-body-manga-larga-suplex-azulmarino1.webp",
+          "relativePath": "productos/mujer/bodys/body-manga-larga-suplex-liso-premium-azul-marino-body-manga-larga-suplex-azulmarino1.webp",
+          "size": 222464
         },
         {
           "filename": "body-manga-larga-suplex-liso-premium-azul-marino-body-manga-larga-suplex-azulmarino2.webp",
@@ -449,7 +514,7 @@
           "size": 232456
         }
       ],
-      "totalSize": 14046352
+      "totalSize": 15115316
     },
     "enterizo-manga-cero": {
       "images": [
@@ -559,6 +624,11 @@
           "size": 216906
         },
         {
+          "filename": "enterizo-manga-cero-suplex-liso-premium-azulino-Manga-cero-azulino1.webp",
+          "relativePath": "productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-Manga-cero-azulino1.webp",
+          "size": 295358
+        },
+        {
           "filename": "enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino2.webp",
           "relativePath": "productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino2.webp",
           "size": 211264
@@ -582,6 +652,11 @@
           "filename": "enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino6.webp",
           "relativePath": "productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino6.webp",
           "size": 690486
+        },
+        {
+          "filename": "enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco1.webp",
+          "relativePath": "productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco1.webp",
+          "size": 209038
         },
         {
           "filename": "enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco2.webp",
@@ -639,7 +714,7 @@
           "size": 325588
         }
       ],
-      "totalSize": 11769294
+      "totalSize": 12273690
     },
     "enterizo-tiras": {
       "images": [
@@ -794,6 +869,11 @@
           "size": 210518
         },
         {
+          "filename": "enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino1.webp",
+          "relativePath": "productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino1.webp",
+          "size": 199808
+        },
+        {
           "filename": "enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino2.webp",
           "relativePath": "productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino2.webp",
           "size": 258006
@@ -814,6 +894,11 @@
           "size": 576482
         },
         {
+          "filename": "enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco1.webp",
+          "relativePath": "productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco1.webp",
+          "size": 188064
+        },
+        {
           "filename": "enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco2.webp",
           "relativePath": "productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco2.webp",
           "size": 188054
@@ -832,6 +917,11 @@
           "filename": "enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco5.webp",
           "relativePath": "productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco5.webp",
           "size": 305300
+        },
+        {
+          "filename": "enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal1.webp",
+          "relativePath": "productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal1.webp",
+          "size": 689304
         },
         {
           "filename": "enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal2.webp",
@@ -904,7 +994,7 @@
           "size": 498750
         }
       ],
-      "totalSize": 25352228
+      "totalSize": 26429404
     },
     "camiseta-cuello-alto": {
       "images": [
@@ -924,6 +1014,11 @@
           "size": 308906
         },
         {
+          "filename": "camiseta-cuello-alto-beige-cuello-alto-beige1.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-cuello-alto-beige-cuello-alto-beige1.webp",
+          "size": 364488
+        },
+        {
           "filename": "camiseta-cuello-alto-beige-cuello-alto-beige2.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-cuello-alto-beige-cuello-alto-beige2.webp",
           "size": 327148
@@ -937,6 +1032,11 @@
           "filename": "camiseta-cuello-alto-beige-cuello-alto-beige4.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-cuello-alto-beige-cuello-alto-beige4.webp",
           "size": 850302
+        },
+        {
+          "filename": "camiseta-cuello-alto-blanco-cuello-alto-blanco1.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-cuello-alto-blanco-cuello-alto-blanco1.webp",
+          "size": 210836
         },
         {
           "filename": "camiseta-cuello-alto-blanco-cuello-alto-blanco2.webp",
@@ -954,6 +1054,11 @@
           "size": 441998
         },
         {
+          "filename": "camiseta-cuello-alto-negro-cuello-alto-negro1.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-cuello-alto-negro-cuello-alto-negro1.webp",
+          "size": 387686
+        },
+        {
           "filename": "camiseta-cuello-alto-negro-cuello-alto-negro2.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-cuello-alto-negro-cuello-alto-negro2.webp",
           "size": 362274
@@ -967,6 +1072,11 @@
           "filename": "camiseta-cuello-alto-negro-cuello-alto-negro4.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-cuello-alto-negro-cuello-alto-negro4.webp",
           "size": 695084
+        },
+        {
+          "filename": "camiseta-cuello-alto-rojo-cuello-alto-rojo1.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-cuello-alto-rojo-cuello-alto-rojo1.webp",
+          "size": 224650
         },
         {
           "filename": "camiseta-cuello-alto-rojo-cuello-alto-rojo2.webp",
@@ -984,6 +1094,16 @@
           "size": 291698
         },
         {
+          "filename": "camiseta-cuello-alto-turquesa-cuello-alto-tuquesa4.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-cuello-alto-turquesa-cuello-alto-tuquesa4.webp",
+          "size": 1172070
+        },
+        {
+          "filename": "camiseta-cuello-alto-turquesa-cuello-alto-turquesa.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-cuello-alto-turquesa-cuello-alto-turquesa.webp",
+          "size": 426216
+        },
+        {
           "filename": "camiseta-cuello-alto-turquesa-cuello-alto-turquesa1.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-cuello-alto-turquesa-cuello-alto-turquesa1.webp",
           "size": 395118
@@ -992,6 +1112,11 @@
           "filename": "camiseta-cuello-alto-turquesa-cuello-alto-turquesa3.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-cuello-alto-turquesa-cuello-alto-turquesa3.webp",
           "size": 1081324
+        },
+        {
+          "filename": "camiseta-cuello-alto-verde-petroleo-cuello-alto-petroleo1.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-cuello-alto-verde-petroleo-cuello-alto-petroleo1.webp",
+          "size": 378290
         },
         {
           "filename": "camiseta-cuello-alto-verde-petroleo-cuello-alto-petroleo2.webp",
@@ -1007,6 +1132,11 @@
           "filename": "camiseta-cuello-alto-verde-petroleo-cuello-alto-petroleo4.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-cuello-alto-verde-petroleo-cuello-alto-petroleo4.webp",
           "size": 844036
+        },
+        {
+          "filename": "camiseta-cuello-alto-vino-cuello-alto-vino1.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-cuello-alto-vino-cuello-alto-vino1.webp",
+          "size": 270770
         },
         {
           "filename": "camiseta-cuello-alto-vino-cuello-alto-vino2.webp",
@@ -1234,7 +1364,7 @@
           "size": 270770
         }
       ],
-      "totalSize": 31295492
+      "totalSize": 34730498
     },
     "camiseta-gia": {
       "images": [
@@ -1254,6 +1384,11 @@
           "size": 406126
         },
         {
+          "filename": "camiseta-gia-negro-camiseta-gia-negro1.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-gia-negro-camiseta-gia-negro1.webp",
+          "size": 286964
+        },
+        {
           "filename": "camiseta-gia-negro-camiseta-gia-negro2.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-gia-negro-camiseta-gia-negro2.webp",
           "size": 292662
@@ -1267,6 +1402,11 @@
           "filename": "camiseta-gia-negro-camiseta-gia-negro4.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-gia-negro-camiseta-gia-negro4.webp",
           "size": 463124
+        },
+        {
+          "filename": "camiseta-gia-vino-camiseta-gia-vino1.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-gia-vino-camiseta-gia-vino1.webp",
+          "size": 275490
         },
         {
           "filename": "camiseta-gia-vino-camiseta-gia-vino2.webp",
@@ -1359,7 +1499,7 @@
           "size": 275490
         }
       ],
-      "totalSize": 7636564
+      "totalSize": 8199018
     },
     "camiseta-manga-corta": {
       "images": [
@@ -1384,6 +1524,11 @@
           "size": 737056
         },
         {
+          "filename": "camiseta-manga-corta-beige-camiseta-beige1.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-manga-corta-beige-camiseta-beige1.webp",
+          "size": 319310
+        },
+        {
           "filename": "camiseta-manga-corta-beige-camiseta-beige2.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-manga-corta-beige-camiseta-beige2.webp",
           "size": 365142
@@ -1402,6 +1547,11 @@
           "filename": "camiseta-manga-corta-beige-camiseta-beige5.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-manga-corta-beige-camiseta-beige5.webp",
           "size": 796394
+        },
+        {
+          "filename": "camiseta-manga-corta-blanco-camiseta-blanco1.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-manga-corta-blanco-camiseta-blanco1.webp",
+          "size": 256086
         },
         {
           "filename": "camiseta-manga-corta-blanco-camiseta-blanco2.webp",
@@ -1424,6 +1574,11 @@
           "size": 409410
         },
         {
+          "filename": "camiseta-manga-corta-negro-camiseta-negro1.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-manga-corta-negro-camiseta-negro1.webp",
+          "size": 286724
+        },
+        {
           "filename": "camiseta-manga-corta-negro-camiseta-negro2.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-manga-corta-negro-camiseta-negro2.webp",
           "size": 259758
@@ -1437,6 +1592,11 @@
           "filename": "camiseta-manga-corta-negro-camiseta-negro4.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-manga-corta-negro-camiseta-negro4.webp",
           "size": 332620
+        },
+        {
+          "filename": "camiseta-manga-corta-rojo-camiseta-rojo1.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-manga-corta-rojo-camiseta-rojo1.webp",
+          "size": 267820
         },
         {
           "filename": "camiseta-manga-corta-rojo-camiseta-rojo2.webp",
@@ -1604,7 +1764,7 @@
           "size": 267820
         }
       ],
-      "totalSize": 20450852
+      "totalSize": 21580792
     },
     "camiseta-manga-larga": {
       "images": [
@@ -1622,6 +1782,11 @@
           "filename": "camiseta-manga-larga-azul-marino-manga-larga-azul-marino5.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-manga-larga-azul-marino-manga-larga-azul-marino5.webp",
           "size": 504196
+        },
+        {
+          "filename": "camiseta-manga-larga-beige-manga-larga-beige1.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-manga-larga-beige-manga-larga-beige1.webp",
+          "size": 822564
         },
         {
           "filename": "camiseta-manga-larga-beige-manga-larga-beige2.webp",
@@ -1644,6 +1809,11 @@
           "size": 699722
         },
         {
+          "filename": "camiseta-manga-larga-blanco-manga-larga-blanco1.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-manga-larga-blanco-manga-larga-blanco1.webp",
+          "size": 484704
+        },
+        {
           "filename": "camiseta-manga-larga-blanco-manga-larga-blanco2.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-manga-larga-blanco-manga-larga-blanco2.webp",
           "size": 437116
@@ -1662,6 +1832,11 @@
           "filename": "camiseta-manga-larga-blanco-manga-larga-blanco5.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-manga-larga-blanco-manga-larga-blanco5.webp",
           "size": 233666
+        },
+        {
+          "filename": "camiseta-manga-larga-negro-manga-larga-negro1.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-manga-larga-negro-manga-larga-negro1.webp",
+          "size": 408726
         },
         {
           "filename": "camiseta-manga-larga-negro-manga-larga-negro2.webp",
@@ -1684,6 +1859,11 @@
           "size": 313170
         },
         {
+          "filename": "camiseta-manga-larga-rojo-manga-larga-rojo1.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-manga-larga-rojo-manga-larga-rojo1.webp",
+          "size": 321694
+        },
+        {
           "filename": "camiseta-manga-larga-rojo-manga-larga-rojo2.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-manga-larga-rojo-manga-larga-rojo2.webp",
           "size": 403786
@@ -1704,6 +1884,11 @@
           "size": 225938
         },
         {
+          "filename": "camiseta-manga-larga-turquesa-manga-larga-turquesa1.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-manga-larga-turquesa-manga-larga-turquesa1.webp",
+          "size": 578726
+        },
+        {
           "filename": "camiseta-manga-larga-turquesa-manga-larga-turquesa2.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-manga-larga-turquesa-manga-larga-turquesa2.webp",
           "size": 821212
@@ -1717,6 +1902,11 @@
           "filename": "camiseta-manga-larga-turquesa-manga-larga-turquesa5.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-manga-larga-turquesa-manga-larga-turquesa5.webp",
           "size": 714436
+        },
+        {
+          "filename": "camiseta-manga-larga-vino-manga-larga-vino1.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-manga-larga-vino-manga-larga-vino1.webp",
+          "size": 386188
         },
         {
           "filename": "camiseta-manga-larga-vino-manga-larga-vino2.webp",
@@ -1949,7 +2139,7 @@
           "size": 386188
         }
       ],
-      "totalSize": 35618192
+      "totalSize": 38620794
     },
     "legging-clasica": {
       "images": [
@@ -2284,6 +2474,11 @@
     "legging-slim": {
       "images": [
         {
+          "filename": "legging-slim-suplex-liso-premium-acero-legging-slim-acero1.webp",
+          "relativePath": "productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero1.webp",
+          "size": 219588
+        },
+        {
           "filename": "legging-slim-suplex-liso-premium-acero-legging-slim-acero2.webp",
           "relativePath": "productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero2.webp",
           "size": 227980
@@ -2307,6 +2502,11 @@
           "filename": "legging-slim-suplex-liso-premium-acero.webp",
           "relativePath": "productos/mujer/legging/legging-slim-suplex-liso-premium-acero.webp",
           "size": 219588
+        },
+        {
+          "filename": "legging-slim-suplex-liso-premium-aqua-legging-slim-aqua1.webp",
+          "relativePath": "productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua1.webp",
+          "size": 307626
         },
         {
           "filename": "legging-slim-suplex-liso-premium-aqua-legging-slim-aqua2.webp",
@@ -2359,6 +2559,11 @@
           "size": 233756
         },
         {
+          "filename": "legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-1.webp",
+          "relativePath": "productos/mujer/legging/legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-1.webp",
+          "size": 215148
+        },
+        {
           "filename": "legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-2.webp",
           "relativePath": "productos/mujer/legging/legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-2.webp",
           "size": 230856
@@ -2404,6 +2609,11 @@
           "size": 166008
         },
         {
+          "filename": "legging-slim-suplex-liso-premium-camel-legging-slim-camel1.webp",
+          "relativePath": "productos/mujer/legging/legging-slim-suplex-liso-premium-camel-legging-slim-camel1.webp",
+          "size": 261664
+        },
+        {
           "filename": "legging-slim-suplex-liso-premium-camel-legging-slim-camel2.webp",
           "relativePath": "productos/mujer/legging/legging-slim-suplex-liso-premium-camel-legging-slim-camel2.webp",
           "size": 223720
@@ -2419,7 +2629,7 @@
           "size": 261664
         }
       ],
-      "totalSize": 7764602
+      "totalSize": 8768628
     },
     "maxi-short": {
       "images": [
@@ -2449,6 +2659,11 @@
           "size": 194144
         },
         {
+          "filename": "maxi-short-blanco-MAXI-SHORT-BLANCO.webp",
+          "relativePath": "productos/mujer/short/maxi-short-blanco-MAXI-SHORT-BLANCO.webp",
+          "size": 261450
+        },
+        {
           "filename": "maxi-short-blanco-MAXI-SHORT-BLANCO2.webp",
           "relativePath": "productos/mujer/short/maxi-short-blanco-MAXI-SHORT-BLANCO2.webp",
           "size": 263924
@@ -2474,6 +2689,11 @@
           "size": 261450
         },
         {
+          "filename": "maxi-short-negro-MAXI-SHORT-NEGRO1.webp",
+          "relativePath": "productos/mujer/short/maxi-short-negro-MAXI-SHORT-NEGRO1.webp",
+          "size": 249984
+        },
+        {
           "filename": "maxi-short-negro-MAXI-SHORT-NEGRO2.webp",
           "relativePath": "productos/mujer/short/maxi-short-negro-MAXI-SHORT-NEGRO2.webp",
           "size": 348644
@@ -2494,7 +2714,7 @@
           "size": 249984
         }
       ],
-      "totalSize": 4137804
+      "totalSize": 4649238
     },
     "mini-short": {
       "images": [
@@ -2522,6 +2742,11 @@
           "filename": "mini-short-beige.webp",
           "relativePath": "productos/mujer/short/mini-short-beige.webp",
           "size": 262270
+        },
+        {
+          "filename": "mini-short-blanco-mini-short-blanco1.webp",
+          "relativePath": "productos/mujer/short/mini-short-blanco-mini-short-blanco1.webp",
+          "size": 243398
         },
         {
           "filename": "mini-short-blanco-mini-short-blanco2.webp",
@@ -2574,7 +2799,7 @@
           "size": 222990
         }
       ],
-      "totalSize": 4492426
+      "totalSize": 4735824
     },
     "short-brasil": {
       "images": [
@@ -2604,6 +2829,11 @@
           "size": 215634
         },
         {
+          "filename": "short-brasil-blanco-short-brasil-blanco1.webp",
+          "relativePath": "productos/mujer/short/short-brasil-blanco-short-brasil-blanco1.webp",
+          "size": 221502
+        },
+        {
           "filename": "short-brasil-blanco-short-brasil-blanco2.webp",
           "relativePath": "productos/mujer/short/short-brasil-blanco-short-brasil-blanco2.webp",
           "size": 245820
@@ -2627,6 +2857,11 @@
           "filename": "short-brasil-blanco.webp",
           "relativePath": "productos/mujer/short/short-brasil-blanco.webp",
           "size": 221502
+        },
+        {
+          "filename": "short-brasil-negro-short-brasil-negro1.webp",
+          "relativePath": "productos/mujer/short/short-brasil-negro-short-brasil-negro1.webp",
+          "size": 272250
         },
         {
           "filename": "short-brasil-negro-short-brasil-negro2.webp",
@@ -2654,7 +2889,7 @@
           "size": 272250
         }
       ],
-      "totalSize": 4131530
+      "totalSize": 4625282
     },
     "short-slim": {
       "images": [
@@ -2679,6 +2914,11 @@
           "size": 238858
         },
         {
+          "filename": "short-slim-suplex-liso-premium-azulino-short-slim-azulino1.webp",
+          "relativePath": "productos/mujer/short/short-slim-suplex-liso-premium-azulino-short-slim-azulino1.webp",
+          "size": 305644
+        },
+        {
           "filename": "short-slim-suplex-liso-premium-azulino-short-slim-azulino2.webp",
           "relativePath": "productos/mujer/short/short-slim-suplex-liso-premium-azulino-short-slim-azulino2.webp",
           "size": 293030
@@ -2699,6 +2939,11 @@
           "size": 305644
         },
         {
+          "filename": "short-slim-suplex-liso-premium-blanco-short-slim-blanco1.webp",
+          "relativePath": "productos/mujer/short/short-slim-suplex-liso-premium-blanco-short-slim-blanco1.webp",
+          "size": 199040
+        },
+        {
           "filename": "short-slim-suplex-liso-premium-blanco-short-slim-blanco2.webp",
           "relativePath": "productos/mujer/short/short-slim-suplex-liso-premium-blanco-short-slim-blanco2.webp",
           "size": 189060
@@ -2717,6 +2962,11 @@
           "filename": "short-slim-suplex-liso-premium-blanco.webp",
           "relativePath": "productos/mujer/short/short-slim-suplex-liso-premium-blanco.webp",
           "size": 199040
+        },
+        {
+          "filename": "short-slim-suplex-liso-premium-negro-short-slim-negro1.webp",
+          "relativePath": "productos/mujer/short/short-slim-suplex-liso-premium-negro-short-slim-negro1.webp",
+          "size": 241046
         },
         {
           "filename": "short-slim-suplex-liso-premium-negro-short-slim-negro2.webp",
@@ -2744,7 +2994,7 @@
           "size": 241046
         }
       ],
-      "totalSize": 4671268
+      "totalSize": 5416998
     },
     "top-afrodita": {
       "images": [
@@ -2779,6 +3029,11 @@
           "size": 435940
         },
         {
+          "filename": "top-afrodita-suplex-liso-premium-negro-afrodita-negro1.webp",
+          "relativePath": "productos/mujer/tops/top-afrodita-suplex-liso-premium-negro-afrodita-negro1.webp",
+          "size": 650234
+        },
+        {
           "filename": "top-afrodita-suplex-liso-premium-negro-afrodita-negro2.webp",
           "relativePath": "productos/mujer/tops/top-afrodita-suplex-liso-premium-negro-afrodita-negro2.webp",
           "size": 427126
@@ -2797,6 +3052,11 @@
           "filename": "top-afrodita-suplex-liso-premium-negro.webp",
           "relativePath": "productos/mujer/tops/top-afrodita-suplex-liso-premium-negro.webp",
           "size": 650234
+        },
+        {
+          "filename": "top-afrodita-suplex-liso-premium-rojo-afrodita-rojo1.webp",
+          "relativePath": "productos/mujer/tops/top-afrodita-suplex-liso-premium-rojo-afrodita-rojo1.webp",
+          "size": 650264
         },
         {
           "filename": "top-afrodita-suplex-liso-premium-rojo-afrodita-rojo2.webp",
@@ -2824,7 +3084,7 @@
           "size": 650264
         }
       ],
-      "totalSize": 11594770
+      "totalSize": 12895268
     },
     "top-paradise": {
       "images": [
@@ -2849,6 +3109,11 @@
           "size": 690684
         },
         {
+          "filename": "top-paradise-suplex-liso-premium-blanco-paradise-blanco1.webp",
+          "relativePath": "productos/mujer/tops/top-paradise-suplex-liso-premium-blanco-paradise-blanco1.webp",
+          "size": 695978
+        },
+        {
           "filename": "top-paradise-suplex-liso-premium-blanco-paradise-blanco2.webp",
           "relativePath": "productos/mujer/tops/top-paradise-suplex-liso-premium-blanco-paradise-blanco2.webp",
           "size": 572122
@@ -2869,6 +3134,11 @@
           "size": 695978
         },
         {
+          "filename": "top-paradise-suplex-liso-premium-charcoal-paradise-charcoal1.webp",
+          "relativePath": "productos/mujer/tops/top-paradise-suplex-liso-premium-charcoal-paradise-charcoal1.webp",
+          "size": 970754
+        },
+        {
           "filename": "top-paradise-suplex-liso-premium-charcoal-paradise-charcoal2.webp",
           "relativePath": "productos/mujer/tops/top-paradise-suplex-liso-premium-charcoal-paradise-charcoal2.webp",
           "size": 1115878
@@ -2887,6 +3157,11 @@
           "filename": "top-paradise-suplex-liso-premium-charcoal.webp",
           "relativePath": "productos/mujer/tops/top-paradise-suplex-liso-premium-charcoal.webp",
           "size": 970754
+        },
+        {
+          "filename": "top-paradise-suplex-liso-premium-negro-paradise-negro1.webp",
+          "relativePath": "productos/mujer/tops/top-paradise-suplex-liso-premium-negro-paradise-negro1.webp",
+          "size": 392650
         },
         {
           "filename": "top-paradise-suplex-liso-premium-negro-paradise-negro2.webp",
@@ -2914,6 +3189,11 @@
           "size": 392650
         },
         {
+          "filename": "top-paradise-suplex-liso-premium-rojo-paradise-rojo1.webp",
+          "relativePath": "productos/mujer/tops/top-paradise-suplex-liso-premium-rojo-paradise-rojo1.webp",
+          "size": 522878
+        },
+        {
           "filename": "top-paradise-suplex-liso-premium-rojo-paradise-rojo2.webp",
           "relativePath": "productos/mujer/tops/top-paradise-suplex-liso-premium-rojo-paradise-rojo2.webp",
           "size": 279754
@@ -2934,7 +3214,7 @@
           "size": 522878
         }
       ],
-      "totalSize": 13421434
+      "totalSize": 16003694
     }
   }
 }

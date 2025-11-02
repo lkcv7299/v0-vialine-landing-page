@@ -238,14 +238,6 @@ export default function ProductDetailCard({ product }: { product: Product }) {
                         : "bg-white text-neutral-900 hover:bg-neutral-50 hover:border-rose-300 hover:shadow-md border-neutral-200"
                     }`}
                   >
-                    {colorHex && (
-                      <span
-                        className={`w-5 h-5 rounded-full border-2 transition-all ${
-                          isSelected ? "border-white shadow-sm" : "border-neutral-300 group-hover:border-neutral-400"
-                        }`}
-                        style={{ backgroundColor: colorHex }}
-                      />
-                    )}
                     <span>{colorName}</span>
                     {isSelected && (
                       <span className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
