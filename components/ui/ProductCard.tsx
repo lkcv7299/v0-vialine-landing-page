@@ -24,17 +24,15 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
   // Usar hover image si está disponible y estamos hovering
   const currentImage = isHovering && hoverImage ? hoverImage : displayImage
 
-  // Determinar scale y object-position para hacer zoom al área relevante
+  // SOLUCIÓN DEFINITIVA: scale + translateY para mover físicamente la imagen
   const getImageStyle = () => {
     const productSlug = slug.toLowerCase()
     const imagePath = displayImage.toLowerCase()
 
-    // Scale base para zoom (más que antes)
-    const baseScale = 1.35
+    const baseScale = 1.4
     const hoverScale = isHovering ? 1.05 : 1
-    const finalScale = baseScale * hoverScale
 
-    // Productos superiores (camisetas, tops): ZOOM hacia arriba (cara + producto)
+    // Productos superiores: ZOOM + MOVER ARRIBA para mostrar cara + producto
     if (productSlug.includes('camiseta') ||
         productSlug.includes('top') ||
         productSlug.includes('body') ||
@@ -44,12 +42,12 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
         imagePath.includes('body') ||
         imagePath.includes('enterizo')) {
       return {
-        transform: `scale(${finalScale})`,
-        objectPosition: 'center 35%'  // Enfoque en parte superior (ajustado para no cortar cabeza)
+        transform: `scale(${baseScale * hoverScale}) translateY(-12%)`,
+        transformOrigin: 'center top'
       }
     }
 
-    // Productos inferiores (leggings, shorts): ZOOM hacia abajo (piernas + producto)
+    // Productos inferiores: ZOOM + MOVER ABAJO para mostrar piernas
     if (productSlug.includes('legging') ||
         productSlug.includes('short') ||
         productSlug.includes('biker') ||
@@ -59,15 +57,15 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
         imagePath.includes('biker') ||
         imagePath.includes('pantalon')) {
       return {
-        transform: `scale(${finalScale})`,
-        objectPosition: 'center 70%'  // Enfoque en parte inferior
+        transform: `scale(${baseScale * hoverScale}) translateY(8%)`,
+        transformOrigin: 'center bottom'
       }
     }
 
-    // Por defecto: Ligero zoom con hover
+    // Default: solo zoom
     return {
-      transform: isHovering ? 'scale(1.15)' : 'scale(1.05)',
-      objectPosition: 'center center'
+      transform: `scale(${isHovering ? 1.1 : 1})`,
+      transformOrigin: 'center center'
     }
   }
 

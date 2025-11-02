@@ -66,15 +66,14 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
               const rating = getAverageRating(item.slug)
               const reviewCount = getReviewCount(item.slug)
               
-              // Determinar scale y object-position para hacer zoom al área relevante
+              // SOLUCIÓN DEFINITIVA: scale + translateY para mover físicamente la imagen
               const getImageStyle = () => {
                 const productSlug = item.slug.toLowerCase()
                 const imagePath = item.image.toLowerCase()
 
-                // Scale MÁS agresivo en carruseles (cuadrados necesitan más zoom)
-                const baseScale = 1.5
+                const baseScale = 1.6  // Carruseles necesitan más zoom (son cuadrados)
 
-                // Productos superiores (camisetas, tops): ZOOM hacia arriba (cara + producto)
+                // Productos superiores: ZOOM + MOVER ARRIBA
                 if (productSlug.includes('camiseta') ||
                     productSlug.includes('top') ||
                     productSlug.includes('body') ||
@@ -84,12 +83,12 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
                     imagePath.includes('body') ||
                     imagePath.includes('enterizo')) {
                   return {
-                    transform: `scale(${baseScale})`,
-                    objectPosition: 'center 30%'  // Enfoque en parte superior (más abajo para no cortar)
+                    transform: `scale(${baseScale}) translateY(-10%)`,
+                    transformOrigin: 'center top'
                   }
                 }
 
-                // Productos inferiores (leggings, shorts): ZOOM hacia abajo (piernas + producto)
+                // Productos inferiores: ZOOM + MOVER ABAJO
                 if (productSlug.includes('legging') ||
                     productSlug.includes('short') ||
                     productSlug.includes('biker') ||
@@ -99,15 +98,15 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
                     imagePath.includes('biker') ||
                     imagePath.includes('pantalon')) {
                   return {
-                    transform: `scale(${baseScale})`,
-                    objectPosition: 'center 70%'  // Enfoque en parte inferior
+                    transform: `scale(${baseScale}) translateY(6%)`,
+                    transformOrigin: 'center bottom'
                   }
                 }
 
-                // Por defecto: Ligero zoom centrado
+                // Default
                 return {
                   transform: 'scale(1.15)',
-                  objectPosition: 'center center'
+                  transformOrigin: 'center center'
                 }
               }
 
