@@ -24,15 +24,13 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
   // Usar hover image si está disponible y estamos hovering
   const currentImage = isHovering && hoverImage ? hoverImage : displayImage
 
-  // Determinar object-position para mostrar CARA + PRODUCTO
-  // Las imágenes de Vialine son cuerpo completo (cabeza hasta pies)
-  // Necesitamos ajustar qué parte se muestra en el recorte vertical
-  const getObjectPosition = (): string => {
+  // Determinar transform para ajustar posición de imagen
+  // object-position NO funciona bien con estas imágenes, usamos transform en su lugar
+  const getImageTransform = (): string => {
     const productSlug = slug.toLowerCase()
     const imagePath = displayImage.toLowerCase()
 
-    // Camisetas, tops, bodys: Mostrar desde cara hacia abajo (parte superior del cuerpo)
-    // 0% = empieza desde el tope de la imagen (cabeza), muestra cara + torso
+    // Camisetas, tops, bodys: Mover imagen ARRIBA para mostrar cara + producto superior
     if (productSlug.includes('camiseta') ||
         productSlug.includes('top') ||
         productSlug.includes('body') ||
@@ -41,14 +39,10 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
         imagePath.includes('top') ||
         imagePath.includes('body') ||
         imagePath.includes('enterizo')) {
-      if (typeof window !== 'undefined') {
-        console.log('[CROP DEBUG] Producto SUPERIOR:', slug, '→ usando center 0%')
-      }
-      return 'center 0%'  // Alinea al tope - muestra cara + producto superior
+      return 'translateY(-15%)'  // Mueve imagen 15% arriba - muestra cara
     }
 
-    // Leggings, shorts, bikers: Parte inferior del cuerpo
-    // 70% = enfoca en piernas/producto inferior
+    // Leggings, shorts, bikers: Mover imagen ABAJO para enfoque en piernas
     if (productSlug.includes('legging') ||
         productSlug.includes('short') ||
         productSlug.includes('biker') ||
@@ -57,11 +51,11 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
         imagePath.includes('short') ||
         imagePath.includes('biker') ||
         imagePath.includes('pantalon')) {
-      return 'center 70%'
+      return 'translateY(10%)'  // Mueve imagen 10% abajo
     }
 
-    // Por defecto: Centro balanceado
-    return 'center 50%'
+    // Por defecto: Sin movimiento
+    return 'translateY(0)'
   }
 
   return (
@@ -77,8 +71,11 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
             ;(e.currentTarget as HTMLImageElement).src = fallbackImage || "/placeholder.svg"
           }}
           alt={title}
-          className="h-full w-full object-cover transition-all duration-500 ease-out group-hover:scale-105"
-          style={{ objectPosition: getObjectPosition() }}
+          className="h-full w-full object-cover transition-all duration-500 ease-out"
+          style={{
+            transform: isHovering ? `${getImageTransform()} scale(1.05)` : getImageTransform(),
+            objectPosition: 'center center'
+          }}
           loading="lazy"
         />
 
