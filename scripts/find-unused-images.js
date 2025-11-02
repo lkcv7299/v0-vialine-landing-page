@@ -1,118 +1,111 @@
 #!/usr/bin/env node
 
-/**
- * 🔍 FIND UNUSED IMAGES
- *
- * Detecta imágenes en public/products/ que no están siendo
- * usadas en data/products.ts
- *
- * Útil para:
- * - Limpiar imágenes viejas
- * - Identificar productos sin código
- * - Optimizar espacio en disco
- */
-
 const fs = require('fs')
 const path = require('path')
 
-const colors = {
-  reset: '\x1b[0m',
-  bright: '\x1b[1m',
-  cyan: '\x1b[36m',
-  green: '\x1b[32m',
-  yellow: '\x1b[33m',
-  red: '\x1b[31m'
+const productsPath = path.join(__dirname, '..', 'data', 'products.ts')
+const publicPath = path.join(__dirname, '..', 'public', 'productos')
+
+console.log('Finding unused images...\n')
+
+// Leer products.ts
+const content = fs.readFileSync(productsPath, 'utf-8')
+
+// Extraer todas las rutas de imágenes referenciadas
+const imagePathRegex = /image:\s*["']([^"']+)["']/g
+const referencedImages = new Set()
+
+let match
+while ((match = imagePathRegex.exec(content)) !== null) {
+  const imagePath = match[1].replace(/^\//, '')
+  referencedImages.add(imagePath)
 }
 
-console.log(`${colors.bright}${colors.cyan}`)
-console.log('════════════════════════════════════════')
-console.log('  🔍 FIND UNUSED IMAGES')
-console.log('════════════════════════════════════════')
-console.log(colors.reset)
+console.log(`Referenced in products.ts: ${referencedImages.size}`)
 
-// Leer todas las imágenes en public/products/
-const productsDir = path.join(__dirname, '..', 'public', 'products')
+// Encontrar todas las imágenes físicas
+const allImageFiles = []
 
-if (!fs.existsSync(productsDir)) {
-  console.log(`${colors.red}✗ Carpeta no encontrada: ${productsDir}${colors.reset}`)
-  process.exit(1)
+function scanDirectory(dir) {
+  const items = fs.readdirSync(dir)
+  items.forEach(item => {
+    const fullPath = path.join(dir, item)
+    const stat = fs.statSync(fullPath)
+    if (stat.isDirectory()) {
+      scanDirectory(fullPath)
+    } else if (item.match(/\.(webp|jpg|jpeg|png)$/i)) {
+      const relativePath = path.relative(publicPath, fullPath).split(path.sep).join('/')
+      allImageFiles.push({
+        filename: item,
+        relativePath: `productos/${relativePath}`,
+        size: stat.size
+      })
+    }
+  })
 }
 
-const allImages = fs.readdirSync(productsDir)
-  .filter(f => /\.(webp|jpg|jpeg|png)$/i.test(f))
+scanDirectory(publicPath)
 
-console.log(`${colors.cyan}ℹ${colors.reset} Imágenes en carpeta: ${allImages.length}\n`)
+console.log(`Physical images found: ${allImageFiles.length}`)
 
-// Leer products.ts y extraer todas las referencias de imágenes
-const productsFile = path.join(__dirname, '..', 'data', 'products.ts')
+// Encontrar no utilizadas
+const unusedImages = allImageFiles.filter(img => !referencedImages.has(img.relativePath))
 
-if (!fs.existsSync(productsFile)) {
-  console.log(`${colors.red}✗ Archivo no encontrado: ${productsFile}${colors.reset}`)
-  process.exit(1)
-}
+console.log(`\nUNUSED IMAGES: ${unusedImages.length}`)
 
-const productsContent = fs.readFileSync(productsFile, 'utf-8')
+// Agrupar por producto
+const byProduct = {}
 
-// Extraer rutas de imágenes: /products/nombre.webp
-const imageMatches = productsContent.match(/\/products\/[a-z0-9\-_.]+\.(webp|jpg|jpeg|png)/gi)
+unusedImages.forEach(img => {
+  const parts = img.filename.split('-')
+  let productSlug = 'unknown'
 
-if (!imageMatches) {
-  console.log(`${colors.yellow}⚠${colors.reset} No se encontraron referencias de imágenes en products.ts`)
-  process.exit(0)
-}
+  if (parts.length >= 2) {
+    for (let i = 2; i <= Math.min(4, parts.length); i++) {
+      const testSlug = parts.slice(0, i).join('-').replace(/\.webp$/, '')
+      if (content.includes(`slug: "${testSlug}"`) || content.includes(`slug: '${testSlug}'`)) {
+        productSlug = testSlug
+        break
+      }
+    }
+  }
 
-const usedImages = imageMatches.map(match => {
-  return match.replace('/products/', '')
+  if (!byProduct[productSlug]) {
+    byProduct[productSlug] = { images: [], totalSize: 0 }
+  }
+
+  byProduct[productSlug].images.push(img)
+  byProduct[productSlug].totalSize += img.size
 })
 
-console.log(`${colors.cyan}ℹ${colors.reset} Imágenes referenciadas en código: ${new Set(usedImages).size}\n`)
+// Mostrar top 10 productos con más imágenes sin usar
+const sorted = Object.entries(byProduct).sort((a, b) => b[1].images.length - a[1].images.length)
 
-// Encontrar imágenes no usadas
-const unusedImages = allImages.filter(img => !usedImages.includes(img))
-
-if (unusedImages.length === 0) {
-  console.log(`${colors.green}✓ ¡Todas las imágenes están siendo usadas!${colors.reset}`)
-  process.exit(0)
-}
-
-console.log(`${colors.yellow}⚠${colors.reset} Imágenes NO usadas (${unusedImages.length}):\n`)
-
-let totalSize = 0
-
-unusedImages.forEach((img, idx) => {
-  const fullPath = path.join(productsDir, img)
-  const stats = fs.statSync(fullPath)
-  const sizeKB = (stats.size / 1024).toFixed(1)
-  totalSize += stats.size
-
-  console.log(`  ${idx + 1}. ${img} (${sizeKB} KB)`)
+console.log('\nTop products with unused images:')
+sorted.slice(0, 10).forEach(([slug, data]) => {
+  const sizeMB = (data.totalSize / (1024 * 1024)).toFixed(2)
+  console.log(`\n${slug}: ${data.images.length} images (${sizeMB}MB)`)
+  data.images.slice(0, 5).forEach(img => {
+    console.log(`  - ${img.filename}`)
+  })
+  if (data.images.length > 5) {
+    console.log(`  ... and ${data.images.length - 5} more`)
+  }
 })
 
-console.log(`\n${colors.cyan}ℹ${colors.reset} Espacio total: ${(totalSize / 1024 / 1024).toFixed(2)} MB`)
+const totalUnusedMB = (unusedImages.reduce((sum, img) => sum + img.size, 0) / (1024 * 1024)).toFixed(2)
+console.log(`\nTotal unused: ${totalUnusedMB}MB (${Math.round((unusedImages.length / allImageFiles.length) * 100)}%)`)
 
-console.log(`\n${colors.bright}Opciones:${colors.reset}`)
-console.log(`  1. Revisar manualmente y eliminar`)
-console.log(`  2. Mover a backup: node scripts/backup-unused-images.js`)
-console.log(`  3. Ignorar si son imágenes de futuro uso\n`)
+// Guardar reporte
+const reportPath = path.join(__dirname, '..', 'unused-images-report.json')
+fs.writeFileSync(reportPath, JSON.stringify({
+  summary: {
+    totalImages: allImageFiles.length,
+    referenced: referencedImages.size,
+    unused: unusedImages.length,
+    unusedSizeMB: parseFloat(totalUnusedMB)
+  },
+  byProduct
+}, null, 2))
 
-// Guardar lista en archivo
-const reportPath = path.join(__dirname, 'unused-images-report.txt')
-const report = `REPORTE DE IMÁGENES NO USADAS
-Fecha: ${new Date().toISOString()}
-Total: ${unusedImages.length} imágenes
-Tamaño: ${(totalSize / 1024 / 1024).toFixed(2)} MB
-
-LISTADO:
-${unusedImages.map((img, idx) => `${idx + 1}. ${img}`).join('\n')}
-
-UBICACIÓN:
-${productsDir}
-
-ACCIÓN RECOMENDADA:
-- Revisar si son imágenes antiguas o de futuro uso
-- Mover a carpeta backup si no se necesitan
-- Eliminar permanentemente si están obsoletas
-`
-
-fs.writeFileSync(reportPath, report)
-console.log(`${colors.green}✓${colors.reset} Reporte guardado: ${reportPath}\n`)
+console.log(`\nReport saved: unused-images-report.json`)

@@ -32,7 +32,7 @@ export const products: Product[] = [
     colors: [
       {
         name: "Azul Marino",
-        slug: "azul-marino",
+        slug: "azulmarino",
         hex: "#1E3A8A",
         image: "/productos/mujer/camisetas/camiseta-cuello-alto-azul-marino-cuello-alto-azulmarino1.webp",
       },
@@ -62,13 +62,19 @@ export const products: Product[] = [
       },
       {
         name: "Turquesa",
+        slug: "tuquesa",
+        hex: "#40E0D0",
+        image: "/productos/mujer/camisetas/camiseta-cuello-alto-turquesa-cuello-alto-tuquesa4.webp",
+      },
+      {
+        name: "Turquesa",
         slug: "turquesa",
         hex: "#40E0D0",
-        image: "/productos/mujer/camisetas/camiseta-cuello-alto-turquesa-cuello-alto-turquesa1.webp",
+        image: "/productos/mujer/camisetas/camiseta-cuello-alto-turquesa-cuello-alto-turquesa.webp",
       },
       {
         name: "Verde Petróleo",
-        slug: "verde-petroleo",
+        slug: "petroleo",
         hex: "#00534E",
         image: "/productos/mujer/camisetas/camiseta-cuello-alto-verde-petroleo-cuello-alto-petroleo1.webp",
       },
@@ -100,10 +106,16 @@ export const products: Product[] = [
     slug: "camiseta-manga-larga",
     title: "Camiseta manga larga",
     price: 43,
-    image: "/productos/mujer/camisetas/camiseta-manga-larga-azul-marino-manga-larga-zul-marino1.webp",
+    image: "/productos/mujer/camisetas/camiseta-manga-larga-azul-marino-manga-larga-azul-marino2.webp",
     category: "camisetas",
     fabric: "algodon",
     colors: [
+      {
+        name: "Azul",
+        slug: "azul",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/camisetas/camiseta-manga-larga-azul-marino-manga-larga-azul-marino2.webp",
+      },
       {
         name: "Azul Marino",
         slug: "azul-marino",
@@ -133,6 +145,12 @@ export const products: Product[] = [
         slug: "rojo",
         hex: "#D22B2B",
         image: "/productos/mujer/camisetas/camiseta-manga-larga-rojo-manga-larga-rojo1.webp",
+      },
+      {
+        name: "Turquesa",
+        slug: "tuqrquesa",
+        hex: "#40E0D0",
+        image: "/productos/mujer/camisetas/camiseta-manga-larga-turquesa-manga-larga-tuqrquesa4.webp",
       },
       {
         name: "Turquesa",
@@ -174,7 +192,7 @@ export const products: Product[] = [
     colors: [
       {
         name: "Azul Marino",
-        slug: "azul-marino",
+        slug: "azulmarino",
         hex: "#1E3A8A",
         image: "/productos/mujer/camisetas/camiseta-manga-corta-azul-marino-camiseta-azulmarino1.webp",
       },
@@ -229,7 +247,14 @@ export const products: Product[] = [
     image: "/productos/mujer/camisetas/camiseta-tropical.webp",
     category: "camisetas",
     fabric: "algodon",
-    colors: ["Blanco", "Negro"],
+    colors: [
+      {
+        name: "Camiseta",
+        slug: "camiseta",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/camisetas/camiseta-tropical.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     inventory: 10,
@@ -254,7 +279,14 @@ export const products: Product[] = [
     image: "/productos/mujer/camisetas/camiseta-deportiva.webp",
     category: "camisetas",
     fabric: "algodon",
-    colors: ["Rojo", "Negro"],
+    colors: [
+      {
+        name: "Camiseta",
+        slug: "camiseta",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/camisetas/camiseta-deportiva.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     inventory: 12,
@@ -322,7 +354,14 @@ export const products: Product[] = [
     image: "/productos/mujer/camisetas/camiseta-tiras-fijas.webp",
     category: "camisetas",
     fabric: "algodon",
-    colors: ["Negro", "Blanco", "Gris"],
+    colors: [
+      {
+        name: "Camiseta",
+        slug: "camiseta",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/camisetas/camiseta-tiras-fijas.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -345,27 +384,33 @@ export const products: Product[] = [
     slug: "short-slim",
     title: "Short Slim",
     price: 34,
-    image: "/productos/mujer/short/short-slim.webp",
+    image: "/productos/mujer/short/short-slim-suplex-liso-premium-acero-short-slim-acero1.webp",
     category: "bikers",
     fabric: "suplex",
     colors: [
       {
-        name: "Gris",
-        slug: "gris",
-        hex: "#9CA3AF",
-        image: "/productos/mujer/short/short-slim.webp",
+        name: "Acero",
+        slug: "acero",
+        hex: "#808080",
+        image: "/productos/mujer/short/short-slim-suplex-liso-premium-acero-short-slim-acero1.webp",
+      },
+      {
+        name: "Azulino",
+        slug: "azulino",
+        hex: "#3A53A4",
+        image: "/productos/mujer/short/short-slim-suplex-liso-premium-azulino-short-slim-azulino1.webp",
+      },
+      {
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        image: "/productos/mujer/short/short-slim-suplex-liso-premium-blanco-short-slim-blanco1.webp",
       },
       {
         name: "Negro",
         slug: "negro",
         hex: "#000000",
-        image: "/productos/mujer/short/short-slim.webp",
-      },
-      {
-        name: "Rojo",
-        slug: "rojo",
-        hex: "#D22B2B",
-        image: "/productos/mujer/short/short-slim.webp",
+        image: "/productos/mujer/short/short-slim-suplex-liso-premium-negro-short-slim-negro1.webp",
       },
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
@@ -391,7 +436,14 @@ export const products: Product[] = [
     image: "/productos/mujer/short/short-ciclista-active.webp",
     category: "bikers",
     fabric: "suplex",
-    colors: ["Negro", "Gris"],
+    colors: [
+      {
+        name: "Short",
+        slug: "short",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/short/short-ciclista-active.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -415,7 +467,14 @@ export const products: Product[] = [
     image: "/productos/mujer/short/short-lux.webp",
     category: "bikers",
     fabric: "suplex",
-    colors: ["Rojo", "Negro", "Gris"],
+    colors: [
+      {
+        name: "Short",
+        slug: "short",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/short/short-lux.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -436,7 +495,7 @@ export const products: Product[] = [
     slug: "short-brasil",
     title: "Short Brasil",
     price: 24,
-    image: "/productos/mujer/short/short-brasil-beige.webp",
+    image: "/productos/mujer/short/short-brasil-beige-short-brasil-beige1.webp",
     category: "shorts",
     fabric: "suplex",
     colors: [
@@ -444,19 +503,19 @@ export const products: Product[] = [
         name: "Beige",
         slug: "beige",
         hex: "#F5F5DC",
-        image: "/productos/mujer/short/short-brasil-beige.webp",
+        image: "/productos/mujer/short/short-brasil-beige-short-brasil-beige1.webp",
       },
       {
         name: "Blanco",
         slug: "blanco",
         hex: "#FFFFFF",
-        image: "/productos/mujer/short/short-brasil-blanco.webp",
+        image: "/productos/mujer/short/short-brasil-blanco-short-brasil-blanco1.webp",
       },
       {
         name: "Negro",
         slug: "negro",
         hex: "#000000",
-        image: "/productos/mujer/short/short-brasil-negro.webp",
+        image: "/productos/mujer/short/short-brasil-negro-short-brasil-negro1.webp",
       },
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
@@ -479,7 +538,7 @@ export const products: Product[] = [
     slug: "maxi-short",
     title: "Maxi Short",
     price: 23,
-    image: "/productos/mujer/short/maxi-short-beige.webp",
+    image: "/productos/mujer/short/maxi-short-beige-MAXI-SHORT-BEIGE1.webp",
     category: "shorts",
     fabric: "suplex",
     colors: [
@@ -487,19 +546,19 @@ export const products: Product[] = [
         name: "Beige",
         slug: "beige",
         hex: "#F5F5DC",
-        image: "/productos/mujer/short/maxi-short-beige.webp",
+        image: "/productos/mujer/short/maxi-short-beige-MAXI-SHORT-BEIGE1.webp",
       },
       {
         name: "Blanco",
         slug: "blanco",
         hex: "#FFFFFF",
-        image: "/productos/mujer/short/maxi-short-blanco.webp",
+        image: "/productos/mujer/short/maxi-short-blanco-MAXI-SHORT-BLANCO.webp",
       },
       {
         name: "Negro",
         slug: "negro",
         hex: "#000000",
-        image: "/productos/mujer/short/maxi-short-negro.webp",
+        image: "/productos/mujer/short/maxi-short-negro-MAXI-SHORT-NEGRO1.webp",
       },
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
@@ -525,7 +584,14 @@ export const products: Product[] = [
     image: "/productos/mujer/short/short-clasico.webp",
     category: "shorts",
     fabric: "suplex",
-    colors: ["Blanco", "Negro"],
+    colors: [
+      {
+        name: "Short",
+        slug: "short",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/short/short-clasico.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -546,7 +612,7 @@ export const products: Product[] = [
     slug: "mini-short",
     title: "Mini Short",
     price: 19,
-    image: "/productos/mujer/short/mini-short-beige.webp",
+    image: "/productos/mujer/short/mini-short-beige-mini-short-beige1.webp",
     category: "shorts",
     fabric: "suplex",
     colors: [
@@ -554,19 +620,19 @@ export const products: Product[] = [
         name: "Beige",
         slug: "beige",
         hex: "#F5F5DC",
-        image: "/productos/mujer/short/mini-short-beige.webp",
+        image: "/productos/mujer/short/mini-short-beige-mini-short-beige1.webp",
       },
       {
         name: "Blanco",
         slug: "blanco",
         hex: "#FFFFFF",
-        image: "/productos/mujer/short/mini-short-blanco.webp",
+        image: "/productos/mujer/short/mini-short-blanco-mini-short-blanco1.webp",
       },
       {
         name: "Negro",
         slug: "negro",
         hex: "#000000",
-        image: "/productos/mujer/short/mini-short-negro.webp",
+        image: "/productos/mujer/short/mini-short-negro-mini-short-negro.webp",
       },
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
@@ -591,27 +657,39 @@ export const products: Product[] = [
     slug: "body-manga-corta-suplex",
     title: "Body manga corta suplex",
     price: 43,
-    image: "/productos/mujer/bodys/body-manga-corta-suplex.webp",
+    image: "/productos/mujer/bodys/body-manga-corta-suplex-azul-marino.webp",
     category: "bodys",
     fabric: "suplex",
     colors: [
       {
-        name: "Gris",
-        slug: "gris",
-        hex: "#9CA3AF",
-        image: "/productos/mujer/bodys/body-manga-corta-suplex.webp",
+        name: "Azul Marino",
+        slug: "azul-marino",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/bodys/body-manga-corta-suplex-azul-marino.webp",
+      },
+      {
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        image: "/productos/mujer/bodys/body-manga-corta-suplex-blanco.webp",
+      },
+      {
+        name: "Azul Marino",
+        slug: "azulmarino",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex-1.webp",
       },
       {
         name: "Negro",
         slug: "negro",
         hex: "#000000",
-        image: "/productos/mujer/bodys/body-manga-corta-suplex.webp",
+        image: "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-negro-Body-mc-negro1.webp",
       },
       {
         name: "Rojo",
         slug: "rojo",
         hex: "#D22B2B",
-        image: "/productos/mujer/bodys/body-manga-corta-suplex.webp",
+        image: "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex-4.webp",
       },
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
@@ -634,39 +712,57 @@ export const products: Product[] = [
     slug: "body-manga-corta",
     title: "Body manga corta",
     price: 40,
-    image: "/productos/mujer/bodys/body-manga-corta-blanco.webp",
+    image: "/productos/mujer/bodys/body-manga-corta-amarillo.webp",
     category: "bodys",
     fabric: "algodon",
     colors: [
       {
-        name: "Blanco",
-        slug: "blanco",
-        hex: "#FFFFFF",
-        image: "/productos/mujer/bodys/body-manga-corta-blanco.webp",
+        name: "Amarillo",
+        slug: "amarillo",
+        hex: "#FFD700",
+        image: "/productos/mujer/bodys/body-manga-corta-amarillo.webp",
       },
       {
         name: "Beige",
         slug: "beige",
         hex: "#F5F5DC",
-        image: "/productos/mujer/bodys/body-manga-corta-beige.webp",
+        image: "/productos/mujer/bodys/body-manga-corta-beige-manga-corta-beige-5.webp",
+      },
+      {
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        image: "/productos/mujer/bodys/body-manga-corta-blanco-manga-corta-blanco1.webp",
       },
       {
         name: "Negro",
         slug: "negro",
         hex: "#000000",
-        image: "/productos/mujer/bodys/body-manga-corta-negro.webp",
+        image: "/productos/mujer/bodys/body-manga-corta-negro-manga-corta-negro1.webp",
       },
       {
         name: "Rojo",
         slug: "rojo",
         hex: "#D22B2B",
-        image: "/productos/mujer/bodys/body-manga-corta-rojo.webp",
+        image: "/productos/mujer/bodys/body-manga-corta-rojo-manga-corta-rojo1.webp",
       },
       {
         name: "Rosado",
         slug: "rosado",
         hex: "#FFC0CB",
-        image: "/productos/mujer/bodys/body-manga-corta-rosado.webp",
+        image: "/productos/mujer/bodys/body-manga-corta-rosado-body-mc-rosado1.webp",
+      },
+      {
+        name: "Azul Marino",
+        slug: "azul-marino",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/bodys/body-manga-corta-suplex-azul-marino.webp",
+      },
+      {
+        name: "Azul",
+        slug: "azul",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex-1.webp",
       },
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
@@ -689,7 +785,7 @@ export const products: Product[] = [
     slug: "body-manga-larga",
     title: "Body manga larga",
     price: 43,
-    image: "/productos/mujer/bodys/body-manga-larga-beige.webp",
+    image: "/productos/mujer/bodys/body-manga-larga-beige-manga-larga-beige1.webp",
     category: "bodys",
     fabric: "algodon",
     colors: [
@@ -697,31 +793,37 @@ export const products: Product[] = [
         name: "Beige",
         slug: "beige",
         hex: "#F5F5DC",
-        image: "/productos/mujer/bodys/body-manga-larga-beige.webp",
+        image: "/productos/mujer/bodys/body-manga-larga-beige-manga-larga-beige1.webp",
       },
       {
         name: "Blanco",
         slug: "blanco",
         hex: "#FFFFFF",
-        image: "/productos/mujer/bodys/body-manga-larga-blanco.webp",
+        image: "/productos/mujer/bodys/body-manga-larga-blanco-Body-manga-larga-blanco-1.webp",
       },
       {
         name: "Negro",
         slug: "negro",
         hex: "#000000",
-        image: "/productos/mujer/bodys/body-manga-larga-negro.webp",
+        image: "/productos/mujer/bodys/body-manga-larga-negro-body-ml-negro1.webp",
       },
       {
         name: "Rojo",
         slug: "rojo",
         hex: "#D22B2B",
-        image: "/productos/mujer/bodys/body-manga-larga-rojo.webp",
+        image: "/productos/mujer/bodys/body-manga-larga-rojo-body-ml-rojo1.webp",
       },
       {
         name: "Rosado",
         slug: "rosado",
         hex: "#FFC0CB",
-        image: "/productos/mujer/bodys/body-manga-larga-rosado.webp",
+        image: "/productos/mujer/bodys/body-manga-larga-rosado-body-ml-rosado1.webp",
+      },
+      {
+        name: "Azul",
+        slug: "azul",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/bodys/body-manga-larga-suplex-liso-premium-azul-marino-body-manga-larga-suplex-azulmarino1.webp",
       },
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
@@ -746,27 +848,27 @@ export const products: Product[] = [
     slug: "top-afrodita",
     title: "Top Afrodita",
     price: 38,
-    image: "/productos/mujer/tops/top-afrodita.webp",
+    image: "/productos/mujer/tops/top-afrodita-suplex-liso-premium-azulino-afrodita-azulino1.webp",
     category: "tops",
     fabric: "algodon",
     colors: [
       {
-        name: "Azul",
-        slug: "azul",
-        hex: "#1E3A8A",
-        image: "/productos/mujer/tops/top-afrodita.webp",
+        name: "Azulino",
+        slug: "azulino",
+        hex: "#3A53A4",
+        image: "/productos/mujer/tops/top-afrodita-suplex-liso-premium-azulino-afrodita-azulino1.webp",
       },
       {
         name: "Negro",
         slug: "negro",
         hex: "#000000",
-        image: "/productos/mujer/tops/top-afrodita.webp",
+        image: "/productos/mujer/tops/top-afrodita-suplex-liso-premium-negro-afrodita-negro1.webp",
       },
       {
         name: "Rojo",
         slug: "rojo",
         hex: "#D22B2B",
-        image: "/productos/mujer/tops/top-afrodita.webp",
+        image: "/productos/mujer/tops/top-afrodita-suplex-liso-premium-rojo-afrodita-rojo1.webp",
       },
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
@@ -792,7 +894,14 @@ export const products: Product[] = [
     image: "/productos/mujer/tops/top-venus.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Negro", "Gris"],
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/tops/top-venus.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -816,7 +925,14 @@ export const products: Product[] = [
     image: "/productos/mujer/tops/top-minerva.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Rojo", "Negro"],
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/tops/top-minerva.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -837,21 +953,39 @@ export const products: Product[] = [
     slug: "top-paradise",
     title: "Top Paradise",
     price: 38,
-    image: "/productos/mujer/tops/top-paradise.webp",
+    image: "/productos/mujer/tops/top-paradise-suplex-liso-premium-azulino-paradise-azulino1.webp",
     category: "tops",
     fabric: "algodon",
     colors: [
       {
-        name: "Rojo",
-        slug: "rojo",
-        hex: "#D22B2B",
-        image: "/productos/mujer/tops/top-paradise.webp",
+        name: "Azulino",
+        slug: "azulino",
+        hex: "#3A53A4",
+        image: "/productos/mujer/tops/top-paradise-suplex-liso-premium-azulino-paradise-azulino1.webp",
+      },
+      {
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        image: "/productos/mujer/tops/top-paradise-suplex-liso-premium-blanco-paradise-blanco1.webp",
+      },
+      {
+        name: "Charcoal",
+        slug: "charcoal",
+        hex: "#5A5A5A",
+        image: "/productos/mujer/tops/top-paradise-suplex-liso-premium-charcoal-paradise-charcoal1.webp",
       },
       {
         name: "Negro",
         slug: "negro",
         hex: "#000000",
-        image: "/productos/mujer/tops/top-paradise.webp",
+        image: "/productos/mujer/tops/top-paradise-suplex-liso-premium-negro-paradise-negro1.webp",
+      },
+      {
+        name: "Rojo",
+        slug: "rojo",
+        hex: "#D22B2B",
+        image: "/productos/mujer/tops/top-paradise-suplex-liso-premium-rojo-paradise-rojo1.webp",
       },
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
@@ -877,7 +1011,14 @@ export const products: Product[] = [
     image: "/productos/mujer/tops/top-jungle.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Gris", "Negro"],
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/tops/top-jungle.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -901,7 +1042,14 @@ export const products: Product[] = [
     image: "/productos/mujer/tops/top-astrid.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Negro"],
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/tops/top-astrid.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -925,7 +1073,14 @@ export const products: Product[] = [
     image: "/productos/mujer/tops/top-soporte.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Blanco", "Negro"],
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/tops/top-soporte.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -950,7 +1105,14 @@ export const products: Product[] = [
     image: "/productos/mujer/tops/top-arena.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Gris", "Blanco"],
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/tops/top-arena.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -974,7 +1136,14 @@ export const products: Product[] = [
     image: "/productos/mujer/tops/top-zafiro.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Blanco"],
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/tops/top-zafiro.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -998,7 +1167,14 @@ export const products: Product[] = [
     image: "/productos/mujer/tops/top-urban.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Blanco"],
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/tops/top-urban.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -1022,7 +1198,14 @@ export const products: Product[] = [
     image: "/productos/mujer/tops/top-perla.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Blanco"],
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/tops/top-perla.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -1046,7 +1229,14 @@ export const products: Product[] = [
     image: "/productos/mujer/tops/straple-chanel.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Blanco", "Negro"],
+    colors: [
+      {
+        name: "Straple",
+        slug: "straple",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/tops/straple-chanel.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -1070,7 +1260,14 @@ export const products: Product[] = [
     image: "/productos/mujer/tops/top-deportivo.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Blanco"],
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/tops/top-deportivo.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -1094,7 +1291,14 @@ export const products: Product[] = [
     image: "/productos/mujer/tops/top-tira-fijas.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Blanco"],
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/tops/top-tira-fijas.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -1118,7 +1322,14 @@ export const products: Product[] = [
     image: "/productos/mujer/tops/top-athena.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Negro", "Rojo"],
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/tops/top-athena.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -1142,7 +1353,14 @@ export const products: Product[] = [
     image: "/productos/mujer/tops/top-jolie.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Beige", "Negro"],
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/tops/top-jolie.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -1166,7 +1384,14 @@ export const products: Product[] = [
     image: "/productos/mujer/tops/top-brigid.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Negro", "Blanco"],
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/tops/top-brigid.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -1194,13 +1419,13 @@ export const products: Product[] = [
     fabric: "suplex",
     colors: [
       {
-        name: "Azulino",
-        slug: "azulino",
-        hex: "#3A53A4",
+        name: "Azul",
+        slug: "azul",
+        hex: "#1E3A8A",
         image: "/productos/mujer/enterizo/enterizo-tiras-azulino.webp",
       },
       {
-        name: "Charcol",
+        name: "Charcoal",
         slug: "charcol",
         hex: "#5A5A5A",
         image: "/productos/mujer/enterizo/enterizo-tiras-charcol.webp",
@@ -1216,6 +1441,24 @@ export const products: Product[] = [
         slug: "rojo",
         hex: "#D22B2B",
         image: "/productos/mujer/enterizo/enterizo-tiras-rojo.webp",
+      },
+      {
+        name: "Azulino",
+        slug: "azulino",
+        hex: "#3A53A4",
+        image: "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino1.webp",
+      },
+      {
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        image: "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco1.webp",
+      },
+      {
+        name: "Charcoal",
+        slug: "charcoal",
+        hex: "#5A5A5A",
+        image: "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal1.webp",
       },
     ],
     sizes: ["S", "M", "L"],
@@ -1241,13 +1484,13 @@ export const products: Product[] = [
     fabric: "suplex",
     colors: [
       {
-        name: "Azulino",
-        slug: "azulino",
-        hex: "#3A53A4",
+        name: "Azul",
+        slug: "azul",
+        hex: "#1E3A8A",
         image: "/productos/mujer/enterizo/enterizo-manga-cero-azulino.webp",
       },
       {
-        name: "Charcol",
+        name: "Charcoal",
         slug: "charcol",
         hex: "#5A5A5A",
         image: "/productos/mujer/enterizo/enterizo-manga-cero-charcol.webp",
@@ -1263,6 +1506,18 @@ export const products: Product[] = [
         slug: "rojo",
         hex: "#D22B2B",
         image: "/productos/mujer/enterizo/enterizo-manga-cero-rojo.webp",
+      },
+      {
+        name: "Azulino",
+        slug: "azulino",
+        hex: "#3A53A4",
+        image: "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-Manga-cero-azulino1.webp",
+      },
+      {
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        image: "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco1.webp",
       },
     ],
     sizes: ["S", "M", "L"],
@@ -1286,7 +1541,14 @@ export const products: Product[] = [
     image: "/productos/nina/enterizos/enterizo-manga-corta-nina.webp",
     category: "enterizos",
     fabric: "suplex",
-    colors: ["Rosa", "Negro", "Azul"],
+    colors: [
+      {
+        name: "Enterizo",
+        slug: "enterizo",
+        hex: "#CCCCCC",
+        image: "/productos/nina/enterizos/enterizo-manga-corta-nina.webp",
+      },
+    ],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
     attributes: {
@@ -1310,7 +1572,14 @@ export const products: Product[] = [
     image: "/productos/nina/enterizos/enterizo-manga-larga-nina.webp",
     category: "enterizos",
     fabric: "suplex",
-    colors: ["Rosa", "Negro", "Morado"],
+    colors: [
+      {
+        name: "Enterizo",
+        slug: "enterizo",
+        hex: "#CCCCCC",
+        image: "/productos/nina/enterizos/enterizo-manga-larga-nina.webp",
+      },
+    ],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
     attributes: {
@@ -1336,7 +1605,14 @@ export const products: Product[] = [
     image: "/productos/mujer/legging/legging-slim-suplex-perchado.webp",
     category: "leggings",
     fabric: "suplex",
-    colors: ["Negro", "Gris", "Azul"],
+    colors: [
+      {
+        name: "Legging",
+        slug: "legging",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/legging/legging-slim-suplex-perchado.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -1357,27 +1633,63 @@ export const products: Product[] = [
     slug: "legging-slim",
     title: "Legging Slim",
     price: 38,
-    image: "/productos/mujer/legging/legging-slim.webp",
+    image: "/productos/mujer/legging/legging-slim-azul-marino.webp",
     category: "leggings",
     fabric: "suplex",
     colors: [
       {
+        name: "Azul Marino",
+        slug: "azul-marino",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/legging/legging-slim-azul-marino.webp",
+      },
+      {
+        name: "Azul",
+        slug: "azul",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/legging/legging-slim-azulino.webp",
+      },
+      {
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        image: "/productos/mujer/legging/legging-slim-blanco.webp",
+      },
+      {
         name: "Negro",
         slug: "negro",
         hex: "#000000",
-        image: "/productos/mujer/legging/legging-slim.webp",
-      },
-      {
-        name: "Gris",
-        slug: "gris",
-        hex: "#9CA3AF",
-        image: "/productos/mujer/legging/legging-slim.webp",
+        image: "/productos/mujer/legging/legging-slim-negro.webp",
       },
       {
         name: "Rojo",
         slug: "rojo",
         hex: "#D22B2B",
-        image: "/productos/mujer/legging/legging-slim.webp",
+        image: "/productos/mujer/legging/legging-slim-rojo.webp",
+      },
+      {
+        name: "Acero",
+        slug: "acero",
+        hex: "#808080",
+        image: "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero1.webp",
+      },
+      {
+        name: "Aqua",
+        slug: "aqua",
+        hex: "#00FFFF",
+        image: "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua1.webp",
+      },
+      {
+        name: "Azulino",
+        slug: "azulino",
+        hex: "#3A53A4",
+        image: "/productos/mujer/legging/legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-1.webp",
+      },
+      {
+        name: "Camel",
+        slug: "camel",
+        hex: "#C19A6B",
+        image: "/productos/mujer/legging/legging-slim-suplex-liso-premium-camel-legging-slim-camel1.webp",
       },
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
@@ -1403,7 +1715,14 @@ export const products: Product[] = [
     image: "/productos/mujer/legging/legging-functional.webp",
     category: "leggings",
     fabric: "suplex",
-    colors: ["Negro", "Gris"],
+    colors: [
+      {
+        name: "Legging",
+        slug: "legging",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/legging/legging-functional.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -1424,27 +1743,33 @@ export const products: Product[] = [
     slug: "legging-harmony",
     title: "Legging Harmony",
     price: 40,
-    image: "/productos/mujer/legging/legging-harmony.webp",
+    image: "/productos/mujer/legging/legging-harmony-azulino.webp",
     category: "leggings",
     fabric: "suplex",
     colors: [
       {
-        name: "Negro",
-        slug: "negro",
-        hex: "#000000",
-        image: "/productos/mujer/legging/legging-harmony.webp",
-      },
-      {
-        name: "Gris",
-        slug: "gris",
-        hex: "#9CA3AF",
-        image: "/productos/mujer/legging/legging-harmony.webp",
-      },
-      {
         name: "Azul",
         slug: "azul",
         hex: "#1E3A8A",
-        image: "/productos/mujer/legging/legging-harmony.webp",
+        image: "/productos/mujer/legging/legging-harmony-azulino.webp",
+      },
+      {
+        name: "Charcoal",
+        slug: "charcol",
+        hex: "#5A5A5A",
+        image: "/productos/mujer/legging/legging-harmony-charcol.webp",
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/productos/mujer/legging/legging-harmony-negro.webp",
+      },
+      {
+        name: "Rojo",
+        slug: "rojo",
+        hex: "#D22B2B",
+        image: "/productos/mujer/legging/legging-harmony-rojo.webp",
       },
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
@@ -1470,7 +1795,14 @@ export const products: Product[] = [
     image: "/productos/mujer/legging/legging-realce-fresh-terry.webp",
     category: "leggings",
     fabric: "suplex",
-    colors: ["Negro", "Gris"],
+    colors: [
+      {
+        name: "Legging",
+        slug: "legging",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/legging/legging-realce-fresh-terry.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -1491,27 +1823,33 @@ export const products: Product[] = [
     slug: "legging-clasica",
     title: "Legging Clásica",
     price: 36,
-    image: "/productos/mujer/legging/legging-clasica.webp",
+    image: "/productos/mujer/legging/legging-clasica-azul-marino.webp",
     category: "leggings",
     fabric: "suplex",
     colors: [
       {
+        name: "Azul Marino",
+        slug: "azul-marino",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/legging/legging-clasica-azul-marino.webp",
+      },
+      {
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        image: "/productos/mujer/legging/legging-clasica-gamusa-blanco.webp",
+      },
+      {
+        name: "Melange",
+        slug: "melange",
+        hex: "#B8B8B8",
+        image: "/productos/mujer/legging/legging-clasica-gamusa-melange.webp",
+      },
+      {
         name: "Negro",
         slug: "negro",
         hex: "#000000",
-        image: "/productos/mujer/legging/legging-clasica.webp",
-      },
-      {
-        name: "Gris",
-        slug: "gris",
-        hex: "#9CA3AF",
-        image: "/productos/mujer/legging/legging-clasica.webp",
-      },
-      {
-        name: "Azul",
-        slug: "azul",
-        hex: "#1E3A8A",
-        image: "/productos/mujer/legging/legging-clasica-azul-marino.webp",
+        image: "/productos/mujer/legging/legging-clasica-gamusa-negro.webp",
       },
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
@@ -1537,7 +1875,14 @@ export const products: Product[] = [
     image: "/productos/mujer/legging/legging-clasica-gamuza.webp",
     category: "leggings",
     fabric: "suplex",
-    colors: ["Negro", "Gris"],
+    colors: [
+      {
+        name: "Legging",
+        slug: "legging",
+        hex: "#CCCCCC",
+        image: "/productos/mujer/legging/legging-clasica-gamuza.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -1561,7 +1906,14 @@ export const products: Product[] = [
     image: "/productos/nina/leggins/legging-nina.webp",
     category: "leggings",
     fabric: "suplex",
-    colors: ["Negro", "Rosa", "Azul"],
+    colors: [
+      {
+        name: "Legging",
+        slug: "legging",
+        hex: "#CCCCCC",
+        image: "/productos/nina/leggins/legging-nina.webp",
+      },
+    ],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
     attributes: {
@@ -1589,16 +1941,10 @@ export const products: Product[] = [
     fabric: "suplex",
     colors: [
       {
-        name: "Azulino",
-        slug: "azulino",
-        hex: "#2563EB",
+        name: "Azul",
+        slug: "azul",
+        hex: "#1E3A8A",
         image: "/productos/mujer/pescador/pescador-realce-azulino.webp",
-      },
-      {
-        name: "Charcol",
-        slug: "charcol",
-        hex: "#374151",
-        image: "/productos/mujer/pescador/pescador-realce-charcol.webp",
       },
       {
         name: "Negro",
@@ -1609,7 +1955,7 @@ export const products: Product[] = [
       {
         name: "Rojo",
         slug: "rojo",
-        hex: "#DC2626",
+        hex: "#D22B2B",
         image: "/productos/mujer/pescador/pescador-realce-rojo.webp",
       },
     ],
@@ -1635,15 +1981,15 @@ export const products: Product[] = [
     fabric: "suplex",
     colors: [
       {
-        name: "Azulino",
-        slug: "azulino",
-        hex: "#2563EB",
+        name: "Azul",
+        slug: "azul",
+        hex: "#1E3A8A",
         image: "/productos/mujer/pescador/pescador-dynamic-azulino.webp",
       },
       {
-        name: "Charcol",
+        name: "Charcoal",
         slug: "charcol",
-        hex: "#374151",
+        hex: "#5A5A5A",
         image: "/productos/mujer/pescador/pescador-dynamic-charcol.webp",
       },
       {
@@ -1655,7 +2001,7 @@ export const products: Product[] = [
       {
         name: "Rojo",
         slug: "rojo",
-        hex: "#DC2626",
+        hex: "#D22B2B",
         image: "/productos/mujer/pescador/pescador-dynamic-rojo.webp",
       },
     ],
@@ -1688,15 +2034,15 @@ export const products: Product[] = [
     fabric: "suplex",
     colors: [
       {
-        name: "Azulino",
-        slug: "azulino",
-        hex: "#2563EB",
+        name: "Azul",
+        slug: "azul",
+        hex: "#1E3A8A",
         image: "/productos/mujer/torero/torero-energy-azulino.webp",
       },
       {
-        name: "Charcol",
+        name: "Charcoal",
         slug: "charcol",
-        hex: "#374151",
+        hex: "#5A5A5A",
         image: "/productos/mujer/torero/torero-energy-charcol.webp",
       },
       {
@@ -1708,7 +2054,7 @@ export const products: Product[] = [
       {
         name: "Rojo",
         slug: "rojo",
-        hex: "#DC2626",
+        hex: "#D22B2B",
         image: "/productos/mujer/torero/torero-energy-rojo.webp",
       },
     ],
@@ -1730,7 +2076,14 @@ export const products: Product[] = [
     image: "/productos/nina/cafarenas/cafarena-nina.webp",
     category: "shorts",
     fabric: "suplex",
-    colors: ["Rosa", "Azul", "Negro"],
+    colors: [
+      {
+        name: "Cafarena",
+        slug: "cafarena",
+        hex: "#CCCCCC",
+        image: "/productos/nina/cafarenas/cafarena-nina.webp",
+      },
+    ],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
     attributes: {
@@ -1754,7 +2107,14 @@ export const products: Product[] = [
     image: "/productos/nina/pantys/panty-nina.webp",
     category: "shorts",
     fabric: "suplex",
-    colors: ["Rosa", "Negro", "Blanco"],
+    colors: [
+      {
+        name: "Panty",
+        slug: "panty",
+        hex: "#CCCCCC",
+        image: "/productos/nina/pantys/panty-nina.webp",
+      },
+    ],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
     attributes: {
@@ -1778,7 +2138,14 @@ export const products: Product[] = [
     image: "/productos/nina/shorts/maxi-short-nina.webp",
     category: "shorts",
     fabric: "suplex",
-    colors: ["Rosa", "Negro", "Blanco"],
+    colors: [
+      {
+        name: "Maxi",
+        slug: "maxi",
+        hex: "#CCCCCC",
+        image: "/productos/nina/shorts/maxi-short-nina.webp",
+      },
+    ],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
     attributes: {
@@ -1802,7 +2169,14 @@ export const products: Product[] = [
     image: "/productos/nina/shorts/short-juvenil-nina.webp",
     category: "shorts",
     fabric: "suplex",
-    colors: ["Rosa", "Negro", "Azul"],
+    colors: [
+      {
+        name: "Short",
+        slug: "short",
+        hex: "#CCCCCC",
+        image: "/productos/nina/shorts/short-juvenil-nina.webp",
+      },
+    ],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
     attributes: {
@@ -1826,7 +2200,14 @@ export const products: Product[] = [
     image: "/productos/nina/tops/top-jazmin.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Rosa", "Blanco", "Negro"],
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/productos/nina/tops/top-jazmin.webp",
+      },
+    ],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
     attributes: {
@@ -1850,7 +2231,14 @@ export const products: Product[] = [
     image: "/productos/nina/tops/top-margarita.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Rosa", "Blanco", "Azul"],
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/productos/nina/tops/top-margarita.webp",
+      },
+    ],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
     attributes: {
@@ -1874,7 +2262,14 @@ export const products: Product[] = [
     image: "/productos/nina/tops/top-orquidea.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Morado", "Rosa", "Blanco"],
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/productos/nina/tops/top-orquidea.webp",
+      },
+    ],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
     attributes: {
@@ -1898,7 +2293,14 @@ export const products: Product[] = [
     image: "/productos/nina/tops/top-tulipan.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Rosa", "Blanco", "Negro"],
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/productos/nina/tops/top-tulipan.webp",
+      },
+    ],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
     attributes: {
@@ -1922,7 +2324,14 @@ export const products: Product[] = [
     image: "/productos/nina/tops/top-vani.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Rosa", "Blanco", "Azul"],
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/productos/nina/tops/top-vani.webp",
+      },
+    ],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
     attributes: {

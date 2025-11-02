@@ -1,0 +1,173 @@
+{
+  "timestamp": "2025-11-02T03:34:45.925Z",
+  "summary": {
+    "totalDownloaded": 394,
+    "totalExisting": 394,
+    "totalMissing": 0,
+    "percentageComplete": 100
+  },
+  "byProduct": [
+    {
+      "slug": "body-manga-corta",
+      "totalDownloaded": 22,
+      "existing": 22,
+      "missing": 0,
+      "missingFiles": []
+    },
+    {
+      "slug": "body-manga-corta-suplex",
+      "totalDownloaded": 18,
+      "existing": 18,
+      "missing": 0,
+      "missingFiles": []
+    },
+    {
+      "slug": "body-manga-larga",
+      "totalDownloaded": 22,
+      "existing": 22,
+      "missing": 0,
+      "missingFiles": []
+    },
+    {
+      "slug": "body-manga-larga-suplex",
+      "totalDownloaded": 19,
+      "existing": 19,
+      "missing": 0,
+      "missingFiles": []
+    },
+    {
+      "slug": "camiseta-cuello-alto",
+      "totalDownloaded": 33,
+      "existing": 33,
+      "missing": 0,
+      "missingFiles": []
+    },
+    {
+      "slug": "camiseta-gia",
+      "totalDownloaded": 12,
+      "existing": 12,
+      "missing": 0,
+      "missingFiles": []
+    },
+    {
+      "slug": "camiseta-manga-corta",
+      "totalDownloaded": 24,
+      "existing": 24,
+      "missing": 0,
+      "missingFiles": []
+    },
+    {
+      "slug": "camiseta-manga-larga",
+      "totalDownloaded": 35,
+      "existing": 35,
+      "missing": 0,
+      "missingFiles": []
+    },
+    {
+      "slug": "enterizo-manga-cero",
+      "totalDownloaded": 18,
+      "existing": 18,
+      "missing": 0,
+      "missingFiles": []
+    },
+    {
+      "slug": "enterizo-tiras",
+      "totalDownloaded": 25,
+      "existing": 25,
+      "missing": 0,
+      "missingFiles": []
+    },
+    {
+      "slug": "legging-push-up",
+      "totalDownloaded": 4,
+      "existing": 4,
+      "missing": 0,
+      "missingFiles": []
+    },
+    {
+      "slug": "legging-realce",
+      "totalDownloaded": 21,
+      "existing": 21,
+      "missing": 0,
+      "missingFiles": []
+    },
+    {
+      "slug": "legging-slim",
+      "totalDownloaded": 25,
+      "existing": 25,
+      "missing": 0,
+      "missingFiles": []
+    },
+    {
+      "slug": "maxi-short",
+      "totalDownloaded": 14,
+      "existing": 14,
+      "missing": 0,
+      "missingFiles": []
+    },
+    {
+      "slug": "mini-short",
+      "totalDownloaded": 15,
+      "existing": 15,
+      "missing": 0,
+      "missingFiles": []
+    },
+    {
+      "slug": "short-brasil",
+      "totalDownloaded": 15,
+      "existing": 15,
+      "missing": 0,
+      "missingFiles": []
+    },
+    {
+      "slug": "short-push-up",
+      "totalDownloaded": 19,
+      "existing": 19,
+      "missing": 0,
+      "missingFiles": []
+    },
+    {
+      "slug": "short-slim",
+      "totalDownloaded": 17,
+      "existing": 17,
+      "missing": 0,
+      "missingFiles": []
+    },
+    {
+      "slug": "top-afrodita",
+      "totalDownloaded": 15,
+      "existing": 15,
+      "missing": 0,
+      "missingFiles": []
+    },
+    {
+      "slug": "top-paradise",
+      "totalDownloaded": 21,
+      "existing": 21,
+      "missing": 0,
+      "missingFiles": []
+    }
+  ],
+  "missingImages": {
+    "body-manga-corta": [],
+    "body-manga-corta-suplex": [],
+    "body-manga-larga": [],
+    "body-manga-larga-suplex": [],
+    "camiseta-cuello-alto": [],
+    "camiseta-gia": [],
+    "camiseta-manga-corta": [],
+    "camiseta-manga-larga": [],
+    "enterizo-manga-cero": [],
+    "enterizo-tiras": [],
+    "legging-push-up": [],
+    "legging-realce": [],
+    "legging-slim": [],
+    "maxi-short": [],
+    "mini-short": [],
+    "short-brasil": [],
+    "short-push-up": [],
+    "short-slim": [],
+    "top-afrodita": [],
+    "top-paradise": []
+  }
+}
