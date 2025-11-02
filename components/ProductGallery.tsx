@@ -14,28 +14,15 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
   const [isZoomOpen, setIsZoomOpen] = useState(false) // ✅ Modal de zoom
   const [zoomLevel, setZoomLevel] = useState(1) // ✅ Nivel de zoom (1 = 100%, 2 = 200%, etc.)
 
-  // Si solo hay una imagen, mostrar vista simple
-  if (images.length === 1) {
-    return (
-      <div className="relative aspect-square overflow-hidden rounded-2xl bg-neutral-100">
-        <Image
-          src={images[0]}
-          alt={productName}
-          fill
-          className="object-cover"
-          priority
-          sizes="(max-width: 768px) 100vw, 50vw"
-        />
-      </div>
-    )
-  }
+  // ✅ Filter out any empty or invalid images
+  const validImages = images.filter(img => img && img.trim() !== "")
 
   const goToPrevious = () => {
-    setSelectedIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1))
+    setSelectedIndex((prev) => (prev === 0 ? validImages.length - 1 : prev - 1))
   }
 
   const goToNext = () => {
-    setSelectedIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1))
+    setSelectedIndex((prev) => (prev === validImages.length - 1 ? 0 : prev + 1))
   }
 
   // ✅ Controles de zoom
@@ -83,6 +70,39 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
     return () => document.removeEventListener('keydown', handleKeys)
   }, [isZoomOpen])
 
+  // ✅ If no valid images, show placeholder
+  if (validImages.length === 0) {
+    console.warn("⚠️  ProductGallery received empty images array")
+    return (
+      <div className="relative aspect-square overflow-hidden rounded-2xl bg-neutral-100">
+        <Image
+          src="/placeholder.svg"
+          alt={productName}
+          fill
+          className="object-cover"
+          priority
+          sizes="(max-width: 768px) 100vw, 50vw"
+        />
+      </div>
+    )
+  }
+
+  // Si solo hay una imagen, mostrar vista simple
+  if (validImages.length === 1) {
+    return (
+      <div className="relative aspect-square overflow-hidden rounded-2xl bg-neutral-100">
+        <Image
+          src={validImages[0]}
+          alt={productName}
+          fill
+          className="object-cover"
+          priority
+          sizes="(max-width: 768px) 100vw, 50vw"
+        />
+      </div>
+    )
+  }
+
   return (
     <>
       <div className="space-y-4">
@@ -90,7 +110,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
         <div className="relative aspect-square overflow-hidden rounded-2xl bg-neutral-100 group cursor-zoom-in">
           <div onClick={openZoom} className="relative w-full h-full">
             <Image
-              src={images[selectedIndex]}
+              src={validImages[selectedIndex]}
               alt={`${productName} - Imagen ${selectedIndex + 1}`}
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -109,7 +129,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
           </button>
 
         {/* Botones de navegación (solo si hay más de una imagen) */}
-        {images.length > 1 && (
+        {validImages.length > 1 && (
           <>
             <button
               onClick={goToPrevious}
@@ -129,9 +149,9 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
         )}
 
         {/* Indicador de posición */}
-        {images.length > 1 && (
+        {validImages.length > 1 && (
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
-            {images.map((_, index) => (
+            {validImages.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setSelectedIndex(index)}
@@ -148,9 +168,9 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
       </div>
 
       {/* Thumbnails (miniaturas) */}
-      {images.length > 1 && (
+      {validImages.length > 1 && (
         <div className="grid grid-cols-4 gap-3">
-          {images.map((image, index) => (
+          {validImages.map((image, index) => (
             <button
               key={index}
               onClick={() => setSelectedIndex(index)}
@@ -180,7 +200,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
           <div className="absolute top-0 left-0 right-0 bg-black/50 backdrop-blur-sm p-4 flex items-center justify-between z-10">
             <div className="flex items-center gap-4">
               <span className="text-white text-sm font-medium">
-                {selectedIndex + 1} / {images.length}
+                {selectedIndex + 1} / {validImages.length}
               </span>
 
               {/* Controles de zoom */}
@@ -228,7 +248,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
               }}
             >
               <Image
-                src={images[selectedIndex]}
+                src={validImages[selectedIndex]}
                 alt={`${productName} - Imagen ${selectedIndex + 1}`}
                 fill
                 className="object-contain"
@@ -238,7 +258,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
           </div>
 
           {/* Botones de navegación */}
-          {images.length > 1 && (
+          {validImages.length > 1 && (
             <>
               <button
                 onClick={goToPrevious}
@@ -258,9 +278,9 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
           )}
 
           {/* Thumbnails en modal */}
-          {images.length > 1 && (
+          {validImages.length > 1 && (
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 max-w-[90vw] overflow-x-auto px-4 pb-2">
-              {images.map((image, index) => (
+              {validImages.map((image, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedIndex(index)}

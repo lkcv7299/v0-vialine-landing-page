@@ -11,6 +11,15 @@ import StockIndicator from "@/components/StockIndicator"
 import { toast } from "sonner"
 
 function getProductImages(product: Product, selectedColorSlug?: string): string[] {
+  // Helper function to filter and validate image arrays
+  const filterValidImages = (images: string[]): string[] => {
+    const filtered = images.filter(img => img && img.trim() !== "")
+    if (filtered.length === 0) {
+      console.warn(`⚠️  Empty images array for product: ${product.slug}`, { selectedColorSlug, images })
+    }
+    return filtered
+  }
+
   // If a color is selected, return ONLY images for that color
   if (selectedColorSlug) {
     const colorObj = product.colors.find(c =>
@@ -20,10 +29,11 @@ function getProductImages(product: Product, selectedColorSlug?: string): string[
     if (colorObj && typeof colorObj === "object") {
       // Prefer images array (multiple images per color)
       if (colorObj.images && colorObj.images.length > 0) {
-        return colorObj.images
+        const validImages = filterValidImages(colorObj.images)
+        if (validImages.length > 0) return validImages
       }
       // Fallback to single image
-      if (colorObj.image) {
+      if (colorObj.image && colorObj.image.trim() !== "") {
         return [colorObj.image]
       }
     }
@@ -36,15 +46,21 @@ function getProductImages(product: Product, selectedColorSlug?: string): string[
 
   if (firstColorWithImages && typeof firstColorWithImages === "object") {
     if (firstColorWithImages.images && firstColorWithImages.images.length > 0) {
-      return firstColorWithImages.images
+      const validImages = filterValidImages(firstColorWithImages.images)
+      if (validImages.length > 0) return validImages
     }
-    if (firstColorWithImages.image) {
+    if (firstColorWithImages.image && firstColorWithImages.image.trim() !== "") {
       return [firstColorWithImages.image]
     }
   }
 
   // Last fallback: product main image
-  return product.image ? [product.image] : ["/placeholder.svg"]
+  if (product.image && product.image.trim() !== "") {
+    return [product.image]
+  }
+
+  console.error(`❌ No valid images found for product: ${product.slug}`)
+  return ["/placeholder.svg"]
 }
 
 export default function ProductDetailCard({ product }: { product: Product }) {

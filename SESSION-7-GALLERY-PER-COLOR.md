@@ -353,8 +353,148 @@ animate-fade-in
 
 ---
 
-**Status:** ✅ COMPLETADO CON ÉXITO
-**Tiempo Total:** ~2.5 horas
-**Errores Encontrados:** 0
+**Status:** ✅ COMPLETADO CON ÉXITO (con debugging adicional)
+**Tiempo Total:** ~5.5 horas (incluye debugging session)
+**Errores Encontrados:** 2 (críticos)
 **Regresiones:** 0
 **Calidad:** Premium / Quirúrgica
+
+---
+
+## ⚠️ DEBUGGING SESSION - Errores Críticos Encontrados y Resueltos
+
+### Problema 1: Empty String en Image src
+
+**Error:**
+```
+An empty string ("") was passed to the src attribute
+Image is missing required 'src' property
+```
+
+**Investigación:**
+- ✅ Verificado: NO hay strings vacíos en products.ts
+- ✅ Verificado: NO hay arrays vacíos
+- ❌ Encontrado: Faltaba validación defensiva en componentes
+
+**Solución:**
+1. **ProductDetailCard.tsx** - Agregada función `filterValidImages()`
+2. **ProductGallery.tsx** - Filtrado de `validImages` al inicio
+3. **SearchBar.tsx** - Fallback a `/placeholder.svg`
+
+**Código implementado:**
+```typescript
+// ProductDetailCard
+const filterValidImages = (images: string[]): string[] => {
+  const filtered = images.filter(img => img && img.trim() !== "")
+  if (filtered.length === 0) {
+    console.warn(`⚠️  Empty images array for product: ${product.slug}`)
+  }
+  return filtered
+}
+
+// ProductGallery
+const validImages = images.filter(img => img && img.trim() !== "")
+if (validImages.length === 0) {
+  return <Image src="/placeholder.svg" />
+}
+```
+
+### Problema 2: React Hooks Violation (CRÍTICO)
+
+**Error:**
+```
+Error: React has detected a change in the order of Hooks called by ProductGallery
+Previous render            Next render
+------------------------------------------------------
+1. useState                   useState
+2. useState                   useState
+3. useState                   useState
+4. undefined                  useEffect
+```
+
+**Causa:**
+Early returns colocados ANTES de los useEffect hooks, violando la regla fundamental de React: los hooks deben llamarse en el MISMO ORDEN en cada render.
+
+**Código Incorrecto:**
+```typescript
+export default function ProductGallery({ images, productName }) {
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const validImages = images.filter(...)
+
+  // ❌ EARLY RETURN ANTES DE HOOKS
+  if (validImages.length === 0) {
+    return <div>...</div>
+  }
+
+  // Hooks solo ejecutados si hay imágenes
+  useEffect(() => { ... }, [isZoomOpen])  // ❌ VIOLACIÓN
+}
+```
+
+**Código Corregido:**
+```typescript
+export default function ProductGallery({ images, productName }) {
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [isZoomOpen, setIsZoomOpen] = useState(false)
+  const [zoomLevel, setZoomLevel] = useState(1)
+
+  const validImages = images.filter(...)
+
+  // ✅ TODOS LOS HOOKS PRIMERO
+  useEffect(() => { ... }, [isZoomOpen])
+  useEffect(() => { ... }, [isZoomOpen])
+
+  // ✅ EARLY RETURNS DESPUÉS
+  if (validImages.length === 0) {
+    return <div>...</div>
+  }
+
+  return (...)
+}
+```
+
+**Fix:** Movidos todos los hooks al inicio del componente ANTES de cualquier return condicional.
+
+### Scripts de Diagnóstico Creados
+
+1. **`scripts/find-empty-images.js`** - Busca strings vacíos en arrays
+2. **`scripts/find-problematic-images.js`** - Análisis exhaustivo de estructura
+3. **`scripts/find-products-with-empty-images.js`** - Verifica campos vacíos
+
+**Resultado:** ✅ Todos confirmaron que los datos están OK
+
+### Validación Defensiva Multicapa
+
+**Nivel 1** - ProductDetailCard (getProductImages):
+- Filtra arrays de imágenes
+- Valida strings individuales
+- Múltiples fallbacks
+
+**Nivel 2** - ProductGallery:
+- Filtra imágenes al inicio
+- Fallback a placeholder si array vacío
+
+**Nivel 3** - SearchBar:
+- Fallback inline: `product.image || "/placeholder.svg"`
+
+### Estado Final del Debugging
+
+✅ Empty string errors - RESUELTO con validación defensiva
+✅ React Hooks violation - RESUELTO reordenando hooks
+✅ Validación en 3 componentes
+✅ Scripts de diagnóstico creados
+✅ Logging para debug futuro
+
+### Lecciones Aprendidas Adicionales
+
+6. **Rules of Hooks son ABSOLUTAS** - No se pueden romper bajo ninguna circunstancia
+7. **Validación defensiva es CRÍTICA** - Nunca asumir datos perfectos
+8. **Debugging sistemático** - Usar scripts para verificar datos antes de culpar al código
+9. **Cache puede confundir** - Hard refresh necesario después de fixes
+
+---
+
+**Status Final:** ✅ COMPLETADO CON VALIDACIÓN ROBUSTA
+**Errores Críticos Resueltos:** 2
+**Scripts de Diagnóstico:** 3
+**Componentes Mejorados:** 3

@@ -226,7 +226,7 @@ export default function SearchBar() {
                         >
                           <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 bg-neutral-100">
                             <Image
-                              src={product.image}
+                              src={product.image || "/placeholder.svg"}
                               alt={product.title}
                               fill
                               className="object-cover group-hover:scale-105 transition-transform"
