@@ -24,22 +24,32 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
   // Usar hover image si está disponible y estamos hovering
   const currentImage = isHovering && hoverImage ? hoverImage : displayImage
 
-  // Determinar object-position PRECISO basado en la categoría del producto
-  // Enfoque quirúrgico para mostrar el producto correcto
+  // Determinar object-position PRECISO basado en el SLUG del producto
+  // Más confiable que buscar en el path de la imagen
   const getObjectPosition = (): string => {
+    const productSlug = slug.toLowerCase()
     const imagePath = displayImage.toLowerCase()
 
     // Camisetas y tops: Enfoque en torso superior + cara (15% desde arriba)
-    if (imagePath.includes('camiseta') || imagePath.includes('top')) {
+    if (productSlug.includes('camiseta') ||
+        productSlug.includes('top') ||
+        imagePath.includes('camiseta') ||
+        imagePath.includes('top')) {
+      console.log('🎯 CROP: Top/Camiseta detectado ->', slug, 'usando center 15%')
       return 'center 15%'
     }
 
     // Bodys y enterizos: Un poco más de cuerpo (25% desde arriba)
-    if (imagePath.includes('body') || imagePath.includes('enterizo')) {
+    if (productSlug.includes('body') ||
+        productSlug.includes('enterizo') ||
+        imagePath.includes('body') ||
+        imagePath.includes('enterizo')) {
+      console.log('🎯 CROP: Body/Enterizo detectado ->', slug, 'usando center 25%')
       return 'center 25%'
     }
 
     // Productos inferiores: Centro balanceado
+    console.log('🎯 CROP: Producto inferior ->', slug, 'usando center center')
     return 'center center'
   }
 
@@ -56,7 +66,7 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
             ;(e.currentTarget as HTMLImageElement).src = fallbackImage || "/placeholder.svg"
           }}
           alt={title}
-          className="h-full w-full object-cover scale-[1.02] transition-all duration-500 ease-out group-hover:scale-110"
+          className="h-full w-full object-cover scale-[1.15] transition-all duration-500 ease-out group-hover:scale-[1.25]"
           style={{ objectPosition: getObjectPosition() }}
           loading="lazy"
         />
