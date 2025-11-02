@@ -156,11 +156,17 @@ export const products: Product[] = [
       ]
     },
       {
-        name: "Azul Marino",
-        slug: "azul-marino",
-        hex: "#1E3A8A",
-        image: "/productos/mujer/camisetas/camiseta-manga-larga-azul-marino-manga-larga-zul-marino1.webp",
-      },
+      name: "Azul Marino",
+      slug: "azul-marino",
+      hex: "#1E3A8A",
+      images: [
+        "/productos/mujer/camisetas/camiseta-manga-larga-azul-marino-manga-larga-zul-marino1.webp",
+        "/productos/mujer/camisetas/camiseta-manga-larga-azul-marino-manga-larga-azul-marino2.webp",
+        "/productos/mujer/camisetas/camiseta-manga-larga-azul-marino-manga-larga-azul-marino3.webp",
+        "/productos/mujer/camisetas/camiseta-manga-larga-azul-marino-manga-larga-azul-marino4.webp",
+        "/productos/mujer/camisetas/camiseta-manga-larga-azul-marino-manga-larga-azul-marino5.webp"
+      ]
+    },
       {
       name: "Beige",
       slug: "beige",
@@ -210,11 +216,17 @@ export const products: Product[] = [
       ]
     },
       {
-        name: "Turquesa",
-        slug: "tuqrquesa",
-        hex: "#40E0D0",
-        image: "/productos/mujer/camisetas/camiseta-manga-larga-turquesa-manga-larga-tuqrquesa4.webp",
-      },
+      name: "Turquesa",
+      slug: "tuqrquesa",
+      hex: "#40E0D0",
+      images: [
+        "/productos/mujer/camisetas/camiseta-manga-larga-turquesa-manga-larga-tuqrquesa4.webp",
+        "/productos/mujer/camisetas/camiseta-manga-larga-turquesa-manga-larga-turquesa1.webp",
+        "/productos/mujer/camisetas/camiseta-manga-larga-turquesa-manga-larga-turquesa2.webp",
+        "/productos/mujer/camisetas/camiseta-manga-larga-turquesa-manga-larga-turquesa3.webp",
+        "/productos/mujer/camisetas/camiseta-manga-larga-turquesa-manga-larga-turquesa5.webp"
+      ]
+    },
       {
       name: "Turquesa",
       slug: "turquesa",
@@ -815,11 +827,17 @@ export const products: Product[] = [
       ]
     },
       {
-        name: "Negro",
-        slug: "negro",
-        hex: "#000000",
-        image: "/productos/mujer/short/mini-short-negro-mini-short-negro.webp",
-      },
+      name: "Negro",
+      slug: "negro",
+      hex: "#000000",
+      images: [
+        "/productos/mujer/short/mini-short-negro-mini-short-negro.webp",
+        "/productos/mujer/short/mini-short-negro-mini-short-negro2..webp",
+        "/productos/mujer/short/mini-short-negro-mini-short-negro3..webp",
+        "/productos/mujer/short/mini-short-negro-mini-short-negro4..webp",
+        "/productos/mujer/short/mini-short-negro-mini-short-negro5..webp"
+      ]
+    },
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
@@ -1992,11 +2010,17 @@ export const products: Product[] = [
         image: "/productos/mujer/legging/legging-slim-azulino.webp",
       },
       {
-        name: "Blanco",
-        slug: "blanco",
-        hex: "#FFFFFF",
-        image: "/productos/mujer/legging/legging-slim-blanco.webp",
-      },
+      name: "Blanco",
+      slug: "blanco",
+      hex: "#FFFFFF",
+      images: [
+        "/productos/mujer/legging/legging-slim-blanco.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-blanco-legging-slim-blanco1.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-blanco-legging-slim-blanco2.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-blanco-legging-slim-blanco3.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-blanco-legging-slim-blanco4.webp"
+      ]
+    },
       {
         name: "Negro",
         slug: "negro",
@@ -2197,11 +2221,16 @@ export const products: Product[] = [
         image: "/productos/mujer/legging/legging-clasica-azul-marino.webp",
       },
       {
-        name: "Blanco",
-        slug: "blanco",
-        hex: "#FFFFFF",
-        image: "/productos/mujer/legging/legging-clasica-gamusa-blanco.webp",
-      },
+      name: "Blanco",
+      slug: "blanco",
+      hex: "#FFFFFF",
+      images: [
+        "/productos/mujer/legging/legging-clasica-gamusa-blanco.webp",
+        "/productos/mujer/legging/legging-clasica-gamusa-azul-marino.webp",
+        "/productos/mujer/legging/legging-clasica-gamusa-melange.webp",
+        "/productos/mujer/legging/legging-clasica-gamusa-negro.webp"
+      ]
+    },
       {
         name: "Melange",
         slug: "melange",
@@ -2209,11 +2238,16 @@ export const products: Product[] = [
         image: "/productos/mujer/legging/legging-clasica-gamusa-melange.webp",
       },
       {
-        name: "Negro",
-        slug: "negro",
-        hex: "#000000",
-        image: "/productos/mujer/legging/legging-clasica-gamusa-negro.webp",
-      },
+      name: "Negro",
+      slug: "negro",
+      hex: "#000000",
+      images: [
+        "/productos/mujer/legging/legging-clasica-gamusa-negro.webp",
+        "/productos/mujer/legging/legging-clasica-gamusa-azul-marino.webp",
+        "/productos/mujer/legging/legging-clasica-gamusa-blanco.webp",
+        "/productos/mujer/legging/legging-clasica-gamusa-melange.webp"
+      ]
+    },
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
