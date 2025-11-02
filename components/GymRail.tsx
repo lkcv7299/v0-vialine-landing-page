@@ -66,6 +66,38 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
               const rating = getAverageRating(item.slug)
               const reviewCount = getReviewCount(item.slug)
               
+              // Determinar transform basado en tipo de producto
+              const getImageTransform = () => {
+                const productSlug = item.slug.toLowerCase()
+                const imagePath = item.image.toLowerCase()
+
+                // Productos superiores: mover arriba para mostrar cara
+                if (productSlug.includes('camiseta') ||
+                    productSlug.includes('top') ||
+                    productSlug.includes('body') ||
+                    productSlug.includes('enterizo') ||
+                    imagePath.includes('camiseta') ||
+                    imagePath.includes('top') ||
+                    imagePath.includes('body') ||
+                    imagePath.includes('enterizo')) {
+                  return 'translateY(-15%)'
+                }
+
+                // Productos inferiores: mover abajo
+                if (productSlug.includes('legging') ||
+                    productSlug.includes('short') ||
+                    productSlug.includes('biker') ||
+                    productSlug.includes('pantalon') ||
+                    imagePath.includes('legging') ||
+                    imagePath.includes('short') ||
+                    imagePath.includes('biker') ||
+                    imagePath.includes('pantalon')) {
+                  return 'translateY(10%)'
+                }
+
+                return 'translateY(0)'
+              }
+
               return (
                 <div
                   key={item.slug}
@@ -78,8 +110,12 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
                         src={item.image}
                         alt={item.name}
                         className="w-full h-full object-cover transition-transform duration-300 group-hover/card:scale-105"
+                        style={{
+                          transform: getImageTransform(),
+                          objectPosition: 'center center'
+                        }}
                       />
-                      
+
                       <WishlistHeart slug={item.slug} />
 
                       {item.badge && (
