@@ -241,6 +241,10 @@ async function generateCSV(mappedData, scrapedProducts) {
 }
 
 async function main() {
+  // Check for command line arguments
+  const args = process.argv.slice(2)
+  let rootPath = args[0]
+
   // Verificar que existe vialine-products.json
   const scrapedDataPath = path.join(__dirname, 'vialine-products.json')
 
@@ -255,14 +259,23 @@ async function main() {
     log.info('Ejecuta primero: node scripts/scrape-vialine.js')
     log.info('O continúa sin datos scrapeados (usará defaults)\n')
 
-    const continueAnyway = await prompt('¿Continuar sin datos scrapeados? (s/n): ')
-    if (continueAnyway.toLowerCase() !== 's') {
-      process.exit(0)
+    // Si se pasó un argumento CLI, continuar automáticamente
+    if (!rootPath) {
+      const continueAnyway = await prompt('¿Continuar sin datos scrapeados? (s/n): ')
+      if (continueAnyway.toLowerCase() !== 's') {
+        process.exit(0)
+      }
+    } else {
+      log.info('Continuando sin datos scrapeados (modo CLI)...\n')
     }
   }
 
-  // Preguntar por carpeta raíz
-  const rootPath = await prompt('\nRuta a la carpeta raíz con productos: ')
+  // Preguntar por carpeta raíz solo si no se pasó como argumento
+  if (!rootPath) {
+    rootPath = await prompt('\nRuta a la carpeta raíz con productos: ')
+  } else {
+    log.info(`Carpeta: ${rootPath}\n`)
+  }
 
   if (!fs.existsSync(rootPath)) {
     log.error('Carpeta no encontrada')
