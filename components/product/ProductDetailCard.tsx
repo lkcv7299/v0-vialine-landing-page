@@ -201,15 +201,17 @@ export default function ProductDetailCard({ product }: { product: Product }) {
               )}
             </div>
             <div className="flex flex-wrap gap-3">
-              {product.colors.map((color) => {
+              {product.colors.map((color, index) => {
                 const colorName = typeof color === "string" ? color : color.name
                 const colorSlug = typeof color === "object" ? color.slug : ""
                 const colorHex = typeof color === "object" ? color.hex : null
                 const isSelected = selectedColorName === colorName
+                // Use slug as key (unique), fallback to index if string
+                const uniqueKey = typeof color === "object" ? color.slug : `${colorName}-${index}`
 
                 return (
                   <button
-                    key={colorName}
+                    key={uniqueKey}
                     onClick={() => typeof color === "object" && handleColorChange(color.slug, color.name)}
                     disabled={isOutOfStock || typeof color === "string"}
                     className={`group relative flex items-center gap-2.5 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 border-2 ${

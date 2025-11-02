@@ -87,12 +87,6 @@ export const products: Product[] = [
     },
       {
         name: "Turquesa",
-        slug: "tuquesa",
-        hex: "#40E0D0",
-        image: "/productos/mujer/camisetas/camiseta-cuello-alto-turquesa-cuello-alto-tuquesa4.webp",
-      },
-      {
-        name: "Turquesa",
         slug: "turquesa",
         hex: "#40E0D0",
         image: "/productos/mujer/camisetas/camiseta-cuello-alto-turquesa-cuello-alto-turquesa.webp",
