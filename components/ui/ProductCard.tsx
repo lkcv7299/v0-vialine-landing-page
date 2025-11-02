@@ -24,14 +24,13 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
   // Usar hover image si está disponible y estamos hovering
   const currentImage = isHovering && hoverImage ? hoverImage : displayImage
 
-  // Determinar object-position PRECISO basado en el SLUG del producto
-  // center X% = punto focal a X% desde arriba (50% = centro perfecto)
+  // Determinar object-position para mostrar CARA + PRODUCTO
+  // Las imágenes de Vialine son cuerpo completo, necesitamos mostrar desde arriba
   const getObjectPosition = (): string => {
     const productSlug = slug.toLowerCase()
     const imagePath = displayImage.toLowerCase()
 
-    // Camisetas, tops, bodys: Muestra cara completa + enfoque en producto superior
-    // 35% = Ligeramente arriba del centro para mostrar cara + torso
+    // Camisetas, tops, bodys: Mostrar desde la CARA hacia abajo
     if (productSlug.includes('camiseta') ||
         productSlug.includes('top') ||
         productSlug.includes('body') ||
@@ -40,11 +39,10 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
         imagePath.includes('top') ||
         imagePath.includes('body') ||
         imagePath.includes('enterizo')) {
-      return 'center 35%'
+      return 'center top'  // Muestra desde arriba (cara visible)
     }
 
-    // Leggings, shorts, bikers: Enfoque en producto inferior
-    // 60% = Abajo del centro para mostrar piernas/producto inferior
+    // Leggings, shorts, bikers: Centro o ligeramente abajo
     if (productSlug.includes('legging') ||
         productSlug.includes('short') ||
         productSlug.includes('biker') ||
@@ -53,11 +51,11 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
         imagePath.includes('short') ||
         imagePath.includes('biker') ||
         imagePath.includes('pantalon')) {
-      return 'center 60%'
+      return 'center center'
     }
 
-    // Por defecto: Centro perfecto (50%)
-    return 'center 50%'
+    // Por defecto: Centro
+    return 'center center'
   }
 
   return (
