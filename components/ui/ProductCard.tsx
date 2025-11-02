@@ -24,14 +24,17 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
   // Usar hover image si está disponible y estamos hovering
   const currentImage = isHovering && hoverImage ? hoverImage : displayImage
 
-  // Determinar transform para ajustar posición de imagen
-  // object-position NO funciona bien con estas imágenes, usamos transform en su lugar
-  const getImageTransform = (): string => {
+  // Determinar scale y object-position para hacer zoom al área relevante
+  const getImageStyle = () => {
     const productSlug = slug.toLowerCase()
     const imagePath = displayImage.toLowerCase()
-    const scale = isHovering ? ' scale(1.05)' : ''
 
-    // Camisetas, tops, bodys: Mover imagen ARRIBA para mostrar cara + producto superior
+    // Scale base para zoom
+    const baseScale = 1.25
+    const hoverScale = isHovering ? 1.05 : 1
+    const finalScale = baseScale * hoverScale
+
+    // Productos superiores (camisetas, tops): ZOOM hacia arriba (cara + producto)
     if (productSlug.includes('camiseta') ||
         productSlug.includes('top') ||
         productSlug.includes('body') ||
@@ -40,10 +43,13 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
         imagePath.includes('top') ||
         imagePath.includes('body') ||
         imagePath.includes('enterizo')) {
-      return `translateY(-15%)${scale}`
+      return {
+        transform: `scale(${finalScale})`,
+        objectPosition: 'center 20%'  // Enfoque en parte superior
+      }
     }
 
-    // Leggings, shorts, bikers: Mover imagen ABAJO para enfoque en piernas
+    // Productos inferiores (leggings, shorts): ZOOM hacia abajo (piernas + producto)
     if (productSlug.includes('legging') ||
         productSlug.includes('short') ||
         productSlug.includes('biker') ||
@@ -52,11 +58,17 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
         imagePath.includes('short') ||
         imagePath.includes('biker') ||
         imagePath.includes('pantalon')) {
-      return `translateY(10%)${scale}`
+      return {
+        transform: `scale(${finalScale})`,
+        objectPosition: 'center 75%'  // Enfoque en parte inferior
+      }
     }
 
-    // Por defecto: Sin movimiento
-    return `translateY(0)${scale}`
+    // Por defecto: Solo hover scale, centrado normal
+    return {
+      transform: isHovering ? 'scale(1.05)' : 'scale(1)',
+      objectPosition: 'center center'
+    }
   }
 
   return (
@@ -73,10 +85,7 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
           }}
           alt={title}
           className="h-full w-full object-cover transition-all duration-500 ease-out"
-          style={{
-            transform: getImageTransform(),
-            objectPosition: 'center center'
-          }}
+          style={getImageStyle()}
           loading="lazy"
         />
 
