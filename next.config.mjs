@@ -29,6 +29,14 @@ const nextConfig = {
       '@headlessui/react',
       'sonner',
     ],
+    // ✅ VERCEL: Exclude product images from serverless functions
+    // Images are served as static assets, not bundled in functions
+    outputFileTracingExcludes: {
+      '*': [
+        'public/products/**/*',
+        'public/productos/**/*',
+      ],
+    },
   },
 
   // ✅ PERFORMANCE: Webpack optimizations
