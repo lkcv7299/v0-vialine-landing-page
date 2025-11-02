@@ -1,27 +1,75 @@
 import Link from "next/link"
-import { byAudience } from "@/data/products"
+import { byAudience, type Product } from "@/data/products"
 import GymRail from "@/components/GymRail"
 import Hero from "@/components/Hero"
 import HeroNina from "@/components/Hero/HeroNina"
 import { FABRICS } from "@/data/fabrics"
 
+// Helper para obtener imagen primaria del producto
+function getPrimaryImage(product: Product): string {
+  const colorEntry = product.colors.find((c) => typeof c === "object" && c.image) as
+    | { image: string }
+    | undefined
+  return colorEntry?.image || product.image || "/placeholder.svg"
+}
+
+// Helper para obtener hover image (segunda imagen del mismo color o de otro color)
+function getHoverImage(product: Product, primaryImage: string): string | null {
+  // 1. Buscar el color que tiene la imagen primaria
+  const primaryColor = product.colors.find((c) => {
+    if (typeof c !== "object") return false
+    if (c.image === primaryImage) return true
+    if (c.images && c.images.includes(primaryImage)) return true
+    return false
+  }) as { image?: string; images?: string[] } | undefined
+
+  // Si el color primario tiene gallery con más de 1 imagen, usar la segunda
+  if (primaryColor?.images && primaryColor.images.length > 1) {
+    const secondImage = primaryColor.images[1]
+    if (secondImage && secondImage !== primaryImage) {
+      return secondImage
+    }
+  }
+
+  // 2. Buscar otro color con imagen diferente
+  const alternativeColor = product.colors.find((c) => {
+    if (typeof c !== "object") return false
+    const altImage = c.images?.[0] || c.image
+    return altImage && altImage !== primaryImage
+  }) as { image?: string; images?: string[] } | undefined
+
+  if (alternativeColor) {
+    return alternativeColor.images?.[0] || alternativeColor.image || null
+  }
+
+  return null
+}
+
 export default function VialineHome() {
   const mujerProducts = byAudience("mujer").slice(0, 12)
   const ninaProducts = byAudience("nina").slice(0, 12)
 
-  const popularMujer = mujerProducts.map((p) => ({
-    slug: p.slug,
-    name: p.title,
-    price: p.price,
-    image: p.image,
-  }))
+  const popularMujer = mujerProducts.map((p) => {
+    const primaryImage = getPrimaryImage(p)
+    return {
+      slug: p.slug,
+      name: p.title,
+      price: p.price,
+      image: primaryImage,
+      hoverImage: getHoverImage(p, primaryImage),
+    }
+  })
 
-  const popularNina = ninaProducts.map((p) => ({
-    slug: p.slug,
-    name: p.title,
-    price: p.price,
-    image: p.image,
-  }))
+  const popularNina = ninaProducts.map((p) => {
+    const primaryImage = getPrimaryImage(p)
+    return {
+      slug: p.slug,
+      name: p.title,
+      price: p.price,
+      image: primaryImage,
+      hoverImage: getHoverImage(p, primaryImage),
+    }
+  })
 
   return (
     <>

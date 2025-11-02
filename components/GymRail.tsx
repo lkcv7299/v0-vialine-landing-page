@@ -1,16 +1,17 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import Link from "next/link"
 import { ChevronLeft, ChevronRight, Star } from "lucide-react"
 import WishlistHeart from "@/components/WishlistHeart"
 import { getAverageRating, getReviewCount } from "@/data/reviews"
 import { useImageDebug } from "@/contexts/ImageDebugContext"
 
-type Item = { 
+type Item = {
   slug: string
   name: string
   image: string
+  hoverImage?: string | null
   price: number
   badge?: string
 }
@@ -24,6 +25,7 @@ type GymRailProps = {
 export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
   const trackRef = useRef<HTMLDivElement>(null)
   const { values } = useImageDebug()
+  const [hoveringSlug, setHoveringSlug] = useState<string | null>(null)
 
   const scroll = (dir: "left" | "right") => {
     if (!trackRef.current) return
@@ -110,6 +112,9 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
                 }
               }
 
+              const isHovering = hoveringSlug === item.slug
+              const currentImage = isHovering && item.hoverImage ? item.hoverImage : item.image
+
               return (
                 <div
                   key={item.slug}
@@ -117,11 +122,15 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
                 >
                   <Link href={`/producto/${item.slug}`} className="group/card block">
                     {/* Imagen CUADRADA */}
-                    <div className="relative aspect-square w-full overflow-hidden bg-neutral-100 mb-3">
+                    <div
+                      className="relative aspect-square w-full overflow-hidden bg-neutral-100 mb-3"
+                      onMouseEnter={() => setHoveringSlug(item.slug)}
+                      onMouseLeave={() => setHoveringSlug(null)}
+                    >
                       <img
-                        src={item.image}
+                        src={currentImage}
                         alt={item.name}
-                        className="absolute inset-0 w-full h-[200%] object-cover transition-transform duration-300"
+                        className="absolute inset-0 w-full h-[200%] object-cover"
                         style={getImageStyle()}
                       />
 
