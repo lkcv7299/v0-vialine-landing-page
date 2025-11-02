@@ -10,56 +10,89 @@ import SizeGuideModal from "@/components/SizeGuideModal"
 import StockIndicator from "@/components/StockIndicator"
 import { toast } from "sonner"
 
-function getProductImages(product: Product): string[] {
-  const images: string[] = []
-  if (product.image) images.push(product.image)
-  product.colors.forEach((color) => {
-    if (typeof color === "object" && color.image && !images.includes(color.image)) {
-      images.push(color.image)
+function getProductImages(product: Product, selectedColorSlug?: string): string[] {
+  // If a color is selected, return ONLY images for that color
+  if (selectedColorSlug) {
+    const colorObj = product.colors.find(c =>
+      typeof c === "object" && c.slug === selectedColorSlug
+    )
+
+    if (colorObj && typeof colorObj === "object") {
+      // Prefer images array (multiple images per color)
+      if (colorObj.images && colorObj.images.length > 0) {
+        return colorObj.images
+      }
+      // Fallback to single image
+      if (colorObj.image) {
+        return [colorObj.image]
+      }
     }
-  })
-  return images.length > 0 ? images : ["/placeholder.svg"]
+  }
+
+  // Fallback: Try to get images from first color with images
+  const firstColorWithImages = product.colors.find(c =>
+    typeof c === "object" && ((c.images && c.images.length > 0) || c.image)
+  )
+
+  if (firstColorWithImages && typeof firstColorWithImages === "object") {
+    if (firstColorWithImages.images && firstColorWithImages.images.length > 0) {
+      return firstColorWithImages.images
+    }
+    if (firstColorWithImages.image) {
+      return [firstColorWithImages.image]
+    }
+  }
+
+  // Last fallback: product main image
+  return product.image ? [product.image] : ["/placeholder.svg"]
 }
 
 export default function ProductDetailCard({ product }: { product: Product }) {
-  const [selectedColor, setSelectedColor] = useState("")
+  const [selectedColorSlug, setSelectedColorSlug] = useState("")
+  const [selectedColorName, setSelectedColorName] = useState("")
   const [selectedSize, setSelectedSize] = useState("")
   const [quantity, setQuantity] = useState(1)
   const [added, setAdded] = useState(false)
   const [activeTab, setActiveTab] = useState<"cuidados" | "envios">("cuidados")
   const [currentImages, setCurrentImages] = useState<string[]>([])
+  const [isLoadingGallery, setIsLoadingGallery] = useState(false)
   const { addItem} = useCart()
 
-  const productImages = getProductImages(product)
   const isOutOfStock = product.inventory === 0
 
-  // ✅ FIX: Initialize images correctly on mount using useEffect
+  // ✅ Auto-select first color and load its gallery on mount
   useEffect(() => {
-    setCurrentImages(productImages)
-  }, []) // Empty deps = run once on mount
-
-  // Update images when color changes
-  const handleColorChange = (colorName: string) => {
-    setSelectedColor(colorName)
-
-    // Find the color object to get its specific image
-    const colorObj = product.colors.find(c =>
-      typeof c === "object" && c.name === colorName
-    )
-
-    if (colorObj && typeof colorObj === "object" && colorObj.image) {
-      // If this color has a specific image, show it first
-      setCurrentImages([colorObj.image, ...productImages.filter(img => img !== colorObj.image)])
+    const firstColor = product.colors.find(c => typeof c === "object")
+    if (firstColor && typeof firstColor === "object") {
+      setSelectedColorSlug(firstColor.slug)
+      setSelectedColorName(firstColor.name)
+      const initialImages = getProductImages(product, firstColor.slug)
+      setCurrentImages(initialImages)
     } else {
-      // Reset to default images
-      setCurrentImages(productImages)
+      // Fallback if no color objects exist
+      const fallbackImages = getProductImages(product)
+      setCurrentImages(fallbackImages)
     }
+  }, [product])
+
+  // Update gallery when color changes - show ONLY selected color's images with smooth transition
+  const handleColorChange = (colorSlug: string, colorName: string) => {
+    setIsLoadingGallery(true)
+    setSelectedColorSlug(colorSlug)
+    setSelectedColorName(colorName)
+
+    // Small delay for smooth transition effect
+    setTimeout(() => {
+      const newImages = getProductImages(product, colorSlug)
+      setCurrentImages(newImages)
+      setIsLoadingGallery(false)
+    }, 150)
   }
 
   const handleAddToCart = () => {
-    if (!selectedColor || !selectedSize || isOutOfStock) return
+    if (!selectedColorName || !selectedSize || isOutOfStock) return
 
-    addItem(product, selectedColor, selectedSize, quantity)
+    addItem(product, selectedColorName, selectedSize, quantity)
     setAdded(true)
 
     setTimeout(() => setAdded(false), 2000)
@@ -81,9 +114,9 @@ export default function ProductDetailCard({ product }: { product: Product }) {
   }
 
   const handleBuyNow = () => {
-    if (!selectedColor || !selectedSize || isOutOfStock) return
+    if (!selectedColorName || !selectedSize || isOutOfStock) return
 
-    const message = `Hola, quiero comprar:\n\n${product.title}\nColor: ${selectedColor}\nTalla: ${selectedSize}\nPrecio: S/ ${product.price}`
+    const message = `Hola, quiero comprar:\n\n${product.title}\nColor: ${selectedColorName}\nTalla: ${selectedSize}\nPrecio: S/ ${product.price}`
     const whatsappUrl = buildWhatsAppUrl(message)
     window.open(whatsappUrl, "_blank")
   }
@@ -114,12 +147,14 @@ export default function ProductDetailCard({ product }: { product: Product }) {
     }
   }
 
-  const isButtonDisabled = !selectedColor || !selectedSize || isOutOfStock
+  const isButtonDisabled = !selectedColorName || !selectedSize || isOutOfStock
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-8">
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-        <ProductGallery images={currentImages.length > 0 ? currentImages : productImages} productName={product.title} />
+        <div className={`transition-opacity duration-300 ${isLoadingGallery ? 'opacity-50' : 'opacity-100'}`}>
+          <ProductGallery images={currentImages} productName={product.title} />
+        </div>
 
         <div>
           <div className="flex items-start justify-between gap-4">
@@ -157,95 +192,117 @@ export default function ProductDetailCard({ product }: { product: Product }) {
           )}
 
           <div className="mt-8">
-            <h3 className="text-sm font-semibold text-neutral-900 mb-3">Color</h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-base font-bold text-neutral-900">Color</h3>
+              {selectedColorName && (
+                <span className="text-sm text-neutral-600 font-medium animate-fade-in">
+                  {selectedColorName}
+                </span>
+              )}
+            </div>
             <div className="flex flex-wrap gap-3">
               {product.colors.map((color) => {
                 const colorName = typeof color === "string" ? color : color.name
+                const colorSlug = typeof color === "object" ? color.slug : ""
                 const colorHex = typeof color === "object" ? color.hex : null
-                const isSelected = selectedColor === colorName
+                const isSelected = selectedColorName === colorName
 
                 return (
                   <button
                     key={colorName}
-                    onClick={() => handleColorChange(colorName)}
-                    disabled={isOutOfStock}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all border-2 ${
+                    onClick={() => typeof color === "object" && handleColorChange(color.slug, color.name)}
+                    disabled={isOutOfStock || typeof color === "string"}
+                    className={`group relative flex items-center gap-2.5 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 border-2 ${
                       isOutOfStock
                         ? "bg-neutral-100 text-neutral-400 cursor-not-allowed border-neutral-200"
                         : isSelected
-                        ? "bg-rose-600 text-white shadow-md border-rose-600"
-                        : "bg-white text-neutral-900 hover:bg-neutral-50 border-neutral-300"
+                        ? "bg-rose-600 text-white shadow-lg shadow-rose-200 border-rose-600 scale-105"
+                        : "bg-white text-neutral-900 hover:bg-neutral-50 hover:border-rose-300 hover:shadow-md border-neutral-200"
                     }`}
                   >
                     {colorHex && (
                       <span
-                        className="w-4 h-4 rounded-full border border-neutral-300"
+                        className={`w-5 h-5 rounded-full border-2 transition-all ${
+                          isSelected ? "border-white shadow-sm" : "border-neutral-300 group-hover:border-neutral-400"
+                        }`}
                         style={{ backgroundColor: colorHex }}
                       />
                     )}
-                    {colorName}
+                    <span>{colorName}</span>
+                    {isSelected && (
+                      <span className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                        <Check className="w-3 h-3 text-white" />
+                      </span>
+                    )}
                   </button>
                 )
               })}
             </div>
           </div>
 
-          <div className="mt-6">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-semibold text-neutral-900">Talla</h3>
+          <div className="mt-7">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-base font-bold text-neutral-900">Talla</h3>
               <SizeGuideModal category={product.category} />
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               {product.sizes.map((size) => (
                 <button
                   key={size}
                   onClick={() => setSelectedSize(size)}
                   disabled={isOutOfStock}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  className={`relative min-w-[56px] px-5 py-3 rounded-xl text-sm font-bold transition-all duration-300 border-2 ${
                     isOutOfStock
-                      ? "bg-neutral-100 text-neutral-400 cursor-not-allowed"
+                      ? "bg-neutral-100 text-neutral-400 cursor-not-allowed border-neutral-200"
                       : selectedSize === size
-                      ? "bg-rose-600 text-white shadow-md"
-                      : "bg-neutral-100 text-neutral-900 hover:bg-neutral-200"
+                      ? "bg-rose-600 text-white shadow-lg shadow-rose-200 border-rose-600 scale-105"
+                      : "bg-white text-neutral-900 hover:bg-neutral-50 hover:border-rose-300 hover:shadow-md border-neutral-200"
                   }`}
                 >
                   {size}
+                  {selectedSize === size && (
+                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                      <Check className="w-3 h-3 text-white" />
+                    </span>
+                  )}
                 </button>
               ))}
             </div>
           </div>
 
           {/* Quantity Selector */}
-          <div className="mt-6">
-            <h3 className="text-sm font-semibold text-neutral-900 mb-3">Cantidad</h3>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={decrementQuantity}
-                disabled={isOutOfStock || quantity <= 1}
-                className={`w-10 h-10 rounded-full border-2 flex items-center justify-center font-semibold transition ${
-                  isOutOfStock || quantity <= 1
-                    ? "border-neutral-200 text-neutral-300 cursor-not-allowed"
-                    : "border-neutral-300 text-neutral-900 hover:border-rose-600 hover:text-rose-600"
-                }`}
-              >
-                -
-              </button>
-              <span className="text-lg font-semibold text-neutral-900 min-w-[40px] text-center">
-                {quantity}
-              </span>
-              <button
-                onClick={incrementQuantity}
-                disabled={isOutOfStock}
-                className={`w-10 h-10 rounded-full border-2 flex items-center justify-center font-semibold transition ${
-                  isOutOfStock
-                    ? "border-neutral-200 text-neutral-300 cursor-not-allowed"
-                    : "border-neutral-300 text-neutral-900 hover:border-rose-600 hover:text-rose-600"
-                }`}
-              >
-                +
-              </button>
+          <div className="mt-7">
+            <h3 className="text-base font-bold text-neutral-900 mb-4">Cantidad</h3>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3 bg-neutral-50 rounded-xl p-2 border-2 border-neutral-200">
+                <button
+                  onClick={decrementQuantity}
+                  disabled={isOutOfStock || quantity <= 1}
+                  className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold text-lg transition-all duration-200 ${
+                    isOutOfStock || quantity <= 1
+                      ? "text-neutral-300 cursor-not-allowed"
+                      : "text-neutral-900 hover:bg-rose-100 hover:text-rose-600 active:scale-95"
+                  }`}
+                >
+                  −
+                </button>
+                <span className="text-xl font-bold text-neutral-900 min-w-[48px] text-center">
+                  {quantity}
+                </span>
+                <button
+                  onClick={incrementQuantity}
+                  disabled={isOutOfStock}
+                  className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold text-lg transition-all duration-200 ${
+                    isOutOfStock
+                      ? "text-neutral-300 cursor-not-allowed"
+                      : "text-neutral-900 hover:bg-rose-100 hover:text-rose-600 active:scale-95"
+                  }`}
+                >
+                  +
+                </button>
+              </div>
               {!isOutOfStock && (
-                <span className="text-xs text-neutral-500 ml-2">
+                <span className="text-sm text-neutral-600 font-medium">
                   {product.inventory && product.inventory < 10
                     ? `Solo ${product.inventory} disponibles`
                     : "Disponible"}
@@ -254,32 +311,35 @@ export default function ProductDetailCard({ product }: { product: Product }) {
             </div>
           </div>
 
-          <div className="mt-8 space-y-3">
+          <div className="mt-9 space-y-4">
             <button
               onClick={handleAddToCart}
               disabled={isButtonDisabled}
-              className={`w-full py-4 rounded-full font-semibold transition-all ${
+              className={`w-full py-4 rounded-2xl font-bold text-base transition-all duration-300 flex items-center justify-center gap-2 shadow-lg ${
                 isButtonDisabled
-                  ? "bg-neutral-200 text-neutral-400 cursor-not-allowed"
+                  ? "bg-neutral-200 text-neutral-400 cursor-not-allowed shadow-none"
                   : added
-                  ? "bg-green-600 text-white"
-                  : "bg-rose-600 text-white hover:bg-rose-700"
+                  ? "bg-green-600 text-white shadow-green-200 scale-[0.98]"
+                  : "bg-gradient-to-r from-rose-600 to-rose-500 text-white hover:from-rose-700 hover:to-rose-600 hover:shadow-xl hover:shadow-rose-200 active:scale-[0.98]"
               }`}
             >
-              {isOutOfStock 
-                ? "Agotado" 
-                : added 
-                ? "¡Agregado al carrito!" 
+              {isOutOfStock
+                ? "Agotado"
+                : added
+                ? <>
+                    <Check className="w-5 h-5" />
+                    ¡Agregado al carrito!
+                  </>
                 : "Agregar al carrito"}
             </button>
 
             <button
               onClick={handleBuyNow}
               disabled={isButtonDisabled}
-              className={`w-full py-4 rounded-full font-semibold transition-all ${
+              className={`w-full py-4 rounded-2xl font-bold text-base transition-all duration-300 border-2 ${
                 isButtonDisabled
-                  ? "bg-neutral-200 text-neutral-400 cursor-not-allowed"
-                  : "bg-neutral-900 text-white hover:bg-neutral-800"
+                  ? "bg-neutral-100 border-neutral-200 text-neutral-400 cursor-not-allowed"
+                  : "bg-neutral-900 border-neutral-900 text-white hover:bg-neutral-800 hover:border-neutral-800 hover:shadow-lg active:scale-[0.98]"
               }`}
             >
               {isOutOfStock ? "No disponible" : "Comprar ahora"}
