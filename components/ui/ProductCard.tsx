@@ -29,6 +29,7 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
   const getImageTransform = (): string => {
     const productSlug = slug.toLowerCase()
     const imagePath = displayImage.toLowerCase()
+    const scale = isHovering ? ' scale(1.05)' : ''
 
     // Camisetas, tops, bodys: Mover imagen ARRIBA para mostrar cara + producto superior
     if (productSlug.includes('camiseta') ||
@@ -39,7 +40,7 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
         imagePath.includes('top') ||
         imagePath.includes('body') ||
         imagePath.includes('enterizo')) {
-      return 'translateY(-15%)'  // Mueve imagen 15% arriba - muestra cara
+      return `translateY(-15%)${scale}`
     }
 
     // Leggings, shorts, bikers: Mover imagen ABAJO para enfoque en piernas
@@ -51,11 +52,11 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
         imagePath.includes('short') ||
         imagePath.includes('biker') ||
         imagePath.includes('pantalon')) {
-      return 'translateY(10%)'  // Mueve imagen 10% abajo
+      return `translateY(10%)${scale}`
     }
 
     // Por defecto: Sin movimiento
-    return 'translateY(0)'
+    return `translateY(0)${scale}`
   }
 
   return (
@@ -73,7 +74,7 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
           alt={title}
           className="h-full w-full object-cover transition-all duration-500 ease-out"
           style={{
-            transform: isHovering ? `${getImageTransform()} scale(1.05)` : getImageTransform(),
+            transform: getImageTransform(),
             objectPosition: 'center center'
           }}
           loading="lazy"
