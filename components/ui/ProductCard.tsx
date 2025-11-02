@@ -24,14 +24,23 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
   // Usar hover image si está disponible y estamos hovering
   const currentImage = isHovering && hoverImage ? hoverImage : displayImage
 
-  // Determinar object-position basado en el path de la imagen (categoría del producto)
-  // Productos de parte superior del cuerpo (tops, camisetas, bodys, enterizos) → object-top
-  // Productos de parte inferior (leggings, shorts, bikers) → object-center
+  // Determinar object-position PRECISO basado en la categoría del producto
+  // Enfoque quirúrgico para mostrar el producto correcto
   const getObjectPosition = () => {
     const imagePath = displayImage.toLowerCase()
-    const topCategories = ['top', 'camiseta', 'body', 'enterizo']
-    const isTopProduct = topCategories.some(cat => imagePath.includes(cat))
-    return isTopProduct ? 'object-top' : 'object-center'
+
+    // Camisetas y tops: Enfoque en torso superior + cara (15% desde arriba)
+    if (imagePath.includes('camiseta') || imagePath.includes('top')) {
+      return 'object-[center_15%]'
+    }
+
+    // Bodys y enterizos: Un poco más de cuerpo (25% desde arriba)
+    if (imagePath.includes('body') || imagePath.includes('enterizo')) {
+      return 'object-[center_25%]'
+    }
+
+    // Productos inferiores: Centro balanceado
+    return 'object-center'
   }
 
   return (
@@ -47,28 +56,28 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
             ;(e.currentTarget as HTMLImageElement).src = fallbackImage || "/placeholder.svg"
           }}
           alt={title}
-          className={`h-full w-full object-cover ${getObjectPosition()} transition-all duration-500 ease-out group-hover:scale-105`}
+          className={`h-full w-full object-cover ${getObjectPosition()} scale-[1.02] transition-all duration-500 ease-out group-hover:scale-110`}
           loading="lazy"
         />
 
         <WishlistHeart slug={slug} />
 
-        {/* Badge NUEVO o OFERTA - Estilo Gymshark (bottom-left, discreto) */}
+        {/* Badge NUEVO o OFERTA - Paleta unificada negra (menos invasivo) */}
         {badge && !isOutOfStock && (
-          <span className={`absolute left-2 bottom-2 rounded-sm px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide shadow-md ${
+          <span className={`absolute left-2 bottom-2 rounded-sm px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide shadow-sm ${
             badge === "nuevo"
-              ? "bg-blue-600/90 text-white"
-              : "bg-red-600/90 text-white"
+              ? "bg-black/70 text-white"
+              : "bg-black/70 text-red-400"
           }`}>
             {badge === "nuevo" ? "Nuevo" : "Oferta"}
           </span>
         )}
 
-        {/* Badge AGOTADO - Overlay sutil + badge discreto */}
+        {/* Badge AGOTADO - Paleta unificada */}
         {isOutOfStock && (
           <>
             <div className="absolute inset-0 bg-black/10" />
-            <span className="absolute bottom-2 left-2 bg-neutral-900/90 text-white px-2 py-1 text-[11px] font-medium uppercase tracking-wide rounded-sm shadow-md">
+            <span className="absolute bottom-2 left-2 bg-black/75 text-white px-2 py-1 text-[11px] font-medium uppercase tracking-wide rounded-sm shadow-sm">
               Agotado
             </span>
           </>
