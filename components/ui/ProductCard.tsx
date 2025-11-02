@@ -25,32 +25,39 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
   const currentImage = isHovering && hoverImage ? hoverImage : displayImage
 
   // Determinar object-position PRECISO basado en el SLUG del producto
-  // Más confiable que buscar en el path de la imagen
+  // center X% = punto focal a X% desde arriba (50% = centro perfecto)
   const getObjectPosition = (): string => {
     const productSlug = slug.toLowerCase()
     const imagePath = displayImage.toLowerCase()
 
-    // Camisetas y tops: Enfoque en torso superior + cara (15% desde arriba)
+    // Camisetas, tops, bodys: Muestra cara completa + enfoque en producto superior
+    // 35% = Ligeramente arriba del centro para mostrar cara + torso
     if (productSlug.includes('camiseta') ||
         productSlug.includes('top') ||
-        imagePath.includes('camiseta') ||
-        imagePath.includes('top')) {
-      console.log('🎯 CROP: Top/Camiseta detectado ->', slug, 'usando center 15%')
-      return 'center 15%'
-    }
-
-    // Bodys y enterizos: Un poco más de cuerpo (25% desde arriba)
-    if (productSlug.includes('body') ||
+        productSlug.includes('body') ||
         productSlug.includes('enterizo') ||
+        imagePath.includes('camiseta') ||
+        imagePath.includes('top') ||
         imagePath.includes('body') ||
         imagePath.includes('enterizo')) {
-      console.log('🎯 CROP: Body/Enterizo detectado ->', slug, 'usando center 25%')
-      return 'center 25%'
+      return 'center 35%'
     }
 
-    // Productos inferiores: Centro balanceado
-    console.log('🎯 CROP: Producto inferior ->', slug, 'usando center center')
-    return 'center center'
+    // Leggings, shorts, bikers: Enfoque en producto inferior
+    // 60% = Abajo del centro para mostrar piernas/producto inferior
+    if (productSlug.includes('legging') ||
+        productSlug.includes('short') ||
+        productSlug.includes('biker') ||
+        productSlug.includes('pantalon') ||
+        imagePath.includes('legging') ||
+        imagePath.includes('short') ||
+        imagePath.includes('biker') ||
+        imagePath.includes('pantalon')) {
+      return 'center 60%'
+    }
+
+    // Por defecto: Centro perfecto (50%)
+    return 'center 50%'
   }
 
   return (
@@ -66,7 +73,7 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
             ;(e.currentTarget as HTMLImageElement).src = fallbackImage || "/placeholder.svg"
           }}
           alt={title}
-          className="h-full w-full object-cover scale-[1.15] transition-all duration-500 ease-out group-hover:scale-[1.25]"
+          className="h-full w-full object-cover transition-all duration-500 ease-out group-hover:scale-105"
           style={{ objectPosition: getObjectPosition() }}
           loading="lazy"
         />
