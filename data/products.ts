@@ -35,15 +35,15 @@ export const products: Product[] = [
     badge: "nuevo",
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Tejido suave y transpirable",
-    "Costuras reforzadas",
-    "Corte moderno y cómodo"
+      detalles: [
+        "Tejido suave y transpirable",
+        "Costuras reforzadas",
+        "Corte moderno y cómodo"
   ],
-  beneficios: [
-    "Máxima comodidad durante todo el día",
-    "Fácil de lavar y mantener",
-    "Ideal para uso diario"
+      beneficios: [
+        "Máxima comodidad durante todo el día",
+        "Fácil de lavar y mantener",
+        "Ideal para uso diario"
   ]
 },
   },
@@ -60,15 +60,15 @@ export const products: Product[] = [
     inventory: 0,
       attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Tejido suave y transpirable",
-    "Costuras reforzadas",
-    "Corte moderno y cómodo"
+      detalles: [
+        "Tejido suave y transpirable",
+        "Costuras reforzadas",
+        "Corte moderno y cómodo"
   ],
-  beneficios: [
-    "Máxima comodidad durante todo el día",
-    "Fácil de lavar y mantener",
-    "Ideal para uso diario"
+      beneficios: [
+        "Máxima comodidad durante todo el día",
+        "Fácil de lavar y mantener",
+        "Ideal para uso diario"
   ]
 },
   },
@@ -85,15 +85,15 @@ export const products: Product[] = [
     inventory: 3,
       attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Tejido suave y transpirable",
-    "Costuras reforzadas",
-    "Corte moderno y cómodo"
+      detalles: [
+        "Tejido suave y transpirable",
+        "Costuras reforzadas",
+        "Corte moderno y cómodo"
   ],
-  beneficios: [
-    "Máxima comodidad durante todo el día",
-    "Fácil de lavar y mantener",
-    "Ideal para uso diario"
+      beneficios: [
+        "Máxima comodidad durante todo el día",
+        "Fácil de lavar y mantener",
+        "Ideal para uso diario"
   ]
 },
   },
@@ -112,15 +112,15 @@ export const products: Product[] = [
     inventory: 10,
       attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Tejido suave y transpirable",
-    "Costuras reforzadas",
-    "Corte moderno y cómodo"
+      detalles: [
+        "Tejido suave y transpirable",
+        "Costuras reforzadas",
+        "Corte moderno y cómodo"
   ],
-  beneficios: [
-    "Máxima comodidad durante todo el día",
-    "Fácil de lavar y mantener",
-    "Ideal para uso diario"
+      beneficios: [
+        "Máxima comodidad durante todo el día",
+        "Fácil de lavar y mantener",
+        "Ideal para uso diario"
   ]
 },
   },
@@ -137,15 +137,15 @@ export const products: Product[] = [
     inventory: 12,
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Tejido suave y transpirable",
-    "Costuras reforzadas",
-    "Corte moderno y cómodo"
+      detalles: [
+        "Tejido suave y transpirable",
+        "Costuras reforzadas",
+        "Corte moderno y cómodo"
   ],
-  beneficios: [
-    "Máxima comodidad durante todo el día",
-    "Fácil de lavar y mantener",
-    "Ideal para uso diario"
+      beneficios: [
+        "Máxima comodidad durante todo el día",
+        "Fácil de lavar y mantener",
+        "Ideal para uso diario"
   ]
 },
   },
@@ -161,15 +161,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Tejido suave y transpirable",
-    "Costuras reforzadas",
-    "Corte moderno y cómodo"
+      detalles: [
+        "Tejido suave y transpirable",
+        "Costuras reforzadas",
+        "Corte moderno y cómodo"
   ],
-  beneficios: [
-    "Máxima comodidad durante todo el día",
-    "Fácil de lavar y mantener",
-    "Ideal para uso diario"
+      beneficios: [
+        "Máxima comodidad durante todo el día",
+        "Fácil de lavar y mantener",
+        "Ideal para uso diario"
   ]
 },
   },
@@ -185,15 +185,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Tejido suave y transpirable",
-    "Costuras reforzadas",
-    "Corte moderno y cómodo"
+      detalles: [
+        "Tejido suave y transpirable",
+        "Costuras reforzadas",
+        "Corte moderno y cómodo"
   ],
-  beneficios: [
-    "Máxima comodidad durante todo el día",
-    "Fácil de lavar y mantener",
-    "Ideal para uso diario"
+      beneficios: [
+        "Máxima comodidad durante todo el día",
+        "Fácil de lavar y mantener",
+        "Ideal para uso diario"
   ]
 },
   },
@@ -211,15 +211,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Pretina elástica confortable",
-    "Ajuste perfecto sin marcar",
-    "Largo ideal"
+      detalles: [
+        "Pretina elástica confortable",
+        "Ajuste perfecto sin marcar",
+        "Largo ideal"
   ],
-  beneficios: [
-    "Máxima libertad de movimiento",
-    "Secado rápido y transpirable",
-    "Ideal para entrenamientos intensos"
+      beneficios: [
+        "Máxima libertad de movimiento",
+        "Secado rápido y transpirable",
+        "Ideal para entrenamientos intensos"
   ]
 },
   },
@@ -235,15 +235,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Pretina elástica confortable",
-    "Ajuste perfecto sin marcar",
-    "Largo ideal"
+      detalles: [
+        "Pretina elástica confortable",
+        "Ajuste perfecto sin marcar",
+        "Largo ideal"
   ],
-  beneficios: [
-    "Máxima libertad de movimiento",
-    "Secado rápido y transpirable",
-    "Ideal para entrenamientos intensos"
+      beneficios: [
+        "Máxima libertad de movimiento",
+        "Secado rápido y transpirable",
+        "Ideal para entrenamientos intensos"
   ]
 },
   },
@@ -259,15 +259,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Pretina elástica confortable",
-    "Ajuste perfecto sin marcar",
-    "Largo ideal"
+      detalles: [
+        "Pretina elástica confortable",
+        "Ajuste perfecto sin marcar",
+        "Largo ideal"
   ],
-  beneficios: [
-    "Máxima libertad de movimiento",
-    "Secado rápido y transpirable",
-    "Ideal para entrenamientos intensos"
+      beneficios: [
+        "Máxima libertad de movimiento",
+        "Secado rápido y transpirable",
+        "Ideal para entrenamientos intensos"
   ]
 },
   },
@@ -283,15 +283,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Pretina elástica confortable",
-    "Ajuste perfecto sin marcar",
-    "Largo ideal"
+      detalles: [
+        "Pretina elástica confortable",
+        "Ajuste perfecto sin marcar",
+        "Largo ideal"
   ],
-  beneficios: [
-    "Máxima libertad de movimiento",
-    "Secado rápido y transpirable",
-    "Ideal para entrenamientos intensos"
+      beneficios: [
+        "Máxima libertad de movimiento",
+        "Secado rápido y transpirable",
+        "Ideal para entrenamientos intensos"
   ]
 },
   },
@@ -307,15 +307,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Pretina elástica confortable",
-    "Ajuste perfecto sin marcar",
-    "Largo ideal"
+      detalles: [
+        "Pretina elástica confortable",
+        "Ajuste perfecto sin marcar",
+        "Largo ideal"
   ],
-  beneficios: [
-    "Máxima libertad de movimiento",
-    "Secado rápido y transpirable",
-    "Ideal para entrenamientos intensos"
+      beneficios: [
+        "Máxima libertad de movimiento",
+        "Secado rápido y transpirable",
+        "Ideal para entrenamientos intensos"
   ]
 },
   },
@@ -331,15 +331,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Pretina elástica confortable",
-    "Ajuste perfecto sin marcar",
-    "Largo ideal"
+      detalles: [
+        "Pretina elástica confortable",
+        "Ajuste perfecto sin marcar",
+        "Largo ideal"
   ],
-  beneficios: [
-    "Máxima libertad de movimiento",
-    "Secado rápido y transpirable",
-    "Ideal para entrenamientos intensos"
+      beneficios: [
+        "Máxima libertad de movimiento",
+        "Secado rápido y transpirable",
+        "Ideal para entrenamientos intensos"
   ]
 },
   },
@@ -355,15 +355,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Pretina elástica confortable",
-    "Ajuste perfecto sin marcar",
-    "Largo ideal"
+      detalles: [
+        "Pretina elástica confortable",
+        "Ajuste perfecto sin marcar",
+        "Largo ideal"
   ],
-  beneficios: [
-    "Máxima libertad de movimiento",
-    "Secado rápido y transpirable",
-    "Ideal para entrenamientos intensos"
+      beneficios: [
+        "Máxima libertad de movimiento",
+        "Secado rápido y transpirable",
+        "Ideal para entrenamientos intensos"
   ]
 },
   },
@@ -381,15 +381,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Ajuste ceñido que define la silueta",
-    "Diseño ergonómico",
-    "Cierre práctico"
+      detalles: [
+        "Ajuste ceñido que define la silueta",
+        "Diseño ergonómico",
+        "Cierre práctico"
   ],
-  beneficios: [
-    "Versatilidad para entrenar o uso casual",
-    "No se sale ni se sube",
-    "Define tu figura con comodidad"
+      beneficios: [
+        "Versatilidad para entrenar o uso casual",
+        "No se sale ni se sube",
+        "Define tu figura con comodidad"
   ]
 },
   },
@@ -405,15 +405,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Ajuste ceñido que define la silueta",
-    "Diseño ergonómico",
-    "Cierre práctico"
+      detalles: [
+        "Ajuste ceñido que define la silueta",
+        "Diseño ergonómico",
+        "Cierre práctico"
   ],
-  beneficios: [
-    "Versatilidad para entrenar o uso casual",
-    "No se sale ni se sube",
-    "Define tu figura con comodidad"
+      beneficios: [
+        "Versatilidad para entrenar o uso casual",
+        "No se sale ni se sube",
+        "Define tu figura con comodidad"
   ]
 },
   },
@@ -429,15 +429,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Ajuste ceñido que define la silueta",
-    "Diseño ergonómico",
-    "Cierre práctico"
+      detalles: [
+        "Ajuste ceñido que define la silueta",
+        "Diseño ergonómico",
+        "Cierre práctico"
   ],
-  beneficios: [
-    "Versatilidad para entrenar o uso casual",
-    "No se sale ni se sube",
-    "Define tu figura con comodidad"
+      beneficios: [
+        "Versatilidad para entrenar o uso casual",
+        "No se sale ni se sube",
+        "Define tu figura con comodidad"
   ]
 },
   },
@@ -455,15 +455,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
+      detalles: [
+        "Diseño deportivo elegante",
+        "Soporte medio confortable",
+        "Tejido elástico"
   ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
+      beneficios: [
+        "Comodidad absoluta",
+        "Transpirable y fresco",
+        "Perfecto para el día a día"
   ]
 },
   },
@@ -479,15 +479,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
+      detalles: [
+        "Diseño deportivo elegante",
+        "Soporte medio confortable",
+        "Tejido elástico"
   ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
+      beneficios: [
+        "Comodidad absoluta",
+        "Transpirable y fresco",
+        "Perfecto para el día a día"
   ]
 },
   },
@@ -503,15 +503,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
+      detalles: [
+        "Diseño deportivo elegante",
+        "Soporte medio confortable",
+        "Tejido elástico"
   ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
+      beneficios: [
+        "Comodidad absoluta",
+        "Transpirable y fresco",
+        "Perfecto para el día a día"
   ]
 },
   },
@@ -527,15 +527,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
+      detalles: [
+        "Diseño deportivo elegante",
+        "Soporte medio confortable",
+        "Tejido elástico"
   ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
+      beneficios: [
+        "Comodidad absoluta",
+        "Transpirable y fresco",
+        "Perfecto para el día a día"
   ]
 },
   },
@@ -551,15 +551,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
+      detalles: [
+        "Diseño deportivo elegante",
+        "Soporte medio confortable",
+        "Tejido elástico"
   ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
+      beneficios: [
+        "Comodidad absoluta",
+        "Transpirable y fresco",
+        "Perfecto para el día a día"
   ]
 },
   },
@@ -575,15 +575,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
+      detalles: [
+        "Diseño deportivo elegante",
+        "Soporte medio confortable",
+        "Tejido elástico"
   ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
+      beneficios: [
+        "Comodidad absoluta",
+        "Transpirable y fresco",
+        "Perfecto para el día a día"
   ]
 },
   },
@@ -599,15 +599,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
+      detalles: [
+        "Diseño deportivo elegante",
+        "Soporte medio confortable",
+        "Tejido elástico"
   ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
+      beneficios: [
+        "Comodidad absoluta",
+        "Transpirable y fresco",
+        "Perfecto para el día a día"
   ]
 },
 
@@ -624,15 +624,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
+      detalles: [
+        "Diseño deportivo elegante",
+        "Soporte medio confortable",
+        "Tejido elástico"
   ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
+      beneficios: [
+        "Comodidad absoluta",
+        "Transpirable y fresco",
+        "Perfecto para el día a día"
   ]
 },
   },
@@ -648,15 +648,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
+      detalles: [
+        "Diseño deportivo elegante",
+        "Soporte medio confortable",
+        "Tejido elástico"
   ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
+      beneficios: [
+        "Comodidad absoluta",
+        "Transpirable y fresco",
+        "Perfecto para el día a día"
   ]
 },
   },
@@ -672,15 +672,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
+      detalles: [
+        "Diseño deportivo elegante",
+        "Soporte medio confortable",
+        "Tejido elástico"
   ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
+      beneficios: [
+        "Comodidad absoluta",
+        "Transpirable y fresco",
+        "Perfecto para el día a día"
   ]
 },
   },
@@ -696,15 +696,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
+      detalles: [
+        "Diseño deportivo elegante",
+        "Soporte medio confortable",
+        "Tejido elástico"
   ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
+      beneficios: [
+        "Comodidad absoluta",
+        "Transpirable y fresco",
+        "Perfecto para el día a día"
   ]
 },
   },
@@ -720,15 +720,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
+      detalles: [
+        "Diseño deportivo elegante",
+        "Soporte medio confortable",
+        "Tejido elástico"
   ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
+      beneficios: [
+        "Comodidad absoluta",
+        "Transpirable y fresco",
+        "Perfecto para el día a día"
   ]
 },
   },
@@ -744,15 +744,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
+      detalles: [
+        "Diseño deportivo elegante",
+        "Soporte medio confortable",
+        "Tejido elástico"
   ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
+      beneficios: [
+        "Comodidad absoluta",
+        "Transpirable y fresco",
+        "Perfecto para el día a día"
   ]
 },
   },
@@ -768,15 +768,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
+      detalles: [
+        "Diseño deportivo elegante",
+        "Soporte medio confortable",
+        "Tejido elástico"
   ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
+      beneficios: [
+        "Comodidad absoluta",
+        "Transpirable y fresco",
+        "Perfecto para el día a día"
   ]
 },
   },
@@ -792,15 +792,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
+      detalles: [
+        "Diseño deportivo elegante",
+        "Soporte medio confortable",
+        "Tejido elástico"
   ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
+      beneficios: [
+        "Comodidad absoluta",
+        "Transpirable y fresco",
+        "Perfecto para el día a día"
   ]
 },
   },
@@ -816,15 +816,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
+      detalles: [
+        "Diseño deportivo elegante",
+        "Soporte medio confortable",
+        "Tejido elástico"
   ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
+      beneficios: [
+        "Comodidad absoluta",
+        "Transpirable y fresco",
+        "Perfecto para el día a día"
   ]
 },
   },
@@ -840,15 +840,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
+      detalles: [
+        "Diseño deportivo elegante",
+        "Soporte medio confortable",
+        "Tejido elástico"
   ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
+      beneficios: [
+        "Comodidad absoluta",
+        "Transpirable y fresco",
+        "Perfecto para el día a día"
   ]
 },
   },
@@ -960,15 +960,15 @@ export const products: Product[] = [
     audience: "nina",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
+      detalles: [
+        "Diseño especial para niñas",
+        "Ajuste cómodo y seguro",
+        "Fácil de poner y quitar"
   ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
+      beneficios: [
+        "Perfecta para actividades deportivas",
+        "Resistente al uso diario",
+        "Mantiene su forma después de lavados"
   ]
 },
   },
@@ -984,15 +984,15 @@ export const products: Product[] = [
     audience: "nina",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
+      detalles: [
+        "Diseño especial para niñas",
+        "Ajuste cómodo y seguro",
+        "Fácil de poner y quitar"
   ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
+      beneficios: [
+        "Perfecta para actividades deportivas",
+        "Resistente al uso diario",
+        "Mantiene su forma después de lavados"
   ]
 },
   },
@@ -1010,15 +1010,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Pretina ancha para mejor soporte",
-    "Corte ajustado sin transparencias",
-    "Costuras planas"
+      detalles: [
+        "Pretina ancha para mejor soporte",
+        "Corte ajustado sin transparencias",
+        "Costuras planas"
   ],
-  beneficios: [
-    "Se adapta al cuerpo como una segunda piel",
-    "Te mantiene fresca y seca durante el entrenamiento",
-    "Alta resistencia y durabilidad"
+      beneficios: [
+        "Se adapta al cuerpo como una segunda piel",
+        "Te mantiene fresca y seca durante el entrenamiento",
+        "Alta resistencia y durabilidad"
   ]
 },
   },
@@ -1034,15 +1034,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Pretina ancha para mejor soporte",
-    "Corte ajustado sin transparencias",
-    "Costuras planas"
+      detalles: [
+        "Pretina ancha para mejor soporte",
+        "Corte ajustado sin transparencias",
+        "Costuras planas"
   ],
-  beneficios: [
-    "Se adapta al cuerpo como una segunda piel",
-    "Te mantiene fresca y seca durante el entrenamiento",
-    "Alta resistencia y durabilidad"
+      beneficios: [
+        "Se adapta al cuerpo como una segunda piel",
+        "Te mantiene fresca y seca durante el entrenamiento",
+        "Alta resistencia y durabilidad"
   ]
 },
   },
@@ -1058,15 +1058,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Pretina ancha para mejor soporte",
-    "Corte ajustado sin transparencias",
-    "Costuras planas"
+      detalles: [
+        "Pretina ancha para mejor soporte",
+        "Corte ajustado sin transparencias",
+        "Costuras planas"
   ],
-  beneficios: [
-    "Se adapta al cuerpo como una segunda piel",
-    "Te mantiene fresca y seca durante el entrenamiento",
-    "Alta resistencia y durabilidad"
+      beneficios: [
+        "Se adapta al cuerpo como una segunda piel",
+        "Te mantiene fresca y seca durante el entrenamiento",
+        "Alta resistencia y durabilidad"
   ]
 },
   },
@@ -1082,15 +1082,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Pretina ancha para mejor soporte",
-    "Corte ajustado sin transparencias",
-    "Costuras planas"
+      detalles: [
+        "Pretina ancha para mejor soporte",
+        "Corte ajustado sin transparencias",
+        "Costuras planas"
   ],
-  beneficios: [
-    "Se adapta al cuerpo como una segunda piel",
-    "Te mantiene fresca y seca durante el entrenamiento",
-    "Alta resistencia y durabilidad"
+      beneficios: [
+        "Se adapta al cuerpo como una segunda piel",
+        "Te mantiene fresca y seca durante el entrenamiento",
+        "Alta resistencia y durabilidad"
   ]
 },
   },
@@ -1106,15 +1106,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Pretina ancha para mejor soporte",
-    "Corte ajustado sin transparencias",
-    "Costuras planas"
+      detalles: [
+        "Pretina ancha para mejor soporte",
+        "Corte ajustado sin transparencias",
+        "Costuras planas"
   ],
-  beneficios: [
-    "Se adapta al cuerpo como una segunda piel",
-    "Te mantiene fresca y seca durante el entrenamiento",
-    "Alta resistencia y durabilidad"
+      beneficios: [
+        "Se adapta al cuerpo como una segunda piel",
+        "Te mantiene fresca y seca durante el entrenamiento",
+        "Alta resistencia y durabilidad"
   ]
 },
   },
@@ -1130,15 +1130,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Pretina ancha para mejor soporte",
-    "Corte ajustado sin transparencias",
-    "Costuras planas"
+      detalles: [
+        "Pretina ancha para mejor soporte",
+        "Corte ajustado sin transparencias",
+        "Costuras planas"
   ],
-  beneficios: [
-    "Se adapta al cuerpo como una segunda piel",
-    "Te mantiene fresca y seca durante el entrenamiento",
-    "Alta resistencia y durabilidad"
+      beneficios: [
+        "Se adapta al cuerpo como una segunda piel",
+        "Te mantiene fresca y seca durante el entrenamiento",
+        "Alta resistencia y durabilidad"
   ]
 },
   },
@@ -1154,15 +1154,15 @@ export const products: Product[] = [
     audience: "mujer",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Pretina ancha para mejor soporte",
-    "Corte ajustado sin transparencias",
-    "Costuras planas"
+      detalles: [
+        "Pretina ancha para mejor soporte",
+        "Corte ajustado sin transparencias",
+        "Costuras planas"
   ],
-  beneficios: [
-    "Se adapta al cuerpo como una segunda piel",
-    "Te mantiene fresca y seca durante el entrenamiento",
-    "Alta resistencia y durabilidad"
+      beneficios: [
+        "Se adapta al cuerpo como una segunda piel",
+        "Te mantiene fresca y seca durante el entrenamiento",
+        "Alta resistencia y durabilidad"
   ]
 },
   },
@@ -1178,15 +1178,15 @@ export const products: Product[] = [
     audience: "nina",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Pretina ancha para mejor soporte",
-    "Corte ajustado sin transparencias",
-    "Costuras planas"
+      detalles: [
+        "Pretina ancha para mejor soporte",
+        "Corte ajustado sin transparencias",
+        "Costuras planas"
   ],
-  beneficios: [
-    "Se adapta al cuerpo como una segunda piel",
-    "Te mantiene fresca y seca durante el entrenamiento",
-    "Alta resistencia y durabilidad"
+      beneficios: [
+        "Se adapta al cuerpo como una segunda piel",
+        "Te mantiene fresca y seca durante el entrenamiento",
+        "Alta resistencia y durabilidad"
   ]
 },
   },
@@ -1347,15 +1347,15 @@ export const products: Product[] = [
     audience: "nina",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
+      detalles: [
+        "Diseño especial para niñas",
+        "Ajuste cómodo y seguro",
+        "Fácil de poner y quitar"
   ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
+      beneficios: [
+        "Perfecta para actividades deportivas",
+        "Resistente al uso diario",
+        "Mantiene su forma después de lavados"
   ]
 },
   },
@@ -1371,15 +1371,15 @@ export const products: Product[] = [
     audience: "nina",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
+      detalles: [
+        "Diseño especial para niñas",
+        "Ajuste cómodo y seguro",
+        "Fácil de poner y quitar"
   ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
+      beneficios: [
+        "Perfecta para actividades deportivas",
+        "Resistente al uso diario",
+        "Mantiene su forma después de lavados"
   ]
 },
   },
@@ -1395,15 +1395,15 @@ export const products: Product[] = [
     audience: "nina",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
+      detalles: [
+        "Diseño especial para niñas",
+        "Ajuste cómodo y seguro",
+        "Fácil de poner y quitar"
   ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
+      beneficios: [
+        "Perfecta para actividades deportivas",
+        "Resistente al uso diario",
+        "Mantiene su forma después de lavados"
   ]
 },
   },
@@ -1419,15 +1419,15 @@ export const products: Product[] = [
     audience: "nina",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
+      detalles: [
+        "Diseño especial para niñas",
+        "Ajuste cómodo y seguro",
+        "Fácil de poner y quitar"
   ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
+      beneficios: [
+        "Perfecta para actividades deportivas",
+        "Resistente al uso diario",
+        "Mantiene su forma después de lavados"
   ]
 },
   },
@@ -1443,15 +1443,15 @@ export const products: Product[] = [
     audience: "nina",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
+      detalles: [
+        "Diseño especial para niñas",
+        "Ajuste cómodo y seguro",
+        "Fácil de poner y quitar"
   ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
+      beneficios: [
+        "Perfecta para actividades deportivas",
+        "Resistente al uso diario",
+        "Mantiene su forma después de lavados"
   ]
 },
   },
@@ -1467,15 +1467,15 @@ export const products: Product[] = [
     audience: "nina",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
+      detalles: [
+        "Diseño especial para niñas",
+        "Ajuste cómodo y seguro",
+        "Fácil de poner y quitar"
   ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
+      beneficios: [
+        "Perfecta para actividades deportivas",
+        "Resistente al uso diario",
+        "Mantiene su forma después de lavados"
   ]
 },
   },
@@ -1491,15 +1491,15 @@ export const products: Product[] = [
     audience: "nina",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
+      detalles: [
+        "Diseño especial para niñas",
+        "Ajuste cómodo y seguro",
+        "Fácil de poner y quitar"
   ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
+      beneficios: [
+        "Perfecta para actividades deportivas",
+        "Resistente al uso diario",
+        "Mantiene su forma después de lavados"
   ]
 },
   },
@@ -1515,15 +1515,15 @@ export const products: Product[] = [
     audience: "nina",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
+      detalles: [
+        "Diseño especial para niñas",
+        "Ajuste cómodo y seguro",
+        "Fácil de poner y quitar"
   ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
+      beneficios: [
+        "Perfecta para actividades deportivas",
+        "Resistente al uso diario",
+        "Mantiene su forma después de lavados"
   ]
 },
   },
@@ -1539,15 +1539,15 @@ export const products: Product[] = [
     audience: "nina",
     attributes: {
   material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
+      detalles: [
+        "Diseño especial para niñas",
+        "Ajuste cómodo y seguro",
+        "Fácil de poner y quitar"
   ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
+      beneficios: [
+        "Perfecta para actividades deportivas",
+        "Resistente al uso diario",
+        "Mantiene su forma después de lavados"
   ]
 },
   },
