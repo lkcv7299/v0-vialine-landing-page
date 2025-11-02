@@ -129,7 +129,7 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
             ;(e.currentTarget as HTMLImageElement).src = fallbackImage || "/placeholder.svg"
           }}
           alt={title}
-          className="absolute inset-0 w-full h-[180%] object-cover transition-all duration-500 ease-out"
+          className="absolute inset-0 w-full h-[180%] object-cover"
           style={getImageStyle()}
           loading="lazy"
         />
