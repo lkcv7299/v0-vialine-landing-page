@@ -1,0 +1,233 @@
+{
+  "new": [
+    {
+      "slug": "body-manga-corta-suplex-liso-premium",
+      "name": "BODY MANGA CORTA - SUPLEX LISO PREMIUM",
+      "category": "bodys",
+      "colors": [
+        "AZUL MARINO",
+        "BLANCO",
+        "NEGRO",
+        "ROJO"
+      ]
+    },
+    {
+      "slug": "body-manga-larga-suplex-liso-premium",
+      "name": "BODY MANGA LARGA - SUPLEX LISO PREMIUM",
+      "category": "bodys",
+      "colors": [
+        "AZUL MARINO",
+        "BLANCO",
+        "NEGRO",
+        "ROJO"
+      ]
+    },
+    {
+      "slug": "enterizo-manga-cero-suplex-liso-premium",
+      "name": "ENTERIZO MANGA CERO - SUPLEX LISO PREMIUM",
+      "category": "bodys",
+      "colors": [
+        "AZULINO",
+        "BLANCO",
+        "NEGRO"
+      ]
+    },
+    {
+      "slug": "enterizo-tiras-suplex-liso-premium",
+      "name": "ENTERIZO TIRAS - SUPLEX LISO PREMIUM",
+      "category": "bodys",
+      "colors": [
+        "AZULINO",
+        "BLANCO",
+        "CHARCOAL",
+        "NEGRO",
+        "ROJO"
+      ]
+    },
+    {
+      "slug": "legging-push-up-suplex-liso-premium",
+      "name": "LEGGING PUSH UP - SUPLEX LISO PREMIUM",
+      "category": "leggings",
+      "colors": [
+        "Negro"
+      ]
+    },
+    {
+      "slug": "legging-realce-suplex-liso-premium",
+      "name": "LEGGING REALCE - SUPLEX LISO PREMIUM",
+      "category": "leggings",
+      "colors": [
+        "AZUL MARINO",
+        "CHARCOAL",
+        "MELANGE",
+        "NEGRO",
+        "VINO"
+      ]
+    },
+    {
+      "slug": "legging-slim-suplex-liso-premium",
+      "name": "LEGGING SLIM - SUPLEX LISO PREMIUM",
+      "category": "leggings",
+      "colors": [
+        "ACERO",
+        "AQUA",
+        "AZUL MARINO",
+        "AZULINO",
+        "BLANCO",
+        "CAMEL"
+      ]
+    },
+    {
+      "slug": "short-push-up-suplex-liso-premium",
+      "name": "SHORT PUSH UP - SUPLEX LISO PREMIUM",
+      "category": "shorts",
+      "colors": [
+        "AZUL MARINO",
+        "AZULINO",
+        "CHARCOAL",
+        "NEGRO",
+        "ROJO"
+      ]
+    },
+    {
+      "slug": "short-slim-suplex-liso-premium",
+      "name": "SHORT SLIM - SUPLEX LISO PREMIUM",
+      "category": "shorts",
+      "colors": [
+        "ACERO",
+        "AZULINO",
+        "BLANCO",
+        "NEGRO"
+      ]
+    },
+    {
+      "slug": "top-afrodita-suplex-liso-premium",
+      "name": "TOP AFRODITA - SUPLEX LISO PREMIUM",
+      "category": "tops",
+      "colors": [
+        "AZULINO",
+        "NEGRO",
+        "ROJO"
+      ]
+    },
+    {
+      "slug": "top-paradise-suplex-liso-premium",
+      "name": "TOP PARADISE - SUPLEX LISO PREMIUM",
+      "category": "tops",
+      "colors": [
+        "AZULINO",
+        "BLANCO",
+        "CHARCOAL",
+        "NEGRO",
+        "ROJO"
+      ]
+    }
+  ],
+  "existing": [
+    {
+      "slug": "body-manga-corta",
+      "name": "BODY MANGA CORTA",
+      "category": "bodys",
+      "colors": [
+        "BLANCO",
+        "Beige",
+        "NEGRO",
+        "ROJO",
+        "ROSADO"
+      ]
+    },
+    {
+      "slug": "body-manga-larga",
+      "name": "BODY MANGA LARGA",
+      "category": "bodys",
+      "colors": [
+        "BEIGE",
+        "BLANCO",
+        "NEGRO",
+        "ROJO",
+        "ROSADO"
+      ]
+    },
+    {
+      "slug": "camiseta-cuello-alto",
+      "name": "CAMISETA CUELLO ALTO",
+      "category": "tops",
+      "colors": [
+        "AZUL MARINO",
+        "BEIGE",
+        "BLANCO",
+        "NEGRO",
+        "ROJO",
+        "TURQUESA",
+        "VERDE PETROLEO",
+        "VINO"
+      ]
+    },
+    {
+      "slug": "camiseta-gia",
+      "name": "CAMISETA GIA",
+      "category": "tops",
+      "colors": [
+        "BLANCO",
+        "NEGRO",
+        "VINO"
+      ]
+    },
+    {
+      "slug": "camiseta-manga-corta",
+      "name": "CAMISETA MANGA CORTA",
+      "category": "tops",
+      "colors": [
+        "AZUL MARINO",
+        "BEIGE",
+        "BLANCO",
+        "NEGRO",
+        "ROJO"
+      ]
+    },
+    {
+      "slug": "camiseta-manga-larga",
+      "name": "CAMISETA MANGA LARGA",
+      "category": "tops",
+      "colors": [
+        "AZUL MARINO",
+        "BEIGE",
+        "BLANCO",
+        "NEGRO",
+        "ROJO",
+        "TURQUESA",
+        "VINO"
+      ]
+    },
+    {
+      "slug": "maxi-short",
+      "name": "MAXI SHORT",
+      "category": "shorts",
+      "colors": [
+        "BEIGE",
+        "BLANCO",
+        "NEGRO"
+      ]
+    },
+    {
+      "slug": "mini-short",
+      "name": "MINI SHORT",
+      "category": "shorts",
+      "colors": [
+        "BEIGE",
+        "BLANCO",
+        "NEGRO"
+      ]
+    },
+    {
+      "slug": "short-brasil",
+      "name": "SHORT BRASIL",
+      "category": "shorts",
+      "colors": [
+        "BEIGE",
+        "BLANCO",
+        "NEGRO"
+      ]
+    }
+  ]
+}
