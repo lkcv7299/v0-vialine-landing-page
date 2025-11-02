@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Check, Share2 } from "lucide-react"
 import type { Product } from "@/data/products"
 import { buildWhatsAppUrl } from "@/lib/contact"
@@ -22,21 +22,17 @@ function getProductImages(product: Product): string[] {
 }
 
 export default function ProductDetailCard({ product }: { product: Product }) {
+  const productImages = getProductImages(product)
+
   const [selectedColor, setSelectedColor] = useState("")
   const [selectedSize, setSelectedSize] = useState("")
   const [quantity, setQuantity] = useState(1)
   const [added, setAdded] = useState(false)
   const [activeTab, setActiveTab] = useState<"cuidados" | "envios">("cuidados")
-  const [currentImages, setCurrentImages] = useState<string[]>([])
+  const [currentImages, setCurrentImages] = useState<string[]>(productImages)
   const { addItem} = useCart()
 
-  const productImages = getProductImages(product)
   const isOutOfStock = product.inventory === 0
-
-  // ✅ FIX: Initialize images correctly on mount using useEffect
-  useEffect(() => {
-    setCurrentImages(productImages)
-  }, []) // Empty deps = run once on mount
 
   // Helper function to normalize color name for image filename
   const normalizeColorForFilename = (color: string) => {
