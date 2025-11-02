@@ -3,19 +3,99 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut, Maximize2 } from "lucide-react"
+import { useImageDebug } from "@/contexts/ImageDebugContext"
+
+// ✅ PRODUCT-SPECIFIC OVERRIDES - Ajustes visuales permanentes para productos específicos
+const PRODUCT_OVERRIDES: { [slug: string]: { scale: number; translateY: number; translateX: number } } = {
+  "short-slim": { scale: 1.00, translateY: -20, translateX: 0 },
+  "camiseta-tropical": { scale: 1.00, translateY: 3, translateX: 1 },
+  "maxi-short": { scale: 1.05, translateY: 0, translateX: 0 },
+  "body-manga-corta": { scale: 1.00, translateY: -1, translateX: 0 },
+  "top-minerva": { scale: 1.00, translateY: -12, translateX: -1 },
+  "top-soporte": { scale: 1.00, translateY: -20, translateX: 0 },
+  "top-perla": { scale: 1.00, translateY: -4, translateX: 1 },
+  "top-athena": { scale: 1.00, translateY: -5, translateX: 0 },
+  "enterizo-manga-cero": { scale: 1.00, translateY: -33, translateX: 0 },
+  "legging-harmony": { scale: 1.05, translateY: -29, translateX: 0 },
+  "pescador-realce": { scale: 1.00, translateY: -20, translateX: 0 },
+  "torero-energy": { scale: 1.00, translateY: 0, translateX: 0 },
+}
 
 type ProductGalleryProps = {
   images: string[]
   productName: string
+  productSlug?: string
 }
 
-export default function ProductGallery({ images, productName }: ProductGalleryProps) {
+export default function ProductGallery({ images, productName, productSlug = "" }: ProductGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [isZoomOpen, setIsZoomOpen] = useState(false) // ✅ Modal de zoom
   const [zoomLevel, setZoomLevel] = useState(1) // ✅ Nivel de zoom (1 = 100%, 2 = 200%, etc.)
+  const { values } = useImageDebug()
 
   // ✅ Filter out any empty or invalid images
   const validImages = images.filter(img => img && img.trim() !== "")
+
+  // 🎨 Calcular estilo de imagen basado en tipo de producto
+  const getImageTransform = () => {
+    const slug = productSlug.toLowerCase()
+    const imagePath = validImages[selectedIndex]?.toLowerCase() || ""
+
+    // ✅ PRIORIDAD 1: Buscar override PERMANENTE específico del producto
+    const permanentOverride = PRODUCT_OVERRIDES[productSlug]
+    if (permanentOverride) {
+      return {
+        transform: `scale(${permanentOverride.scale}) translateY(${permanentOverride.translateY}%) translateX(${permanentOverride.translateX}%)`,
+        transformOrigin: slug.includes('top') || slug.includes('camiseta') || slug.includes('body')
+          ? 'center top'
+          : 'center bottom'
+      }
+    }
+
+    // ✅ PRIORIDAD 2: Valores generales por tipo de producto (fallback)
+    // Detectar si es producto de niña
+    const isGirlProduct = slug.includes('nina') || imagePath.includes('nina')
+
+    // Productos superiores: tops/camisetas
+    if (slug.includes('camiseta') || slug.includes('top') || slug.includes('body') || slug.includes('enterizo') ||
+        imagePath.includes('camiseta') || imagePath.includes('top') || imagePath.includes('body') || imagePath.includes('enterizo')) {
+
+      if (isGirlProduct) {
+        return {
+          transform: `scale(${values.girlTopScale}) translateY(${values.girlTopTranslateY}%) translateX(${values.girlTopTranslateX}%)`,
+          transformOrigin: 'center top'
+        }
+      }
+
+      return {
+        transform: `scale(${values.cardTopScale}) translateY(${values.cardTopTranslateY}%) translateX(${values.cardTopTranslateX}%)`,
+        transformOrigin: 'center top'
+      }
+    }
+
+    // Productos inferiores: leggings/shorts
+    if (slug.includes('legging') || slug.includes('short') || slug.includes('biker') || slug.includes('pantalon') ||
+        imagePath.includes('legging') || imagePath.includes('short') || imagePath.includes('biker') || imagePath.includes('pantalon')) {
+
+      if (isGirlProduct) {
+        return {
+          transform: `scale(${values.girlBottomScale}) translateY(${values.girlBottomTranslateY}%) translateX(${values.girlBottomTranslateX}%)`,
+          transformOrigin: 'center bottom'
+        }
+      }
+
+      return {
+        transform: `scale(${values.cardBottomScale}) translateY(${values.cardBottomTranslateY}%) translateX(${values.cardBottomTranslateX}%)`,
+        transformOrigin: 'center bottom'
+      }
+    }
+
+    // Default
+    return {
+      transform: 'scale(1)',
+      transformOrigin: 'center center'
+    }
+  }
 
   const goToPrevious = () => {
     setSelectedIndex((prev) => (prev === 0 ? validImages.length - 1 : prev - 1))
@@ -91,13 +171,11 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
   if (validImages.length === 1) {
     return (
       <div className="relative aspect-square overflow-hidden rounded-2xl bg-neutral-100">
-        <Image
+        <img
           src={validImages[0]}
           alt={productName}
-          fill
-          className="object-cover"
-          priority
-          sizes="(max-width: 768px) 100vw, 50vw"
+          className="absolute inset-0 w-full h-[180%] object-cover"
+          style={getImageTransform()}
         />
       </div>
     )
@@ -108,14 +186,12 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
       <div className="space-y-4">
         {/* Imagen principal */}
         <div className="relative aspect-square overflow-hidden rounded-2xl bg-neutral-100 group cursor-zoom-in">
-          <div onClick={openZoom} className="relative w-full h-full">
-            <Image
+          <div onClick={openZoom} className="relative w-full h-full overflow-hidden">
+            <img
               src={validImages[selectedIndex]}
               alt={`${productName} - Imagen ${selectedIndex + 1}`}
-              fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-              priority
-              sizes="(max-width: 768px) 100vw, 50vw"
+              className="absolute inset-0 w-full h-[180%] object-cover transition-transform duration-300"
+              style={getImageTransform()}
             />
           </div>
 

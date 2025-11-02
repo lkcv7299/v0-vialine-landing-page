@@ -169,7 +169,7 @@ export default function ProductDetailCard({ product }: { product: Product }) {
     <main className="mx-auto max-w-7xl px-4 py-8">
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
         <div className={`transition-opacity duration-300 ${isLoadingGallery ? 'opacity-50' : 'opacity-100'}`}>
-          <ProductGallery images={currentImages} productName={product.title} />
+          <ProductGallery images={currentImages} productName={product.title} productSlug={product.slug} />
         </div>
 
         <div>

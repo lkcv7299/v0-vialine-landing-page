@@ -5,6 +5,7 @@ import Link from "next/link"
 import { ChevronLeft, ChevronRight, Star } from "lucide-react"
 import WishlistHeart from "@/components/WishlistHeart"
 import { getAverageRating, getReviewCount } from "@/data/reviews"
+import { useImageDebug } from "@/contexts/ImageDebugContext"
 
 type Item = { 
   slug: string
@@ -22,6 +23,7 @@ type GymRailProps = {
 
 export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
   const trackRef = useRef<HTMLDivElement>(null)
+  const { values } = useImageDebug()
 
   const scroll = (dir: "left" | "right") => {
     if (!trackRef.current) return
@@ -66,12 +68,10 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
               const rating = getAverageRating(item.slug)
               const reviewCount = getReviewCount(item.slug)
               
-              // SOLUCIÓN DEFINITIVA: scale + translateY para mover físicamente la imagen
+              // SOLUCIÓN DEFINITIVA: scale + translateY + translateX para mover físicamente la imagen
               const getImageStyle = () => {
                 const productSlug = item.slug.toLowerCase()
                 const imagePath = item.image.toLowerCase()
-
-                const baseScale = 1.6  // Carruseles necesitan más zoom (son cuadrados)
 
                 // Productos superiores: ZOOM + MOVER ARRIBA
                 if (productSlug.includes('camiseta') ||
@@ -83,7 +83,7 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
                     imagePath.includes('body') ||
                     imagePath.includes('enterizo')) {
                   return {
-                    transform: `scale(${baseScale}) translateY(-10%)`,
+                    transform: `scale(${values.railTopScale}) translateY(${values.railTopTranslateY}%) translateX(${values.railTopTranslateX}%)`,
                     transformOrigin: 'center top'
                   }
                 }
@@ -98,7 +98,7 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
                     imagePath.includes('biker') ||
                     imagePath.includes('pantalon')) {
                   return {
-                    transform: `scale(${baseScale}) translateY(6%)`,
+                    transform: `scale(${values.railBottomScale}) translateY(${values.railBottomTranslateY}%) translateX(${values.railBottomTranslateX}%)`,
                     transformOrigin: 'center bottom'
                   }
                 }
@@ -121,7 +121,7 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover/card:scale-110"
+                        className="absolute inset-0 w-full h-[200%] object-cover transition-transform duration-300"
                         style={getImageStyle()}
                       />
 

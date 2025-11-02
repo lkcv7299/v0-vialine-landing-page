@@ -13,6 +13,7 @@ import { WishlistProvider } from "@/components/providers/WishlistContext"
 import { CartProvider } from "@/contexts/CartContext"
 import SessionProvider from "@/components/providers/SessionProvider"
 import { Toaster } from "sonner"
+import { ImageDebugProvider } from "@/contexts/ImageDebugContext"
 
 export const metadata: Metadata = {
   title: "Vialine | Activewear & ropa interior para mujer – Hecho en Perú",
@@ -90,13 +91,15 @@ export default function RootLayout({
         <SessionProvider>
           <CartProvider>
             <WishlistProvider>
-              <ClientWrapper>
-                <PromoBar />
-                <SiteHeader />
-                {children}
-                <WhatsAppFloat />
-                <Toaster position="bottom-right" richColors />
-              </ClientWrapper>
+              <ImageDebugProvider>
+                <ClientWrapper>
+                  <PromoBar />
+                  <SiteHeader />
+                  {children}
+                  <WhatsAppFloat />
+                  <Toaster position="bottom-right" richColors />
+                </ClientWrapper>
+              </ImageDebugProvider>
             </WishlistProvider>
           </CartProvider>
         </SessionProvider>

@@ -2,6 +2,23 @@
 import { useState } from "react"
 import Link from "next/link"
 import WishlistHeart from "@/components/WishlistHeart"
+import { useImageDebug } from "@/contexts/ImageDebugContext"
+
+// ✅ PRODUCT-SPECIFIC OVERRIDES - Ajustes visuales permanentes para productos específicos
+const PRODUCT_OVERRIDES: { [slug: string]: { scale: number; translateY: number; translateX: number } } = {
+  "short-slim": { scale: 1.00, translateY: -20, translateX: 0 },
+  "camiseta-tropical": { scale: 1.00, translateY: 3, translateX: 1 },
+  "maxi-short": { scale: 1.05, translateY: 0, translateX: 0 },
+  "body-manga-corta": { scale: 1.00, translateY: -1, translateX: 0 },
+  "top-minerva": { scale: 1.00, translateY: -12, translateX: -1 },
+  "top-soporte": { scale: 1.00, translateY: -20, translateX: 0 },
+  "top-perla": { scale: 1.00, translateY: -4, translateX: 1 },
+  "top-athena": { scale: 1.00, translateY: -5, translateX: 0 },
+  "enterizo-manga-cero": { scale: 1.00, translateY: -33, translateX: 0 },
+  "legging-harmony": { scale: 1.05, translateY: -29, translateX: 0 },
+  "pescador-realce": { scale: 1.00, translateY: -20, translateX: 0 },
+  "torero-energy": { scale: 1.00, translateY: 0, translateX: 0 },
+}
 
 type Props = {
   href: string
@@ -20,17 +37,31 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
   const [isHovering, setIsHovering] = useState(false)
   const displayImage = image || fallbackImage || "/placeholder.svg"
   const isOutOfStock = inventory === 0
+  const { values } = useImageDebug()
 
   // Usar hover image si está disponible y estamos hovering
   const currentImage = isHovering && hoverImage ? hoverImage : displayImage
 
-  // SOLUCIÓN DEFINITIVA: scale + translateY para mover físicamente la imagen
+  // SOLUCIÓN DEFINITIVA: scale + translateY + translateX para mover físicamente la imagen
   const getImageStyle = () => {
     const productSlug = slug.toLowerCase()
     const imagePath = displayImage.toLowerCase()
-
-    const baseScale = 1.4
     const hoverScale = isHovering ? 1.05 : 1
+
+    // ✅ PRIORIDAD 1: Buscar override PERMANENTE específico del producto
+    const permanentOverride = PRODUCT_OVERRIDES[slug]
+    if (permanentOverride) {
+      return {
+        transform: `scale(${permanentOverride.scale * hoverScale}) translateY(${permanentOverride.translateY}%) translateX(${permanentOverride.translateX}%)`,
+        transformOrigin: productSlug.includes('top') || productSlug.includes('camiseta') || productSlug.includes('body')
+          ? 'center top'
+          : 'center bottom'
+      }
+    }
+
+    // ✅ PRIORIDAD 2: Valores generales por tipo de producto (fallback)
+    // Detectar si es producto de niña
+    const isGirlProduct = productSlug.includes('nina') || imagePath.includes('nina')
 
     // Productos superiores: ZOOM + MOVER ARRIBA para mostrar cara + producto
     if (productSlug.includes('camiseta') ||
@@ -41,8 +72,16 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
         imagePath.includes('top') ||
         imagePath.includes('body') ||
         imagePath.includes('enterizo')) {
+
+      if (isGirlProduct) {
+        return {
+          transform: `scale(${values.girlTopScale * hoverScale}) translateY(${values.girlTopTranslateY}%) translateX(${values.girlTopTranslateX}%)`,
+          transformOrigin: 'center top'
+        }
+      }
+
       return {
-        transform: `scale(${baseScale * hoverScale}) translateY(-12%)`,
+        transform: `scale(${values.cardTopScale * hoverScale}) translateY(${values.cardTopTranslateY}%) translateX(${values.cardTopTranslateX}%)`,
         transformOrigin: 'center top'
       }
     }
@@ -56,8 +95,16 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
         imagePath.includes('short') ||
         imagePath.includes('biker') ||
         imagePath.includes('pantalon')) {
+
+      if (isGirlProduct) {
+        return {
+          transform: `scale(${values.girlBottomScale * hoverScale}) translateY(${values.girlBottomTranslateY}%) translateX(${values.girlBottomTranslateX}%)`,
+          transformOrigin: 'center bottom'
+        }
+      }
+
       return {
-        transform: `scale(${baseScale * hoverScale}) translateY(8%)`,
+        transform: `scale(${values.cardBottomScale * hoverScale}) translateY(${values.cardBottomTranslateY}%) translateX(${values.cardBottomTranslateX}%)`,
         transformOrigin: 'center bottom'
       }
     }
@@ -82,7 +129,7 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
             ;(e.currentTarget as HTMLImageElement).src = fallbackImage || "/placeholder.svg"
           }}
           alt={title}
-          className="h-full w-full object-cover transition-all duration-500 ease-out"
+          className="absolute inset-0 w-full h-[180%] object-cover transition-all duration-500 ease-out"
           style={getImageStyle()}
           loading="lazy"
         />

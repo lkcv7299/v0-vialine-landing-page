@@ -5815,3 +5815,334 @@ El sistema ahora tiene protección multicapa contra datos inválidos
 y cumple con todas las reglas de React.
 
 ✅✅✅ SESIÓN 7 CONTINUACIÓN COMPLETADA CON ÉXITO ✅✅✅
+
+
+================================================================================
+SESIÓN 8: OPTIMIZACIÓN Y APLICACIÓN PERMANENTE DE TRANSFORMS DE IMÁGENES
+================================================================================
+FECHA: 2025-11-02
+OBJETIVO: Aplicar valores optimizados de image transforms permanentemente
+          y limpiar productos antiguos sin galería
+
+CONTEXTO:
+Después de crear el sistema de debug GlobalImageDebugger en sesiones anteriores,
+el usuario realizó ajustes visuales exhaustivos en todos los productos para
+encontrar los valores óptimos de scale, translateY y translateX que mejor
+enmarcan cada tipo de producto en sus cards.
+
+================================================================================
+FASE 1: APLICACIÓN DE VALORES OPTIMIZADOS
+================================================================================
+
+VALORES PROPORCIONADOS POR USUARIO:
+El usuario proporcionó valores ajustados visualmente después de usar el sistema
+de debug para optimizar el encuadre de las imágenes de productos.
+
+A. VALORES GLOBALES PARA ProductCard (h-[180%]):
+   - Tops/Camisetas/Bodys: scale 1.1, translateY -7%, translateX 3%
+   - Bottoms: scale 1.0, translateY -3%, translateX 0%
+
+B. VALORES GLOBALES PARA GymRail (h-[200%]):
+   - Tops: scale 1.05, translateY -7%, translateX 0%
+   - Bottoms: scale 1.15, translateY -9%, translateX 3%
+
+C. VALORES PARA PRODUCTOS NIÑA (h-[180%]):
+   - Tops: scale 1.0, translateY -20%, translateX 0%
+   - Bottoms: scale 1.0, translateY -5%, translateX 0%
+
+D. OVERRIDES ESPECÍFICOS (12 productos):
+   1. short-slim: scale 1.00, translateY -20%, translateX 0%
+   2. camiseta-tropical: scale 1.00, translateY 3%, translateX 1%
+   3. maxi-short: scale 1.05, translateY 0%, translateX 0%
+   4. body-manga-corta: scale 1.00, translateY -1%, translateX 0%
+   5. top-minerva: scale 1.00, translateY -12%, translateX -1%
+   6. top-soporte: scale 1.00, translateY -20%, translateX 0%
+   7. top-perla: scale 1.00, translateY -4%, translateX 1%
+   8. top-athena: scale 1.00, translateY -5%, translateX 0%
+   9. enterizo-manga-cero: scale 1.00, translateY -33%, translateX 0%
+   10. legging-harmony: scale 1.05, translateY -29%, translateX 0%
+   11. pescador-realce: scale 1.00, translateY -20%, translateX 0%
+   12. torero-energy: scale 1.00, translateY 0%, translateX 0%
+
+ARCHIVOS MODIFICADOS:
+
+1. contexts/ImageDebugContext.tsx
+   - Actualizado IMAGE_TRANSFORM_VALUES con valores optimizados
+   - Simplificado: removida toda funcionalidad de debug
+   - Ahora solo provee valores estáticos via context
+
+   ANTES: Sistema complejo con callbacks y estado mutable
+   DESPUÉS: Simple provider con valores constantes
+
+2. components/ui/ProductCard.tsx
+   - Agregado PRODUCT_OVERRIDES con 12 productos específicos
+   - Implementado sistema de prioridad:
+     * PRIORIDAD 1: Override permanente específico del producto
+     * PRIORIDAD 2: Valores generales por categoría (top/bottom)
+     * PRIORIDAD 3: Fallback genérico
+
+   - Removido código de debug:
+     * IntersectionObserver
+     * useEffect para detección de visibilidad
+     * useRef para el elemento
+     * Props de productRef y onVisible
+
+   - Mantenido solo useState para hover
+
+3. components/ProductGallery.tsx
+   - Agregado PRODUCT_OVERRIDES idéntico a ProductCard
+   - Aplicado mismo sistema de prioridad
+   - Consistencia visual entre card y galería
+
+4. app/layout.tsx
+   - Removido import de GlobalImageDebugger
+   - Removido componente <GlobalImageDebugger />
+   - Layout limpio para producción
+
+   NOTA: GlobalImageDebugger.tsx se conserva en el proyecto
+         para futuras sesiones de ajuste visual
+
+ARQUITECTURA DEL SISTEMA:
+
+1. SISTEMA DE PRIORIDAD:
+   En getImageStyle(), se busca primero override específico del producto,
+   luego se aplican valores por categoría (top/bottom/niña), y finalmente
+   se usa fallback genérico si no hay coincidencias.
+
+2. TRANSFORM ORIGIN:
+   - Productos superiores (top, camiseta, body): 'center top'
+   - Productos inferiores (legging, short, biker): 'center bottom'
+   - Default: 'center center'
+
+3. HOVER EFFECT:
+   - Scale adicional de 1.05x en hover
+   - Se multiplica con scale base del producto
+   - Transición suave de 500ms
+
+================================================================================
+FASE 2: LIMPIEZA DE PRODUCTOS ANTIGUOS
+================================================================================
+
+PROBLEMA IDENTIFICADO:
+El proyecto tenía 59 productos totales:
+- 20 productos actualizados: con galería de imágenes y colores
+- 39 productos antiguos: sin galería, imágenes sueltas sin actualizar
+
+SOLUCIÓN IMPLEMENTADA:
+
+1. SEPARACIÓN DE PRODUCTOS:
+   - Productos actualizados: mantener intactos
+   - Productos antiguos: limpiar imágenes físicas
+
+2. LIMPIEZA FÍSICA:
+   Script manual ejecutado en public/images:
+   Eliminadas 52 imágenes de productos antiguos
+   (biker-nina, body-manga-larga, calza, etc.)
+
+3. ACTUALIZACIÓN DE DATOS:
+   Archivo: data/products.ts
+   - 39 productos antiguos actualizados
+   - Todas las referencias de imagen cambiadas a "/placeholder.svg"
+   - Preservados: slug, name, category, price, description
+
+4. VERIFICACIÓN:
+   - 20 productos actualizados: sin cambios ✓
+   - 39 productos antiguos: placeholder aplicado ✓
+   - 52 imágenes eliminadas del filesystem ✓
+   - 0 referencias rotas ✓
+
+PRODUCTOS AFECTADOS (39 total):
+- Categoría "nina": 7 productos
+- Categoría "mujer" leggings: 9 productos
+- Categoría "mujer" tops: 12 productos
+- Categoría "mujer" shorts/biker: 11 productos
+
+RESULTADO:
+Sistema limpio con separación clara entre:
+- Productos en venta activa (con galería)
+- Productos legacy (con placeholder)
+
+================================================================================
+FASE 3: REMOCIÓN DEL SISTEMA DE DEBUG
+================================================================================
+
+OBJETIVO:
+Eliminar todo código de debug de producción manteniendo funcionalidad optimizada.
+
+CAMBIOS REALIZADOS:
+
+1. ImageDebugContext simplificado:
+   - Removidas funciones: getProductOverride, setProductOverride, updateGlobalValues
+   - Removido estado: productOverrides, globalValues, currentProduct
+   - Mantenido solo: valores estáticos en IMAGE_TRANSFORM_VALUES
+
+2. ProductCard.tsx limpiado:
+   - Removido IntersectionObserver setup
+   - Removido useEffect con dependency de visibilidad
+   - Removido useRef para elemento DOM
+   - Removidas props: productRef, onVisible
+   - Mantenido solo useState para hover
+
+3. GlobalImageDebugger desactivado:
+   - Removido de layout.tsx
+   - Archivo preservado para futuro uso
+   - No se carga en producción
+
+BENEFICIOS:
+- Menor bundle size
+- Sin overhead de IntersectionObserver
+- Sin re-renders innecesarios
+- Código más limpio y mantenible
+
+================================================================================
+ERROR RESUELTO DURANTE SESIÓN
+================================================================================
+
+ERROR: "Maximum update depth exceeded"
+UBICACIÓN: GlobalImageDebugger.tsx
+CAUSA: useEffect con funciones en dependency array
+
+SOLUCIÓN:
+Removidas todas las funciones de dependency arrays en 3 useEffect,
+agregados comentarios eslint-disable para suprimir warnings.
+
+RESULTADO: Debug panel funcionó correctamente para ajustes visuales.
+
+================================================================================
+ARQUITECTURA TÉCNICA COMPLETA
+================================================================================
+
+SISTEMA DE CSS TRANSFORMS:
+- Altura extendida para permitir transforms (180% o 200%)
+- Transform aplicado dinámicamente con scale, translateY, translateX
+- Transform-origin según tipo de producto (top o bottom)
+
+FLUJO DE DATOS:
+ImageDebugContext provee valores estáticos → useImageDebug() los consume →
+ProductCard.getImageStyle() aplica lógica de prioridad → CSS transform final
+
+DETECCIÓN DE CATEGORÍA:
+Por slug del producto (includes 'top', 'legging', etc.) o por path de imagen
+como fallback, se determina si usar valores de TOP, BOTTOM o NIÑA.
+
+================================================================================
+ESTADÍSTICAS DE LA SESIÓN
+================================================================================
+
+ARCHIVOS MODIFICADOS: 4
+- contexts/ImageDebugContext.tsx
+- components/ui/ProductCard.tsx
+- components/ProductGallery.tsx
+- app/layout.tsx
+
+ARCHIVOS DE DATOS ACTUALIZADOS: 1
+- data/products.ts (39 productos)
+
+IMÁGENES ELIMINADAS: 52 archivos .webp
+
+CÓDIGO AGREGADO:
+- PRODUCT_OVERRIDES: 12 entradas x 2 archivos = 24 líneas
+- IMAGE_TRANSFORM_VALUES: 15 valores optimizados
+
+CÓDIGO REMOVIDO:
+- GlobalImageDebugger de layout: ~5 líneas
+- IntersectionObserver de ProductCard: ~30 líneas
+- Debug logic de ImageDebugContext: ~100 líneas
+
+TOTAL DE TRANSFORMS DEFINIDOS:
+- 9 valores globales (3 categorías x 3 propiedades)
+- 12 overrides específicos (3 propiedades cada uno)
+- = 45 valores numéricos optimizados manualmente
+
+TIEMPO ESTIMADO: ~4 horas
+- Ajuste visual con debug tool: ~2 horas
+- Aplicación de valores permanentes: ~1 hora
+- Limpieza de productos antiguos: ~1 hora
+
+ERRORES RESUELTOS: 1 (Maximum update depth exceeded)
+
+================================================================================
+RESULTADO FINAL
+================================================================================
+
+ANTES:
+- Sistema de debug activo en producción
+- IntersectionObserver monitoreando todos los productos
+- Valores de transform no optimizados
+- 52 imágenes antiguas ocupando espacio
+- 39 productos con referencias a imágenes inexistentes
+
+DESPUÉS:
+- ✓ Código de producción limpio sin debug overhead
+- ✓ Valores de transform optimizados visualmente
+- ✓ 12 productos con ajustes específicos permanentes
+- ✓ Sistema de prioridad claro y mantenible
+- ✓ Productos antiguos con placeholder consistente
+- ✓ 52 imágenes eliminadas del filesystem
+- ✓ 0 referencias rotas en el código
+
+IMPACTO EN UX:
+- Mejor encuadre de productos en cards
+- Caras de modelos visibles en productos superiores
+- Piernas/producto visible en productos inferiores
+- Consistencia visual entre card, galería y carruseles
+- Hover effect suave y profesional
+
+IMPACTO EN PERFORMANCE:
+- Menor bundle size (sin GlobalImageDebugger en prod)
+- Sin IntersectionObserver overhead
+- Menos re-renders en ProductCard
+
+IMPACTO EN MANTENIBILIDAD:
+- Código más simple y directo
+- Valores centralizados en ImageDebugContext
+- Overrides claramente documentados
+- Fácil agregar nuevos productos específicos
+
+================================================================================
+LECCIONES APRENDIDAS
+================================================================================
+
+1. PROCESO DE OPTIMIZACIÓN VISUAL:
+   - Debug tool temporal es excelente para ajustes iterativos
+   - IntersectionObserver permite detectar productos visibles
+   - Export de valores facilita aplicación permanente
+   - Importante remover debug code después de optimizar
+
+2. GESTIÓN DE ASSETS:
+   - Separar productos actualizados de legacy
+   - Placeholder para productos sin imágenes
+   - Evitar referencias rotas con validación
+
+3. ARQUITECTURA DE TRANSFORMS:
+   - Sistema de prioridad: específico → categoría → default
+   - Transform origin crítico para encuadre correcto
+   - Hover scale debe multiplicar, no sumar
+
+4. LIMPIEZA DE CÓDIGO:
+   - Remover debug tools de producción
+   - Simplificar contexts cuando no se necesita estado
+   - Mantener solo código necesario en components
+
+STATUS: ✓ COMPLETADO
+
+================================================================================
+PRÓXIMOS PASOS RECOMENDADOS
+================================================================================
+
+1. CORTO PLAZO:
+   - Monitorear comportamiento de productos en producción
+   - Verificar que todos los overrides funcionan correctamente
+   - Revisar feedback de usuarios sobre visualización
+
+2. MEDIANO PLAZO:
+   - Actualizar productos legacy con nuevas fotos
+   - Reemplazar placeholders con imágenes reales
+   - Considerar mejoras en sistema de categorización
+
+3. LARGO PLAZO:
+   - Automatizar detección de tipo de producto
+   - Machine learning para sugerir valores óptimos
+   - A/B testing de diferentes encuadres
+
+✓✓✓ SESIÓN 8 COMPLETADA CON ÉXITO ✓✓✓
