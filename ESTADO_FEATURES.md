@@ -7,11 +7,88 @@
 
 ## ✅ COMPLETADOS EN SESIÓN 6 (03 Febrero 2025)
 
-### 🎨 MASSIVE IMAGE & PRODUCT UPDATE (100%)
+### 🎨 MASSIVE IMAGE & PRODUCT UPDATE + BUG FIXES (100%)
 
-**Contexto:** Se descubrió que 612 imágenes (86%, 237MB) estaban descargadas pero NO siendo utilizadas por los productos. Solo 107 de 711 imágenes estaban referenciadas en products.ts.
+**Contexto inicial:** El usuario reportó que el selector de colores no funcionaba y que los nombres de colores estaban en MAYÚSCULAS en lugar de proper case. Durante la investigación se descubrieron múltiples problemas críticos que se fueron resolviendo uno por uno durante toda la sesión.
 
-#### 1. ✅ **Actualización de miniaturas de productos**
+---
+
+### 🐛 FASE 1: Bugs Críticos Resueltos (5/5 - 100%)
+
+#### 1. ✅ **React Error #310 - Inconsistent Hook Execution**
+   - **Problema:** Error crítico causando infinite re-renders al seleccionar colores de productos
+   - **Causa:** Hooks ejecutándose después de early return condicional en ProductGallery.tsx
+   - **Solución:**
+     * Movidos TODOS los hooks (useState, useCallback, useEffect) ANTES del early return
+     * Asegura ejecución consistente de hooks en cada render
+   - **Archivos afectados:**
+     * `components/ProductGallery.tsx` - Reordenamiento de hooks
+     * `data/products.ts` - Eliminadas 263 líneas de productos mal colocados
+     * `scripts/fix-products-corruption.js` (NUEVO) - Script de corrección
+   - **Commit:** 4fb1a22
+
+#### 2. ✅ **485 imágenes de productos faltantes en repositorio**
+   - **Problema:** Imágenes convertidas a WebP pero nunca committed al repo, causando 404s en producción
+   - **Solución:** Agregadas TODAS las imágenes faltantes al repositorio
+   - **Imágenes agregadas:** 485 archivos WebP (total ~158MB)
+   - **Categorías:** Bodies (corta/larga), Shorts (maxi/mini/brasil), Leggings, Camisetas, Enterizos, Tops
+   - **Variantes de color por producto:** 4-6 imágenes por color
+   - **Commit:** dda6394
+
+#### 3. ✅ **Paths incorrectos de imágenes en products.ts**
+   - **Problema:** 9 productos con rutas de imágenes incorrectas causando 404s
+   - **Ejemplos de errores:**
+     * `camiseta-manga-larga-negro.webp` → debía ser `camiseta-manga-larga.webp`
+     * Rutas incorrectas de carpetas (short-slim, top-afrodita, productos niña)
+   - **Solución:** Corregidas todas las rutas de imágenes base
+   - **Commit:** 2c891ea
+
+#### 4. ✅ **Color Selector no funcionaba + Nombres en MAYÚSCULAS**
+   - **Problema:** Selector de colores no funcionaba Y colores mostraban "NEGRO, BLANCO" en lugar de "Negro, Blanco"
+   - **Causas identificadas:**
+     * 40 nombres de colores en UPPERCASE en products.ts
+     * normalizeColorForFilename() era case-sensitive
+     * Productos sin variantes de color intentaban cargar imágenes inexistentes
+   - **Solución:**
+     * Normalizados 40 nombres de color de UPPERCASE → Proper Case
+     * Hecho normalizeColorForFilename() case-insensitive
+     * Revertidos 4 productos SIN variantes (camisetas) a string[] simple
+     * Mantenidos productos CON variantes en format object[]
+   - **Productos revertidos:** camiseta-cuello-alto, camiseta-manga-larga, camiseta-manga-corta, camiseta-gia
+   - **Commit:** b8bc81c
+
+#### 5. ✅ **Vercel Function Size Limit Exceeded (329MB > 300MB)**
+   - **Problema:** Build fallando en Vercel por función serverless excediendo límite
+   - **Causa:** 158MB de imágenes siendo bundled en funciones serverless
+   - **Solución:** Agregado `outputFileTracingExcludes` en next.config.mjs
+     ```javascript
+     experimental: {
+       outputFileTracingExcludes: {
+         '*': ['public/products/**', 'public/productos/**']
+       }
+     }
+     ```
+   - **Resultado:** Función reducida de 329MB → ~70MB (estimado)
+   - **Commit:** 013bf7a
+
+---
+
+### 🎨 FASE 2: Actualización Masiva de Productos (5/5 - 100%)
+
+#### 6. ✅ **Reorganización de 213 imágenes + Estructura de colores mejorada**
+   - **Problema:** Imágenes en carpetas incorrectas, estructura de colores inconsistente
+   - **Solución:**
+     * Reorganizadas 213 imágenes de `/public/products/` → `/public/productos/mujer/{category}/`
+     * Actualizados 11 productos de string[] a object[] con imágenes por color
+     * Generado diagnostic-report.json con análisis completo
+   - **Categorías organizadas:** bodys, camisetas, enterizo, legging, short, tops
+   - **Scripts creados:**
+     * `comprehensive-diagnostic.js` - Análisis completo de productos
+     * `auto-update-product-structure.js` - Actualización automática de estructura
+     * `reorganize-products-images.js` - Reorganización de imágenes
+   - **Commit:** d352ee7
+
+#### 7. ✅ **Actualización de miniaturas de productos**
    - **Script:** `scripts/update-product-thumbnails.js` (NUEVO)
    - **Problema:** Productos usando imágenes antiguas de baja calidad (3-78KB) en lugar de nuevas imágenes de alta calidad (200KB-1MB)
    - **Solución:**
@@ -21,7 +98,7 @@
    - **Resultado:** 14 productos actualizados con miniaturas de alta calidad
    - **Commit:** bd32574
 
-#### 2. ✅ **Análisis de imágenes no utilizadas**
+#### 8. ✅ **Análisis de imágenes no utilizadas - Descubrimiento crítico**
    - **Script:** `scripts/find-unused-images.js` (NUEVO)
    - **Funcionalidad:**
      * Extrae todas las referencias de imágenes en products.ts
@@ -34,8 +111,9 @@
      * **NO UTILIZADAS: 612 (85%, 237.58MB)**
    - **Reporte:** `unused-images-report.json`
    - **Ejemplo:** `top-paradise` tenía 26 imágenes pero solo usaba 1
+   - **Implicación:** Había imágenes de alta calidad para muchos más colores pero no estaban siendo usadas
 
-#### 3. ✅ **Actualización masiva de productos con TODAS las variantes de color**
+#### 9. ✅ **Actualización masiva de productos con TODAS las variantes de color**
    - **Scripts iterativos creados:**
      * `complete-product-update.js` (v1 - falló por regex)
      * `update-all-products-with-images.js` (v2 - detección de color pobre)
@@ -80,58 +158,59 @@
    - **Commit:** 385182d
    - **Mensaje commit:** "feat: Massive product update - Added ALL available color variants"
 
-#### 4. ✅ **Scripts de diagnóstico adicionales**
-   - **`analyze-missing-images.js`** (NUEVO)
-     * Compara imágenes de Drive vs proyecto
-     * Resultado: 100% de imágenes de Drive ya están en proyecto (394/394)
+#### 10. ✅ **Scripts de diagnóstico adicionales y reportes**
+   - **Scripts creados:**
+     * `analyze-missing-images.js` - Compara imágenes de Drive vs proyecto
+       - Resultado: 100% sincronizado (394/394 imágenes)
+     * `find-products-without-folders.js` - Identifica productos sin carpetas Drive
+       - Resultado: 42/58 productos (66%) sin carpetas de alta calidad
+       - Estos usan imágenes scrapeadas de web
 
-   - **`find-products-without-folders.js`** (NUEVO)
-     * Identifica productos sin carpetas de imágenes de Drive
-     * Resultado: 42 de 58 productos (66%) no tienen carpetas
-     * Estos usan imágenes scrapeadas de la web (menor calidad)
-     * Reporte: `products-without-folders-report.json`
-
-#### 5. ✅ **Reportes generados**
-   - `diagnostic-report.json` - Diagnóstico completo de productos e imágenes
-   - `unused-images-report.json` - Análisis detallado de imágenes sin usar
-   - `products-without-folders-report.json` - Productos sin carpetas de Drive
-   - `missing-images-report.json` - Comparación Drive vs proyecto
+   - **Reportes generados:**
+     * `diagnostic-report.json` - Diagnóstico completo de productos e imágenes
+     * `unused-images-report.json` - Análisis detallado de imágenes sin usar
+     * `products-without-folders-report.json` - Productos sin carpetas de Drive
+     * `missing-images-report.json` - Comparación Drive vs proyecto
 
 ---
 
-### 🐛 PROBLEMAS RESUELTOS EN SESIÓN 6
+### 💡 PROBLEMAS TÉCNICOS ADICIONALES RESUELTOS
 
-#### Error 1: Regex no detectaba productos
-   - **Archivo:** `complete-product-update.js:40`
-   - **Causa:** Patrón regex demasiado estricto
-   - **Solución:** Cambio a lectura de `diagnostic-report.json`
+#### Error A: Regex no detectaba productos (Script v1)
+   - **Archivo:** `complete-product-update.js`
+   - **Problema:** Regex pattern demasiado estricto
+   - **Solución:** Cambio a lectura de diagnostic-report.json
 
-#### Error 2: Detección de color incorrecta
-   - **Archivo:** `update-all-products-with-images.js:74-89`
-   - **Problema:** Detectaba "suplex", "liso", "camiseta" como colores
-   - **Causa:** Patrón simple: tomar primera palabra después del slug
-   - **Solución:** Algoritmo de patrones que busca color DESPUÉS de descriptores de material
-   - **Ejemplo antes:** `top-paradise` → color: "suplex" ❌
-   - **Ejemplo después:** `top-paradise` → color: "negro" ✅
+#### Error B: Detección de color pobre (Script v2)
+   - **Archivo:** `update-all-products-with-images.js`
+   - **Problema:** Detectaba materiales como colores ("suplex", "liso")
+   - **Solución:** Algoritmo avanzado que busca color DESPUÉS de patrones de material
+   - **Ejemplo:** `top-paradise-suplex-liso-premium-negro-...`
+     * Antes: color detectado = "suplex" ❌
+     * Después: color detectado = "negro" ✅
 
-#### Error 3: Sintaxis en template literals
-   - **Múltiples archivos**
-   - **Problema:** Template literals escapados incorrectamente
-   - **Solución:** Usar sintaxis correcta sin escapes
+#### Error C: Template literals con sintaxis incorrecta
+   - **Problema:** Template literals escapados cuando no debían
+   - **Solución:** Sintaxis correcta en generación de código
 
 ---
 
 ### 📊 ESTADÍSTICAS SESIÓN 6
 
-**Scripts creados:** 7 nuevos scripts de análisis y actualización
-**Archivos modificados:** 1 (products.ts)
-**Productos actualizados:** 21 productos con todas sus variantes de color
-**Colores agregados:** ~80 nuevas variantes de color
-**Imágenes recuperadas:** 43 imágenes (de 612 a 569 sin usar)
-**Mejora en uso de imágenes:** 33% (107 → 142 imágenes usadas)
-**Espacio recuperado:** ~13MB
+**Trabajo total realizado:**
+- **Bugs críticos resueltos:** 5 (React hooks, 485 imágenes, paths, color selector, Vercel size)
+- **Scripts creados:** 10+ scripts de análisis, corrección y actualización
+- **Imágenes agregadas al repo:** 485 archivos WebP (~158MB)
+- **Imágenes reorganizadas:** 213 archivos
+- **Productos actualizados:** 32 productos en total
+  * 11 productos reorganizados con estructura de colores mejorada
+  * 21 productos con TODAS las variantes de color agregadas
+- **Colores agregados:** ~80 nuevas variantes de color
+- **Mejora en uso de imágenes:** +33% (107 → 142 imágenes usadas)
+- **Imágenes recuperadas del desperdicio:** 43 imágenes
+- **Espacio recuperado:** ~13MB
 
-**Desglose de colores por producto actualizados:**
+**Desglose de colores agregados por producto:**
 - 1 producto con 11 colores (body-manga-larga)
 - 2 productos con 9 colores
 - 3 productos con 8 colores
@@ -139,8 +218,16 @@
 - 5 productos con 6 colores
 - 6 productos con 5 colores
 
-**Tiempo de ejecución total:** ~4 horas
-**Commits realizados:** 2 commits principales
+**Archivos modificados:**
+- `data/products.ts` (múltiples actualizaciones)
+- `components/ProductGallery.tsx` (fix hooks)
+- `components/ProductDetailCard.tsx` (normalización case-insensitive)
+- `next.config.mjs` (outputFileTracingExcludes)
+
+**Reportes generados:** 4 archivos JSON de diagnóstico
+
+**Tiempo de ejecución:** ~6-7 horas (sesión completa)
+**Commits realizados:** 8 commits principales
 
 ---
 
@@ -344,11 +431,14 @@
 
 ## 📊 ESTADÍSTICAS
 
-**Total completado en Sesión 6:** 5 items principales (Massive Image & Product Update)
-**Scripts creados:** 7 scripts de análisis y actualización
-**Productos actualizados:** 21 productos
+**Total completado en Sesión 6:** 10 items (5 bugs críticos + 5 mejoras masivas)
+**Bugs críticos resueltos:** 5
+**Scripts creados:** 10+ scripts
+**Productos actualizados:** 32 productos
+**Imágenes agregadas:** 485 (158MB)
 **Imágenes recuperadas:** 43 (de 612 a 569 sin usar)
 **Mejora uso de imágenes:** +33% (107 → 142)
+**Commits:** 8
 
 **Total completado en Sesión 5:** 8 items (5 features + 3 bugs)
 **Sprint 3 UX:** 5/5 (100%)
@@ -361,10 +451,11 @@
 - Sesión 3: 5 bugs críticos
 - Sesión 4: 10 features (backlog + opcionales)
 - Sesión 5: 8 items (5 features + 3 bugs)
-- Sesión 6: 5 items (Massive update + 7 scripts)
-- **Total:** 45 implementaciones
+- Sesión 6: 10 items (5 bugs críticos + 5 mejoras masivas)
+- **Total:** 50 implementaciones
 
 **Estado general del proyecto:** ~99% completo
+**Catálogo de productos:** 100% funcional con todas las variantes de color
 **Falta:** Solo items de baja prioridad (footer, newsletter, OAuth setup) + decisión sobre 569 imágenes sin usar
 
 
