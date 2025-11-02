@@ -29,7 +29,56 @@ export const products: Product[] = [
     image: "/productos/mujer/camisetas/camiseta-cuello-alto.webp",
     category: "camisetas",
     fabric: "algodon",
-    colors: ["Azul Marino","Beige","Blanco","Negro","Rojo","Turquesa","Verde Petróleo","Vino"],
+    colors: [
+      {
+        name: "Azul Marino",
+        slug: "azul-marino",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/camisetas/camiseta-cuello-alto-azul-marino-cuello-alto-azulmarino1.webp",
+      },
+      {
+        name: "Beige",
+        slug: "beige",
+        hex: "#F5F5DC",
+        image: "/productos/mujer/camisetas/camiseta-cuello-alto-beige-cuello-alto-beige1.webp",
+      },
+      {
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        image: "/productos/mujer/camisetas/camiseta-cuello-alto-blanco-cuello-alto-blanco1.webp",
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/productos/mujer/camisetas/camiseta-cuello-alto-negro-cuello-alto-negro1.webp",
+      },
+      {
+        name: "Rojo",
+        slug: "rojo",
+        hex: "#D22B2B",
+        image: "/productos/mujer/camisetas/camiseta-cuello-alto-rojo-cuello-alto-rojo1.webp",
+      },
+      {
+        name: "Turquesa",
+        slug: "turquesa",
+        hex: "#40E0D0",
+        image: "/productos/mujer/camisetas/camiseta-cuello-alto-turquesa-cuello-alto-turquesa1.webp",
+      },
+      {
+        name: "Verde Petróleo",
+        slug: "verde-petroleo",
+        hex: "#00534E",
+        image: "/productos/mujer/camisetas/camiseta-cuello-alto-verde-petroleo-cuello-alto-petroleo1.webp",
+      },
+      {
+        name: "Vino",
+        slug: "vino",
+        hex: "#722F37",
+        image: "/productos/mujer/camisetas/camiseta-cuello-alto-vino-cuello-alto-vino1.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     badge: "nuevo",
@@ -54,7 +103,50 @@ export const products: Product[] = [
     image: "/productos/mujer/camisetas/camiseta-manga-larga.webp",
     category: "camisetas",
     fabric: "algodon",
-    colors: ["Azul Marino","Beige","Blanco","Negro","Rojo","Turquesa","Vino"],
+    colors: [
+      {
+        name: "Azul Marino",
+        slug: "azul-marino",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/camisetas/camiseta-manga-larga-azul-marino-manga-larga-zul-marino1.webp",
+      },
+      {
+        name: "Beige",
+        slug: "beige",
+        hex: "#F5F5DC",
+        image: "/productos/mujer/camisetas/camiseta-manga-larga-beige-manga-larga-beige1.webp",
+      },
+      {
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        image: "/productos/mujer/camisetas/camiseta-manga-larga-blanco-manga-larga-blanco1.webp",
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/productos/mujer/camisetas/camiseta-manga-larga-negro-manga-larga-negro1.webp",
+      },
+      {
+        name: "Rojo",
+        slug: "rojo",
+        hex: "#D22B2B",
+        image: "/productos/mujer/camisetas/camiseta-manga-larga-rojo-manga-larga-rojo1.webp",
+      },
+      {
+        name: "Turquesa",
+        slug: "turquesa",
+        hex: "#40E0D0",
+        image: "/productos/mujer/camisetas/camiseta-manga-larga-turquesa-manga-larga-turquesa1.webp",
+      },
+      {
+        name: "Vino",
+        slug: "vino",
+        hex: "#722F37",
+        image: "/productos/mujer/camisetas/camiseta-manga-larga-vino-manga-larga-vino1.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     inventory: 0,
@@ -79,7 +171,38 @@ export const products: Product[] = [
     image: "/productos/mujer/camisetas/camiseta-manga-corta.webp",
     category: "camisetas",
     fabric: "algodon",
-    colors: ["Azul Marino","Beige","Blanco","Negro","Rojo"],
+    colors: [
+      {
+        name: "Azul Marino",
+        slug: "azul-marino",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/camisetas/camiseta-manga-corta-azul-marino-camiseta-azulmarino1.webp",
+      },
+      {
+        name: "Beige",
+        slug: "beige",
+        hex: "#F5F5DC",
+        image: "/productos/mujer/camisetas/camiseta-manga-corta-beige-camiseta-beige1.webp",
+      },
+      {
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        image: "/productos/mujer/camisetas/camiseta-manga-corta-blanco-camiseta-blanco1.webp",
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/productos/mujer/camisetas/camiseta-manga-corta-negro-camiseta-negro1.webp",
+      },
+      {
+        name: "Rojo",
+        slug: "rojo",
+        hex: "#D22B2B",
+        image: "/productos/mujer/camisetas/camiseta-manga-corta-rojo-camiseta-rojo1.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     inventory: 3,
@@ -156,7 +279,26 @@ export const products: Product[] = [
     image: "/productos/mujer/camisetas/camiseta-gia.webp",
     category: "camisetas",
     fabric: "algodon",
-    colors: ["Blanco","Negro","Vino"],
+    colors: [
+      {
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        image: "/productos/mujer/camisetas/camiseta-gia-blanco-camiseta-gia-blanco1.webp",
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/productos/mujer/camisetas/camiseta-gia-negro-camiseta-gia-negro1.webp",
+      },
+      {
+        name: "Vino",
+        slug: "vino",
+        hex: "#722F37",
+        image: "/productos/mujer/camisetas/camiseta-gia-vino-camiseta-gia-vino1.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -206,7 +348,26 @@ export const products: Product[] = [
     image: "/productos/mujer/short/short-slim.webp",
     category: "bikers",
     fabric: "suplex",
-    colors: ["Gris", "Negro", "Rojo"],
+    colors: [
+      {
+        name: "Gris",
+        slug: "gris",
+        hex: "#9CA3AF",
+        image: "/productos/mujer/short/short-slim.webp",
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/productos/mujer/short/short-slim.webp",
+      },
+      {
+        name: "Rojo",
+        slug: "rojo",
+        hex: "#D22B2B",
+        image: "/productos/mujer/short/short-slim.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -433,7 +594,26 @@ export const products: Product[] = [
     image: "/productos/mujer/bodys/body-manga-corta-suplex.webp",
     category: "bodys",
     fabric: "suplex",
-    colors: ["Gris", "Negro", "Rojo"],
+    colors: [
+      {
+        name: "Gris",
+        slug: "gris",
+        hex: "#9CA3AF",
+        image: "/productos/mujer/bodys/body-manga-corta-suplex.webp",
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/productos/mujer/bodys/body-manga-corta-suplex.webp",
+      },
+      {
+        name: "Rojo",
+        slug: "rojo",
+        hex: "#D22B2B",
+        image: "/productos/mujer/bodys/body-manga-corta-suplex.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -569,7 +749,26 @@ export const products: Product[] = [
     image: "/productos/mujer/tops/top-afrodita.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Azul", "Negro", "Rojo"],
+    colors: [
+      {
+        name: "Azul",
+        slug: "azul",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/tops/top-afrodita.webp",
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/productos/mujer/tops/top-afrodita.webp",
+      },
+      {
+        name: "Rojo",
+        slug: "rojo",
+        hex: "#D22B2B",
+        image: "/productos/mujer/tops/top-afrodita.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -641,7 +840,20 @@ export const products: Product[] = [
     image: "/productos/mujer/tops/top-paradise.webp",
     category: "tops",
     fabric: "algodon",
-    colors: ["Rojo", "Negro"],
+    colors: [
+      {
+        name: "Rojo",
+        slug: "rojo",
+        hex: "#D22B2B",
+        image: "/productos/mujer/tops/top-paradise.webp",
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/productos/mujer/tops/top-paradise.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -1148,7 +1360,26 @@ export const products: Product[] = [
     image: "/productos/mujer/legging/legging-slim.webp",
     category: "leggings",
     fabric: "suplex",
-    colors: ["Negro", "Gris", "Rojo"],
+    colors: [
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/productos/mujer/legging/legging-slim.webp",
+      },
+      {
+        name: "Gris",
+        slug: "gris",
+        hex: "#9CA3AF",
+        image: "/productos/mujer/legging/legging-slim.webp",
+      },
+      {
+        name: "Rojo",
+        slug: "rojo",
+        hex: "#D22B2B",
+        image: "/productos/mujer/legging/legging-slim.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -1196,7 +1427,26 @@ export const products: Product[] = [
     image: "/productos/mujer/legging/legging-harmony.webp",
     category: "leggings",
     fabric: "suplex",
-    colors: ["Negro", "Gris", "Azul"],
+    colors: [
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/productos/mujer/legging/legging-harmony.webp",
+      },
+      {
+        name: "Gris",
+        slug: "gris",
+        hex: "#9CA3AF",
+        image: "/productos/mujer/legging/legging-harmony.webp",
+      },
+      {
+        name: "Azul",
+        slug: "azul",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/legging/legging-harmony.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
@@ -1244,7 +1494,26 @@ export const products: Product[] = [
     image: "/productos/mujer/legging/legging-clasica.webp",
     category: "leggings",
     fabric: "suplex",
-    colors: ["Negro", "Gris", "Azul"],
+    colors: [
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/productos/mujer/legging/legging-clasica.webp",
+      },
+      {
+        name: "Gris",
+        slug: "gris",
+        hex: "#9CA3AF",
+        image: "/productos/mujer/legging/legging-clasica.webp",
+      },
+      {
+        name: "Azul",
+        slug: "azul",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/legging/legging-clasica-azul-marino.webp",
+      },
+    ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
     attributes: {
