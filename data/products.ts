@@ -26,7 +26,7 @@ export const products: Product[] = [
     slug: "camiseta-cuello-alto",
     title: "Camiseta cuello alto",
     price: 45,
-    image: "/productos/mujer/camisetas/camiseta-cuello-alto.webp",
+    image: "/productos/mujer/camisetas/camiseta-cuello-alto-azul-marino-cuello-alto-azulmarino1.webp",
     category: "camisetas",
     fabric: "algodon",
     colors: [
@@ -100,7 +100,7 @@ export const products: Product[] = [
     slug: "camiseta-manga-larga",
     title: "Camiseta manga larga",
     price: 43,
-    image: "/productos/mujer/camisetas/camiseta-manga-larga.webp",
+    image: "/productos/mujer/camisetas/camiseta-manga-larga-azul-marino-manga-larga-zul-marino1.webp",
     category: "camisetas",
     fabric: "algodon",
     colors: [
@@ -168,7 +168,7 @@ export const products: Product[] = [
     slug: "camiseta-manga-corta",
     title: "Camiseta manga corta",
     price: 34,
-    image: "/productos/mujer/camisetas/camiseta-manga-corta.webp",
+    image: "/productos/mujer/camisetas/camiseta-manga-corta-azul-marino-camiseta-azulmarino1.webp",
     category: "camisetas",
     fabric: "algodon",
     colors: [
@@ -276,7 +276,7 @@ export const products: Product[] = [
     slug: "camiseta-gia",
     title: "Camiseta Gia",
     price: 27,
-    image: "/productos/mujer/camisetas/camiseta-gia.webp",
+    image: "/productos/mujer/camisetas/camiseta-gia-blanco-camiseta-gia-blanco1.webp",
     category: "camisetas",
     fabric: "algodon",
     colors: [
@@ -1584,7 +1584,7 @@ export const products: Product[] = [
     slug: "pescador-realce",
     title: "Pescador realce",
     price: 46,
-    image: "/productos/mujer/pescador/pescador-realce.webp",
+    image: "/productos/mujer/pescador/pescador-realce-azulino.webp",
     category: "pescador",
     fabric: "suplex",
     colors: [
@@ -1630,7 +1630,7 @@ export const products: Product[] = [
     slug: "pescador-dynamic",
     title: "Pescador dynamic",
     price: 46,
-    image: "/productos/mujer/pescador/pescador-dynamic.webp",
+    image: "/productos/mujer/pescador/pescador-dynamic-azulino.webp",
     category: "pescador",
     fabric: "suplex",
     colors: [
@@ -1683,7 +1683,7 @@ export const products: Product[] = [
     slug: "torero-energy",
     title: "Torero energy",
     price: 43,
-    image: "/productos/mujer/torero/torero-energy.webp",
+    image: "/productos/mujer/torero/torero-energy-azulino.webp",
     category: "torero",
     fabric: "suplex",
     colors: [
