@@ -38,6 +38,35 @@ export default function ProductDetailCard({ product }: { product: Product }) {
     setCurrentImages(productImages)
   }, []) // Empty deps = run once on mount
 
+  // Helper function to normalize color name for image filename
+  const normalizeColorForFilename = (color: string) => {
+    const colorMap: { [key: string]: string } = {
+      'Azul Marino': 'azul-marino',
+      'Azul': 'azul-marino',
+      'Azulino': 'azulino',
+      'Beige': 'beige',
+      'Blanco': 'blanco',
+      'Negro': 'negro',
+      'Rojo': 'rojo',
+      'Rosado': 'rosado',
+      'Charcoal': 'charcoal',
+      'Melange': 'melange',
+      'Vino': 'vino',
+      'Acero': 'acero',
+      'Aqua': 'aqua',
+      'Camel': 'camel',
+      'Turquesa': 'turquesa',
+      'Verde Petróleo': 'verde-petroleo',
+      'Verde': 'verde-petroleo',
+      'Amarillo': 'amarillo',
+      'Gris': 'gris',
+      'Suplex': 'suplex',
+      'Rosa': 'rosa',
+      'Morado': 'morado'
+    }
+    return colorMap[color] || color.toLowerCase().replace(/\s+/g, '-')
+  }
+
   // Update images when color changes
   const handleColorChange = (colorName: string) => {
     setSelectedColor(colorName)
@@ -51,8 +80,13 @@ export default function ProductDetailCard({ product }: { product: Product }) {
       // If this color has a specific image, show it first
       setCurrentImages([colorObj.image, ...productImages.filter(img => img !== colorObj.image)])
     } else {
-      // Reset to default images
-      setCurrentImages(productImages)
+      // For string colors, construct the image path dynamically
+      const colorSlug = normalizeColorForFilename(colorName)
+      const basePath = product.image.substring(0, product.image.lastIndexOf('/'))
+      const constructedImagePath = `${basePath}/${product.slug}-${colorSlug}.webp`
+
+      // Check if the constructed image exists by trying to load it
+      setCurrentImages([constructedImagePath, ...productImages.filter(img => img !== constructedImagePath)])
     }
   }
 

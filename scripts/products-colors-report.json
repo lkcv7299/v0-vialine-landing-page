@@ -1,0 +1,143 @@
+[
+  {
+    "slug": "body-manga-corta",
+    "colors": [
+      "Amarillo",
+      "Beige",
+      "Blanco",
+      "Negro",
+      "Rojo",
+      "Rosado",
+      "Suplex"
+    ],
+    "image": "/productos/mujer/bodys/body-manga-corta-amarillo.webp",
+    "category": "bodys"
+  },
+  {
+    "slug": "body-manga-corta-suplex-liso-premium",
+    "colors": [
+      "Azul",
+      "Blanco",
+      "Negro",
+      "Rojo"
+    ],
+    "image": "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino.webp",
+    "category": "bodys"
+  },
+  {
+    "slug": "body-manga-larga",
+    "colors": [
+      "Beige",
+      "Blanco",
+      "Negro",
+      "Rojo",
+      "Rosado"
+    ],
+    "image": "/productos/mujer/bodys/body-manga-larga-beige.webp",
+    "category": "bodys"
+  },
+  {
+    "slug": "body-manga-larga-suplex-liso-premium",
+    "colors": [
+      "Azul",
+      "Blanco",
+      "Negro",
+      "Rojo"
+    ],
+    "image": "/productos/mujer/bodys/body-manga-larga-suplex-liso-premium-azul-marino.webp",
+    "category": "bodys"
+  },
+  {
+    "slug": "legging-realce-suplex-liso-premium",
+    "colors": [
+      "Azul",
+      "Charcoal",
+      "Melange",
+      "Negro",
+      "Vino"
+    ],
+    "image": "/productos/mujer/legging/legging-realce-suplex-liso-premium-azul-marino.webp",
+    "category": "legging"
+  },
+  {
+    "slug": "legging-slim-suplex-liso-premium",
+    "colors": [
+      "Acero",
+      "Aqua",
+      "Azul",
+      "Azulino",
+      "Blanco",
+      "Camel"
+    ],
+    "image": "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero.webp",
+    "category": "legging"
+  },
+  {
+    "slug": "maxi-short",
+    "colors": [
+      "Beige",
+      "Blanco",
+      "Negro"
+    ],
+    "image": "/productos/mujer/short/maxi-short-beige.webp",
+    "category": "short"
+  },
+  {
+    "slug": "mini-short",
+    "colors": [
+      "Beige",
+      "Blanco",
+      "Negro"
+    ],
+    "image": "/productos/mujer/short/mini-short-beige.webp",
+    "category": "short"
+  },
+  {
+    "slug": "short-brasil",
+    "colors": [
+      "Beige",
+      "Blanco",
+      "Negro"
+    ],
+    "image": "/productos/mujer/short/short-brasil-beige.webp",
+    "category": "short"
+  },
+  {
+    "slug": "short-push-up-suplex-liso-premium",
+    "colors": [
+      "Azul",
+      "Azulino",
+      "Charcoal",
+      "Negro",
+      "Rojo"
+    ],
+    "image": "/productos/mujer/short/short-push-up-suplex-liso-premium-azul-marino-short-push-azulMarino.webp",
+    "category": "short"
+  },
+  {
+    "slug": "short-slim-suplex-liso-premium",
+    "colors": [
+      "Acero",
+      "Azulino",
+      "Blanco",
+      "Negro"
+    ],
+    "image": "/productos/mujer/short/short-slim-suplex-liso-premium-acero.webp",
+    "category": "short"
+  },
+  {
+    "slug": "camiseta-cuello-alto",
+    "colors": [
+      "Azul",
+      "Beige",
+      "Blanco",
+      "Negro",
+      "Rojo",
+      "Turquesa",
+      "Verde",
+      "Vino"
+    ],
+    "image": "/productos/mujer/tops/camiseta-cuello-alto-azul-marino.webp",
+    "category": "tops"
+  }
+]
