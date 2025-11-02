@@ -1,4 +1,5 @@
 "use client"
+import { useState } from "react"
 import Link from "next/link"
 import WishlistHeart from "@/components/WishlistHeart"
 
@@ -7,6 +8,7 @@ type Props = {
   title: string
   price: number
   image: string
+  hoverImage?: string | null
   badge?: "nuevo" | "oferta"
   slug: string
   fallbackImage?: string
@@ -14,52 +16,62 @@ type Props = {
   inventory?: number
 }
 
-export default function ProductCard({ href, title, price, image, badge, slug, fallbackImage, originalPrice, inventory }: Props) {
+export default function ProductCard({ href, title, price, image, hoverImage, badge, slug, fallbackImage, originalPrice, inventory }: Props) {
+  const [isHovering, setIsHovering] = useState(false)
   const displayImage = image || fallbackImage || "/placeholder.svg"
   const isOutOfStock = inventory === 0
 
+  // Usar hover image si está disponible y estamos hovering
+  const currentImage = isHovering && hoverImage ? hoverImage : displayImage
+
+  // Determinar object-position basado en el path de la imagen (categoría del producto)
+  // Productos de parte superior del cuerpo (tops, camisetas, bodys, enterizos) → object-top
+  // Productos de parte inferior (leggings, shorts, bikers) → object-center
+  const getObjectPosition = () => {
+    const imagePath = displayImage.toLowerCase()
+    const topCategories = ['top', 'camiseta', 'body', 'enterizo']
+    const isTopProduct = topCategories.some(cat => imagePath.includes(cat))
+    return isTopProduct ? 'object-top' : 'object-center'
+  }
+
   return (
     <Link href={href} className="group block">
-      <div className="relative aspect-[3/4] w-full overflow-hidden rounded-md">
+      <div
+        className="relative aspect-[3/4] w-full overflow-hidden rounded-md"
+        onMouseEnter={() => !isOutOfStock && setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+      >
         <img
-          src={displayImage}
+          src={currentImage}
           onError={(e) => {
             ;(e.currentTarget as HTMLImageElement).src = fallbackImage || "/placeholder.svg"
           }}
           alt={title}
-          className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.02]"
+          className={`h-full w-full object-cover ${getObjectPosition()} transition-all duration-500 ease-out group-hover:scale-105`}
           loading="lazy"
         />
 
-        {/* Botón "Ver detalles" en hover */}
-        {!isOutOfStock && (
-          <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <button className="bg-white text-neutral-900 px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-neutral-100 transition transform translate-y-2 group-hover:translate-y-0">
-              Ver detalles
-            </button>
-          </div>
-        )}
-
         <WishlistHeart slug={slug} />
 
-        {/* Badge NUEVO o OFERTA */}
+        {/* Badge NUEVO o OFERTA - Estilo Gymshark (bottom-left, discreto) */}
         {badge && !isOutOfStock && (
-          <span className={`absolute left-2 top-2 rounded-md px-2.5 py-1 text-xs font-bold uppercase shadow-lg ${
+          <span className={`absolute left-2 bottom-2 rounded-sm px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide shadow-md ${
             badge === "nuevo"
-              ? "bg-blue-600 text-white"
-              : "bg-red-600 text-white"
+              ? "bg-blue-600/90 text-white"
+              : "bg-red-600/90 text-white"
           }`}>
             {badge === "nuevo" ? "Nuevo" : "Oferta"}
           </span>
         )}
 
-        {/* Badge AGOTADO */}
+        {/* Badge AGOTADO - Overlay sutil + badge discreto */}
         {isOutOfStock && (
-          <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-            <span className="bg-neutral-900 text-white px-4 py-2 rounded-md text-sm font-bold uppercase">
+          <>
+            <div className="absolute inset-0 bg-black/10" />
+            <span className="absolute bottom-2 left-2 bg-neutral-900/90 text-white px-2 py-1 text-[11px] font-medium uppercase tracking-wide rounded-sm shadow-md">
               Agotado
             </span>
-          </div>
+          </>
         )}
       </div>
 

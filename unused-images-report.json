@@ -1,9 +1,9 @@
 {
   "summary": {
     "totalImages": 711,
-    "referenced": 86,
-    "unused": 625,
-    "unusedSizeMB": 243.12
+    "referenced": 80,
+    "unused": 631,
+    "unusedSizeMB": 245.53
   },
   "byProduct": {
     "body-manga-corta": {
@@ -1784,6 +1784,11 @@
           "size": 504196
         },
         {
+          "filename": "camiseta-manga-larga-azul-marino-manga-larga-zul-marino1.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-manga-larga-azul-marino-manga-larga-zul-marino1.webp",
+          "size": 665782
+        },
+        {
           "filename": "camiseta-manga-larga-beige-manga-larga-beige1.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-manga-larga-beige-manga-larga-beige1.webp",
           "size": 822564
@@ -1882,6 +1887,11 @@
           "filename": "camiseta-manga-larga-rojo-manga-larga-rojo5.webp",
           "relativePath": "productos/mujer/camisetas/camiseta-manga-larga-rojo-manga-larga-rojo5.webp",
           "size": 225938
+        },
+        {
+          "filename": "camiseta-manga-larga-turquesa-manga-larga-tuqrquesa4.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-manga-larga-turquesa-manga-larga-tuqrquesa4.webp",
+          "size": 1164060
         },
         {
           "filename": "camiseta-manga-larga-turquesa-manga-larga-turquesa1.webp",
@@ -2139,7 +2149,7 @@
           "size": 386188
         }
       ],
-      "totalSize": 38620794
+      "totalSize": 40450636
     },
     "legging-clasica": {
       "images": [
@@ -2147,6 +2157,16 @@
           "filename": "legging-clasica-gamusa-azul-marino.webp",
           "relativePath": "productos/mujer/legging/legging-clasica-gamusa-azul-marino.webp",
           "size": 7698
+        },
+        {
+          "filename": "legging-clasica-gamusa-blanco.webp",
+          "relativePath": "productos/mujer/legging/legging-clasica-gamusa-blanco.webp",
+          "size": 94422
+        },
+        {
+          "filename": "legging-clasica-gamusa-negro.webp",
+          "relativePath": "productos/mujer/legging/legging-clasica-gamusa-negro.webp",
+          "size": 6748
         },
         {
           "filename": "legging-clasica-melange.webp",
@@ -2159,7 +2179,7 @@
           "size": 60702
         }
       ],
-      "totalSize": 147840
+      "totalSize": 249010
     },
     "unknown": {
       "images": [
@@ -2474,6 +2494,11 @@
     "legging-slim": {
       "images": [
         {
+          "filename": "legging-slim-blanco.webp",
+          "relativePath": "productos/mujer/legging/legging-slim-blanco.webp",
+          "size": 377812
+        },
+        {
           "filename": "legging-slim-suplex-liso-premium-acero-legging-slim-acero1.webp",
           "relativePath": "productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero1.webp",
           "size": 219588
@@ -2629,7 +2654,7 @@
           "size": 261664
         }
       ],
-      "totalSize": 8768628
+      "totalSize": 9146440
     },
     "maxi-short": {
       "images": [
@@ -2774,6 +2799,11 @@
           "size": 243398
         },
         {
+          "filename": "mini-short-negro-mini-short-negro.webp",
+          "relativePath": "productos/mujer/short/mini-short-negro-mini-short-negro.webp",
+          "size": 222990
+        },
+        {
           "filename": "mini-short-negro-mini-short-negro2..webp",
           "relativePath": "productos/mujer/short/mini-short-negro-mini-short-negro2..webp",
           "size": 228536
@@ -2799,7 +2829,7 @@
           "size": 222990
         }
       ],
-      "totalSize": 4735824
+      "totalSize": 4958814
     },
     "short-brasil": {
       "images": [
