@@ -6146,3 +6146,312 @@ PRÓXIMOS PASOS RECOMENDADOS
    - A/B testing de diferentes encuadres
 
 ✓✓✓ SESIÓN 8 COMPLETADA CON ÉXITO ✓✓✓
+
+
+═══════════════════════════════════════════════════════════════════════════════
+  SESIÓN 9 - Hover Effects Unification & Domain Configuration Planning
+═══════════════════════════════════════════════════════════════════════════════
+
+📅 FECHA: 2 Noviembre 2025
+⏱️ DURACIÓN: ~20 minutos
+🎯 FASE: Refinamiento UX + Infrastructure Planning
+👤 COLABORADORES: Usuario + Claude Code
+
+───────────────────────────────────────────────────────────────────────────────
+  OBJETIVO DE LA SESIÓN
+───────────────────────────────────────────────────────────────────────────────
+
+1. Unificar efectos de hover en todos los componentes de producto
+2. Iniciar configuración de dominio custom vialineperu.com → Vercel
+
+
+───────────────────────────────────────────────────────────────────────────────
+  CONTEXTO PREVIO
+───────────────────────────────────────────────────────────────────────────────
+
+Esta sesión es continuación de Session 8 (conversación cortada por límite de contexto).
+
+Estado antes de esta sesión:
+  ✅ Image transforms optimizados aplicados permanentemente
+  ✅ Hover image effect implementado en GymRail (carruseles)
+  ✅ Hover image effect implementado en ProductCard (/mujer, /nina)
+  ⚠️ INCONSISTENCIA: ProductCard tenía transición CSS, GymRail no
+
+Problema reportado por usuario:
+  "Ya. El problema es que todos los efectos sin diferentes sabes. Necesito un efecto
+  global que es el que usaste ahora en el carrusel por favor..."
+
+
+───────────────────────────────────────────────────────────────────────────────
+  FASE 1: UNIFICACIÓN DE HOVER EFFECTS
+───────────────────────────────────────────────────────────────────────────────
+
+🎯 OBJETIVO:
+  Eliminar inconsistencia: todos los hover effects deben usar instant image swap
+  (sin animación de transición CSS)
+
+📝 ANÁLISIS:
+
+Componentes revisados:
+  1. ✅ ProductCard.tsx (línea 132)
+     - ANTES: className="... transition-all duration-500 ease-out"
+     - PROBLEMA: Fade suave al cambiar imagen en hover
+
+  2. ✅ GymRail.tsx (línea 131)
+     - OK: Sin transición, solo cambia src directamente
+
+  3. ✅ ProductGallery.tsx (línea 193)
+     - OK: Tiene transition pero es para navegación de galería (no hover effect)
+     - Diferente patrón UX, no requiere cambio
+
+🔧 SOLUCIÓN IMPLEMENTADA:
+
+components/ui/ProductCard.tsx:132
+```diff
+- className="absolute inset-0 w-full h-[180%] object-cover transition-all duration-500 ease-out"
++ className="absolute inset-0 w-full h-[180%] object-cover"
+```
+
+✅ RESULTADO:
+  - Instant image swap en hover (igual que GymRail)
+  - Comportamiento consistente en toda la aplicación
+  - UX más snappy y responsiva
+
+
+───────────────────────────────────────────────────────────────────────────────
+  FASE 2: CONFIGURACIÓN DE DOMINIO CUSTOM (PENDIENTE)
+───────────────────────────────────────────────────────────────────────────────
+
+🎯 OBJETIVO:
+  Configurar vialineperu.com para apuntar a Vercel (actualmente en vercel: vialine.vercel.app)
+
+📋 INFORMACIÓN RECOPILADA:
+
+Credenciales cPanel:
+  - URL: https://vialineperu.com:2096
+  - Usuario: oficina@vialineperu.com
+  - Contraseña: Rm4nchtop234!
+
+Registros DNS requeridos por Vercel:
+  1. Dominio raíz (vialineperu.com):
+     Tipo: A
+     Nombre: @ (o vacio)
+     Valor: 216.198.79.1
+
+  2. Subdominio www (www.vialineperu.com):
+     Tipo: CNAME
+     Nombre: www
+     Valor: db1fdb81a61be079.vercel-dns-017.com.
+
+🚨 PROBLEMA CRÍTICO DETECTADO:
+
+  ANTES de hacer cualquier cambio DNS, se descubrió que:
+
+  ⚠️ vialineperu.com actualmente tiene una página WordPress diferente
+  ⚠️ Si se configuran los registros DNS a Vercel, WordPress DESAPARECERÁ
+
+  Pregunta del usuario:
+    "si añado eso la de wordpress desaparece? o sea no vale nada pero por sea caso"
+
+  Respuesta:
+    SÍ, WordPress desaparece al cambiar el registro A a Vercel.
+
+📊 OPCIONES PRESENTADAS AL USUARIO:
+
+  OPCIÓN A: Reemplazar WordPress por la nueva tienda
+    ✅ La tienda Vercel será vialineperu.com
+    ❌ WordPress desaparece completamente
+    📋 Caso de uso: Si WordPress no se necesita más
+
+  OPCIÓN B: Mantener ambas usando subdominio para tienda
+    ✅ WordPress sigue en vialineperu.com (sin cambios)
+    ✅ Tienda en tienda.vialineperu.com o shop.vialineperu.com
+    📋 Caso de uso: Si se necesitan ambas páginas
+
+  OPCIÓN C: Migrar WordPress a subdominio
+    ✅ Tienda nueva queda en vialineperu.com (dominio principal)
+    ✅ WordPress se mueve a blog.vialineperu.com o viejo.vialineperu.com
+    📋 Caso de uso: Tienda como principal, WordPress como archivo
+
+⏸️ ESTADO ACTUAL:
+  Usuario consultará con el propietario antes de proceder.
+  NO se hicieron cambios en DNS.
+
+
+───────────────────────────────────────────────────────────────────────────────
+  ARCHIVOS MODIFICADOS
+───────────────────────────────────────────────────────────────────────────────
+
+components/ui/ProductCard.tsx
+  - Línea 132: Removida clase "transition-all duration-500 ease-out"
+  - Motivo: Unificar comportamiento de hover con GymRail
+
+
+───────────────────────────────────────────────────────────────────────────────
+  COMMITS REALIZADOS
+───────────────────────────────────────────────────────────────────────────────
+
+Commit: fc3e2af
+Mensaje: fix: Remove transition animation from ProductCard hover for consistency
+Archivos:
+  - components/ui/ProductCard.tsx (1 insertion, 1 deletion)
+Deploy:
+  ✅ Pushed to GitHub main branch
+  ✅ Vercel auto-deploy triggered
+
+
+───────────────────────────────────────────────────────────────────────────────
+  ESTADÍSTICAS
+───────────────────────────────────────────────────────────────────────────────
+
+📊 Cambios de código:
+  - Archivos modificados: 1
+  - Líneas añadidas: 1
+  - Líneas eliminadas: 1
+  - Commits: 1
+
+📦 Deploy:
+  - Branch: main
+  - Commits pushed: 1 (fc3e2af)
+  - Vercel: Auto-deployed ✅
+
+
+───────────────────────────────────────────────────────────────────────────────
+  DECISIONES TÉCNICAS IMPORTANTES
+───────────────────────────────────────────────────────────────────────────────
+
+1. HOVER EFFECTS STRATEGY
+
+   Decisión: Instant image swap sin transición CSS
+
+   Razón:
+     - Más snappy y responsivo
+     - Consistente con carruseles (GymRail)
+     - Reduce complejidad (menos CSS)
+
+   Alternativas consideradas:
+     - Mantener fade transition (RECHAZADO: inconsistente)
+     - Agregar transition a GymRail (RECHAZADO: contra feedback usuario)
+
+2. DOMAIN CONFIGURATION APPROACH
+
+   Decisión: Pausar hasta confirmación del propietario
+
+   Razón:
+     - Riesgo de romper WordPress existente
+     - Necesita decisión de negocio, no técnica
+     - Evitar downtime no planificado
+
+   Alternativas consideradas:
+     - Proceder con Opción A (RECHAZADO: muy destructivo sin confirmación)
+     - Configurar subdominio directamente (RECHAZADO: sin especificación clara)
+
+
+───────────────────────────────────────────────────────────────────────────────
+  PROBLEMAS RESUELTOS
+───────────────────────────────────────────────────────────────────────────────
+
+✅ PROBLEMA 1: Inconsistencia en hover effects
+
+  Síntoma:
+    ProductCard tenía fade suave, GymRail cambio instantáneo
+
+  Causa:
+    ProductCard tenía transition-all CSS, GymRail no
+
+  Solución:
+    Remover transition de ProductCard
+
+  Verificación:
+    Comportamiento ahora idéntico en todos los componentes
+
+✅ PROBLEMA 2: Falta de claridad sobre impacto de DNS
+
+  Síntoma:
+    Usuario no sabía que cambiar DNS rompería WordPress
+
+  Solución:
+    Explicación detallada de 3 opciones con pros/cons
+
+  Resultado:
+    Usuario pausó para consultar propietario (decisión correcta)
+
+
+───────────────────────────────────────────────────────────────────────────────
+  NOTAS DE DEBUGGING
+───────────────────────────────────────────────────────────────────────────────
+
+N/A - No hubo bugs en esta sesión
+
+
+───────────────────────────────────────────────────────────────────────────────
+  LECCIONES APRENDIDAS
+───────────────────────────────────────────────────────────────────────────────
+
+1. Siempre verificar entorno actual antes de modificar DNS
+   → Evitó romper WordPress en producción
+
+2. Presentar opciones claras cuando hay decisión de negocio
+   → Usuario pudo consultar propietario informadamente
+
+3. Consistency checks deben incluir CSS animations/transitions
+   → Encontrado porque usuario reportó diferencias percibidas
+
+
+───────────────────────────────────────────────────────────────────────────────
+  PENDIENTES PARA PRÓXIMA SESIÓN
+───────────────────────────────────────────────────────────────────────────────
+
+🔴 CRÍTICO - Configuración de dominio custom
+
+  Bloqueador: Esperando decisión del propietario
+
+  Próximos pasos (según decisión):
+
+    SI eligen OPCIÓN A (Reemplazar WordPress):
+      1. En cPanel → Zone Editor
+      2. Agregar registro A: @ → 216.198.79.1
+      3. Agregar registro CNAME: www → db1fdb81a61be079.vercel-dns-017.com.
+      4. Esperar propagación DNS (10-30 min, hasta 48h)
+      5. Refresh en Vercel para verificar
+
+    SI eligen OPCIÓN B (Subdominio para tienda):
+      1. En Vercel, agregar tienda.vialineperu.com
+      2. En cPanel → Zone Editor
+      3. Agregar CNAME: tienda → [valor que dé Vercel]
+      4. No tocar registros A actuales
+
+    SI eligen OPCIÓN C (Migrar WordPress primero):
+      1. Crear subdominio blog.vialineperu.com en cPanel
+      2. Migrar archivos WordPress a ese subdominio
+      3. Actualizar URLs en WordPress
+      4. Luego seguir pasos de Opción A para dominio principal
+
+🟡 IMPORTANTE - Actualizar metadata cuando dominio esté listo
+
+  Archivos a modificar:
+    - app/layout.tsx (metadata URLs)
+    - next.config.js (si tiene configuración de dominio)
+    - Actualizar variables de entorno en Vercel
+
+
+───────────────────────────────────────────────────────────────────────────────
+  PRÓXIMAS ACCIONES RECOMENDADAS
+───────────────────────────────────────────────────────────────────────────────
+
+Prioridad ALTA:
+  1. [ ] Esperar confirmación del propietario sobre opción de dominio
+  2. [ ] Ejecutar configuración DNS según opción elegida
+  3. [ ] Cambiar contraseña de cPanel (credenciales expuestas en chat)
+
+Prioridad MEDIA:
+  4. [ ] Configurar SSL/HTTPS en Vercel cuando dominio esté conectado
+  5. [ ] Actualizar sitemap.xml con nuevo dominio
+
+Prioridad BAJA:
+  6. [ ] Documentar proceso final de migración de dominio
+
+
+───────────────────────────────────────────────────────────────────────────────
+  FIN DE SESIÓN 9
+───────────────────────────────────────────────────────────────────────────────
