@@ -55,84 +55,192 @@ export async function sendOrderStatusEmail(data: OrderStatusEmailData): Promise<
 
     const emailHTML = `
       <!DOCTYPE html>
-      <html>
+      <html lang="es">
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
-          .container { max-width: 600px; margin: 0 auto; }
-          .header { background: ${config.color}; color: white; padding: 40px 20px; text-align: center; }
-          .header h1 { margin: 0; font-size: 28px; }
-          .content { background: #f9fafb; padding: 40px 20px; }
-          .card { background: white; border-radius: 12px; padding: 30px; margin: 20px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-          .order-number { font-size: 24px; font-weight: bold; color: #111827; margin: 20px 0; text-align: center; }
-          .message { font-size: 16px; color: #4b5563; text-align: center; margin: 20px 0; line-height: 1.8; }
-          .button { display: inline-block; background: ${config.color}; color: white; padding: 14px 32px; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 20px 0; }
-          .info-box { background: #f3f4f6; border-left: 4px solid ${config.color}; padding: 20px; margin: 20px 0; border-radius: 4px; }
-          .footer { text-align: center; padding: 30px 20px; color: #6b7280; font-size: 14px; }
-          .whatsapp-btn { display: inline-block; background: #25D366; color: white; padding: 12px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; margin: 10px 0; }
-          @media only screen and (max-width: 600px) {
-            .content { padding: 20px 10px; }
-            .card { padding: 20px; }
-          }
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Actualización de Pedido - Vialine</title>
+        <!--[if mso]>
+        <style type="text/css">
+          body, table, td { font-family: Arial, sans-serif !important; }
         </style>
+        <![endif]-->
       </head>
-      <body>
-        <div class="container">
-          <!-- Header -->
-          <div class="header">
-            <h1>${config.title}</h1>
-          </div>
+      <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f5f5f5; line-height: 1.6;">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f5f5f5; padding: 40px 0;">
+          <tr>
+            <td align="center">
+              <!-- Main Container -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="max-width: 600px; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);">
 
-          <!-- Content -->
-          <div class="content">
-            <div class="card">
-              <p style="margin: 0 0 10px 0; color: #6b7280; text-align: center;">Orden</p>
-              <div class="order-number">#${data.orderId}</div>
-              
-              <div class="message">
-                ${config.message}
-              </div>
+                <!-- Hero Header -->
+                <tr>
+                  <td style="background: linear-gradient(135deg, ${config.color} 0%, ${config.color}dd 100%); padding: 48px 30px; text-align: center;">
+                    <h1 style="margin: 0 0 16px 0; font-size: 32px; font-weight: 700; color: #ffffff; letter-spacing: -0.5px;">
+                      ${config.title}
+                    </h1>
+                    <p style="margin: 0 0 4px 0; font-size: 14px; color: rgba(255, 255, 255, 0.8); text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">
+                      Orden
+                    </p>
+                    <p style="margin: 0; font-size: 24px; color: #ffffff; font-weight: 700; background-color: rgba(255, 255, 255, 0.15); display: inline-block; padding: 10px 24px; border-radius: 8px;">
+                      #${data.orderId}
+                    </p>
+                  </td>
+                </tr>
 
-              ${data.status === "shipped" ? `
-                <div class="info-box">
-                  <p style="margin: 0; font-weight: bold; color: #111827;">📦 Información de Envío</p>
-                  <p style="margin: 10px 0 0 0; color: #4b5563;">
-                    <strong>Lima:</strong> 24-48 horas<br>
-                    <strong>Provincias:</strong> 3-7 días hábiles<br>
-                    <br>
-                    Te contactaremos por teléfono o WhatsApp para coordinar la entrega.
-                  </p>
-                </div>
-              ` : ''}
+                <!-- Content Padding -->
+                <tr>
+                  <td style="padding: 40px 32px;">
 
-              <div style="text-align: center; margin-top: 30px;">
-                <a href="${data.trackingUrl}" class="button">
-                  Ver Estado de mi Pedido
-                </a>
-              </div>
-            </div>
+                    <!-- Status Message Card -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 32px; background-color: #ffffff; border: 3px solid ${config.color}; border-radius: 12px; overflow: hidden;">
+                      <tr>
+                        <td style="padding: 32px; text-align: center;">
+                          <p style="margin: 0 0 16px 0; font-size: 20px; font-weight: 700; color: #111827; line-height: 1.4;">
+                            ${config.message}
+                          </p>
+                          ${data.status === 'delivered' ? `
+                          <p style="margin: 0; font-size: 48px;">🎉</p>
+                          ` : data.status === 'shipped' ? `
+                          <p style="margin: 0; font-size: 48px;">📦</p>
+                          ` : data.status === 'processing' ? `
+                          <p style="margin: 0; font-size: 48px;">⚡</p>
+                          ` : data.status === 'paid' ? `
+                          <p style="margin: 0; font-size: 48px;">✅</p>
+                          ` : ''}
+                        </td>
+                      </tr>
+                    </table>
 
-            <!-- WhatsApp Contact -->
-            <div style="text-align: center; margin-top: 20px;">
-              <p style="color: #6b7280; margin-bottom: 10px;">¿Necesitas ayuda?</p>
-              <a href="https://wa.me/51972327236" class="whatsapp-btn">
-                📱 Contactar por WhatsApp
-              </a>
-            </div>
-          </div>
+                    ${data.status === "shipped" ? `
+                    <!-- Shipping Info Card -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 32px; background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%); border-radius: 10px; overflow: hidden;">
+                      <tr>
+                        <td style="padding: 28px;">
+                          <h2 style="margin: 0 0 20px 0; font-size: 18px; font-weight: 700; color: #5b21b6; letter-spacing: -0.3px;">
+                            📦 Información de Envío
+                          </h2>
+                          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                            <tr>
+                              <td style="padding: 12px 0;">
+                                <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                  <tr>
+                                    <td style="vertical-align: top; padding-right: 12px;">
+                                      <span style="font-size: 24px;">🏙️</span>
+                                    </td>
+                                    <td>
+                                      <p style="margin: 0; font-size: 15px; color: #6b21a8; line-height: 1.6;">
+                                        <strong>Lima:</strong> 24-48 horas
+                                      </p>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 12px 0;">
+                                <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                  <tr>
+                                    <td style="vertical-align: top; padding-right: 12px;">
+                                      <span style="font-size: 24px;">🗺️</span>
+                                    </td>
+                                    <td>
+                                      <p style="margin: 0; font-size: 15px; color: #6b21a8; line-height: 1.6;">
+                                        <strong>Provincias:</strong> 3-7 días hábiles
+                                      </p>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 12px 0;">
+                                <table role="presentation" cellspacing="0" cellpadding="0" border="0">
+                                  <tr>
+                                    <td style="vertical-align: top; padding-right: 12px;">
+                                      <span style="font-size: 24px;">📱</span>
+                                    </td>
+                                    <td>
+                                      <p style="margin: 0; font-size: 15px; color: #6b21a8; line-height: 1.6;">
+                                        Te contactaremos por teléfono o WhatsApp para coordinar la entrega.
+                                      </p>
+                                    </td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                    ` : ''}
 
-          <!-- Footer -->
-          <div class="footer">
-            <p style="margin: 0 0 10px 0;"><strong>Vialine</strong></p>
-            <p style="margin: 0 0 5px 0;">Activewear & Fitness</p>
-            <p style="margin: 0;">+51 972 327 236</p>
-            <p style="margin: 10px 0 0 0; font-size: 12px; color: #9ca3af;">
-              © ${new Date().getFullYear()} Vialine. Todos los derechos reservados.
-            </p>
-          </div>
-        </div>
+                    <!-- CTA Button -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 32px 0;">
+                      <tr>
+                        <td align="center">
+                          <a href="${data.trackingUrl}"
+                             style="display: inline-block; padding: 18px 40px; background-color: ${config.color}; color: #ffffff; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 16px; letter-spacing: 0.3px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);">
+                            Ver Estado de mi Pedido →
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Divider -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 40px 0 32px 0;">
+                      <tr>
+                        <td style="border-top: 2px solid #e5e7eb;"></td>
+                      </tr>
+                    </table>
+
+                    <!-- WhatsApp Contact -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                      <tr>
+                        <td align="center">
+                          <p style="margin: 0 0 16px 0; font-size: 15px; color: #6b7280; font-weight: 500;">
+                            ¿Necesitas ayuda con tu pedido?
+                          </p>
+                          <a href="https://wa.me/51972327236?text=Hola,%20tengo%20una%20consulta%20sobre%20mi%20orden%20%23${data.orderId}"
+                             style="display: inline-block; padding: 16px 32px; background-color: #25D366; color: #ffffff; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 15px; box-shadow: 0 4px 6px rgba(37, 211, 102, 0.3);">
+                            📱 Contactar por WhatsApp
+                          </a>
+                          <p style="margin: 12px 0 0 0; font-size: 13px; color: #9ca3af;">
+                            +51 972 327 236
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+
+                  </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                  <td style="background-color: #111827; padding: 36px; text-align: center;">
+                    <h3 style="margin: 0 0 8px 0; font-size: 20px; font-weight: 700; color: #ffffff; letter-spacing: 1px;">
+                      VIALINE
+                    </h3>
+                    <p style="margin: 0 0 4px 0; font-size: 14px; color: #d1d5db;">
+                      Activewear & Fitness
+                    </p>
+                    <p style="margin: 0 0 20px 0; font-size: 14px; color: #d1d5db;">
+                      📱 +51 972 327 236
+                    </p>
+                    <p style="margin: 0 0 8px 0; font-size: 13px; color: #9ca3af;">
+                      Gracias por elegirnos 💕
+                    </p>
+                    <p style="margin: 0; font-size: 12px; color: #6b7280;">
+                      © ${new Date().getFullYear()} Vialine. Todos los derechos reservados.
+                    </p>
+                  </td>
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+        </table>
       </body>
       </html>
     `
