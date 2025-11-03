@@ -358,6 +358,20 @@ export async function PATCH(request: NextRequest) {
           }
         })
         .catch(err => console.error(`❌ Error email cliente:`, err))
+
+      // ✅ NUEVO: También enviar email al admin (pago confirmado)
+      sendAdminNotification({
+        ...emailData,
+        paymentConfirmed: true // Flag para mostrar diseño de pago confirmado
+      })
+        .then(success => {
+          if (success) {
+            console.log(`✅ Email de pago confirmado enviado al admin - Orden ${orderId}`)
+          } else {
+            console.log(`⚠️ No se pudo enviar email confirmado al admin - Orden ${orderId}`)
+          }
+        })
+        .catch(err => console.error(`❌ Error email admin confirmación:`, err))
     }
 
     return NextResponse.json({

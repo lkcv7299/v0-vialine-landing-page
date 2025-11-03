@@ -31,6 +31,7 @@ type OrderData = {
   paymentMethod: "culqi" | "yape" | "contraentrega"
   notes: string
   createdAt: string
+  paymentConfirmed?: boolean // Nuevo flag para indicar si el pago ya fue confirmado
 }
 
 /**
@@ -58,7 +59,7 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
       statusBorderColor: "",
     }
 
-    if (orderData.paymentMethod === "culqi") {
+    if (orderData.paymentMethod === "culqi" && !orderData.paymentConfirmed) {
       emailConfig = {
         subject: `⏳ PENDIENTE DE PAGO - Orden #${orderData.orderId}`,
         headerTitle: "⏳ ORDEN PENDIENTE DE PAGO",
@@ -68,6 +69,17 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
         statusMessage: "El cliente creó esta orden pero AÚN NO ha completado el pago con tarjeta de crédito/débito. La orden se confirmará automáticamente cuando pague.",
         statusBgColor: "#fef3c7",
         statusBorderColor: "#f59e0b",
+      }
+    } else if (orderData.paymentMethod === "culqi" && orderData.paymentConfirmed) {
+      emailConfig = {
+        subject: `✅ PAGO CONFIRMADO - Orden #${orderData.orderId}`,
+        headerTitle: "✅ PAGO CONFIRMADO",
+        headerColor: "#10b981", // Verde
+        statusEmoji: "💳",
+        statusTitle: "PAGO CON TARJETA CONFIRMADO",
+        statusMessage: "El cliente ha completado el pago con tarjeta de crédito/débito exitosamente. La orden está CONFIRMADA y lista para procesar.",
+        statusBgColor: "#d1fae5",
+        statusBorderColor: "#10b981",
       }
     } else if (orderData.paymentMethod === "contraentrega") {
       emailConfig = {
