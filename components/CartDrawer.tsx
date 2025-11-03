@@ -4,6 +4,7 @@ import { X, ShoppingBag, Plus, Minus, Trash2 } from "lucide-react"
 import Link from "next/link"
 import { useCart } from "@/contexts/CartContext"
 import Drawer from "@/components/ui/Drawer"
+import { getAssetPath } from "@/lib/assets"
 
 interface CartDrawerProps {
   open: boolean
@@ -58,6 +59,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
             {items.map((item) => {
               const itemKey = `${item.product.slug}-${item.selectedColor}-${item.selectedSize}`
               const stockLimit = item.product.inventory || 999
+              const imagePath = getAssetPath(item.product.slug, item.product.category, item.selectedColor, 0)
 
               return (
                 <div key={itemKey} className="flex gap-4 pb-4 border-b border-neutral-200 last:border-0">
@@ -68,7 +70,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                     className="relative w-24 h-24 rounded-lg overflow-hidden bg-neutral-100 flex-shrink-0 hover:opacity-80 transition"
                   >
                     <img
-                      src={item.product.image}
+                      src={imagePath}
                       alt={item.product.title}
                       className="w-full h-full object-cover"
                     />

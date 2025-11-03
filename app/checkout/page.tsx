@@ -11,6 +11,7 @@ import Link from "next/link"
 import Image from "next/image"
 import Script from "next/script"
 import { toast } from "sonner"
+import { getAssetPath } from "@/lib/assets"
 import {
   ShoppingBag,
   Truck,
@@ -368,7 +369,7 @@ export default function CheckoutPage() {
           productSlug: item.product.slug,
           productTitle: item.product.title,
           productPrice: item.product.price,
-          productImage: item.product.image,
+          productImage: getAssetPath(item.product.slug, item.product.category, item.selectedColor, 0),
           quantity: item.quantity,
           selectedColor: item.selectedColor,
           selectedSize: item.selectedSize,
@@ -907,11 +908,13 @@ export default function CheckoutPage() {
 
                   {/* Items */}
                   <div className="space-y-4 mb-6 max-h-64 overflow-y-auto">
-                    {items.map((item) => (
+                    {items.map((item) => {
+                      const imagePath = getAssetPath(item.product.slug, item.product.category, item.selectedColor, 0)
+                      return (
                       <div key={`${item.product.slug}-${item.selectedColor}-${item.selectedSize}`} className="flex gap-3">
                         <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
                           <Image
-                            src={item.product.image}
+                            src={imagePath}
                             alt={item.product.title}
                             fill
                             className="object-cover"
@@ -930,7 +933,8 @@ export default function CheckoutPage() {
                           S/ {(item.product.price * item.quantity).toFixed(2)}
                         </div>
                       </div>
-                    ))}
+                      )
+                    })}
                   </div>
 
                   {/* Totales */}
