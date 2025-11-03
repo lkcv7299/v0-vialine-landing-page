@@ -58,43 +58,43 @@ Usuarios diferentes ven diseños distintos al acceder al mismo URL (vialine.verc
 ### 1.1 Carrito de Compras
 
 #### TEST-FUNC-001: Agregar producto al carrito
-- [ ] **Precondición**: Usuario en página de producto
-- [ ] Seleccionar color
-- [ ] Seleccionar talla
-- [ ] Hacer clic en "Agregar al carrito"
-- [ ] **Resultado esperado**: Toast de confirmación + contador carrito incrementa
-- [ ] **Estado**: ⏸️ PENDIENTE
+- [🆗] **Precondición**: Usuario en página de producto
+- [🆗 ] Seleccionar color
+- [🆗 ] Seleccionar talla
+- [ 🆗] Hacer clic en "Agregar al carrito"
+- [ 🆗] **Resultado esperado**: Toast de confirmación + contador carrito incrementa
+- [ ] **Estado**: 🆗
 - [ ] **Notas**:
 
 #### TEST-FUNC-002: Modificar cantidad en carrito
-- [ ] **Precondición**: Producto en carrito
-- [ ] Abrir carrito
-- [ ] Incrementar cantidad con botón "+"
-- [ ] Decrementar cantidad con botón "-"
-- [ ] **Resultado esperado**: Precio total se actualiza correctamente
-- [ ] **Estado**: ⏸️ PENDIENTE
+- [🆗 ] **Precondición**: Producto en carrito
+- [🆗 ] Abrir carrito
+- [🆗 ] Incrementar cantidad con botón "+"
+- [ 🆗] Decrementar cantidad con botón "-"
+- [ 🆗] **Resultado esperado**: Precio total se actualiza correctamente
+- [ ] **Estado**: 🆗
 - [ ] **Notas**:
 
 #### TEST-FUNC-003: Eliminar producto del carrito
-- [ ] **Precondición**: Producto en carrito
-- [ ] Abrir carrito
-- [ ] Hacer clic en "Eliminar"
-- [ ] **Resultado esperado**: Producto se elimina, total se recalcula
-- [ ] **Estado**: ⏸️ PENDIENTE
+- [ 🆗] **Precondición**: Producto en carrito
+- [🆗 ] Abrir carrito
+- [ 🆗] Hacer clic en "Eliminar"
+- [ 🆗] **Resultado esperado**: Producto se elimina, total se recalcula
+- [🆗 ] **Estado**: 🆗
 - [ ] **Notas**:
 
 #### TEST-FUNC-004: Carrito vacío
-- [ ] **Precondición**: Carrito vacío
-- [ ] Hacer clic en ícono de carrito
-- [ ] **Resultado esperado**: Muestra mensaje "Tu carrito está vacío"
-- [ ] **Estado**: ⏸️ PENDIENTE
+- [🆗 ] **Precondición**: Carrito vacío
+- [🆗 ] Hacer clic en ícono de carrito
+- 🆗[ ] **Resultado esperado**: Muestra mensaje "Tu carrito está vacío"
+- [ ] **Estado**: 🆗
 - [ ] **Notas**:
 
 #### TEST-FUNC-005: Persistencia del carrito
-- [ ] **Precondición**: Productos en carrito
-- [ ] Recargar página (F5)
-- [ ] **Resultado esperado**: Productos siguen en carrito
-- [ ] **Estado**: ⏸️ PENDIENTE
+- [🆗 ] **Precondición**: Productos en carrito
+- [🆗 ] Recargar página (F5)
+- [🆗 ] **Resultado esperado**: Productos siguen en carrito
+- [🆗 ] **Estado**: 🆗
 - [ ] **Notas**:
 
 ---
@@ -102,60 +102,60 @@ Usuarios diferentes ven diseños distintos al acceder al mismo URL (vialine.verc
 ### 1.2 Checkout y Pagos
 
 #### TEST-FUNC-101: Checkout con Culqi (Tarjeta)
-- [ ] **Precondición**: Productos en carrito
-- [ ] Ir a checkout
-- [ ] Llenar formulario de envío
-- [ ] Seleccionar método "Tarjeta de crédito/débito"
-- [ ] Ingresar datos de tarjeta de prueba:
+- [🆗 ] **Precondición**: Productos en carrito
+- [🆗 ] Ir a checkout
+- [🆗 ] Llenar formulario de envío
+- [🆗 ] Seleccionar método "Tarjeta de crédito/débito"
+- [🆗 ] Ingresar datos de tarjeta de prueba:
   - Número: `4111 1111 1111 1111`
   - CVV: `123`
   - Fecha: `12/25`
-- [ ] Completar pago
-- [ ] **Resultado esperado**:
-  - [ ] Pago procesado exitosamente
-  - [ ] Orden guardada en base de datos
-  - [ ] Redirección a página de confirmación
-  - [ ] Email de confirmación enviado (si aplica)
-- [ ] **Estado**: ⏸️ PENDIENTE
-- [ ] **Notas**:
+- [ 🆗] Completar pago
+- [ 🆗] **Resultado esperado**:
+  - [ 🆗] Pago procesado exitosamente
+  - [🆗 ] Orden guardada en base de datos
+  - [🆗 ] Redirección a página de confirmación
+  - [🆗 ] Email de confirmación enviado (si aplica)
+- [ ] **Estado**: 🆗
+- [ ] **Notas**: Recibí el email como comprador, pero no como vendedor/admin. Además, como nota extra deberíamos mejorar los correos o sea que se vean más bonitos sabes jaj
 
 #### TEST-FUNC-102: Checkout con Yape
-- [ ] **Precondición**: Productos en carrito
-- [ ] Ir a checkout
-- [ ] Llenar formulario de envío
-- [ ] Seleccionar método "Yape"
-- [ ] **Resultado esperado**:
-  - [ ] Muestra instrucciones de pago
-  - [ ] Orden creada con estado "pendiente"
-- [ ] **Estado**: ⏸️ PENDIENTE
-- [ ] **Notas**:
+- [❎ ] **Precondición**: Productos en carrito
+- [ ❎] Ir a checkout
+- [❎ ] Llenar formulario de envío
+- [❎ ] Seleccionar método "Yape"
+- [❎ ] **Resultado esperado**:
+  - [❎ ] Muestra instrucciones de pago
+  - [❎ ] Orden creada con estado "pendiente"
+- [ ] **Estado**: 🆗
+- [ ] **Notas**: Eso lo eliminamos wey viene incluido en culqi
 
 #### TEST-FUNC-103: Checkout Contra Entrega
-- [ ] **Precondición**: Productos en carrito
-- [ ] Ir a checkout
-- [ ] Llenar formulario de envío
-- [ ] Seleccionar método "Contra entrega"
-- [ ] Completar orden
-- [ ] **Resultado esperado**:
-  - [ ] Orden creada con estado "pendiente"
-  - [ ] Muestra confirmación
-- [ ] **Estado**: ⏸️ PENDIENTE
-- [ ] **Notas**:
+- [ ❎] **Precondición**: Productos en carrito
+- [ ❎] Ir a checkout
+- [ ❎] Llenar formulario de envío
+- [ ❎] Seleccionar método "Contra entrega"
+- [ ❎] Completar orden
+- [❎ ] **Resultado esperado**:
+  - [❎ ] Orden creada con estado "pendiente"
+  - [ ❎] Muestra confirmación
+- [❎ ] **Estado**:  🆗
+- [ ] **Notas**: Eso lo eliminamos wey
 
 #### TEST-FUNC-104: Validación de formulario checkout
-- [ ] Intentar enviar formulario vacío
-- [ ] **Resultado esperado**: Muestra errores de validación
-- [ ] Llenar solo algunos campos
-- [ ] **Resultado esperado**: Muestra errores en campos faltantes
+- [🆗 ] Intentar enviar formulario vacío
+- [🆗 ] **Resultado esperado**: Muestra errores de validación
+- [🆗 ] Llenar solo algunos campos
+- [🆗 ] **Resultado esperado**: Muestra errores en campos faltantes
 - [ ] **Estado**: ⏸️ PENDIENTE
 - [ ] **Notas**:
 
 #### TEST-FUNC-105: Error de pago Culqi
-- [ ] Usar tarjeta de prueba inválida en Culqi
-- [ ] **Resultado esperado**:
-  - [ ] Muestra mensaje de error
-  - [ ] No crea orden
-  - [ ] Usuario puede reintentar
+- [🆗 ] Usar tarjeta de prueba inválida en Culqi
+- [🆗 ] **Resultado esperado**:
+  - [🆗 ] Muestra mensaje de error
+  - [ 🆗] No crea orden
+  - [ 🆗] Usuario puede reintentar
 - [ ] **Estado**: ⏸️ PENDIENTE
 - [ ] **Notas**:
 
@@ -164,14 +164,14 @@ Usuarios diferentes ven diseños distintos al acceder al mismo URL (vialine.verc
 ### 1.3 Autenticación
 
 #### TEST-FUNC-201: Registro de usuario nuevo
-- [ ] Ir a /registro
-- [ ] Llenar formulario con datos válidos
-- [ ] Hacer clic en "Registrarse"
-- [ ] **Resultado esperado**:
-  - [ ] Usuario creado en base de datos
-  - [ ] Sesión iniciada automáticamente
-  - [ ] Redirección a home o perfil
-- [ ] **Estado**: ⏸️ PENDIENTE
+- [ 🆗] Ir a /registro
+- [🆗 ] Llenar formulario con datos válidos
+- [🆗 ] Hacer clic en "Registrarse"
+- [🆗 ] **Resultado esperado**:
+  - [🆗 ] Usuario creado en base de datos
+  - [🆗 ] Sesión iniciada automáticamente
+  - [🆗 ] Redirección a home o perfil
+- [🆗 ] **Estado**: 🆗
 - [ ] **Notas**:
 
 #### TEST-FUNC-202: Login con credenciales correctas
@@ -185,56 +185,55 @@ Usuarios diferentes ven diseños distintos al acceder al mismo URL (vialine.verc
 - [ ] **Notas**:
 
 #### TEST-FUNC-203: Login con credenciales incorrectas
-- [ ] Ir a /login
-- [ ] Ingresar email o password incorrecto
-- [ ] **Resultado esperado**: Muestra error "Credenciales inválidas"
-- [ ] **Estado**: ⏸️ PENDIENTE
+- [🆗 ] Ir a /login
+- [ 🆗] Ingresar email o password incorrecto
+- [🆗 ] **Resultado esperado**: Muestra error "Credenciales inválidas"
+- [🆗 ] **Estado**: 🆗
 - [ ] **Notas**:
 
 #### TEST-FUNC-204: Logout
-- [ ] **Precondición**: Usuario con sesión activa
-- [ ] Hacer clic en "Cerrar sesión"
-- [ ] **Resultado esperado**:
-  - [ ] Sesión cerrada
-  - [ ] Redirección a home
-- [ ] **Estado**: ⏸️ PENDIENTE
+- [🆗 ] **Precondición**: Usuario con sesión activa
+- [🆗 ] Hacer clic en "Cerrar sesión"
+- [🆗 ] **Resultado esperado**:
+  - [🆗 ] Sesión cerrada
+  - [🆗 ] Redirección a home
+- [ ] **Estado**: 🆗
 - [ ] **Notas**:
 
 #### TEST-FUNC-205: Persistencia de sesión
-- [ ] **Precondición**: Usuario logueado
-- [ ] Cerrar pestaña
-- [ ] Abrir nueva pestaña con mismo sitio
-- [ ] **Resultado esperado**: Usuario sigue logueado
-- [ ] **Estado**: ⏸️ PENDIENTE
-- [ ] **Notas**:
+- [🆗 ] **Precondición**: Usuario logueado
+- [🆗 ] Cerrar pestaña
+- [ 🆗] Abrir nueva pestaña con mismo sitio
+- [ 🆗] **Resultado esperado**: Usuario sigue logueado
+- [🆗 ] **Estado**: 🆗
 
 ---
 
 ### 1.4 Wishlist / Favoritos
 
 #### TEST-FUNC-301: Agregar a favoritos
-- [ ] **Precondición**: Usuario en página de producto
-- [ ] Hacer clic en corazón de favoritos
-- [ ] **Resultado esperado**:
-  - [ ] Corazón se llena (cambia color)
-  - [ ] Producto guardado en favoritos
-- [ ] **Estado**: ⏸️ PENDIENTE
+- [🆗 ] **Precondición**: Usuario en página de producto
+- [🆗 ] Hacer clic en corazón de favoritos
+- [🆗 ] **Resultado esperado**:
+  - [ 🆗] Corazón se llena (cambia color)
+  - [🆗 ] Producto guardado en favoritos
+- [🆗 ] **Estado**: 🆗
 - [ ] **Notas**:
 
 #### TEST-FUNC-302: Remover de favoritos
-- [ ] **Precondición**: Producto en favoritos
-- [ ] Hacer clic en corazón nuevamente
-- [ ] **Resultado esperado**:
-  - [ ] Corazón se vacía
-  - [ ] Producto removido de favoritos
-- [ ] **Estado**: ⏸️ PENDIENTE
+- [🆗 ] **Precondición**: Producto en favoritos
+- [🆗 ] Hacer clic en corazón nuevamente
+- [🆗 ] **Resultado esperado**:
+  - [ 🆗] Corazón se vacía
+  - [ 🆗] Producto removido de favoritos
+- 🆗[ ] **Estado**: 🆗
 - [ ] **Notas**:
 
 #### TEST-FUNC-303: Ver lista de favoritos
-- [ ] **Precondición**: Productos en favoritos
-- [ ] Ir a página de favoritos
-- [ ] **Resultado esperado**: Muestra todos los productos favoritos
-- [ ] **Estado**: ⏸️ PENDIENTE
+- [🆗 ] **Precondición**: Productos en favoritos
+- [🆗 ] Ir a página de favoritos
+- [🆗 ] **Resultado esperado**: Muestra todos los productos favoritos
+- [🆗 ] **Estado**: 🆗
 - [ ] **Notas**:
 
 ---
@@ -242,73 +241,73 @@ Usuarios diferentes ven diseños distintos al acceder al mismo URL (vialine.verc
 ### 1.5 Búsqueda y Filtros
 
 #### TEST-FUNC-401: Búsqueda por texto
-- [ ] Escribir "legging" en buscador
-- [ ] Presionar Enter
-- [ ] **Resultado esperado**: Muestra solo productos con "legging" en título
-- [ ] **Estado**: ⏸️ PENDIENTE
-- [ ] **Notas**:
+- [🆗 ] Escribir "legging" en buscador
+- [🆗 ] Presionar Enter
+- [🆗 ] **Resultado esperado**: Muestra solo productos con "legging" en título
+- [ 🆗] **Estado**: 🆗
+- [ ] **Notas**: Deberíamos mejorar aun mas el sistema de search y autocompletado... añadir mas variables por ejemplo si escribo leging no me encuentra el producto sabes pero es obvio que me refiero a legging
 
 #### TEST-FUNC-402: Filtro por categoría
-- [ ] Ir a /mujer
-- [ ] Seleccionar categoría "Tops"
-- [ ] **Resultado esperado**: Muestra solo tops
-- [ ] **Estado**: ⏸️ PENDIENTE
+- [🆗 ] Ir a /mujer
+- [🆗 ] Seleccionar categoría "Tops"
+- [🆗 ] **Resultado esperado**: Muestra solo tops
+- [ 🆗] **Estado**: 🆗
 - [ ] **Notas**:
 
 #### TEST-FUNC-403: Filtro por tejido
-- [ ] Ir a /tejido/suplex
-- [ ] **Resultado esperado**: Muestra solo productos de suplex
-- [ ] **Estado**: ⏸️ PENDIENTE
-- [ ] **Notas**:
+- [⁉️ ] Ir a /tejido/suplex
+- [⁉️ ] **Resultado esperado**: Muestra solo productos de suplex
+- [⁉️ ] **Estado**: ⏸️ PENDIENTE
+- [ ] **Notas**: Las secciones por tejido no funcionan sus filtros... le doy a leggings y no me aparece nada ni en tejido algodon ni tejido suplex...
 
 #### TEST-FUNC-404: Filtro por audiencia
-- [ ] Ir a /nina
-- [ ] **Resultado esperado**: Muestra solo productos para niña
-- [ ] **Estado**: ⏸️ PENDIENTE
-- [ ] **Notas**:
+- [⁉️ ] Ir a /nina
+- [🆗 ] **Resultado esperado**: Muestra solo productos para niña
+- [🆗 ] **Estado**: ⏸️ PENDIENTE
+- [⁉️ ] **Notas**: /nina tiene un hero arriba que nada que ver... ninguna seccion como /mujer tiene ese hero arriba. Parece un duplicado del hero de nina de home
 
 ---
 
 ### 1.6 Producto Individual
 
 #### TEST-FUNC-501: Cambio de color en galería
-- [ ] **Precondición**: Producto con múltiples colores
-- [ ] Hacer clic en botón de color diferente
-- [ ] **Resultado esperado**:
-  - [ ] Galería cambia a imágenes del color seleccionado
-  - [ ] Transición suave (fade)
-- [ ] **Estado**: ⏸️ PENDIENTE
+- [ 🆗] **Precondición**: Producto con múltiples colores
+- [🆗 ] Hacer clic en botón de color diferente
+- [🆗 ] **Resultado esperado**:
+  - [ 🆗] Galería cambia a imágenes del color seleccionado
+  - [🆗 ] Transición suave (fade)
+- [🆗 ] **Estado**: ⏸️ PENDIENTE
 - [ ] **Notas**:
 
 #### TEST-FUNC-502: Navegación de galería
-- [ ] Hacer clic en flechas izquierda/derecha
-- [ ] **Resultado esperado**: Navega entre imágenes del mismo color
+- [🆗 ] Hacer clic en flechas izquierda/derecha
+- [🆗 ] **Resultado esperado**: Navega entre imágenes del mismo color
 - [ ] **Estado**: ⏸️ PENDIENTE
 - [ ] **Notas**:
 
 #### TEST-FUNC-503: Zoom de imagen
-- [ ] Hacer clic en imagen de producto
-- [ ] **Resultado esperado**:
-  - [ ] Abre modal fullscreen
-  - [ ] Permite zoom in/out
-  - [ ] Se puede cerrar con ESC o X
+- [🆗 ] Hacer clic en imagen de producto
+- [🆗 ] **Resultado esperado**:
+  - [ 🆗] Abre modal fullscreen
+  - [ 🆗] Permite zoom in/out
+  - [🆗 ] Se puede cerrar con ESC o X
 - [ ] **Estado**: ⏸️ PENDIENTE
 - [ ] **Notas**:
 
 #### TEST-FUNC-504: Compartir producto
-- [ ] Hacer clic en botón "Compartir"
-- [ ] **Resultado esperado**:
-  - [ ] Abre menú de compartir nativo (móvil)
-  - [ ] O copia link al portapapeles (desktop)
+- [ 🆗] Hacer clic en botón "Compartir"
+- [🆗 ] **Resultado esperado**:
+  - [ 🆗] Abre menú de compartir nativo (móvil)
+  - [ 🆗] O copia link al portapapeles (desktop)
 - [ ] **Estado**: ⏸️ PENDIENTE
 - [ ] **Notas**:
 
 #### TEST-FUNC-505: Comprar ahora (WhatsApp)
-- [ ] Seleccionar color y talla
-- [ ] Hacer clic en "Comprar ahora"
-- [ ] **Resultado esperado**:
-  - [ ] Abre WhatsApp con mensaje pre-llenado
-  - [ ] Mensaje incluye: nombre producto, color, talla, precio
+- [🆗 ] Seleccionar color y talla
+- [🆗 ] Hacer clic en "Comprar ahora"
+- [🆗 ] **Resultado esperado**:
+  - [🆗 ] Abre WhatsApp con mensaje pre-llenado
+  - [ 🆗] Mensaje incluye: nombre producto, color, talla, precio
 - [ ] **Estado**: ⏸️ PENDIENTE
 - [ ] **Notas**:
 
@@ -319,7 +318,7 @@ Usuarios diferentes ven diseños distintos al acceder al mismo URL (vialine.verc
 ### 2.1 Responsive Design
 
 #### TEST-UI-001: Mobile (375px)
-- [ ] Abrir en iPhone SE o similar
+- [🆗 ] Abrir en iPhone SE o similar
 - [ ] Navegar por todas las páginas
 - [ ] **Verificar**:
   - [ ] Sin scroll horizontal

@@ -196,48 +196,13 @@ export async function POST(request: NextRequest) {
     await saveOrderToDatabase(orderData)
 
     // ====================================
-    // 📧 SOLO EMAIL AL ADMIN (Nueva orden pendiente)
+    // ✅ NO ENVIAR EMAILS AL CREAR LA ORDEN
     // ====================================
-    // ✅ FIXED: Solo log en desarrollo
+    // Los emails se enviarán SOLO cuando el pago se confirme (endpoint PATCH)
+    // Evita spam de órdenes que nunca se pagan
     if (process.env.NODE_ENV === 'development') {
-      console.log(`📧 Enviando notificación al admin...`)
+      console.log(`⏳ Orden ${orderId} creada - Esperando confirmación de pago`)
     }
-    
-    const emailData = {
-      orderId: orderData.orderId,
-      customer: orderData.customer,
-      shippingAddress: orderData.shippingAddress,
-      items: orderData.items.map(item => ({
-        productTitle: item.productTitle,
-        productPrice: item.productPrice,
-        quantity: item.quantity,
-        selectedColor: item.selectedColor,
-        selectedSize: item.selectedSize,
-      })),
-      subtotal: orderData.subtotal,
-      shippingCost: orderData.shippingCost,
-      total: orderData.total,
-      paymentMethod: orderData.paymentMethod,
-      notes: orderData.notes,
-      createdAt: orderData.createdAt,
-    }
-
-    // ✅ Solo enviar email al admin (orden pendiente)
-    console.log(`📧 Intentando enviar email al admin para orden ${orderId}...`)
-    console.log(`📧 Payment method: ${orderData.paymentMethod}`)
-
-    try {
-      const emailSent = await sendAdminNotification(emailData)
-      if (emailSent) {
-        console.log(`✅ Email al admin enviado exitosamente - Orden ${orderId}`)
-      } else {
-        console.error(`⚠️ sendAdminNotification retornó false - Orden ${orderId}`)
-      }
-    } catch (emailError) {
-      console.error(`❌ Error crítico enviando email al admin - Orden ${orderId}:`, emailError)
-    }
-
-    // ❌ NO enviar email al cliente todavía (esperar confirmación de pago)
 
     // Retornar respuesta
     return NextResponse.json({
@@ -352,30 +317,36 @@ export async function PATCH(request: NextRequest) {
         createdAt: order.created_at
       }
 
-      // ✅ Ahora SÍ enviar email al cliente (pago confirmado)
-      sendCustomerConfirmation(emailData)
-        .then(success => {
-          if (success) {
-            console.log(`✅ Email de confirmación enviado al cliente - Orden ${orderId}`)
-          } else {
-            console.log(`⚠️ No se pudo enviar email al cliente - Orden ${orderId}`)
-          }
-        })
-        .catch(err => console.error(`❌ Error email cliente:`, err))
+      // ✅ Enviar emails de confirmación (pago confirmado)
+      // Enviamos con await + delay para evitar problemas de socket
+      console.log(`📧 Enviando emails de confirmación para orden ${orderId}...`)
 
-      // ✅ NUEVO: También enviar email al admin (pago confirmado)
-      sendAdminNotification({
-        ...emailData,
-        paymentConfirmed: true // Flag para mostrar diseño de pago confirmado
-      })
-        .then(success => {
-          if (success) {
-            console.log(`✅ Email de pago confirmado enviado al admin - Orden ${orderId}`)
-          } else {
-            console.log(`⚠️ No se pudo enviar email confirmado al admin - Orden ${orderId}`)
-          }
+      try {
+        // Email al cliente primero
+        const clientEmailSent = await sendCustomerConfirmation(emailData)
+        if (clientEmailSent) {
+          console.log(`✅ Email enviado al cliente - Orden ${orderId}`)
+        } else {
+          console.warn(`⚠️ Email al cliente falló - Orden ${orderId}`)
+        }
+
+        // Esperar 1 segundo antes del siguiente email para evitar sobrecarga
+        await new Promise(resolve => setTimeout(resolve, 1000))
+
+        // Email al admin
+        const adminEmailSent = await sendAdminNotification({
+          ...emailData,
+          paymentConfirmed: true
         })
-        .catch(err => console.error(`❌ Error email admin confirmación:`, err))
+        if (adminEmailSent) {
+          console.log(`✅ Email enviado al admin - Orden ${orderId}`)
+        } else {
+          console.warn(`⚠️ Email al admin falló - Orden ${orderId}`)
+        }
+      } catch (emailError) {
+        console.error(`❌ Error enviando emails de confirmación - Orden ${orderId}:`, emailError)
+        // No bloqueamos la respuesta aunque fallen los emails
+      }
     }
 
     return NextResponse.json({

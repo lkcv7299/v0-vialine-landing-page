@@ -63,49 +63,30 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
       statusBorderColor: "",
     }
 
-    if (orderData.paymentMethod === "culqi" && !orderData.paymentConfirmed) {
+    // Solo hay un método de pago: Culqi (incluye Tarjeta y Yape)
+    if (orderData.paymentConfirmed) {
+      // Email cuando el pago YA fue confirmado (caso normal)
       emailConfig = {
-        subject: `⏳ PENDIENTE DE PAGO - Orden #${orderData.orderId}`,
-        headerTitle: "⏳ ORDEN PENDIENTE DE PAGO",
-        headerColor: "#f59e0b", // Amarillo/naranja
-        statusEmoji: "⏳",
-        statusTitle: "PENDIENTE DE PAGO CON TARJETA",
-        statusMessage: "El cliente creó esta orden pero AÚN NO ha completado el pago con tarjeta de crédito/débito. La orden se confirmará automáticamente cuando pague.",
-        statusBgColor: "#fef3c7",
-        statusBorderColor: "#f59e0b",
-      }
-    } else if (orderData.paymentMethod === "culqi" && orderData.paymentConfirmed) {
-      emailConfig = {
-        subject: `✅ PAGO CONFIRMADO - Orden #${orderData.orderId}`,
-        headerTitle: "✅ PAGO CONFIRMADO",
+        subject: `✅ NUEVO PEDIDO PAGADO - #${orderData.orderId}`,
+        headerTitle: "✅ NUEVO PEDIDO CONFIRMADO",
         headerColor: "#10b981", // Verde
         statusEmoji: "💳",
-        statusTitle: "PAGO CON TARJETA CONFIRMADO",
-        statusMessage: "El cliente ha completado el pago con tarjeta de crédito/débito exitosamente. La orden está CONFIRMADA y lista para procesar.",
+        statusTitle: "PAGO CONFIRMADO",
+        statusMessage: "El cliente completó el pago exitosamente vía Culqi (Tarjeta o Yape). La orden está lista para procesar.",
         statusBgColor: "#d1fae5",
         statusBorderColor: "#10b981",
       }
-    } else if (orderData.paymentMethod === "contraentrega") {
+    } else {
+      // Caso edge: orden creada pero no pagada (no debería recibir email normalmente)
       emailConfig = {
-        subject: `✅ NUEVA ORDEN - Pago Contra Entrega #${orderData.orderId}`,
-        headerTitle: "✅ NUEVA ORDEN CONFIRMADA",
-        headerColor: "#10b981", // Verde
-        statusEmoji: "💵",
-        statusTitle: "PAGO CONTRA ENTREGA",
-        statusMessage: "El cliente pagará en efectivo al momento de la entrega. Esta orden está CONFIRMADA y lista para procesar. No esperes ningún pago online.",
-        statusBgColor: "#d1fae5",
-        statusBorderColor: "#10b981",
-      }
-    } else if (orderData.paymentMethod === "yape") {
-      emailConfig = {
-        subject: `📱 YAPE - Confirmar Pago - Orden #${orderData.orderId}`,
-        headerTitle: "📱 ORDEN YAPE - CONFIRMAR PAGO",
-        headerColor: "#8b5cf6", // Morado
-        statusEmoji: "📱",
-        statusTitle: "PAGO POR YAPE - PENDIENTE CONFIRMACIÓN",
-        statusMessage: "El cliente hará el pago por Yape. IMPORTANTE: Verifica el pago en tu app Yape antes de procesar la orden. Una vez confirmado el pago, marca la orden como pagada.",
-        statusBgColor: "#ede9fe",
-        statusBorderColor: "#8b5cf6",
+        subject: `⏳ Orden Pendiente - #${orderData.orderId}`,
+        headerTitle: "⏳ ORDEN PENDIENTE",
+        headerColor: "#f59e0b",
+        statusEmoji: "⏳",
+        statusTitle: "PENDIENTE DE PAGO",
+        statusMessage: "Orden creada, esperando confirmación de pago vía Culqi.",
+        statusBgColor: "#fef3c7",
+        statusBorderColor: "#f59e0b",
       }
     }
 
