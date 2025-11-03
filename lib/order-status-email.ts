@@ -11,6 +11,25 @@ type OrderStatusEmailData = {
   trackingUrl: string
 }
 
+/**
+ * Verifica si un email pertenece a un usuario registrado
+ */
+async function isRegisteredUser(email: string): Promise<boolean> {
+  try {
+    const { sql } = await import('@vercel/postgres')
+    const result = await sql`
+      SELECT COUNT(*) as count
+      FROM users
+      WHERE LOWER(email) = LOWER(${email})
+      LIMIT 1
+    `
+    return result.rows[0].count > 0
+  } catch (error) {
+    console.error("Error verificando usuario registrado:", error)
+    return false
+  }
+}
+
 export async function sendOrderStatusEmail(data: OrderStatusEmailData): Promise<boolean> {
   const BREVO_API_KEY = process.env.BREVO_API_KEY || process.env.NEXT_PUBLIC_BREVO_API_KEY
 
@@ -52,6 +71,14 @@ export async function sendOrderStatusEmail(data: OrderStatusEmailData): Promise<
 
   try {
     console.log(`📧 Enviando email de actualización - Orden ${data.orderId} - Estado: ${data.status}`)
+
+    // ✅ SMART LINK: Detectar si es usuario registrado
+    const hasAccount = await isRegisteredUser(data.customerEmail)
+    const smartTrackingUrl = hasAccount
+      ? `${process.env.NEXT_PUBLIC_SITE_URL || 'https://vialineperu.com'}/account/pedidos`
+      : data.trackingUrl // Ya viene con /orden/[orderId]
+
+    console.log(`📧 Usuario ${data.customerEmail} - Cuenta: ${hasAccount ? 'SÍ' : 'NO'} - Link: ${smartTrackingUrl}`)
 
     const emailHTML = `
       <!DOCTYPE html>
@@ -180,9 +207,9 @@ export async function sendOrderStatusEmail(data: OrderStatusEmailData): Promise<
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 32px 0;">
                       <tr>
                         <td align="center">
-                          <a href="${data.trackingUrl}"
+                          <a href="${smartTrackingUrl}"
                              style="display: inline-block; padding: 18px 40px; background-color: ${config.color}; color: #ffffff; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 16px; letter-spacing: 0.3px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);">
-                            Ver Estado de mi Pedido →
+                            ${hasAccount ? '📋 Ver mis pedidos →' : '📦 Ver estado de mi pedido →'}
                           </a>
                         </td>
                       </tr>

@@ -415,6 +415,26 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
 }
 
 /**
+ * Verifica si un email pertenece a un usuario registrado
+ */
+async function isRegisteredUser(email: string): Promise<boolean> {
+  try {
+    const { sql } = await import('@vercel/postgres')
+    const result = await sql`
+      SELECT COUNT(*) as count
+      FROM users
+      WHERE LOWER(email) = LOWER(${email})
+      LIMIT 1
+    `
+    return result.rows[0].count > 0
+  } catch (error) {
+    console.error("Error verificando usuario registrado:", error)
+    // En caso de error, asumimos que no está registrado (fallback a tracking público)
+    return false
+  }
+}
+
+/**
  * Envía email de confirmación al CLIENTE (cuando paga)
  */
 export async function sendCustomerConfirmation(orderData: OrderData): Promise<boolean> {
@@ -426,6 +446,13 @@ export async function sendCustomerConfirmation(orderData: OrderData): Promise<bo
   }
 
   try {
+    // ✅ SMART LINK: Detectar si es usuario registrado
+    const hasAccount = await isRegisteredUser(orderData.customer.email)
+    const trackingUrl = hasAccount
+      ? `${process.env.NEXT_PUBLIC_SITE_URL || 'https://vialineperu.com'}/account/pedidos`
+      : `${process.env.NEXT_PUBLIC_SITE_URL || 'https://vialineperu.com'}/orden/${orderData.orderId}`
+
+    console.log(`📧 Usuario ${orderData.customer.email} - Cuenta: ${hasAccount ? 'SÍ' : 'NO'} - Link: ${trackingUrl}`)
     const customerEmailHTML = `
       <!DOCTYPE html>
       <html lang="es">
@@ -650,8 +677,20 @@ export async function sendCustomerConfirmation(orderData: OrderData): Promise<bo
                       </tr>
                     </table>
 
+                    <!-- Tracking CTA -->
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 32px 0 16px 0;">
+                      <tr>
+                        <td align="center">
+                          <a href="${trackingUrl}"
+                             style="display: inline-block; padding: 18px 40px; background-color: #e11d48; color: #ffffff; text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 16px; box-shadow: 0 4px 6px rgba(225, 29, 72, 0.3);">
+                            ${hasAccount ? '📋 Ver mis pedidos' : '📦 Seguir mi pedido'}
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
                     <!-- WhatsApp CTA -->
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 32px 0;">
+                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 16px 0 32px 0;">
                       <tr>
                         <td align="center">
                           <a href="https://wa.me/51972327236?text=Hola,%20tengo%20una%20consulta%20sobre%20mi%20orden%20%23${orderData.orderId}"

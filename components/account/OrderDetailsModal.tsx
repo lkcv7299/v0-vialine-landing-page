@@ -1,7 +1,7 @@
 // components/account/OrderDetailsModal.tsx
 "use client"
 
-import { X, Package, MapPin, CreditCard, Calendar, Truck, Phone, Mail } from "lucide-react"
+import { X, Package, MapPin, CreditCard, Calendar, Truck, Phone, Mail, CheckCircle, Clock, Home } from "lucide-react"
 import Image from "next/image"
 import { useEffect } from "react"
 
@@ -107,6 +107,33 @@ export default function OrderDetailsModal({ order, isOpen, onClose }: OrderDetai
     }
   }
 
+  // Timeline de estados
+  const getTimeline = () => {
+    const allSteps = [
+      { key: "paid", label: "Pagada", icon: CheckCircle },
+      { key: "processing", label: "En Preparación", icon: Package },
+      { key: "shipped", label: "Enviada", icon: Truck },
+      { key: "delivered", label: "Entregada", icon: Home }
+    ]
+
+    // Mapear estados de la DB a estados del timeline
+    const statusMapping: Record<string, string> = {
+      "pending": "paid",
+      "processing": "processing",
+      "shipped": "shipped",
+      "delivered": "delivered"
+    }
+
+    const mappedStatus = statusMapping[order.status] || "paid"
+    const currentStatusIndex = allSteps.findIndex(step => step.key === mappedStatus)
+
+    return allSteps.map((step, index) => ({
+      ...step,
+      completed: index <= currentStatusIndex,
+      active: step.key === mappedStatus
+    }))
+  }
+
   return (
     <>
       {/* Backdrop */}
@@ -155,6 +182,49 @@ export default function OrderDetailsModal({ order, isOpen, onClose }: OrderDetai
                 </div>
               </div>
             </div>
+
+            {/* Timeline - Solo si no está cancelada */}
+            {order.status !== "cancelled" && (
+              <div className="bg-white rounded-lg border border-neutral-200 p-6">
+                <h3 className="text-lg font-semibold mb-6 text-neutral-900">Progreso del Pedido</h3>
+                <div className="relative">
+                  {/* Línea de progreso */}
+                  <div className="absolute top-5 left-0 right-0 h-1 bg-neutral-200">
+                    <div
+                      className="h-full bg-rose-600 transition-all duration-500"
+                      style={{
+                        width: `${(getTimeline().filter(s => s.completed).length - 1) / (getTimeline().length - 1) * 100}%`
+                      }}
+                    />
+                  </div>
+
+                  {/* Steps */}
+                  <div className="relative flex justify-between">
+                    {getTimeline().map((step) => {
+                      const StepIcon = step.icon
+                      return (
+                        <div key={step.key} className="flex flex-col items-center flex-1 max-w-[100px]">
+                          <div
+                            className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 transition-all ${
+                              step.completed
+                                ? "bg-rose-600 text-white"
+                                : "bg-neutral-200 text-neutral-400"
+                            } ${step.active ? "ring-4 ring-rose-200" : ""}`}
+                          >
+                            <StepIcon className="w-5 h-5" />
+                          </div>
+                          <span className={`text-xs text-center font-medium leading-tight ${
+                            step.completed ? "text-neutral-900" : "text-neutral-400"
+                          }`}>
+                            {step.label}
+                          </span>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* Grid de información */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
