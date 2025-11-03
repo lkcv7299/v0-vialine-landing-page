@@ -151,7 +151,7 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify({
         sender: {
           name: "Vialine",
-          email: "no-reply@vialineperu.com",
+          email: "osinpacha@gmail.com", // ✅ Usar email verificado en Brevo
         },
         to: [
           {

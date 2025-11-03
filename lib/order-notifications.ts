@@ -226,7 +226,7 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
       body: JSON.stringify({
         sender: {
           name: "Vialine",
-          email: "no-reply@vialineperu.com"
+          email: "osinpacha@gmail.com" // ✅ Usar email verificado en Brevo
         },
         to: [
           {
@@ -360,7 +360,7 @@ export async function sendCustomerConfirmation(orderData: OrderData): Promise<bo
       body: JSON.stringify({
         sender: {
           name: "Vialine",
-          email: "no-reply@vialineperu.com"
+          email: "osinpacha@gmail.com" // ✅ Usar email verificado en Brevo
         },
         to: [
           {
