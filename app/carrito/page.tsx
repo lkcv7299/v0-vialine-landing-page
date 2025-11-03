@@ -18,10 +18,9 @@ type ItemToDelete = {
 
 export default function CarritoPage() {
   const router = useRouter()
-  const { items, total, updateQuantity, removeItem } = useCart()
+  const { items, total, updateQuantity, removeItem, appliedCoupon, applyCoupon, removeCoupon } = useCart()
   const [itemToDelete, setItemToDelete] = useState<ItemToDelete>(null)
   const [couponCode, setCouponCode] = useState("")
-  const [appliedCoupon, setAppliedCoupon] = useState<{ code: string; discount: number; type: "percentage" | "fixed" } | null>(null)
   const [couponError, setCouponError] = useState("")
   const [loadingCoupon, setLoadingCoupon] = useState(false)
 
@@ -56,12 +55,14 @@ export default function CarritoPage() {
       const data = await response.json()
 
       if (data.valid) {
-        setAppliedCoupon({
+        // ✅ Usar context para guardar el cupón
+        applyCoupon({
           code: couponCode,
           discount: data.discount,
           type: data.type,
         })
         setCouponError("")
+        setCouponCode("")
       } else {
         setCouponError(data.error || "Cupón inválido")
       }
@@ -73,7 +74,8 @@ export default function CarritoPage() {
   }
 
   const handleRemoveCoupon = () => {
-    setAppliedCoupon(null)
+    // ✅ Usar context para remover el cupón
+    removeCoupon()
     setCouponCode("")
     setCouponError("")
   }

@@ -11,6 +11,12 @@ export type CartItem = {
   selectedSize: string
 }
 
+export type AppliedCoupon = {
+  code: string
+  discount: number
+  type: "percentage" | "fixed"
+}
+
 type CartContextType = {
   items: CartItem[]
   addItem: (product: Product, color: string, size: string, quantity?: number) => void
@@ -19,12 +25,16 @@ type CartContextType = {
   clearCart: () => void
   total: number
   itemCount: number
+  appliedCoupon: AppliedCoupon | null
+  applyCoupon: (coupon: AppliedCoupon) => void
+  removeCoupon: () => void
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
+  const [appliedCoupon, setAppliedCoupon] = useState<AppliedCoupon | null>(null)
   const [mounted, setMounted] = useState(false)
 
   // Cargar del localStorage al montar
@@ -38,6 +48,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
         console.error('Error loading cart:', e)
       }
     }
+
+    const savedCoupon = localStorage.getItem('vialine-coupon')
+    if (savedCoupon) {
+      try {
+        setAppliedCoupon(JSON.parse(savedCoupon))
+      } catch (e) {
+        console.error('Error loading coupon:', e)
+      }
+    }
   }, [])
 
   // Guardar en localStorage cuando cambie
@@ -46,6 +65,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
       localStorage.setItem('vialine-cart', JSON.stringify(items))
     }
   }, [items, mounted])
+
+  useEffect(() => {
+    if (mounted) {
+      if (appliedCoupon) {
+        localStorage.setItem('vialine-coupon', JSON.stringify(appliedCoupon))
+      } else {
+        localStorage.removeItem('vialine-coupon')
+      }
+    }
+  }, [appliedCoupon, mounted])
 
   const addItem = (product: Product, color: string, size: string, quantity: number = 1) => {
     setItems(current => {
@@ -119,13 +148,35 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const clearCart = () => {
     setItems([])
+    setAppliedCoupon(null)
+  }
+
+  const applyCoupon = (coupon: AppliedCoupon) => {
+    setAppliedCoupon(coupon)
+    toast.success(`Cupón ${coupon.code} aplicado`)
+  }
+
+  const removeCoupon = () => {
+    setAppliedCoupon(null)
+    toast.success('Cupón removido')
   }
 
   const total = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0)
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
 
   return (
-    <CartContext.Provider value={{ items, addItem, removeItem, updateQuantity, clearCart, total, itemCount }}>
+    <CartContext.Provider value={{
+      items,
+      addItem,
+      removeItem,
+      updateQuantity,
+      clearCart,
+      total,
+      itemCount,
+      appliedCoupon,
+      applyCoupon,
+      removeCoupon
+    }}>
       {children}
     </CartContext.Provider>
   )

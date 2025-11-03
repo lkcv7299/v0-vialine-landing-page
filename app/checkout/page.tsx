@@ -26,6 +26,7 @@ import {
   Briefcase,
   Check,
   ChevronLeft,
+  Tag,
 } from "lucide-react"
 
 // ====================================
@@ -84,7 +85,7 @@ interface SavedAddress {
 export default function CheckoutPage() {
   const router = useRouter()
   const { data: session } = useSession()
-  const { items, total, clearCart } = useCart()
+  const { items, total, clearCart, appliedCoupon, removeCoupon } = useCart()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [culqiLoaded, setCulqiLoaded] = useState(false)
   const [currentOrderId, setCurrentOrderId] = useState<string | null>(null)
@@ -114,9 +115,18 @@ export default function CheckoutPage() {
 
   const paymentMethod = watch("paymentMethod")
 
-  // Calcular costos
-  const shippingCost = total > 269 ? 0 : 15
-  const finalTotal = total + shippingCost
+  // ✅ Calcular descuento si hay cupón aplicado
+  const discount = appliedCoupon
+    ? appliedCoupon.type === "percentage"
+      ? total * (appliedCoupon.discount / 100)
+      : appliedCoupon.discount
+    : 0
+
+  const subtotalAfterDiscount = total - discount
+
+  // Calcular costos (usar subtotalAfterDiscount para evaluar envío gratis)
+  const shippingCost = subtotalAfterDiscount > 269 ? 0 : 15
+  const finalTotal = subtotalAfterDiscount + shippingCost
 
   // ====================================
   // PRE-LLENAR EMAIL Y NOMBRE SI HAY SESIÓN
@@ -364,6 +374,8 @@ export default function CheckoutPage() {
           selectedSize: item.selectedSize,
         })),
         subtotal: total,
+        discount: discount,
+        couponCode: appliedCoupon?.code || null,
         shippingCost: shippingCost,
         total: finalTotal,
         paymentMethod: data.paymentMethod,
@@ -927,6 +939,39 @@ export default function CheckoutPage() {
                       <span>Subtotal</span>
                       <span>S/ {total.toFixed(2)}</span>
                     </div>
+
+                    {/* ✅ Mostrar cupón aplicado */}
+                    {appliedCoupon && discount > 0 && (
+                      <div className="bg-green-50 border border-green-200 rounded-lg p-3 -mx-2">
+                        <div className="flex justify-between items-start">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2">
+                              <Tag className="w-4 h-4 text-green-600" />
+                              <span className="text-sm font-semibold text-green-700">
+                                Cupón: {appliedCoupon.code}
+                              </span>
+                            </div>
+                            <p className="text-xs text-green-600 mt-1">
+                              {appliedCoupon.type === "percentage"
+                                ? `${appliedCoupon.discount}% de descuento`
+                                : `S/ ${appliedCoupon.discount} de descuento`}
+                            </p>
+                          </div>
+                          <div className="text-right">
+                            <span className="text-sm font-semibold text-green-700">
+                              - S/ {discount.toFixed(2)}
+                            </span>
+                            <button
+                              onClick={removeCoupon}
+                              className="block text-xs text-green-600 hover:text-green-700 mt-1"
+                            >
+                              Quitar
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
                     <div className="flex justify-between text-neutral-700">
                       <span className="flex items-center gap-2">
                         <Truck className="w-4 h-4" />
@@ -934,9 +979,9 @@ export default function CheckoutPage() {
                       </span>
                       <span>{shippingCost === 0 ? "GRATIS" : `S/ ${shippingCost.toFixed(2)}`}</span>
                     </div>
-                    {total <= 269 && (
+                    {subtotalAfterDiscount <= 269 && (
                       <p className="text-sm text-green-600">
-                        Te faltan S/ {(269 - total).toFixed(2)} para envío gratis
+                        Te faltan S/ {(269 - subtotalAfterDiscount).toFixed(2)} para envío gratis
                       </p>
                     )}
                     <div className="flex justify-between text-lg font-bold pt-2 border-t border-neutral-200">
