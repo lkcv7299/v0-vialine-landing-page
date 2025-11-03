@@ -147,7 +147,7 @@ export async function sendOrderStatusEmail(data: OrderStatusEmailData): Promise<
       body: JSON.stringify({
         sender: {
           name: "Vialine",
-          email: "osinpacha@gmail.com" // ✅ Usar email verificado en Brevo
+          email: "no-reply@vialineperu.com"
         },
         to: [
           {
