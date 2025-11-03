@@ -1,6 +1,7 @@
 "use client"
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import WishlistHeart from "@/components/WishlistHeart"
 import { useImageDebug } from "@/contexts/ImageDebugContext"
 
@@ -123,15 +124,16 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
         onMouseEnter={() => !isOutOfStock && setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
       >
-        <img
+        <Image
           src={currentImage}
-          onError={(e) => {
-            ;(e.currentTarget as HTMLImageElement).src = fallbackImage || "/placeholder.svg"
-          }}
           alt={title}
-          className="absolute inset-0 w-full h-[180%] object-cover"
-          style={getImageStyle()}
-          loading="lazy"
+          fill
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          className="object-cover"
+          style={{
+            ...getImageStyle(),
+            height: '180%',
+          }}
         />
 
         <WishlistHeart slug={slug} />

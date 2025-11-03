@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { ChevronLeft, ChevronRight, Star } from "lucide-react"
 import WishlistHeart from "@/components/WishlistHeart"
 import { getAverageRating, getReviewCount } from "@/data/reviews"
@@ -127,11 +128,16 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
                       onMouseEnter={() => setHoveringSlug(item.slug)}
                       onMouseLeave={() => setHoveringSlug(null)}
                     >
-                      <img
+                      <Image
                         src={currentImage}
                         alt={item.name}
-                        className="absolute inset-0 w-full h-[200%] object-cover"
-                        style={getImageStyle()}
+                        fill
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                        className="object-cover"
+                        style={{
+                          ...getImageStyle(),
+                          height: '200%',
+                        }}
                       />
 
                       <WishlistHeart slug={item.slug} />
