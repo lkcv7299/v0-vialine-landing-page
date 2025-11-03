@@ -10,6 +10,7 @@ export default function HeroNina() {
           src="/hero-nina.jpg"
           alt="Colección Niña"
           fill
+          priority
           className="object-cover"
           style={{
             objectPosition: "center center",

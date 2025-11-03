@@ -22,6 +22,15 @@ const nextConfig = {
   // ✅ PERFORMANCE: Optimizaciones adicionales
   compress: true, // Comprimir respuestas con gzip
 
+  // ✅ VERCEL: Exclude product images from serverless functions
+  // Images are served as static assets, not bundled in functions
+  outputFileTracingExcludes: {
+    '*': [
+      'public/products/**/*',
+      'public/productos/**/*',
+    ],
+  },
+
   // ✅ PERFORMANCE: Reduce bundle size by optimizing package imports
   experimental: {
     optimizePackageImports: [
@@ -29,14 +38,6 @@ const nextConfig = {
       '@headlessui/react',
       'sonner',
     ],
-    // ✅ VERCEL: Exclude product images from serverless functions
-    // Images are served as static assets, not bundled in functions
-    outputFileTracingExcludes: {
-      '*': [
-        'public/products/**/*',
-        'public/productos/**/*',
-      ],
-    },
   },
 
   // ✅ PERFORMANCE: Webpack optimizations

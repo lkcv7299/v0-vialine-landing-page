@@ -34,18 +34,21 @@ const heading = Outfit({
   subsets: ["latin"],
   weight: ["400", "600", "700"],
   variable: "--font-heading",
+  display: "swap",
 })
 
 const body = Inter({
   subsets: ["latin"],
   weight: ["400", "500"],
   variable: "--font-body",
+  display: "swap",
 })
 
 const ui = Manrope({
   subsets: ["latin"],
   weight: ["500", "600"],
   variable: "--font-ui",
+  display: "swap",
 })
 
 export default function RootLayout({
@@ -58,6 +61,10 @@ export default function RootLayout({
 
   return (
     <html lang="es" className={`${heading.variable} ${body.variable} ${ui.variable}`}>
+      <head>
+        {/* Preload critical hero image for faster LCP */}
+        <link rel="preload" as="image" href="/hero-woman.jpg" />
+      </head>
       <body className="antialiased text-neutral-900 bg-neutral-50">
         {/* ANALYTICS: Solo cargar en producción para evitar ChunkLoadError en Codespaces */}
         {isProduction && (
