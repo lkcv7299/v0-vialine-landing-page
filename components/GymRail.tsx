@@ -133,6 +133,7 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
                         alt={item.name}
                         fill
                         sizes="(max-width: 768px) 50vw, 25vw"
+                        quality={90}
                         className="object-cover"
                         style={{
                           ...getImageStyle(),
