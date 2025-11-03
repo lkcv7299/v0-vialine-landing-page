@@ -43,6 +43,23 @@ function applyFilters(items: Product[], q: { get: (k: string) => string | null; 
   const fabric = q.get("fabric")
   if (fabric) out = out.filter((p) => p.fabric === fabric)
 
+  // ✅ FIX: Agregar filtro por categoría (Leggings, Tops, etc.)
+  const category = q.get("category")
+  if (category) out = out.filter((p) => p.category === category)
+
+  // ✅ FIX: Agregar filtro por precio
+  const minPrice = q.get("minPrice")
+  if (minPrice) {
+    const min = parseFloat(minPrice)
+    if (!isNaN(min)) out = out.filter((p) => p.price >= min)
+  }
+
+  const maxPrice = q.get("maxPrice")
+  if (maxPrice) {
+    const max = parseFloat(maxPrice)
+    if (!isNaN(max)) out = out.filter((p) => p.price <= max)
+  }
+
   const sort = q.get("sort")
   if (sort === "price-asc") out.sort((a, b) => a.price - b.price)
   if (sort === "price-desc") out.sort((a, b) => b.price - a.price)
