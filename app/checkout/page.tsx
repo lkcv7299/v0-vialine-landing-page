@@ -11,7 +11,7 @@ import Link from "next/link"
 import Image from "next/image"
 import Script from "next/script"
 import { toast } from "sonner"
-import { getAssetPath } from "@/lib/assets"
+import { getProductColorImage } from "@/lib/assets"
 import {
   ShoppingBag,
   Truck,
@@ -369,7 +369,7 @@ export default function CheckoutPage() {
           productSlug: item.product.slug,
           productTitle: item.product.title,
           productPrice: item.product.price,
-          productImage: getAssetPath(item.product.slug, item.product.category, item.selectedColor, 0),
+          productImage: getProductColorImage(item.product, item.selectedColor, 0),
           quantity: item.quantity,
           selectedColor: item.selectedColor,
           selectedSize: item.selectedSize,
@@ -909,7 +909,7 @@ export default function CheckoutPage() {
                   {/* Items */}
                   <div className="space-y-4 mb-6 max-h-64 overflow-y-auto">
                     {items.map((item) => {
-                      const imagePath = getAssetPath(item.product.slug, item.product.category, item.selectedColor, 0)
+                      const imagePath = getProductColorImage(item.product, item.selectedColor, 0)
                       return (
                       <div key={`${item.product.slug}-${item.selectedColor}-${item.selectedSize}`} className="flex gap-3">
                         <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">

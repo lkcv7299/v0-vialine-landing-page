@@ -2,6 +2,8 @@
  * Helper functions for asset path generation
  */
 
+import type { Product } from '@/data/products'
+
 /**
  * Generates the asset path for a product image
  * @param slug - Product slug (e.g., "legging-basico")
@@ -28,4 +30,34 @@ export function getAssetPath(slug: string, category: string, color: string, inde
  */
 export function getProductImages(slug: string, category: string, color: string, count = 4): string[] {
   return Array.from({ length: count }, (_, i) => getAssetPath(slug, category, color, i))
+}
+
+/**
+ * Gets the image for a specific color variant from the product data
+ * @param product - The product object
+ * @param selectedColor - The selected color name (e.g., "Blanco", "Negro")
+ * @param index - Image index (default: 0 for first image)
+ * @returns The image path for the selected color, or the default product image as fallback
+ */
+export function getProductColorImage(product: Product, selectedColor: string, index = 0): string {
+  // If colors is an array of objects (new format with images)
+  if (Array.isArray(product.colors) && product.colors.length > 0) {
+    const colorObj = product.colors.find((c: any) =>
+      typeof c === 'object' && c.name === selectedColor
+    )
+
+    if (colorObj && typeof colorObj === 'object') {
+      // If the color has an images array
+      if (colorObj.images && Array.isArray(colorObj.images) && colorObj.images[index]) {
+        return colorObj.images[index]
+      }
+      // If the color has a single image property
+      if (colorObj.image) {
+        return colorObj.image
+      }
+    }
+  }
+
+  // Fallback to the default product image
+  return product.image
 }

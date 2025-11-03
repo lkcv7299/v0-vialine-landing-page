@@ -4,7 +4,7 @@ import { useCart } from "@/contexts/CartContext"
 import Link from "next/link"
 import Image from "next/image"
 import { X } from "lucide-react"
-import { getAssetPath } from "@/lib/assets"
+import { getProductColorImage } from "@/lib/assets"
 
 type MiniCartProps = {
   onClose: () => void
@@ -38,7 +38,7 @@ export default function MiniCart({ onClose }: MiniCartProps) {
 
       <div className="max-h-[400px] overflow-y-auto">
         {items.slice(0, 3).map((item, idx) => {
-          const imagePath = getAssetPath(item.product.slug, item.product.category, item.selectedColor, 0)
+          const imagePath = getProductColorImage(item.product, item.selectedColor, 0)
 
           return (
             <div key={idx} className="flex gap-3 p-4 border-b border-gray-100 hover:bg-gray-50 transition">
