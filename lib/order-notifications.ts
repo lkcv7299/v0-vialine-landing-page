@@ -39,6 +39,10 @@ type OrderData = {
  * ✅ FIX: Diferencia entre métodos de pago
  */
 export async function sendAdminNotification(orderData: OrderData): Promise<boolean> {
+  console.log(`📨 sendAdminNotification iniciado para orden ${orderData.orderId}`)
+  console.log(`📨 Payment method recibido: ${orderData.paymentMethod}`)
+  console.log(`📨 Payment confirmed: ${orderData.paymentConfirmed}`)
+
   const BREVO_API_KEY = process.env.BREVO_API_KEY || process.env.NEXT_PUBLIC_BREVO_API_KEY
 
   if (!BREVO_API_KEY) {
@@ -103,6 +107,17 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
         statusBgColor: "#ede9fe",
         statusBorderColor: "#8b5cf6",
       }
+    }
+
+    console.log(`📧 Email config determinado:`)
+    console.log(`   Subject: ${emailConfig.subject}`)
+    console.log(`   Header: ${emailConfig.headerTitle}`)
+
+    if (!emailConfig.subject || !emailConfig.headerTitle) {
+      console.error(`❌ Error: emailConfig tiene valores vacíos!`)
+      console.error(`   Payment method: ${orderData.paymentMethod}`)
+      console.error(`   Payment confirmed: ${orderData.paymentConfirmed}`)
+      return false
     }
 
     const adminEmailHTML = `

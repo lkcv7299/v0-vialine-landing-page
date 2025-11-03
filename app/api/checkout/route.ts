@@ -223,19 +223,23 @@ export async function POST(request: NextRequest) {
     }
 
     // ✅ Solo enviar email al admin (orden pendiente)
-    sendAdminNotification(emailData)
-      .then(success => {
-        if (success) {
-          console.log(`✅ Email al admin enviado - Orden ${orderId}`)
-        } else {
-          console.log(`⚠️ No se pudo enviar email al admin - Orden ${orderId}`)
-        }
-      })
-      .catch(err => console.error(`❌ Error email admin:`, err))
+    console.log(`📧 Intentando enviar email al admin para orden ${orderId}...`)
+    console.log(`📧 Payment method: ${orderData.paymentMethod}`)
+
+    try {
+      const emailSent = await sendAdminNotification(emailData)
+      if (emailSent) {
+        console.log(`✅ Email al admin enviado exitosamente - Orden ${orderId}`)
+      } else {
+        console.error(`⚠️ sendAdminNotification retornó false - Orden ${orderId}`)
+      }
+    } catch (emailError) {
+      console.error(`❌ Error crítico enviando email al admin - Orden ${orderId}:`, emailError)
+    }
 
     // ❌ NO enviar email al cliente todavía (esperar confirmación de pago)
 
-    // Retornar respuesta inmediata
+    // Retornar respuesta
     return NextResponse.json({
       success: true,
       orderId: orderId,
