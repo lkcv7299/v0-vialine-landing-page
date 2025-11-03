@@ -2,7 +2,6 @@ import { byAudience, type Product } from "@/data/products"
 import ProductFiltersDesktop from "@/components/ProductFiltersDesktop"
 import ProductFiltersDrawer from "@/components/ProductFiltersDrawer"
 import ProductListWithLoadMore from "@/components/ProductListWithLoadMore"
-import Hero from "@/components/Hero"
 
 function apply(items: Product[], q: Record<string, string | string[] | undefined>) {
   let out = [...items]
@@ -81,19 +80,7 @@ export default async function Page({
   const initialItems = allItems.slice(0, itemsPerPage)
 
   return (
-    <>
-      {/* Hero de niña */}
-      <Hero
-        image="/hero-nina.jpg"
-        kicker="VIALINE · NIÑA"
-        title="Niña"
-        description="Comodidad para moverse, diseños que les encantan."
-        primary={{ href: "/nina", label: "Ver colección niña" }}
-        objectPositionDesktop="60% 42%"
-        objectPositionMobile="58% 38%"
-      />
-
-      <main className="mx-auto max-w-7xl px-4 md:px-6 py-8">
+    <main className="mx-auto max-w-7xl px-4 md:px-6 py-8">
         {/* Header de la página */}
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-neutral-900">Niña</h1>
@@ -122,6 +109,5 @@ export default async function Page({
           </div>
         </div>
       </main>
-    </>
   )
 }
