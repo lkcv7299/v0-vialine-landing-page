@@ -58,7 +58,7 @@ export default function AdminLoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-rose-500"
-                  placeholder="admin@vialine.pe"
+                  placeholder="correo@ejemplo.com"
                   required
                 />
               </div>
@@ -95,11 +95,6 @@ export default function AdminLoginPage() {
               {loading ? "Ingresando..." : "Ingresar"}
             </button>
           </form>
-        </div>
-
-        <div className="mt-4 text-center text-sm text-neutral-500">
-          <p>Email: admin@vialine.pe</p>
-          <p>Password: vialine2025</p>
         </div>
       </div>
     </div>
