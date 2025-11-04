@@ -4065,3 +4065,16 @@ export const products: Product[] = [
 ]
 
 export const allProducts = products
+
+// Helper functions
+export function byAudience(audience: "mujer" | "nina") {
+  return products.filter((p) => p.audience === audience)
+}
+
+export function byFabric(fabric: "suplex" | "algodon") {
+  return products.filter((p) => p.fabric === fabric)
+}
+
+export function findProduct(slug: string) {
+  return products.find((p) => p.slug === slug)
+}
