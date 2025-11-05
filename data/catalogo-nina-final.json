@@ -1,0 +1,192 @@
+{
+  "extractedAt": "2025-11-05",
+  "source": "Catálogo Vialine Niña PDF",
+  "totalProducts": 12,
+  "priceRange": {
+    "min": 12.00,
+    "max": 30.00
+  },
+  "products": [
+    {
+      "codigo": "506",
+      "nombre": "Cafarena",
+      "precio": 30.00,
+      "categoria": "Shorts",
+      "material": "Algodón Licrado",
+      "tallas": ["4", "6", "8", "10", "12", "14", "16"],
+      "colores": ["Blanco", "Rosado", "Azul Marino", "Negro", "Rojo"],
+      "caracteristicas": [
+        "Diseño cafarena deportivo",
+        "Algodón licrado suave",
+        "Ideal para actividades"
+      ],
+      "coleccion": "Nueva Colección Niña"
+    },
+    {
+      "codigo": "431",
+      "nombre": "Panty",
+      "precio": 25.00,
+      "categoria": "Shorts",
+      "material": "Algodón Licrado",
+      "tallas": ["2", "4", "6", "8", "10", "12", "14", "16"],
+      "colores": ["Blanco", "Rosado", "Azul Marino", "Negro", "Rojo"],
+      "caracteristicas": [
+        "Panty deportivo básico",
+        "Algodón licrado",
+        "Muy cómodo"
+      ],
+      "coleccion": "Nueva Colección Niña"
+    },
+    {
+      "codigo": "425",
+      "nombre": "Enterizo Manga Corta",
+      "precio": 29.00,
+      "categoria": "Enterizos",
+      "material": "Algodón Licrado",
+      "tallas": ["2", "4", "6", "8", "10", "12", "14", "16"],
+      "colores": ["Negro", "Beige", "Lila", "Blanco", "Rosado", "Amarillo", "Rojo"],
+      "caracteristicas": [
+        "Enterizo deportivo manga corta",
+        "Diseño cómodo y funcional",
+        "Algodón licrado"
+      ],
+      "coleccion": "Nueva Colección Niña"
+    },
+    {
+      "codigo": "430",
+      "nombre": "Enterizo Manga Larga",
+      "precio": 30.00,
+      "categoria": "Enterizos",
+      "material": "Algodón Licrado",
+      "tallas": ["4", "6", "8", "10", "12", "14", "16"],
+      "colores": ["Negro", "Rojo", "Blanco", "Amarillo", "Rosado", "Beige"],
+      "caracteristicas": [
+        "Enterizo deportivo manga larga",
+        "Diseño cómodo y funcional",
+        "Algodón licrado"
+      ],
+      "coleccion": "Nueva Colección Niña"
+    },
+    {
+      "codigo": "432",
+      "nombre": "Legging",
+      "precio": 25.00,
+      "categoria": "Leggings",
+      "material": "Algodón Licrado",
+      "tallas": ["2", "4", "6", "8", "10", "12", "14", "16"],
+      "colores": ["Negro", "Blanco", "Rosado", "Rojo", "Azul Marino"],
+      "caracteristicas": [
+        "Legging clásica para niña",
+        "Cintura elástica confortable",
+        "Algodón licrado"
+      ],
+      "coleccion": "Nueva Colección Niña"
+    },
+    {
+      "codigo": "503",
+      "nombre": "Maxi Short",
+      "precio": 15.00,
+      "categoria": "Shorts",
+      "material": "Algodón Licrado",
+      "tallas": ["10", "12", "14", "16"],
+      "colores": ["Negro", "Blanco", "Azul Marino", "Rojo"],
+      "caracteristicas": [
+        "Maxi short deportivo",
+        "Largo medio",
+        "Algodón licrado"
+      ],
+      "coleccion": "Nueva Colección Niña"
+    },
+    {
+      "codigo": "433",
+      "nombre": "Short Juvenil",
+      "precio": 13.00,
+      "categoria": "Shorts",
+      "material": "Algodón Licrado",
+      "tallas": ["4", "6", "8", "10", "12", "14", "16"],
+      "colores": ["Negro", "Blanco", "Azul Marino", "Rosado", "Rojo"],
+      "caracteristicas": [
+        "Short juvenil básico",
+        "Diseño deportivo",
+        "Algodón licrado"
+      ],
+      "coleccion": "Nueva Colección Niña"
+    },
+    {
+      "codigo": "224",
+      "nombre": "Top Orquídea",
+      "precio": 23.00,
+      "categoria": "Tops",
+      "material": "Algodón Licrado",
+      "tallas": ["12", "14", "16"],
+      "colores": ["Negro", "Blanco", "Rosado", "Beige"],
+      "caracteristicas": [
+        "Tiras regulables",
+        "Copas removibles",
+        "Elástico afelpeado"
+      ],
+      "coleccion": "Nueva Colección Niña"
+    },
+    {
+      "codigo": "222",
+      "nombre": "Top Tulipán",
+      "precio": 23.00,
+      "categoria": "Tops",
+      "material": "Algodón Licrado",
+      "tallas": ["12", "14", "16"],
+      "colores": ["Negro", "Blanco", "Rosado", "Beige"],
+      "caracteristicas": [
+        "Modelo deportivo",
+        "Copas removibles",
+        "Elástico afelpeado"
+      ],
+      "coleccion": "Nueva Colección Niña"
+    },
+    {
+      "codigo": "225",
+      "nombre": "Top Margarita",
+      "precio": 23.00,
+      "categoria": "Tops",
+      "material": "Algodón Licrado",
+      "tallas": ["12", "14", "16"],
+      "colores": ["Negro", "Blanco", "Rosado", "Beige"],
+      "caracteristicas": [
+        "Doble broche en la espalda",
+        "Tiras regulables",
+        "Copas removibles"
+      ],
+      "coleccion": "Nueva Colección Niña"
+    },
+    {
+      "codigo": "223",
+      "nombre": "Top Jazmín",
+      "precio": 23.00,
+      "categoria": "Tops",
+      "material": "Algodón Licrado",
+      "tallas": ["12", "14", "16"],
+      "colores": ["Negro", "Blanco", "Rosado", "Beige"],
+      "caracteristicas": [
+        "Tiras regulables",
+        "Copas removibles",
+        "Elástico afelpeado",
+        "Doble broche en la espalda"
+      ],
+      "coleccion": "Nueva Colección Niña"
+    },
+    {
+      "codigo": "504",
+      "nombre": "Top Vani",
+      "precio": 12.00,
+      "categoria": "Tops",
+      "material": "Algodón Licrado",
+      "tallas": ["10", "12", "14", "16"],
+      "colores": ["Negro", "Blanco", "Rosado", "Rojo"],
+      "caracteristicas": [
+        "Top básico deportivo",
+        "Diseño simple",
+        "Algodón licrado"
+      ],
+      "coleccion": "Nueva Colección Niña"
+    }
+  ]
+}

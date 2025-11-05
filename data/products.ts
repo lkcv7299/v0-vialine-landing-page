@@ -1841,7 +1841,7 @@ export const products: Product[] = [
   {
     slug: "enterizo-manga-corta-nina",
     title: "Enterizo manga corta Niña",
-    price: 38,
+    price: 29,
     image: "/placeholder.svg",
     category: "enterizos",
     fabric: "suplex",
@@ -1853,27 +1853,24 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["2", "4", "6", "8", "10", "12"],
-    audience: "nina",
+    sizes: ["2","4","6","8","10","12","14","16"],
+    audience: "nina",    tags: ["COD.425", "Nueva Colección Niña", "Algodón Licrado"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
-  ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Enterizo deportivo manga corta",
+            "Diseño cómodo y funcional",
+            "Algodón licrado"
+        ],
+        "beneficios": []
+    },
   },
 
   {
     slug: "enterizo-manga-larga-nina",
     title: "Enterizo manga larga Niña",
-    price: 42,
+    price: 30,
     image: "/placeholder.svg",
     category: "enterizos",
     fabric: "suplex",
@@ -1885,21 +1882,18 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["2", "4", "6", "8", "10", "12"],
-    audience: "nina",
+    sizes: ["4","6","8","10","12","14","16"],
+    audience: "nina",    tags: ["COD.430", "Nueva Colección Niña", "Algodón Licrado"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
-  ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Enterizo deportivo manga larga",
+            "Diseño cómodo y funcional",
+            "Algodón licrado"
+        ],
+        "beneficios": []
+    },
   },
 
   {
@@ -2232,7 +2226,7 @@ export const products: Product[] = [
   {
     slug: "legging-nina",
     title: "Legging Niña",
-    price: 32,
+    price: 25,
     image: "/placeholder.svg",
     category: "leggings",
     fabric: "suplex",
@@ -2244,21 +2238,18 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["2", "4", "6", "8", "10", "12"],
-    audience: "nina",
+    sizes: ["2","4","6","8","10","12","14","16"],
+    audience: "nina",    tags: ["COD.432", "Nueva Colección Niña", "Algodón Licrado"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Pretina ancha para mejor soporte",
-    "Corte ajustado sin transparencias",
-    "Costuras planas"
-  ],
-  beneficios: [
-    "Se adapta al cuerpo como una segunda piel",
-    "Te mantiene fresca y seca durante el entrenamiento",
-    "Alta resistencia y durabilidad"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Legging clásica para niña",
+            "Cintura elástica confortable",
+            "Algodón licrado"
+        ],
+        "beneficios": []
+    },
   },
 
   {
@@ -2405,7 +2396,7 @@ export const products: Product[] = [
   {
     slug: "cafarena-nina",
     title: "Cafarena Niña",
-    price: 28,
+    price: 30,
     image: "/placeholder.svg",
     category: "shorts",
     fabric: "suplex",
@@ -2417,27 +2408,24 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["2", "4", "6", "8", "10", "12"],
-    audience: "nina",
+    sizes: ["4","6","8","10","12","14","16"],
+    audience: "nina",    tags: ["COD.506", "Nueva Colección Niña", "Algodón Licrado"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
-  ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Diseño cafarena deportivo",
+            "Algodón licrado suave",
+            "Ideal para actividades"
+        ],
+        "beneficios": []
+    },
   },
 
   {
     slug: "panty-nina",
     title: "Panty Niña",
-    price: 22,
+    price: 25,
     image: "/placeholder.svg",
     category: "shorts",
     fabric: "suplex",
@@ -2449,27 +2437,24 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["2", "4", "6", "8", "10", "12"],
-    audience: "nina",
+    sizes: ["2","4","6","8","10","12","14","16"],
+    audience: "nina",    tags: ["COD.431", "Nueva Colección Niña", "Algodón Licrado"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
-  ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Panty deportivo básico",
+            "Algodón licrado",
+            "Muy cómodo"
+        ],
+        "beneficios": []
+    },
   },
 
   {
     slug: "maxi-short-nina",
     title: "Maxi Short Niña",
-    price: 26,
+    price: 15,
     image: "/placeholder.svg",
     category: "shorts",
     fabric: "suplex",
@@ -2481,27 +2466,24 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["2", "4", "6", "8", "10", "12"],
-    audience: "nina",
+    sizes: ["10","12","14","16"],
+    audience: "nina",    tags: ["COD.503", "Nueva Colección Niña", "Algodón Licrado"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
-  ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Maxi short deportivo",
+            "Largo medio",
+            "Algodón licrado"
+        ],
+        "beneficios": []
+    },
   },
 
   {
     slug: "short-juvenil-nina",
     title: "Short Juvenil Niña",
-    price: 24,
+    price: 13,
     image: "/placeholder.svg",
     category: "shorts",
     fabric: "suplex",
@@ -2513,27 +2495,24 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["2", "4", "6", "8", "10", "12"],
-    audience: "nina",
+    sizes: ["4","6","8","10","12","14","16"],
+    audience: "nina",    tags: ["COD.433", "Nueva Colección Niña", "Algodón Licrado"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
-  ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Short juvenil básico",
+            "Diseño deportivo",
+            "Algodón licrado"
+        ],
+        "beneficios": []
+    },
   },
 
   {
     slug: "top-jazmin",
     title: "Top Jazmín",
-    price: 30,
+    price: 23,
     image: "/placeholder.svg",
     category: "tops",
     fabric: "algodon",
@@ -2545,27 +2524,25 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["2", "4", "6", "8", "10", "12"],
-    audience: "nina",
+    sizes: ["12","14","16"],
+    audience: "nina",    tags: ["COD.223", "Nueva Colección Niña", "Algodón Licrado"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
-  ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Tiras regulables",
+            "Copas removibles",
+            "Elástico afelpeado",
+            "Doble broche en la espalda"
+        ],
+        "beneficios": []
+    },
   },
 
   {
     slug: "top-margarita",
     title: "Top Margarita",
-    price: 30,
+    price: 23,
     image: "/placeholder.svg",
     category: "tops",
     fabric: "algodon",
@@ -2577,27 +2554,24 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["2", "4", "6", "8", "10", "12"],
-    audience: "nina",
+    sizes: ["12","14","16"],
+    audience: "nina",    tags: ["COD.225", "Nueva Colección Niña", "Algodón Licrado"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
-  ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Doble broche en la espalda",
+            "Tiras regulables",
+            "Copas removibles"
+        ],
+        "beneficios": []
+    },
   },
 
   {
     slug: "top-orquidea",
     title: "Top Orquídea",
-    price: 30,
+    price: 23,
     image: "/placeholder.svg",
     category: "tops",
     fabric: "algodon",
@@ -2609,27 +2583,24 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["2", "4", "6", "8", "10", "12"],
-    audience: "nina",
+    sizes: ["12","14","16"],
+    audience: "nina",    tags: ["COD.224", "Nueva Colección Niña", "Algodón Licrado"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
-  ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Tiras regulables",
+            "Copas removibles",
+            "Elástico afelpeado"
+        ],
+        "beneficios": []
+    },
   },
 
   {
     slug: "top-tulipan",
     title: "Top Tulipán",
-    price: 30,
+    price: 23,
     image: "/placeholder.svg",
     category: "tops",
     fabric: "algodon",
@@ -2641,27 +2612,24 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["2", "4", "6", "8", "10", "12"],
-    audience: "nina",
+    sizes: ["12","14","16"],
+    audience: "nina",    tags: ["COD.222", "Nueva Colección Niña", "Algodón Licrado"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
-  ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Modelo deportivo",
+            "Copas removibles",
+            "Elástico afelpeado"
+        ],
+        "beneficios": []
+    },
   },
 
   {
     slug: "top-vani",
     title: "Top Vani",
-    price: 28,
+    price: 12,
     image: "/placeholder.svg",
     category: "tops",
     fabric: "algodon",
@@ -2673,21 +2641,18 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["2", "4", "6", "8", "10", "12"],
-    audience: "nina",
+    sizes: ["10","12","14","16"],
+    audience: "nina",    tags: ["COD.504", "Nueva Colección Niña", "Algodón Licrado"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
-  ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Top básico deportivo",
+            "Diseño simple",
+            "Algodón licrado"
+        ],
+        "beneficios": []
+    },
   }
 ]
 
