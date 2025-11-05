@@ -21,11 +21,11 @@ export type Product = {
 }
 
 export const products: Product[] = [
-  // CAMISETAS (algodón)
+
   {
     slug: "camiseta-cuello-alto",
     title: "Camiseta cuello alto",
-    price: 45,
+    price: 29,
     image: "/productos/mujer/camisetas/camiseta-cuello-alto-azul-marino-cuello-alto-azulmarino1.webp",
     category: "camisetas",
     fabric: "algodon",
@@ -119,27 +119,24 @@ export const products: Product[] = [
       ]
     },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
+    sizes: ["S","M","L","XL"],
     audience: "mujer",
-    badge: "nuevo",
+    badge: "nuevo",    tags: ["COD.389", "Colección Camisetas Algodón Licrado", "Algodón Licrado"],
+
     attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Tejido suave y transpirable",
-    "Costuras reforzadas",
-    "Corte moderno y cómodo"
-  ],
-  beneficios: [
-    "Máxima comodidad durante todo el día",
-    "Fácil de lavar y mantener",
-    "Ideal para uso diario"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Cuello alto",
+            "Algodón licrado"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "camiseta-manga-larga",
     title: "Camiseta manga larga",
-    price: 43,
+    price: 36,
     image: "/productos/mujer/camisetas/camiseta-manga-larga-azul-marino-manga-larga-azul-marino2.webp",
     category: "camisetas",
     fabric: "algodon",
@@ -251,27 +248,24 @@ export const products: Product[] = [
       ]
     },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.393", "Colección Camisetas Algodón Licrado", "Algodón Licrado"],
+
     inventory: 0,
       attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Tejido suave y transpirable",
-    "Costuras reforzadas",
-    "Corte moderno y cómodo"
-  ],
-  beneficios: [
-    "Máxima comodidad durante todo el día",
-    "Fácil de lavar y mantener",
-    "Ideal para uso diario"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Manga larga",
+            "Algodón licrado"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "camiseta-manga-corta",
     title: "Camiseta manga corta",
-    price: 34,
+    price: 29,
     image: "/productos/mujer/camisetas/camiseta-manga-corta-azul-marino-camiseta-azulmarino1.webp",
     category: "camisetas",
     fabric: "algodon",
@@ -336,27 +330,24 @@ export const products: Product[] = [
       ]
     },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.399", "Colección Camisetas Algodón Licrado", "Algodón Licrado"],
+
     inventory: 3,
       attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Tejido suave y transpirable",
-    "Costuras reforzadas",
-    "Corte moderno y cómodo"
-  ],
-  beneficios: [
-    "Máxima comodidad durante todo el día",
-    "Fácil de lavar y mantener",
-    "Ideal para uso diario"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Manga corta",
+            "Algodón licrado"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "camiseta-tropical",
     title: "Camiseta tropical",
-    price: 25,
+    price: 21,
     originalPrice: 35,
     badge: "oferta",
     image: "/placeholder.svg",
@@ -370,27 +361,24 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.388", "Colección Camisetas Algodón Licrado", "Algodón Licrado"],
+
     inventory: 10,
       attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Tejido suave y transpirable",
-    "Costuras reforzadas",
-    "Corte moderno y cómodo"
-  ],
-  beneficios: [
-    "Máxima comodidad durante todo el día",
-    "Fácil de lavar y mantener",
-    "Ideal para uso diario"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Diseño tropical",
+            "Algodón licrado"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "camiseta-deportiva",
     title: "Camiseta deportiva",
-    price: 29,
+    price: 24,
     image: "/placeholder.svg",
     category: "camisetas",
     fabric: "algodon",
@@ -402,23 +390,20 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.386", "Colección Camisetas Algodón Licrado", "Algodón Licrado"],
+
     inventory: 12,
     attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Tejido suave y transpirable",
-    "Costuras reforzadas",
-    "Corte moderno y cómodo"
-  ],
-  beneficios: [
-    "Máxima comodidad durante todo el día",
-    "Fácil de lavar y mantener",
-    "Ideal para uso diario"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Diseño deportivo",
+            "Algodón licrado"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "camiseta-gia",
     title: "Camiseta Gia",
@@ -477,10 +462,11 @@ export const products: Product[] = [
   ]
 },
   },
+
   {
     slug: "camiseta-tiras-fijas",
     title: "Camiseta tiras fijas",
-    price: 35,
+    price: 21,
     image: "/placeholder.svg",
     category: "camisetas",
     fabric: "algodon",
@@ -492,28 +478,23 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L"],
+    audience: "mujer",    tags: ["COD.384", "Colección Camisetas Algodón Licrado", "Algodón Licrado"],
+
     attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Tejido suave y transpirable",
-    "Costuras reforzadas",
-    "Corte moderno y cómodo"
-  ],
-  beneficios: [
-    "Máxima comodidad durante todo el día",
-    "Fácil de lavar y mantener",
-    "Ideal para uso diario"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Diseño con tiras finas",
+            "Algodón licrado"
+        ],
+        "beneficios": []
+    },
   },
 
-  // LÍNEA SUPLEX (bikers/shorts/leggings => suplex)
   {
     slug: "short-slim",
     title: "Short Slim",
-    price: 34,
+    price: 29,
     image: "/productos/mujer/short/short-slim-suplex-liso-premium-acero-short-slim-acero1.webp",
     category: "bikers",
     fabric: "suplex",
@@ -564,26 +545,26 @@ export const products: Product[] = [
       ]
     },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.S-103", "Colección Especial Suplex", "Suplex + Spandex"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Pretina elástica confortable",
-    "Ajuste perfecto sin marcar",
-    "Largo ideal"
-  ],
-  beneficios: [
-    "Máxima libertad de movimiento",
-    "Secado rápido y transpirable",
-    "Ideal para entrenamientos intensos"
-  ]
-},
+        "material": "Suplex + Spandex",
+        "detalles": [
+            "Pretina tipo faja",
+            "Suplex liso interno",
+            "Tejido spandex",
+            "Diseño slim",
+            "Alta variedad de colores (10 colores)"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "short-ciclista-active",
     title: "Short ciclista Active",
-    price: 38,
+    price: 32,
     image: "/placeholder.svg",
     category: "bikers",
     fabric: "suplex",
@@ -595,26 +576,25 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.204", "Colección Infinity", "Suplex Liso de Alta Elongación"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Pretina elástica confortable",
-    "Ajuste perfecto sin marcar",
-    "Largo ideal"
-  ],
-  beneficios: [
-    "Máxima libertad de movimiento",
-    "Secado rápido y transpirable",
-    "Ideal para entrenamientos intensos"
-  ]
-},
+        "material": "Suplex Liso de Alta Elongación",
+        "detalles": [
+            "Pretina tipo faja",
+            "Refuerzo trasero",
+            "Suplex liso de alta elongación",
+            "Largo ciclista/biker"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "short-lux",
     title: "Short Lux",
-    price: 33,
+    price: 28,
     image: "/placeholder.svg",
     category: "bikers",
     fabric: "suplex",
@@ -626,26 +606,25 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.205", "Colección Infinity", "Suplex Liso de Alta Elongación"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Pretina elástica confortable",
-    "Ajuste perfecto sin marcar",
-    "Largo ideal"
-  ],
-  beneficios: [
-    "Máxima libertad de movimiento",
-    "Secado rápido y transpirable",
-    "Ideal para entrenamientos intensos"
-  ]
-},
+        "material": "Suplex Liso de Alta Elongación",
+        "detalles": [
+            "Pretina tipo faja",
+            "Refuerzo trasero",
+            "Suplex liso de alta elongación",
+            "Largo corto (short)"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "short-brasil",
     title: "Short Brasil",
-    price: 24,
+    price: 20,
     image: "/productos/mujer/short/short-brasil-beige-short-brasil-beige1.webp",
     category: "shorts",
     fabric: "suplex",
@@ -687,26 +666,24 @@ export const products: Product[] = [
       ]
     },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.363", "Colección Shorts Algodón Licrado", "Algodón Licrado"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Pretina elástica confortable",
-    "Ajuste perfecto sin marcar",
-    "Largo ideal"
-  ],
-  beneficios: [
-    "Máxima libertad de movimiento",
-    "Secado rápido y transpirable",
-    "Ideal para entrenamientos intensos"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Pretina de cintura sin elástico",
+            "Algodón licrado",
+            "Estilo brasilero"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "maxi-short",
     title: "Maxi Short",
-    price: 23,
+    price: 19,
     image: "/productos/mujer/short/maxi-short-beige-MAXI-SHORT-BEIGE1.webp",
     category: "shorts",
     fabric: "suplex",
@@ -747,26 +724,24 @@ export const products: Product[] = [
       ]
     },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.362", "Colección Shorts Algodón Licrado", "Algodón Licrado"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Pretina elástica confortable",
-    "Ajuste perfecto sin marcar",
-    "Largo ideal"
-  ],
-  beneficios: [
-    "Máxima libertad de movimiento",
-    "Secado rápido y transpirable",
-    "Ideal para entrenamientos intensos"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Versión short clásico a la cintura",
+            "Pierna más larga",
+            "Algodón licrado"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "short-clasico",
     title: "Short clásico",
-    price: 19,
+    price: 16,
     image: "/placeholder.svg",
     category: "shorts",
     fabric: "suplex",
@@ -778,26 +753,23 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.360", "Colección Shorts Algodón Licrado", "Algodón Licrado"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Pretina elástica confortable",
-    "Ajuste perfecto sin marcar",
-    "Largo ideal"
-  ],
-  beneficios: [
-    "Máxima libertad de movimiento",
-    "Secado rápido y transpirable",
-    "Ideal para entrenamientos intensos"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Modelo clásico a la cintura",
+            "Algodón licrado"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "mini-short",
     title: "Mini Short",
-    price: 19,
+    price: 16,
     image: "/productos/mujer/short/mini-short-beige-mini-short-beige1.webp",
     category: "shorts",
     fabric: "suplex",
@@ -839,28 +811,24 @@ export const products: Product[] = [
       ]
     },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.361", "Colección Shorts Algodón Licrado", "Algodón Licrado"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Pretina elástica confortable",
-    "Ajuste perfecto sin marcar",
-    "Largo ideal"
-  ],
-  beneficios: [
-    "Máxima libertad de movimiento",
-    "Secado rápido y transpirable",
-    "Ideal para entrenamientos intensos"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Cintura semi baja",
+            "Pretina en la pierna",
+            "Algodón licrado"
+        ],
+        "beneficios": []
+    },
   },
 
-  // BODYS (mixto)
   {
     slug: "body-manga-corta-suplex",
     title: "Body manga corta suplex",
-    price: 43,
+    price: 36,
     image: "/productos/mujer/bodys/body-manga-corta-suplex-azul-marino.webp",
     category: "bodysuits",
     fabric: "suplex",
@@ -912,26 +880,25 @@ export const products: Product[] = [
       ]
     },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.228", "Colección Nueva Temporada", "Suplex"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Ajuste ceñido que define la silueta",
-    "Diseño ergonómico",
-    "Cierre práctico"
-  ],
-  beneficios: [
-    "Versatilidad para entrenar o uso casual",
-    "No se sale ni se sube",
-    "Define tu figura con comodidad"
-  ]
-},
+        "material": "Suplex",
+        "detalles": [
+            "Body de suplex liso",
+            "Diseño bikini para más comodidad",
+            "Gafete regulable en la entrepierna",
+            "Manga corta"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "body-manga-corta",
     title: "Body manga corta",
-    price: 40,
+    price: 33,
     image: "/productos/mujer/bodys/body-manga-corta-amarillo.webp",
     category: "bodysuits",
     fabric: "algodon",
@@ -1016,26 +983,24 @@ export const products: Product[] = [
       ]
     },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.435", "Colección Bodys Algodón Licrado", "Algodón Licrado"],
+
     attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Ajuste ceñido que define la silueta",
-    "Diseño ergonómico",
-    "Cierre práctico"
-  ],
-  beneficios: [
-    "Versatilidad para entrenar o uso casual",
-    "No se sale ni se sube",
-    "Define tu figura con comodidad"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Body de algodón licrado",
+            "Diseño bikini para más comodidad",
+            "Gafete graduable en la entrepierna"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "body-manga-larga",
     title: "Body manga larga",
-    price: 43,
+    price: 36,
     image: "/productos/mujer/bodys/body-manga-larga-beige-manga-larga-beige1.webp",
     category: "bodysuits",
     fabric: "algodon",
@@ -1110,28 +1075,25 @@ export const products: Product[] = [
       ]
     },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.436", "Colección Bodys Algodón Licrado", "Algodón Licrado"],
+
     attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Ajuste ceñido que define la silueta",
-    "Diseño ergonómico",
-    "Cierre práctico"
-  ],
-  beneficios: [
-    "Versatilidad para entrenar o uso casual",
-    "No se sale ni se sube",
-    "Define tu figura con comodidad"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Body de algodón licrado",
+            "Diseño bikini para más comodidad",
+            "Gafete graduable en la entrepierna",
+            "Manga larga"
+        ],
+        "beneficios": []
+    },
   },
 
-  // TOPS (algodón por defecto)
   {
     slug: "top-afrodita",
     title: "Top Afrodita",
-    price: 38,
+    price: 32,
     image: "/productos/mujer/tops/top-afrodita-suplex-liso-premium-azulino-afrodita-azulino1.webp",
     category: "tops",
     fabric: "algodon",
@@ -1173,26 +1135,24 @@ export const products: Product[] = [
       ]
     },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L"],
+    audience: "mujer",    tags: ["COD.213", "Colección Tops Suplex", "Suplex + Algodón"],
+
     attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
-  ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
-  ]
-},
+        "material": "Suplex + Algodón",
+        "detalles": [
+            "Forro interno de algodón",
+            "Copas removibles y lavables",
+            "Diseño deportivo"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "top-venus",
     title: "Top Venus",
-    price: 38,
+    price: 32,
     image: "/placeholder.svg",
     category: "tops",
     fabric: "algodon",
@@ -1204,26 +1164,24 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L"],
+    audience: "mujer",    tags: ["COD.215", "Colección Tops Suplex", "Suplex + Algodón"],
+
     attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
-  ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
-  ]
-},
+        "material": "Suplex + Algodón",
+        "detalles": [
+            "Forro interno de algodón",
+            "Copas removibles y lavables",
+            "Diseño deportivo"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "top-minerva",
     title: "Top Minerva",
-    price: 38,
+    price: 32,
     image: "/placeholder.svg",
     category: "tops",
     fabric: "algodon",
@@ -1235,26 +1193,24 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L"],
+    audience: "mujer",    tags: ["COD.214", "Colección Tops Suplex", "Suplex + Algodón"],
+
     attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
-  ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
-  ]
-},
+        "material": "Suplex + Algodón",
+        "detalles": [
+            "Forro interno de algodón",
+            "Diseño deportivo",
+            "Sin copas removibles"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "top-paradise",
     title: "Top Paradise",
-    price: 38,
+    price: 32,
     image: "/productos/mujer/tops/top-paradise-suplex-liso-premium-azulino-paradise-azulino1.webp",
     category: "tops",
     fabric: "algodon",
@@ -1316,26 +1272,24 @@ export const products: Product[] = [
       ]
     },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L"],
+    audience: "mujer",    tags: ["COD.104", "Colección Tops Suplex", "Suplex + Algodón"],
+
     attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
-  ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
-  ]
-},
+        "material": "Suplex + Algodón",
+        "detalles": [
+            "Forro interno de algodón",
+            "Copas removibles y lavables",
+            "Diseño deportivo"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "top-jungle",
     title: "Top Jungle",
-    price: 38,
+    price: 32,
     image: "/placeholder.svg",
     category: "tops",
     fabric: "algodon",
@@ -1347,26 +1301,24 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L"],
+    audience: "mujer",    tags: ["COD.109", "Colección Tops Suplex", "Suplex + Algodón"],
+
     attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
-  ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
-  ]
-},
+        "material": "Suplex + Algodón",
+        "detalles": [
+            "Forro interno de algodón",
+            "Copas removibles y lavables",
+            "Diseño deportivo"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "top-astrid",
     title: "Top Astrid",
-    price: 38,
+    price: 32,
     image: "/placeholder.svg",
     category: "tops",
     fabric: "algodon",
@@ -1378,22 +1330,23 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L"],
+    audience: "mujer",    tags: ["COD.S-107", "Colección Especial Suplex", "Suplex + Algodón Licrado"],
+
     attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
-  ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
-  ]
-},
+        "material": "Suplex + Algodón Licrado",
+        "detalles": [
+            "Forro interno de algodón licrado",
+            "Copas removibles y lavables",
+            "Pretina tipo faja",
+            "Suplex liso interno",
+            "Tejido spandex",
+            "Ideal para yoga/gym"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "top-soporte",
     title: "Top Soporte",
@@ -1426,6 +1379,7 @@ export const products: Product[] = [
 },
 
   },
+
   {
     slug: "top-arena",
     title: "Top Arena",
@@ -1457,6 +1411,7 @@ export const products: Product[] = [
   ]
 },
   },
+
   {
     slug: "top-zafiro",
     title: "Top Zafiro",
@@ -1488,6 +1443,7 @@ export const products: Product[] = [
   ]
 },
   },
+
   {
     slug: "top-urban",
     title: "Top Urban",
@@ -1519,6 +1475,7 @@ export const products: Product[] = [
   ]
 },
   },
+
   {
     slug: "top-perla",
     title: "Top Perla",
@@ -1550,10 +1507,11 @@ export const products: Product[] = [
   ]
 },
   },
+
   {
     slug: "straple-chanel",
     title: "Straple Chanel",
-    price: 27,
+    price: 23,
     image: "/placeholder.svg",
     category: "tops",
     fabric: "algodon",
@@ -1565,26 +1523,24 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.900", "Colección Tops Algodón Licrado", "Algodón Licrado"],
+
     attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
-  ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Copas internas removibles",
+            "Algodón licrado",
+            "Diseño straple"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "top-deportivo",
     title: "Top Deportivo",
-    price: 17,
+    price: 14,
     image: "/placeholder.svg",
     category: "tops",
     fabric: "algodon",
@@ -1596,26 +1552,24 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L"],
+    audience: "mujer",    tags: ["COD.390", "Colección Tops Algodón Licrado", "Algodón Licrado"],
+
     attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
-  ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Precio económico",
+            "Diseño deportivo básico",
+            "Sin copas removibles"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "top-tira-fijas",
     title: "Top tira fijas",
-    price: 17,
+    price: 14,
     image: "/placeholder.svg",
     category: "tops",
     fabric: "algodon",
@@ -1627,26 +1581,24 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L"],
+    audience: "mujer",    tags: ["COD.392", "Colección Tops Algodón Licrado", "Algodón Licrado"],
+
     attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
-  ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Precio económico",
+            "Diseño con tiras finas",
+            "Sin copas removibles"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "top-athena",
     title: "Top Athena",
-    price: 34,
+    price: 29,
     image: "/placeholder.svg",
     category: "tops",
     fabric: "algodon",
@@ -1658,26 +1610,24 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.207", "Colección Tops Algodón Licrado", "Algodón Licrado"],
+
     attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
-  ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Copas internas removibles",
+            "Algodón licrado (cómodo y transpirable)",
+            "Diseño premium"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "top-jolie",
     title: "Top Jolie",
-    price: 34,
+    price: 29,
     image: "/placeholder.svg",
     category: "tops",
     fabric: "algodon",
@@ -1689,26 +1639,24 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.208", "Colección Tops Algodón Licrado", "Algodón Licrado"],
+
     attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
-  ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Copas internas removibles",
+            "Algodón licrado",
+            "Diseño premium"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "top-brigid",
     title: "Top Brigid",
-    price: 34,
+    price: 29,
     image: "/placeholder.svg",
     category: "tops",
     fabric: "algodon",
@@ -1720,28 +1668,24 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.209", "Colección Tops Algodón Licrado", "Algodón Licrado"],
+
     attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
-  ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
-  ]
-},
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Copas internas removibles",
+            "Algodón licrado",
+            "Diseño premium"
+        ],
+        "beneficios": []
+    },
   },
 
-  // ENTERIZOS (suplex)
   {
     slug: "enterizo-tiras",
     title: "Enterizo tiras",
-    price: 59,
+    price: 49,
     image: "/productos/mujer/enterizo/enterizo-tiras-azulino.webp",
     category: "enterizos",
     fabric: "suplex",
@@ -1807,24 +1751,24 @@ export const products: Product[] = [
       ]
     },
     ],
-    sizes: ["S", "M", "L"],
+    sizes: ["S","M","L"],
     audience: "mujer",
-    tags: ["enterizo", "enterizo tiras", "enterizos", "enterizos dama", "línea suplex dama", "dama", "damas", "tiras"],
+    tags: [
+      "COD.219","enterizo", "enterizo tiras", "enterizos", "enterizos dama", "línea suplex dama", "dama", "damas", "tiras"],
     attributes: {
-      material: "Suplex liso",
-      detalles: ["Tiras delgadas", "Costura plana para más comodidad"],
-      beneficios: [
-        "De alta elongación, se puede estirar sin perder su forma",
-        "Es resistente, liviana y de secado rápido",
-        "Se adapta al cuerpo como una segunda piel, te mantiene fresca en todo momento",
-        "Versatilidad; perfecto para actividades deportivas o para combinarlo con chaquetas o poleras para un look más casual",
-      ],
+        "material": "Suplex",
+        "detalles": [
+            "Suplex liso de alta elongación",
+            "Diseño con tiras"
+        ],
+        "beneficios": []
     },
   },
+
   {
     slug: "enterizo-manga-cero",
     title: "Enterizo manga cero",
-    price: 59,
+    price: 49,
     image: "/productos/mujer/enterizo/enterizo-manga-cero-azulino.webp",
     category: "enterizos",
     fabric: "suplex",
@@ -1880,20 +1824,20 @@ export const products: Product[] = [
       ]
     },
     ],
-    sizes: ["S", "M", "L"],
+    sizes: ["S","M","L"],
     audience: "mujer",
-    tags: ["enterizo", "enterizo manga cero", "enterizos", "enterizos dama", "línea suplex dama", "dama", "damas"],
+    tags: [
+      "COD.221","enterizo", "enterizo manga cero", "enterizos", "enterizos dama", "línea suplex dama", "dama", "damas"],
     attributes: {
-      material: "Suplex liso",
-      detalles: ["Tiras anchas", "Espalda olímpica", "Costura plana para más comodidad"],
-      beneficios: [
-        "De alta elongación, se puede estirar sin perder su forma",
-        "Es resistente, liviana y de secado rápido",
-        "Se adapta al cuerpo como una segunda piel, te mantiene fresca en todo momento",
-        "Versatilidad; perfecto para actividades deportivas o para combinarlo con chaquetas o poleras para un look más casual",
-      ],
+        "material": "Suplex",
+        "detalles": [
+            "Suplex liso de alta elongación",
+            "Manga cero (sin mangas)"
+        ],
+        "beneficios": []
     },
   },
+
   {
     slug: "enterizo-manga-corta-nina",
     title: "Enterizo manga corta Niña",
@@ -1925,6 +1869,7 @@ export const products: Product[] = [
   ]
 },
   },
+
   {
     slug: "enterizo-manga-larga-nina",
     title: "Enterizo manga larga Niña",
@@ -1957,11 +1902,10 @@ export const products: Product[] = [
 },
   },
 
-  // LEGGINGS (suplex)
   {
     slug: "legging-slim-suplex-perchado",
     title: "Legging Slim Suplex Perchado",
-    price: 42,
+    price: 59,
     image: "/placeholder.svg",
     category: "leggings",
     fabric: "suplex",
@@ -1973,26 +1917,25 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.S-101", "Colección Especial Suplex", "Suplex Perchado"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Pretina ancha para mejor soporte",
-    "Corte ajustado sin transparencias",
-    "Costuras planas"
-  ],
-  beneficios: [
-    "Se adapta al cuerpo como una segunda piel",
-    "Te mantiene fresca y seca durante el entrenamiento",
-    "Alta resistencia y durabilidad"
-  ]
-},
+        "material": "Suplex Perchado",
+        "detalles": [
+            "Suplex perchado = tejido de spandex",
+            "Externo liso",
+            "Interno afranelado medio (abrigado)",
+            "Diseño slim"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "legging-slim",
     title: "Legging Slim",
-    price: 38,
+    price: 59,
     image: "/productos/mujer/legging/legging-slim-azul-marino.webp",
     category: "leggings",
     fabric: "suplex",
@@ -2079,26 +2022,24 @@ export const products: Product[] = [
       ]
     },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.S-1011", "Colección Especial Suplex", "Suplex Liso"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Pretina ancha para mejor soporte",
-    "Corte ajustado sin transparencias",
-    "Costuras planas"
-  ],
-  beneficios: [
-    "Se adapta al cuerpo como una segunda piel",
-    "Te mantiene fresca y seca durante el entrenamiento",
-    "Alta resistencia y durabilidad"
-  ]
-},
+        "material": "Suplex Liso",
+        "detalles": [
+            "Suplex liso",
+            "Diseño slim",
+            "Alta variedad de colores (10 colores)"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "legging-functional",
     title: "Legging Functional",
-    price: 40,
+    price: 55,
     image: "/placeholder.svg",
     category: "leggings",
     fabric: "suplex",
@@ -2110,26 +2051,25 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L"],
+    audience: "mujer",    tags: ["COD.S-108", "Colección Especial Suplex", "Suplex + Spandex"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Pretina ancha para mejor soporte",
-    "Corte ajustado sin transparencias",
-    "Costuras planas"
-  ],
-  beneficios: [
-    "Se adapta al cuerpo como una segunda piel",
-    "Te mantiene fresca y seca durante el entrenamiento",
-    "Alta resistencia y durabilidad"
-  ]
-},
+        "material": "Suplex + Spandex",
+        "detalles": [
+            "Pretina tipo faja (compresión)",
+            "Suplex liso interno",
+            "Tejido spandex externo",
+            "Diseño funcional para deportes"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "legging-harmony",
     title: "Legging Harmony",
-    price: 40,
+    price: 49,
     image: "/placeholder.svg",
     category: "leggings",
     fabric: "suplex",
@@ -2159,26 +2099,25 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L"],
+    audience: "mujer",    tags: ["COD.201", "Colección Infinity", "Suplex Liso de Alta Elongación"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Pretina ancha para mejor soporte",
-    "Corte ajustado sin transparencias",
-    "Costuras planas"
-  ],
-  beneficios: [
-    "Se adapta al cuerpo como una segunda piel",
-    "Te mantiene fresca y seca durante el entrenamiento",
-    "Alta resistencia y durabilidad"
-  ]
-},
+        "material": "Suplex Liso de Alta Elongación",
+        "detalles": [
+            "Pretina tipo faja",
+            "Refuerzo trasero",
+            "Suplex liso de alta elongación",
+            "Largo completo (legging)"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "legging-realce-fresh-terry",
     title: "Legging Realce Fresh Terry",
-    price: 45,
+    price: 48,
     image: "/placeholder.svg",
     category: "leggings",
     fabric: "suplex",
@@ -2190,26 +2129,24 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL","XXL"],
+    audience: "mujer",    tags: ["COD.437", "Colección Fresh Terry", "Fresh Terry"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Pretina ancha para mejor soporte",
-    "Corte ajustado sin transparencias",
-    "Costuras planas"
-  ],
-  beneficios: [
-    "Se adapta al cuerpo como una segunda piel",
-    "Te mantiene fresca y seca durante el entrenamiento",
-    "Alta resistencia y durabilidad"
-  ]
-},
+        "material": "Fresh Terry",
+        "detalles": [
+            "Material Fresh Terry (innovador tipo toalla francesa/felpa)",
+            "Cintura alta y ancha para estilizar la silueta",
+            "Efecto realce"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "legging-clasica",
     title: "Legging Clásica",
-    price: 36,
+    price: 32,
     image: "/productos/mujer/legging/legging-clasica-azul-marino.webp",
     category: "leggings",
     fabric: "suplex",
@@ -2249,26 +2186,24 @@ export const products: Product[] = [
       ]
     },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.371", "Línea Nice - Leggings Algodón Licrado", "Algodón Licra"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Pretina ancha para mejor soporte",
-    "Corte ajustado sin transparencias",
-    "Costuras planas"
-  ],
-  beneficios: [
-    "Se adapta al cuerpo como una segunda piel",
-    "Te mantiene fresca y seca durante el entrenamiento",
-    "Alta resistencia y durabilidad"
-  ]
-},
+        "material": "Algodón Licra",
+        "detalles": [
+            "Algodón licra",
+            "Legging clásica",
+            "Marca Nice"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "legging-clasica-gamuza",
     title: "Legging Clásica Gamuza",
-    price: 38,
+    price: 35,
     image: "/placeholder.svg",
     category: "leggings",
     fabric: "suplex",
@@ -2280,22 +2215,20 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.324", "Línea Nice - Leggings Algodón Licrado", "Algodón Gamusa"],
+
     attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Pretina ancha para mejor soporte",
-    "Corte ajustado sin transparencias",
-    "Costuras planas"
-  ],
-  beneficios: [
-    "Se adapta al cuerpo como una segunda piel",
-    "Te mantiene fresca y seca durante el entrenamiento",
-    "Alta resistencia y durabilidad"
-  ]
-},
+        "material": "Algodón Gamusa",
+        "detalles": [
+            "Algodón gamusa (textura especial)",
+            "Legging clásica",
+            "Marca Nice"
+        ],
+        "beneficios": []
+    },
   },
+
   {
     slug: "legging-nina",
     title: "Legging Niña",
@@ -2328,11 +2261,10 @@ export const products: Product[] = [
 },
   },
 
-  // PESCADOR (suplex)
   {
     slug: "pescador-realce",
     title: "Pescador realce",
-    price: 46,
+    price: 48,
     image: "/placeholder.svg",
     category: "pescador",
     fabric: "suplex",
@@ -2356,23 +2288,26 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["S", "M", "L", "XL"],
+    sizes: ["S","M","L","XL"],
     audience: "mujer",
-    tags: ["dama", "damas", "pescador", "pescador realce", "Línea suplex dama"],
+    tags: [
+      "COD.210","dama", "damas", "pescador", "pescador realce", "Línea suplex dama"],
     attributes: {
-      material: "Suplex liso",
-      detalles: ["Pretina ancha para mejor compresión en el abdomen", "Ajuste ideal", "Realce en la parte trasera"],
-      beneficios: [
-        "Se adapta al cuerpo como una segunda piel",
-        "Reduce la vibración muscular en tus rutinas",
-        "Te mantiene fresca y seca durante el entrenamiento",
-      ],
+        "material": "Suplex",
+        "detalles": [
+            "Pretina tipo faja (compresión)",
+            "Suplex liso de alta elongación",
+            "Efecto realce (levanta glúteos)",
+            "Largo 3/4 (pescador)"
+        ],
+        "beneficios": []
     },
   },
+
   {
     slug: "pescador-dynamic",
     title: "Pescador dynamic",
-    price: 46,
+    price: 39,
     image: "/placeholder.svg",
     category: "pescador",
     fabric: "suplex",
@@ -2402,30 +2337,26 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["S", "M", "L"],
+    sizes: ["S","M","L"],
     audience: "mujer",
-    tags: ["dama", "damas", "pescador", "pescador dynamic", "Línea suplex dama"],
+    tags: [
+      "COD.202","dama", "damas", "pescador", "pescador dynamic", "Línea suplex dama"],
     attributes: {
-      material: "Suplex liso",
-      detalles: [
-        "Pretina tipo faja",
-        "Refuerzo trasero",
-        "Corte ajustado para mantener todo en su lugar",
-        "Resistente",
-      ],
-      beneficios: [
-        "Alta elongación y elasticidad",
-        "Se adapta como una segunda piel",
-        "Te mantiene fresca y seca durante el entrenamiento",
-      ],
+        "material": "Suplex Liso de Alta Elongación",
+        "detalles": [
+            "Pretina tipo faja",
+            "Refuerzo trasero",
+            "Suplex liso de alta elongación",
+            "Largo 3/4 (pescador)"
+        ],
+        "beneficios": []
     },
   },
 
-  // TORERO (suplex)
   {
     slug: "torero-energy",
     title: "Torero energy",
-    price: 43,
+    price: 36,
     image: "/placeholder.svg",
     category: "torero",
     fabric: "suplex",
@@ -2455,17 +2386,22 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["S", "M", "L"],
+    sizes: ["S","M","L"],
     audience: "mujer",
-    tags: ["dama", "damas", "torero", "energy", "Línea suplex dama", "torero energy"],
+    tags: [
+      "COD.203","dama", "damas", "torero", "energy", "Línea suplex dama", "torero energy"],
     attributes: {
-      material: "Suplex liso",
-      detalles: ["Pretina tipo faja", "Ajuste trasero", "Corte ajustado para mantener todo en su lugar"],
-      beneficios: ["Se adapta al cuerpo como una segunda piel", "Te mantiene fresca y seca durante el entrenamiento"],
+        "material": "Suplex Liso de Alta Elongación",
+        "detalles": [
+            "Pretina tipo faja",
+            "Refuerzo trasero",
+            "Suplex liso de alta elongación",
+            "Largo torero (entre ciclista y pescador)"
+        ],
+        "beneficios": []
     },
   },
 
-  // PRODUCTOS DE NIÑA
   {
     slug: "cafarena-nina",
     title: "Cafarena Niña",
@@ -2497,6 +2433,7 @@ export const products: Product[] = [
   ]
 },
   },
+
   {
     slug: "panty-nina",
     title: "Panty Niña",
@@ -2528,6 +2465,7 @@ export const products: Product[] = [
   ]
 },
   },
+
   {
     slug: "maxi-short-nina",
     title: "Maxi Short Niña",
@@ -2559,6 +2497,7 @@ export const products: Product[] = [
   ]
 },
   },
+
   {
     slug: "short-juvenil-nina",
     title: "Short Juvenil Niña",
@@ -2590,6 +2529,7 @@ export const products: Product[] = [
   ]
 },
   },
+
   {
     slug: "top-jazmin",
     title: "Top Jazmín",
@@ -2621,6 +2561,7 @@ export const products: Product[] = [
   ]
 },
   },
+
   {
     slug: "top-margarita",
     title: "Top Margarita",
@@ -2652,6 +2593,7 @@ export const products: Product[] = [
   ]
 },
   },
+
   {
     slug: "top-orquidea",
     title: "Top Orquídea",
@@ -2683,6 +2625,7 @@ export const products: Product[] = [
   ]
 },
   },
+
   {
     slug: "top-tulipan",
     title: "Top Tulipán",
@@ -2714,6 +2657,7 @@ export const products: Product[] = [
   ]
 },
   },
+
   {
     slug: "top-vani",
     title: "Top Vani",
@@ -2744,7 +2688,7 @@ export const products: Product[] = [
     "Mantiene su forma después de lavados"
   ]
 },
-  },
+  }
 ]
 
 export const findProduct = (slug: string) => products.find((p) => p.slug === slug)
