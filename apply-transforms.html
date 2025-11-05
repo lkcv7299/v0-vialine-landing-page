@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aplicar Image Transforms</title>
+</head>
+<body>
+    <h1>Aplicar Image Transforms</h1>
+    <button onclick="applyTransforms()">Aplicar Transforms del archivo</button>
+    <div id="result"></div>
+
+    <script>
+        function applyTransforms() {
+            const transforms = {"camiseta-cuello-alto-azul-marino-cuello-alto":{"azulmarino":{"0":{"rail":{"x":0,"y":163,"scale":1.97,"context":"rail"},"undefined":{"x":0,"y":0,"scale":1}}}},"camiseta-manga-larga-azul-marino-manga-larga-azul":{"marino":{"1":{"rail":{"x":0,"y":108,"scale":1.5,"context":"rail"},"undefined":{"x":0,"y":0,"scale":1}}}},"camiseta-manga-corta-azul-marino-camiseta":{"azulmarino":{"0":{"rail":{"x":0,"y":119,"scale":1.74,"context":"rail"},"undefined":{"x":0,"y":0,"scale":1.65}}}},"camiseta-gia-blanco-camiseta-gia":{"blanco":{"0":{"rail":{"x":0,"y":131,"scale":1.69,"context":"rail"}}}},"short-slim-suplex-liso-premium-acero-short-slim":{"acero":{"0":{"rail":{"x":0,"y":-128,"scale":1.53,"context":"rail"},"undefined":{"x":-266,"y":-365,"scale":0.96}}}},"short-ciclista-active":{"aqua":{"0":{"rail":{"x":0,"y":-122,"scale":1.7,"context":"rail"}}}},"short-lux":{"aqua":{"0":{"rail":{"x":0,"y":-122,"scale":1.57,"context":"rail"}}}},"short-brasil-beige-short-brasil":{"beige":{"0":{"rail":{"x":0,"y":-122,"scale":1.57,"context":"rail"}}}},"maxi-short-beige-MAXI-SHORT":{"BEIGE":{"0":{"rail":{"x":0,"y":-122,"scale":1.57,"context":"rail"}}}},"camiseta-tropical":{"":{"0":{"undefined":{"x":0,"y":0,"scale":1}}}}};
+
+            localStorage.setItem('imageTransforms', JSON.stringify(transforms));
+            document.getElementById('result').innerHTML = '<p style="color: green;">✅ Transforms aplicados exitosamente!</p><p>Productos guardados: ' + Object.keys(transforms).length + '</p>';
+
+            // Emitir evento para actualizar todas las imágenes
+            window.dispatchEvent(new CustomEvent('imageTransformsUpdated'));
+        }
+    </script>
+</body>
+</html>

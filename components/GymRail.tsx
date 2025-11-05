@@ -7,6 +7,9 @@ import { ChevronLeft, ChevronRight, Star } from "lucide-react"
 import WishlistHeart from "@/components/WishlistHeart"
 import { getAverageRating, getReviewCount } from "@/data/reviews"
 import { useImageDebug } from "@/contexts/ImageDebugContext"
+import { useImageFraming } from "@/contexts/ImageFramingContext"
+import { useImageTransform } from "@/hooks/useImageTransform"
+import { parseImagePath } from "@/lib/imageTransformUtils"
 
 type Item = {
   slug: string
@@ -23,10 +26,162 @@ type GymRailProps = {
   items: Item[]
 }
 
+function RailItem({ item }: { item: Item }) {
+  const [isHovering, setIsHovering] = useState(false)
+  const { values } = useImageDebug()
+  const { isFramingMode, selectedImage, setSelectedImage } = useImageFraming()
+
+  // Parsear imagen para obtener transform
+  const { productSlug: imageParsedSlug, colorSlug, imageIndex } = parseImagePath(item.image)
+  const actualProductSlug = imageParsedSlug || item.slug
+  const debuggerTransform = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'rail')
+
+  const isSelected =
+    isFramingMode &&
+    selectedImage?.productSlug === actualProductSlug &&
+    selectedImage?.colorSlug === colorSlug &&
+    selectedImage?.imageIndex === imageIndex
+
+  const handleFramingClick = (e: React.MouseEvent) => {
+    if (isFramingMode) {
+      e.preventDefault()
+      e.stopPropagation()
+      setSelectedImage({
+        productSlug: actualProductSlug,
+        colorSlug: colorSlug || '',
+        imageIndex,
+        imagePath: item.image,
+        context: 'rail',
+      })
+    }
+  }
+
+  const rating = getAverageRating(item.slug)
+  const reviewCount = getReviewCount(item.slug)
+
+  const getImageStyle = () => {
+    const productSlug = item.slug.toLowerCase()
+    const imagePath = item.image.toLowerCase()
+
+    // PRIORIDAD 0: Transform del debugger
+    if (debuggerTransform) {
+      return {
+        transform: `translate(${debuggerTransform.x}px, ${debuggerTransform.y}px) scale(${debuggerTransform.scale})`,
+        transformOrigin: 'center center'
+      }
+    }
+
+    // Productos superiores
+    if (productSlug.includes('camiseta') ||
+        productSlug.includes('top') ||
+        productSlug.includes('body') ||
+        productSlug.includes('enterizo') ||
+        imagePath.includes('camiseta') ||
+        imagePath.includes('top') ||
+        imagePath.includes('body') ||
+        imagePath.includes('enterizo')) {
+      return {
+        transform: `scale(${values.railTopScale}) translateY(${values.railTopTranslateY}%) translateX(${values.railTopTranslateX}%)`,
+        transformOrigin: 'center top'
+      }
+    }
+
+    // Productos inferiores
+    if (productSlug.includes('legging') ||
+        productSlug.includes('short') ||
+        productSlug.includes('biker') ||
+        productSlug.includes('pantalon') ||
+        imagePath.includes('legging') ||
+        imagePath.includes('short') ||
+        imagePath.includes('biker') ||
+        imagePath.includes('pantalon')) {
+      return {
+        transform: `scale(${values.railBottomScale}) translateY(${values.railBottomTranslateY}%) translateX(${values.railBottomTranslateX}%)`,
+        transformOrigin: 'center bottom'
+      }
+    }
+
+    return {
+      transform: 'scale(1.0)',
+      transformOrigin: 'center center'
+    }
+  }
+
+  const currentImage = isHovering && item.hoverImage ? item.hoverImage : item.image
+
+  const content = (
+    <>
+      <div
+        className={`relative w-full aspect-square overflow-hidden bg-neutral-100 mb-3 transition-all ${
+          isSelected ? 'ring-4 ring-blue-600 ring-offset-4' : ''
+        } ${isFramingMode && !isSelected ? 'ring-2 ring-blue-400 ring-offset-2 hover:ring-blue-600' : ''}`}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+      >
+        <Image
+          src={currentImage}
+          alt={item.name}
+          fill
+          sizes="(max-width: 768px) 50vw, 25vw"
+          quality={90}
+          className="object-contain"
+          style={getImageStyle()}
+        />
+
+        {isFramingMode && (
+          <div className="absolute top-2 right-2 bg-blue-600 text-white px-2 py-1 rounded text-[10px] font-medium shadow-lg">
+            Click
+          </div>
+        )}
+
+        {!isFramingMode && <WishlistHeart slug={item.slug} />}
+
+        {item.badge && (
+          <span className="absolute left-3 top-3 bg-white px-2 py-1 text-xs font-bold uppercase">
+            {item.badge}
+          </span>
+        )}
+      </div>
+
+      <p className="text-sm font-medium mb-1 line-clamp-2">{item.name}</p>
+      {reviewCount > 0 && (
+        <div className="flex items-center gap-1 mb-2">
+          <div className="flex items-center">
+            {[...Array(5)].map((_, i) => (
+              <Star
+                key={i}
+                className={`w-3 h-3 ${i < Math.floor(rating) ? "fill-yellow-400 text-yellow-400" : "text-neutral-300"}`}
+              />
+            ))}
+          </div>
+          <span className="text-xs text-neutral-500">({reviewCount})</span>
+        </div>
+      )}
+      <p className="text-sm font-semibold">
+        {new Intl.NumberFormat("es-PE", { style: "currency", currency: "PEN" }).format(item.price)}
+      </p>
+    </>
+  )
+
+  if (isFramingMode) {
+    return (
+      <div className="flex-none w-[25vw] min-w-[200px] snap-start px-2 cursor-crosshair" onClick={handleFramingClick}>
+        {content}
+      </div>
+    )
+  }
+
+  return (
+    <div className="flex-none w-[25vw] min-w-[200px] snap-start px-2">
+      <Link href={`/producto/${item.slug}`} className="group/card block">
+        {content}
+      </Link>
+    </div>
+  )
+}
+
 export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
   const trackRef = useRef<HTMLDivElement>(null)
-  const { values } = useImageDebug()
-  const [hoveringSlug, setHoveringSlug] = useState<string | null>(null)
 
   const scroll = (dir: "left" | "right") => {
     if (!trackRef.current) return
@@ -67,127 +222,9 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
         >
           {/* IMPORTANTE: Sin padding, sin gap, usando viewport width */}
           <div className="flex">
-            {items.map((item) => {
-              const rating = getAverageRating(item.slug)
-              const reviewCount = getReviewCount(item.slug)
-              
-              // SOLUCIÓN DEFINITIVA: scale + translateY + translateX para mover físicamente la imagen
-              const getImageStyle = () => {
-                const productSlug = item.slug.toLowerCase()
-                const imagePath = item.image.toLowerCase()
-
-                // Productos superiores: ZOOM + MOVER ARRIBA
-                if (productSlug.includes('camiseta') ||
-                    productSlug.includes('top') ||
-                    productSlug.includes('body') ||
-                    productSlug.includes('enterizo') ||
-                    imagePath.includes('camiseta') ||
-                    imagePath.includes('top') ||
-                    imagePath.includes('body') ||
-                    imagePath.includes('enterizo')) {
-                  return {
-                    transform: `scale(${values.railTopScale}) translateY(${values.railTopTranslateY}%) translateX(${values.railTopTranslateX}%)`,
-                    transformOrigin: 'center top'
-                  }
-                }
-
-                // Productos inferiores: ZOOM + MOVER ABAJO
-                if (productSlug.includes('legging') ||
-                    productSlug.includes('short') ||
-                    productSlug.includes('biker') ||
-                    productSlug.includes('pantalon') ||
-                    imagePath.includes('legging') ||
-                    imagePath.includes('short') ||
-                    imagePath.includes('biker') ||
-                    imagePath.includes('pantalon')) {
-                  return {
-                    transform: `scale(${values.railBottomScale}) translateY(${values.railBottomTranslateY}%) translateX(${values.railBottomTranslateX}%)`,
-                    transformOrigin: 'center bottom'
-                  }
-                }
-
-                // Default
-                return {
-                  transform: 'scale(1.15)',
-                  transformOrigin: 'center center'
-                }
-              }
-
-              const isHovering = hoveringSlug === item.slug
-              const currentImage = isHovering && item.hoverImage ? item.hoverImage : item.image
-
-              return (
-                <div
-                  key={item.slug}
-                  className="flex-none w-[25vw] min-w-[200px] snap-start px-2"
-                >
-                  <Link href={`/producto/${item.slug}`} className="group/card block">
-                    {/* Imagen CUADRADA */}
-                    <div
-                      className="relative aspect-square w-full overflow-hidden bg-neutral-100 mb-3"
-                      onMouseEnter={() => setHoveringSlug(item.slug)}
-                      onMouseLeave={() => setHoveringSlug(null)}
-                    >
-                      <Image
-                        src={currentImage}
-                        alt={item.name}
-                        fill
-                        sizes="(max-width: 768px) 50vw, 25vw"
-                        quality={90}
-                        className="object-cover"
-                        style={{
-                          ...getImageStyle(),
-                          height: '200%',
-                        }}
-                      />
-
-                      <WishlistHeart slug={item.slug} />
-
-                      {item.badge && (
-                        <span className="absolute left-3 top-3 bg-white px-2 py-1 text-xs font-bold uppercase">
-                          {item.badge}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Info */}
-                    <div className="space-y-1">
-                      <h3 className="text-sm font-medium text-neutral-900 leading-tight line-clamp-2">
-                        {item.name}
-                      </h3>
-                      
-                      {/* Reviews */}
-                      {reviewCount > 0 && (
-                        <div className="flex items-center gap-1.5">
-                          <div className="flex items-center gap-0.5">
-                            {[...Array(5)].map((_, i) => (
-                              <Star
-                                key={i}
-                                className={`w-3 h-3 ${
-                                  i < Math.floor(rating)
-                                    ? "fill-neutral-900 text-neutral-900"
-                                    : "fill-neutral-200 text-neutral-200"
-                                }`}
-                              />
-                            ))}
-                          </div>
-                          <span className="text-xs font-semibold text-neutral-900">
-                            {rating.toFixed(1)}
-                          </span>
-                          <span className="text-xs text-neutral-500">
-                            ({reviewCount})
-                          </span>
-                        </div>
-                      )}
-
-                      <p className="text-sm font-semibold text-neutral-900">
-                        S/ {item.price}
-                      </p>
-                    </div>
-                  </Link>
-                </div>
-              )
-            })}
+            {items.map((item) => (
+              <RailItem key={item.slug} item={item} />
+            ))}
           </div>
         </div>
 

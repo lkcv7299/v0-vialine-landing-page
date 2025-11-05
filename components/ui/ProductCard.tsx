@@ -4,6 +4,9 @@ import Link from "next/link"
 import Image from "next/image"
 import WishlistHeart from "@/components/WishlistHeart"
 import { useImageDebug } from "@/contexts/ImageDebugContext"
+import { useImageTransform } from "@/hooks/useImageTransform"
+import { parseImagePath } from "@/lib/imageTransformUtils"
+import { useImageFraming } from "@/contexts/ImageFramingContext"
 
 // ✅ PRODUCT-SPECIFIC OVERRIDES - Ajustes visuales permanentes para productos específicos
 const PRODUCT_OVERRIDES: { [slug: string]: { scale: number; translateY: number; translateX: number } } = {
@@ -40,14 +43,54 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
   const isOutOfStock = inventory === 0
   const { values } = useImageDebug()
 
+  // ✅ Modo Framing
+  const { isFramingMode, selectedImage, setSelectedImage } = useImageFraming()
+
+  // ✅ SIEMPRE parsear la imagen principal para obtener el transform correcto
+  const { productSlug: imageParsedSlug, colorSlug, imageIndex } = parseImagePath(displayImage)
+  const actualProductSlug = imageParsedSlug || slug
+
+  // ✅ Usar hook para obtener transform del debugger (MÁXIMA PRIORIDAD)
+  const debuggerTransform = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'card')
+
   // Usar hover image si está disponible y estamos hovering
   const currentImage = isHovering && hoverImage ? hoverImage : displayImage
+
+  // ✅ Check si este producto está seleccionado
+  const isSelected =
+    isFramingMode &&
+    selectedImage?.productSlug === actualProductSlug &&
+    selectedImage?.colorSlug === colorSlug &&
+    selectedImage?.imageIndex === imageIndex
+
+  // ✅ Handler para seleccionar este producto en modo framing
+  const handleFramingClick = (e: React.MouseEvent) => {
+    if (isFramingMode) {
+      e.preventDefault()
+      e.stopPropagation()
+      setSelectedImage({
+        productSlug: actualProductSlug,
+        colorSlug: colorSlug || '',
+        imageIndex,
+        imagePath: currentImage,
+        context: 'card',
+      })
+    }
+  }
 
   // SOLUCIÓN DEFINITIVA: scale + translateY + translateX para mover físicamente la imagen
   const getImageStyle = () => {
     const productSlug = slug.toLowerCase()
     const imagePath = displayImage.toLowerCase()
     const hoverScale = isHovering ? 1.05 : 1
+
+    // ✅ PRIORIDAD 0 (MÁXIMA): Transform desde el debugger
+    if (debuggerTransform) {
+      return {
+        transform: `translate(${debuggerTransform.x}px, ${debuggerTransform.y}px) scale(${debuggerTransform.scale * hoverScale})`,
+        transformOrigin: 'center center'
+      }
+    }
 
     // ✅ PRIORIDAD 1: Buscar override PERMANENTE específico del producto
     const permanentOverride = PRODUCT_OVERRIDES[slug]
@@ -117,10 +160,13 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
     }
   }
 
-  return (
-    <Link href={href} className="group block">
+  // ✅ Renderizar contenido del card
+  const renderCardContent = () => (
+    <>
       <div
-        className="relative aspect-[3/4] w-full overflow-hidden rounded-md"
+        className={`relative aspect-[3/4] w-full overflow-hidden rounded-md transition-all ${
+          isFramingMode ? 'ring-2 ring-blue-400 ring-offset-2 hover:ring-blue-600' : ''
+        } ${isSelected ? 'ring-4 ring-blue-600 ring-offset-4' : ''}`}
         onMouseEnter={() => !isOutOfStock && setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
       >
@@ -131,13 +177,17 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           quality={90}
           className="object-cover"
-          style={{
-            ...getImageStyle(),
-            height: '180%',
-          }}
+          style={getImageStyle()}
         />
 
-        <WishlistHeart slug={slug} />
+        {/* ✅ Indicador de modo framing */}
+        {isFramingMode && (
+          <div className="absolute top-2 right-2 bg-blue-600 text-white px-2 py-1 rounded text-[10px] font-medium shadow-lg">
+            Click para ajustar
+          </div>
+        )}
+
+        {!isFramingMode && <WishlistHeart slug={slug} />}
 
         {/* Badge NUEVO o OFERTA - Paleta unificada negra (menos invasivo) */}
         {badge && !isOutOfStock && (
@@ -180,6 +230,21 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
           )}
         </div>
       </div>
+    </>
+  )
+
+  // ✅ Renderizar con wrapper condicional
+  if (isFramingMode) {
+    return (
+      <div className="group block cursor-crosshair" onClick={handleFramingClick}>
+        {renderCardContent()}
+      </div>
+    )
+  }
+
+  return (
+    <Link href={href} className="group block">
+      {renderCardContent()}
     </Link>
   )
 }
