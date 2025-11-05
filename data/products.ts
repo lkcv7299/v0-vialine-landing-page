@@ -1683,8 +1683,8 @@ export const products: Product[] = [
   },
 
   {
-    slug: "top-cod710",
-    title: "Top COD.710",
+    slug: "top-soporte",
+    title: "Top Soporte",
     price: 29,
     image: "/placeholder.svg",
     category: "tops",
@@ -1733,8 +1733,8 @@ export const products: Product[] = [
   },
 
   {
-    slug: "top-cod902",
-    title: "Top COD.902",
+    slug: "top-urban",
+    title: "Top Urban",
     price: 28,
     image: "/placeholder.svg",
     category: "tops",
@@ -1766,8 +1766,8 @@ export const products: Product[] = [
   },
 
   {
-    slug: "top-cod402",
-    title: "Top COD.402",
+    slug: "top-zafiro",
+    title: "Top Zafiro",
     price: 28,
     image: "/placeholder.svg",
     category: "tops",
@@ -1816,8 +1816,8 @@ export const products: Product[] = [
   },
 
   {
-    slug: "top-cod391",
-    title: "Top COD.391",
+    slug: "top-arena",
+    title: "Top Arena",
     price: 28,
     image: "/placeholder.svg",
     category: "tops",
@@ -1866,8 +1866,8 @@ export const products: Product[] = [
   },
 
   {
-    slug: "top-cod901",
-    title: "Top COD.901",
+    slug: "top-perla",
+    title: "Top Perla",
     price: 23,
     image: "/placeholder.svg",
     category: "tops",
