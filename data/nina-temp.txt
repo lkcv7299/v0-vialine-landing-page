@@ -1,0 +1,279 @@
+  // PRODUCTOS DE NIÑA
+  {
+    slug: "cafarena-nina",
+    title: "Cafarena Niña",
+    price: 28,
+    image: "/placeholder.svg",
+    category: "shorts",
+    fabric: "suplex",
+    colors: [
+      {
+        name: "Cafarena",
+        slug: "cafarena",
+        hex: "#CCCCCC",
+        image: "/placeholder.svg",
+      },
+    ],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
+  },
+  {
+    slug: "panty-nina",
+    title: "Panty Niña",
+    price: 22,
+    image: "/placeholder.svg",
+    category: "shorts",
+    fabric: "suplex",
+    colors: [
+      {
+        name: "Panty",
+        slug: "panty",
+        hex: "#CCCCCC",
+        image: "/placeholder.svg",
+      },
+    ],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
+  },
+  {
+    slug: "maxi-short-nina",
+    title: "Maxi Short Niña",
+    price: 26,
+    image: "/placeholder.svg",
+    category: "shorts",
+    fabric: "suplex",
+    colors: [
+      {
+        name: "Maxi",
+        slug: "maxi",
+        hex: "#CCCCCC",
+        image: "/placeholder.svg",
+      },
+    ],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
+  },
+  {
+    slug: "short-juvenil-nina",
+    title: "Short Juvenil Niña",
+    price: 24,
+    image: "/placeholder.svg",
+    category: "shorts",
+    fabric: "suplex",
+    colors: [
+      {
+        name: "Short",
+        slug: "short",
+        hex: "#CCCCCC",
+        image: "/placeholder.svg",
+      },
+    ],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
+  },
+  {
+    slug: "top-jazmin",
+    title: "Top Jazmín",
+    price: 30,
+    image: "/placeholder.svg",
+    category: "tops",
+    fabric: "algodon",
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/placeholder.svg",
+      },
+    ],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
+  },
+  {
+    slug: "top-margarita",
+    title: "Top Margarita",
+    price: 30,
+    image: "/placeholder.svg",
+    category: "tops",
+    fabric: "algodon",
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/placeholder.svg",
+      },
+    ],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
+  },
+  {
+    slug: "top-orquidea",
+    title: "Top Orquídea",
+    price: 30,
+    image: "/placeholder.svg",
+    category: "tops",
+    fabric: "algodon",
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/placeholder.svg",
+      },
+    ],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
+  },
+  {
+    slug: "top-tulipan",
+    title: "Top Tulipán",
+    price: 30,
+    image: "/placeholder.svg",
+    category: "tops",
+    fabric: "algodon",
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/placeholder.svg",
+      },
+    ],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
+  },
+  {
+    slug: "top-vani",
+    title: "Top Vani",
+    price: 28,
+    image: "/placeholder.svg",
+    category: "tops",
+    fabric: "algodon",
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/placeholder.svg",
+      },
+    ],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},

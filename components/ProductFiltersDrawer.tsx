@@ -99,7 +99,7 @@ export default function ProductFiltersDrawer({ totalProducts, filteredCount }: P
     { value: "bikers", label: "Bikers" },
     { value: "shorts", label: "Shorts" },
     { value: "tops", label: "Tops" },
-    { value: "bodys", label: "Bodys" },
+    { value: "bodysuits", label: "Bodysuits" },
     { value: "camisetas", label: "Camisetas" },
     { value: "enterizos", label: "Enterizos" },
     { value: "pescador", label: "Pescador" },

@@ -164,5 +164,5 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
 }
 
 export function generateStaticParams() {
-  return [{ slug: "camisetas" }, { slug: "linea-suplex" }, { slug: "bodys" }, { slug: "tops-algodon" }]
+  return [{ slug: "camisetas" }, { slug: "linea-suplex" }, { slug: "bodysuits" }, { slug: "tops-algodon" }]
 }
