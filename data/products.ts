@@ -565,20 +565,118 @@ export const products: Product[] = [
     slug: "short-ciclista-active",
     title: "Short ciclista Active",
     price: 32,
-    image: "/placeholder.svg",
+    image: "/productos/mujer/bikers/short-ciclista-active-aqua1.webp",
     category: "bikers",
     fabric: "suplex",
     colors: [
-      {
-        name: "Short",
-        slug: "short",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
+        {
+            "name": "Aqua",
+            "slug": "aqua",
+            "hex": "#00CED1",
+            "image": "/productos/mujer/bikers/short-ciclista-active-aqua1.webp",
+            "images": [
+                "/productos/mujer/bikers/short-ciclista-active-aqua1.webp",
+                "/productos/mujer/bikers/short-ciclista-active-aqua2.webp",
+                "/productos/mujer/bikers/short-ciclista-active-aqua3.webp",
+                "/productos/mujer/bikers/short-ciclista-active-aqua4.webp",
+                "/productos/mujer/bikers/short-ciclista-active-aqua5.webp"
+            ]
+        },
+        {
+            "name": "Azulino",
+            "slug": "azulino",
+            "hex": "#87CEEB",
+            "image": "/productos/mujer/bikers/short-ciclista-active-azulino1.webp",
+            "images": [
+                "/productos/mujer/bikers/short-ciclista-active-azulino1.webp",
+                "/productos/mujer/bikers/short-ciclista-active-azulino2.webp",
+                "/productos/mujer/bikers/short-ciclista-active-azulino3.webp",
+                "/productos/mujer/bikers/short-ciclista-active-azulino4.webp",
+                "/productos/mujer/bikers/short-ciclista-active-azulino5.webp"
+            ]
+        },
+        {
+            "name": "Blanco",
+            "slug": "blanco",
+            "hex": "#FFFFFF",
+            "image": "/productos/mujer/bikers/short-ciclista-active-blanco1.webp",
+            "images": [
+                "/productos/mujer/bikers/short-ciclista-active-blanco1.webp",
+                "/productos/mujer/bikers/short-ciclista-active-blanco2.webp",
+                "/productos/mujer/bikers/short-ciclista-active-blanco3.webp",
+                "/productos/mujer/bikers/short-ciclista-active-blanco4.webp",
+                "/productos/mujer/bikers/short-ciclista-active-blanco5.webp"
+            ]
+        },
+        {
+            "name": "Charcoal",
+            "slug": "charcoal",
+            "hex": "#36454F",
+            "image": "/productos/mujer/bikers/short-ciclista-active-charcoal1.webp",
+            "images": [
+                "/productos/mujer/bikers/short-ciclista-active-charcoal1.webp",
+                "/productos/mujer/bikers/short-ciclista-active-charcoal2.webp",
+                "/productos/mujer/bikers/short-ciclista-active-charcoal3.webp",
+                "/productos/mujer/bikers/short-ciclista-active-charcoal4.webp",
+                "/productos/mujer/bikers/short-ciclista-active-charcoal5.webp"
+            ]
+        },
+        {
+            "name": "Melange",
+            "slug": "melange",
+            "hex": "#D3D3D3",
+            "image": "/productos/mujer/bikers/short-ciclista-active-melange1.webp",
+            "images": [
+                "/productos/mujer/bikers/short-ciclista-active-melange1.webp",
+                "/productos/mujer/bikers/short-ciclista-active-melange2.webp",
+                "/productos/mujer/bikers/short-ciclista-active-melange3.webp",
+                "/productos/mujer/bikers/short-ciclista-active-melange4.webp",
+                "/productos/mujer/bikers/short-ciclista-active-melange5.webp"
+            ]
+        },
+        {
+            "name": "Melon",
+            "slug": "melon",
+            "hex": "#FEBAAD",
+            "image": "/productos/mujer/bikers/short-ciclista-active-melon1.webp",
+            "images": [
+                "/productos/mujer/bikers/short-ciclista-active-melon1.webp",
+                "/productos/mujer/bikers/short-ciclista-active-melon2.webp",
+                "/productos/mujer/bikers/short-ciclista-active-melon3.webp",
+                "/productos/mujer/bikers/short-ciclista-active-melon4.webp",
+                "/productos/mujer/bikers/short-ciclista-active-melon5.webp"
+            ]
+        },
+        {
+            "name": "Negro",
+            "slug": "negro",
+            "hex": "#000000",
+            "image": "/productos/mujer/bikers/short-ciclista-active-negro1.webp",
+            "images": [
+                "/productos/mujer/bikers/short-ciclista-active-negro1.webp",
+                "/productos/mujer/bikers/short-ciclista-active-negro2.webp",
+                "/productos/mujer/bikers/short-ciclista-active-negro3.webp",
+                "/productos/mujer/bikers/short-ciclista-active-negro4.webp",
+                "/productos/mujer/bikers/short-ciclista-active-negro5.webp"
+            ]
+        },
+        {
+            "name": "Rojo",
+            "slug": "rojo",
+            "hex": "#FF0000",
+            "image": "/productos/mujer/bikers/short-ciclista-active-rojo1.webp",
+            "images": [
+                "/productos/mujer/bikers/short-ciclista-active-rojo1.webp",
+                "/productos/mujer/bikers/short-ciclista-active-rojo2.webp",
+                "/productos/mujer/bikers/short-ciclista-active-rojo3.webp",
+                "/productos/mujer/bikers/short-ciclista-active-rojo4.webp",
+                "/productos/mujer/bikers/short-ciclista-active-rojo5.webp"
+            ]
+        }
     ],
     sizes: ["S","M","L","XL"],
-    audience: "mujer",    tags: ["COD.204", "Colección Infinity", "Suplex Liso de Alta Elongación"],
-
+    audience: "mujer",
+    tags: ["COD.204", "Colección Infinity", "Suplex Liso de Alta Elongación"],
     attributes: {
         "material": "Suplex Liso de Alta Elongación",
         "detalles": [
@@ -595,16 +693,109 @@ export const products: Product[] = [
     slug: "short-lux",
     title: "Short Lux",
     price: 28,
-    image: "/placeholder.svg",
+    image: "/productos/mujer/shorts/short-lux-aqua1.webp",
     category: "bikers",
     fabric: "suplex",
     colors: [
-      {
-        name: "Short",
-        slug: "short",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
+        {
+            "name": "Aqua",
+            "slug": "aqua",
+            "hex": "#00CED1",
+            "image": "/productos/mujer/shorts/short-lux-aqua1.webp",
+            "images": [
+                "/productos/mujer/shorts/short-lux-aqua1.webp",
+                "/productos/mujer/shorts/short-lux-aqua2.webp",
+                "/productos/mujer/shorts/short-lux-aqua3.webp",
+                "/productos/mujer/shorts/short-lux-aqua4.webp",
+                "/productos/mujer/shorts/short-lux-aqua5.webp"
+            ]
+        },
+        {
+            "name": "Azulino",
+            "slug": "azulino",
+            "hex": "#87CEEB",
+            "image": "/productos/mujer/shorts/short-lux-azulino1.webp",
+            "images": [
+                "/productos/mujer/shorts/short-lux-azulino1.webp",
+                "/productos/mujer/shorts/short-lux-azulino2.webp",
+                "/productos/mujer/shorts/short-lux-azulino3.webp",
+                "/productos/mujer/shorts/short-lux-azulino4.webp",
+                "/productos/mujer/shorts/short-lux-azulino5.webp"
+            ]
+        },
+        {
+            "name": "Blanco",
+            "slug": "blanco",
+            "hex": "#FFFFFF",
+            "image": "/productos/mujer/shorts/short-lux-blanco1.webp",
+            "images": [
+                "/productos/mujer/shorts/short-lux-blanco1.webp",
+                "/productos/mujer/shorts/short-lux-blanco2.webp",
+                "/productos/mujer/shorts/short-lux-blanco3.webp",
+                "/productos/mujer/shorts/short-lux-blanco4.webp",
+                "/productos/mujer/shorts/short-lux-blanco5.webp"
+            ]
+        },
+        {
+            "name": "Charcoal",
+            "slug": "charcoal",
+            "hex": "#36454F",
+            "image": "/productos/mujer/shorts/short-lux-charcoal1.webp",
+            "images": [
+                "/productos/mujer/shorts/short-lux-charcoal1.webp",
+                "/productos/mujer/shorts/short-lux-charcoal2.webp",
+                "/productos/mujer/shorts/short-lux-charcoal3.webp",
+                "/productos/mujer/shorts/short-lux-charcoal4.webp",
+                "/productos/mujer/shorts/short-lux-charcoal5.webp"
+            ]
+        },
+        {
+            "name": "Melange",
+            "slug": "melange",
+            "hex": "#D3D3D3",
+            "image": "/productos/mujer/shorts/short-lux-melange1.webp",
+            "images": [
+                "/productos/mujer/shorts/short-lux-melange1.webp",
+                "/productos/mujer/shorts/short-lux-melange2.webp",
+                "/productos/mujer/shorts/short-lux-melange3.webp",
+                "/productos/mujer/shorts/short-lux-melange4.webp",
+                "/productos/mujer/shorts/short-lux-melange5.webp"
+            ]
+        },
+        {
+            "name": "Melon",
+            "slug": "melon",
+            "hex": "#FEBAAD",
+            "image": "/productos/mujer/shorts/short-lux-melon1.webp",
+            "images": [
+                "/productos/mujer/shorts/short-lux-melon1.webp",
+                "/productos/mujer/shorts/short-lux-melon2.webp",
+                "/productos/mujer/shorts/short-lux-melon3.webp"
+            ]
+        },
+        {
+            "name": "Negro",
+            "slug": "negro",
+            "hex": "#000000",
+            "image": "/productos/mujer/shorts/short-lux-negro1.webp",
+            "images": [
+                "/productos/mujer/shorts/short-lux-negro1.webp",
+                "/productos/mujer/shorts/short-lux-negro2.webp",
+                "/productos/mujer/shorts/short-lux-negro3.webp"
+            ]
+        },
+        {
+            "name": "Rojo",
+            "slug": "rojo",
+            "hex": "#FF0000",
+            "image": "/productos/mujer/shorts/short-lux-rojo1.webp",
+            "images": [
+                "/productos/mujer/shorts/short-lux-rojo1.webp",
+                "/productos/mujer/shorts/short-lux-rojo2.webp",
+                "/productos/mujer/shorts/short-lux-rojo3.webp",
+                "/productos/mujer/shorts/short-lux-rojo4.webp"
+            ]
+        }
     ],
     sizes: ["S","M","L","XL"],
     audience: "mujer",    tags: ["COD.205", "Colección Infinity", "Suplex Liso de Alta Elongación"],
@@ -742,16 +933,36 @@ export const products: Product[] = [
     slug: "short-clasico",
     title: "Short clásico",
     price: 16,
-    image: "/placeholder.svg",
+    image: "/productos/mujer/shorts/short-clasico-negro1.webp",
     category: "shorts",
     fabric: "suplex",
     colors: [
-      {
-        name: "Short",
-        slug: "short",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
+        {
+            "name": "Negro",
+            "slug": "negro",
+            "hex": "#000000",
+            "image": "/productos/mujer/shorts/short-clasico-negro1.webp",
+            "images": [
+                "/productos/mujer/shorts/short-clasico-negro1.webp",
+                "/productos/mujer/shorts/short-clasico-negro2.webp",
+                "/productos/mujer/shorts/short-clasico-negro3.webp",
+                "/productos/mujer/shorts/short-clasico-negro4.webp"
+            ]
+        },
+        {
+            "name": "Rojo",
+            "slug": "rojo",
+            "hex": "#FF0000",
+            "image": "/productos/mujer/shorts/short-clasico-rojo1.webp",
+            "images": [
+                "/productos/mujer/shorts/short-clasico-rojo1.webp",
+                "/productos/mujer/shorts/short-clasico-rojo2.webp",
+                "/productos/mujer/shorts/short-clasico-rojo3.webp",
+                "/productos/mujer/shorts/short-clasico-rojo4.webp",
+                "/productos/mujer/shorts/short-clasico-rojo5.webp",
+                "/productos/mujer/shorts/short-clasico-rojo6.webp"
+            ]
+        }
     ],
     sizes: ["S","M","L","XL"],
     audience: "mujer",    tags: ["COD.360", "Colección Shorts Algodón Licrado", "Algodón Licrado"],
@@ -1153,16 +1364,75 @@ export const products: Product[] = [
     slug: "top-venus",
     title: "Top Venus",
     price: 32,
-    image: "/placeholder.svg",
+    image: "/productos/mujer/tops/top-venus-azulino1.webp",
     category: "tops",
     fabric: "algodon",
     colors: [
-      {
-        name: "Top",
-        slug: "top",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
+        {
+            "name": "Azulino",
+            "slug": "azulino",
+            "hex": "#87CEEB",
+            "image": "/productos/mujer/tops/top-venus-azulino1.webp",
+            "images": [
+                "/productos/mujer/tops/top-venus-azulino1.webp",
+                "/productos/mujer/tops/top-venus-azulino2.webp",
+                "/productos/mujer/tops/top-venus-azulino3.webp",
+                "/productos/mujer/tops/top-venus-azulino4.webp"
+            ]
+        },
+        {
+            "name": "Blanco",
+            "slug": "blanco",
+            "hex": "#FFFFFF",
+            "image": "/productos/mujer/tops/top-venus-blanco1.webp",
+            "images": [
+                "/productos/mujer/tops/top-venus-blanco1.webp",
+                "/productos/mujer/tops/top-venus-blanco2.webp",
+                "/productos/mujer/tops/top-venus-blanco3.webp",
+                "/productos/mujer/tops/top-venus-blanco4.webp",
+                "/productos/mujer/tops/top-venus-blanco5.webp"
+            ]
+        },
+        {
+            "name": "Charcoal",
+            "slug": "charcoal",
+            "hex": "#36454F",
+            "image": "/productos/mujer/tops/top-venus-charcoal1.webp",
+            "images": [
+                "/productos/mujer/tops/top-venus-charcoal1.webp",
+                "/productos/mujer/tops/top-venus-charcoal2.webp",
+                "/productos/mujer/tops/top-venus-charcoal3.webp",
+                "/productos/mujer/tops/top-venus-charcoal4.webp",
+                "/productos/mujer/tops/top-venus-charcoal5.webp"
+            ]
+        },
+        {
+            "name": "Negro",
+            "slug": "negro",
+            "hex": "#000000",
+            "image": "/productos/mujer/tops/top-venus-negro1.webp",
+            "images": [
+                "/productos/mujer/tops/top-venus-negro1.webp",
+                "/productos/mujer/tops/top-venus-negro2.webp",
+                "/productos/mujer/tops/top-venus-negro3.webp",
+                "/productos/mujer/tops/top-venus-negro4.webp",
+                "/productos/mujer/tops/top-venus-negro5.webp"
+            ]
+        },
+        {
+            "name": "Rojo",
+            "slug": "rojo",
+            "hex": "#FF0000",
+            "image": "/productos/mujer/tops/top-venus-rojo1.webp",
+            "images": [
+                "/productos/mujer/tops/top-venus-rojo1.webp",
+                "/productos/mujer/tops/top-venus-rojo2.webp",
+                "/productos/mujer/tops/top-venus-rojo3.webp",
+                "/productos/mujer/tops/top-venus-rojo4.webp",
+                "/productos/mujer/tops/top-venus-rojo5.webp",
+                "/productos/mujer/tops/top-venus-rojo6.webp"
+            ]
+        }
     ],
     sizes: ["S","M","L"],
     audience: "mujer",    tags: ["COD.215", "Colección Tops Suplex", "Suplex + Algodón"],
@@ -1290,16 +1560,58 @@ export const products: Product[] = [
     slug: "top-jungle",
     title: "Top Jungle",
     price: 32,
-    image: "/placeholder.svg",
+    image: "/productos/mujer/tops/top-jungle-azulino1.webp",
     category: "tops",
     fabric: "algodon",
     colors: [
-      {
-        name: "Top",
-        slug: "top",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
+        {
+            "name": "Azulino",
+            "slug": "azulino",
+            "hex": "#87CEEB",
+            "image": "/productos/mujer/tops/top-jungle-azulino1.webp",
+            "images": [
+                "/productos/mujer/tops/top-jungle-azulino1.webp",
+                "/productos/mujer/tops/top-jungle-azulino2.webp",
+                "/productos/mujer/tops/top-jungle-azulino3.webp",
+                "/productos/mujer/tops/top-jungle-azulino4.webp"
+            ]
+        },
+        {
+            "name": "Charcoal",
+            "slug": "charcoal",
+            "hex": "#36454F",
+            "image": "/productos/mujer/tops/top-jungle-charcoal1.webp",
+            "images": [
+                "/productos/mujer/tops/top-jungle-charcoal1.webp",
+                "/productos/mujer/tops/top-jungle-charcoal2.webp",
+                "/productos/mujer/tops/top-jungle-charcoal3.webp",
+                "/productos/mujer/tops/top-jungle-charcoal4.webp"
+            ]
+        },
+        {
+            "name": "Negro",
+            "slug": "negro",
+            "hex": "#000000",
+            "image": "/productos/mujer/tops/top-jungle-negro1.webp",
+            "images": [
+                "/productos/mujer/tops/top-jungle-negro1.webp",
+                "/productos/mujer/tops/top-jungle-negro2.webp",
+                "/productos/mujer/tops/top-jungle-negro3.webp",
+                "/productos/mujer/tops/top-jungle-negro4.webp"
+            ]
+        },
+        {
+            "name": "Rojo",
+            "slug": "rojo",
+            "hex": "#FF0000",
+            "image": "/productos/mujer/tops/top-jungle-rojo1.webp",
+            "images": [
+                "/productos/mujer/tops/top-jungle-rojo1.webp",
+                "/productos/mujer/tops/top-jungle-rojo2.webp",
+                "/productos/mujer/tops/top-jungle-rojo3.webp",
+                "/productos/mujer/tops/top-jungle-rojo4.webp"
+            ]
+        }
     ],
     sizes: ["S","M","L"],
     audience: "mujer",    tags: ["COD.109", "Colección Tops Suplex", "Suplex + Algodón"],
@@ -1351,16 +1663,48 @@ export const products: Product[] = [
     slug: "top-soporte",
     title: "Top Soporte",
     price: 35,
-    image: "/placeholder.svg",
+    image: "/productos/mujer/tops/top-soporte-beige1.webp",
     category: "tops",
     fabric: "algodon",
     colors: [
-      {
-        name: "Top",
-        slug: "top",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
+        {
+            "name": "Beige",
+            "slug": "beige",
+            "hex": "#F5F5DC",
+            "image": "/productos/mujer/tops/top-soporte-beige1.webp",
+            "images": [
+                "/productos/mujer/tops/top-soporte-beige1.webp",
+                "/productos/mujer/tops/top-soporte-beige2.webp",
+                "/productos/mujer/tops/top-soporte-beige3.webp",
+                "/productos/mujer/tops/top-soporte-beige4.webp",
+                "/productos/mujer/tops/top-soporte-beige5.webp"
+            ]
+        },
+        {
+            "name": "Blanco",
+            "slug": "blanco",
+            "hex": "#FFFFFF",
+            "image": "/productos/mujer/tops/top-soporte-blanco1.webp",
+            "images": [
+                "/productos/mujer/tops/top-soporte-blanco1.webp",
+                "/productos/mujer/tops/top-soporte-blanco2.webp",
+                "/productos/mujer/tops/top-soporte-blanco3.webp",
+                "/productos/mujer/tops/top-soporte-blanco4.webp",
+                "/productos/mujer/tops/top-soporte-blanco5.webp"
+            ]
+        },
+        {
+            "name": "Negro",
+            "slug": "negro",
+            "hex": "#000000",
+            "image": "/productos/mujer/tops/top-soporte-negro1.webp",
+            "images": [
+                "/productos/mujer/tops/top-soporte-negro1.webp",
+                "/productos/mujer/tops/top-soporte-negro2.webp",
+                "/productos/mujer/tops/top-soporte-negro3.webp",
+                "/productos/mujer/tops/top-soporte-negro4.webp"
+            ]
+        }
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
@@ -1384,16 +1728,22 @@ export const products: Product[] = [
     slug: "top-arena",
     title: "Top Arena",
     price: 34,
-    image: "/placeholder.svg",
+    image: "/productos/mujer/tops/top-arena-blanco1.webp",
     category: "tops",
     fabric: "algodon",
     colors: [
-      {
-        name: "Top",
-        slug: "top",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
+        {
+            "name": "Blanco",
+            "slug": "blanco",
+            "hex": "#FFFFFF",
+            "image": "/productos/mujer/tops/top-arena-blanco1.webp",
+            "images": [
+                "/productos/mujer/tops/top-arena-blanco1.webp",
+                "/productos/mujer/tops/top-arena-blanco2.webp",
+                "/productos/mujer/tops/top-arena-blanco3.webp",
+                "/productos/mujer/tops/top-arena-blanco4.webp"
+            ]
+        }
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
@@ -1416,16 +1766,36 @@ export const products: Product[] = [
     slug: "top-zafiro",
     title: "Top Zafiro",
     price: 34,
-    image: "/placeholder.svg",
+    image: "/productos/mujer/tops/top-zafiro-blanco1.webp",
     category: "tops",
     fabric: "algodon",
     colors: [
-      {
-        name: "Top",
-        slug: "top",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
+        {
+            "name": "Blanco",
+            "slug": "blanco",
+            "hex": "#FFFFFF",
+            "image": "/productos/mujer/tops/top-zafiro-blanco1.webp",
+            "images": [
+                "/productos/mujer/tops/top-zafiro-blanco1.webp",
+                "/productos/mujer/tops/top-zafiro-blanco2.webp",
+                "/productos/mujer/tops/top-zafiro-blanco3.webp",
+                "/productos/mujer/tops/top-zafiro-blanco4.webp",
+                "/productos/mujer/tops/top-zafiro-blanco5.webp"
+            ]
+        },
+        {
+            "name": "Negro",
+            "slug": "negro",
+            "hex": "#000000",
+            "image": "/productos/mujer/tops/top-zafiro-negro1.webp",
+            "images": [
+                "/productos/mujer/tops/top-zafiro-negro1.webp",
+                "/productos/mujer/tops/top-zafiro-negro2.webp",
+                "/productos/mujer/tops/top-zafiro-negro3.webp",
+                "/productos/mujer/tops/top-zafiro-negro4.webp",
+                "/productos/mujer/tops/top-zafiro-negro5.webp"
+            ]
+        }
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
@@ -1477,19 +1847,88 @@ export const products: Product[] = [
   },
 
   {
-    slug: "top-perla",
-    title: "Top Perla",
-    price: 27,
-    image: "/placeholder.svg",
+    slug: "top-luna",
+    title: "Top Luna",
+    price: 28,
+    image: "/productos/mujer/tops/top-luna-beige1.webp",
     category: "tops",
     fabric: "algodon",
     colors: [
-      {
-        name: "Top",
-        slug: "top",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
+        {
+            "name": "Beige",
+            "slug": "beige",
+            "hex": "#F5F5DC",
+            "image": "/productos/mujer/tops/top-luna-beige1.webp",
+            "images": [
+                "/productos/mujer/tops/top-luna-beige1.webp",
+                "/productos/mujer/tops/top-luna-beige2.webp",
+                "/productos/mujer/tops/top-luna-beige3.webp",
+                "/productos/mujer/tops/top-luna-beige4.webp",
+                "/productos/mujer/tops/top-luna-beige5.webp"
+            ]
+        },
+        {
+            "name": "Blanco",
+            "slug": "blanco",
+            "hex": "#FFFFFF",
+            "image": "/productos/mujer/tops/top-luna-blanco1.webp",
+            "images": [
+                "/productos/mujer/tops/top-luna-blanco1.webp",
+                "/productos/mujer/tops/top-luna-blanco2.webp",
+                "/productos/mujer/tops/top-luna-blanco3.webp",
+                "/productos/mujer/tops/top-luna-blanco4.webp",
+                "/productos/mujer/tops/top-luna-blanco5.webp"
+            ]
+        },
+        {
+            "name": "Negro",
+            "slug": "negro",
+            "hex": "#000000",
+            "image": "/productos/mujer/tops/top-luna-negro1.webp",
+            "images": [
+                "/productos/mujer/tops/top-luna-negro1.webp",
+                "/productos/mujer/tops/top-luna-negro2.webp",
+                "/productos/mujer/tops/top-luna-negro3.webp",
+                "/productos/mujer/tops/top-luna-negro4.webp",
+                "/productos/mujer/tops/top-luna-negro5.webp"
+            ]
+        }
+    ],
+    sizes: ["S", "M", "L", "XL"],
+    audience: "mujer",
+    tags: ["Algodón Licrado", "Top Deportivo"],
+    attributes: {
+      material: "Algodón Licrado",
+      detalles: [
+        "Copas internas removibles",
+        "Diseño deportivo elegante",
+        "Algodón licrado premium"
+      ],
+      beneficios: []
+    },
+  },
+
+  {
+    slug: "top-perla",
+    title: "Top Perla",
+    price: 27,
+    image: "/productos/mujer/tops/top-perla-blanco1.webp",
+    category: "tops",
+    fabric: "algodon",
+    colors: [
+        {
+            "name": "Blanco",
+            "slug": "blanco",
+            "hex": "#FFFFFF",
+            "image": "/productos/mujer/tops/top-perla-blanco1.webp",
+            "images": [
+                "/productos/mujer/tops/top-perla-blanco1.webp",
+                "/productos/mujer/tops/top-perla-blanco2.webp",
+                "/productos/mujer/tops/top-perla-blanco3.webp",
+                "/productos/mujer/tops/top-perla-blanco4.webp",
+                "/productos/mujer/tops/top-perla-blanco5.webp"
+            ]
+        }
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
@@ -1841,7 +2280,7 @@ export const products: Product[] = [
   {
     slug: "enterizo-manga-corta-nina",
     title: "Enterizo manga corta Niña",
-    price: 29,
+    price: 38,
     image: "/placeholder.svg",
     category: "enterizos",
     fabric: "suplex",
@@ -1853,24 +2292,27 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["2","4","6","8","10","12","14","16"],
-    audience: "nina",    tags: ["COD.425", "Nueva Colección Niña", "Algodón Licrado"],
-
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
     attributes: {
-        "material": "Algodón Licrado",
-        "detalles": [
-            "Enterizo deportivo manga corta",
-            "Diseño cómodo y funcional",
-            "Algodón licrado"
-        ],
-        "beneficios": []
-    },
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
   },
 
   {
     slug: "enterizo-manga-larga-nina",
     title: "Enterizo manga larga Niña",
-    price: 30,
+    price: 42,
     image: "/placeholder.svg",
     category: "enterizos",
     fabric: "suplex",
@@ -1882,18 +2324,21 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["4","6","8","10","12","14","16"],
-    audience: "nina",    tags: ["COD.430", "Nueva Colección Niña", "Algodón Licrado"],
-
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
     attributes: {
-        "material": "Algodón Licrado",
-        "detalles": [
-            "Enterizo deportivo manga larga",
-            "Diseño cómodo y funcional",
-            "Algodón licrado"
-        ],
-        "beneficios": []
-    },
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
   },
 
   {
@@ -2226,7 +2671,7 @@ export const products: Product[] = [
   {
     slug: "legging-nina",
     title: "Legging Niña",
-    price: 25,
+    price: 32,
     image: "/placeholder.svg",
     category: "leggings",
     fabric: "suplex",
@@ -2238,18 +2683,21 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["2","4","6","8","10","12","14","16"],
-    audience: "nina",    tags: ["COD.432", "Nueva Colección Niña", "Algodón Licrado"],
-
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
     attributes: {
-        "material": "Algodón Licrado",
-        "detalles": [
-            "Legging clásica para niña",
-            "Cintura elástica confortable",
-            "Algodón licrado"
-        ],
-        "beneficios": []
-    },
+  material: "Suplex liso",
+  detalles: [
+    "Pretina ancha para mejor soporte",
+    "Corte ajustado sin transparencias",
+    "Costuras planas"
+  ],
+  beneficios: [
+    "Se adapta al cuerpo como una segunda piel",
+    "Te mantiene fresca y seca durante el entrenamiento",
+    "Alta resistencia y durabilidad"
+  ]
+},
   },
 
   {
@@ -2396,7 +2844,7 @@ export const products: Product[] = [
   {
     slug: "cafarena-nina",
     title: "Cafarena Niña",
-    price: 30,
+    price: 28,
     image: "/placeholder.svg",
     category: "shorts",
     fabric: "suplex",
@@ -2408,24 +2856,27 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["4","6","8","10","12","14","16"],
-    audience: "nina",    tags: ["COD.506", "Nueva Colección Niña", "Algodón Licrado"],
-
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
     attributes: {
-        "material": "Algodón Licrado",
-        "detalles": [
-            "Diseño cafarena deportivo",
-            "Algodón licrado suave",
-            "Ideal para actividades"
-        ],
-        "beneficios": []
-    },
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
   },
 
   {
     slug: "panty-nina",
     title: "Panty Niña",
-    price: 25,
+    price: 22,
     image: "/placeholder.svg",
     category: "shorts",
     fabric: "suplex",
@@ -2437,24 +2888,27 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["2","4","6","8","10","12","14","16"],
-    audience: "nina",    tags: ["COD.431", "Nueva Colección Niña", "Algodón Licrado"],
-
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
     attributes: {
-        "material": "Algodón Licrado",
-        "detalles": [
-            "Panty deportivo básico",
-            "Algodón licrado",
-            "Muy cómodo"
-        ],
-        "beneficios": []
-    },
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
   },
 
   {
     slug: "maxi-short-nina",
     title: "Maxi Short Niña",
-    price: 15,
+    price: 26,
     image: "/placeholder.svg",
     category: "shorts",
     fabric: "suplex",
@@ -2466,24 +2920,27 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["10","12","14","16"],
-    audience: "nina",    tags: ["COD.503", "Nueva Colección Niña", "Algodón Licrado"],
-
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
     attributes: {
-        "material": "Algodón Licrado",
-        "detalles": [
-            "Maxi short deportivo",
-            "Largo medio",
-            "Algodón licrado"
-        ],
-        "beneficios": []
-    },
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
   },
 
   {
     slug: "short-juvenil-nina",
     title: "Short Juvenil Niña",
-    price: 13,
+    price: 24,
     image: "/placeholder.svg",
     category: "shorts",
     fabric: "suplex",
@@ -2495,24 +2952,27 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["4","6","8","10","12","14","16"],
-    audience: "nina",    tags: ["COD.433", "Nueva Colección Niña", "Algodón Licrado"],
-
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
     attributes: {
-        "material": "Algodón Licrado",
-        "detalles": [
-            "Short juvenil básico",
-            "Diseño deportivo",
-            "Algodón licrado"
-        ],
-        "beneficios": []
-    },
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
   },
 
   {
     slug: "top-jazmin",
     title: "Top Jazmín",
-    price: 23,
+    price: 30,
     image: "/placeholder.svg",
     category: "tops",
     fabric: "algodon",
@@ -2524,25 +2984,27 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["12","14","16"],
-    audience: "nina",    tags: ["COD.223", "Nueva Colección Niña", "Algodón Licrado"],
-
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
     attributes: {
-        "material": "Algodón Licrado",
-        "detalles": [
-            "Tiras regulables",
-            "Copas removibles",
-            "Elástico afelpeado",
-            "Doble broche en la espalda"
-        ],
-        "beneficios": []
-    },
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
   },
 
   {
     slug: "top-margarita",
     title: "Top Margarita",
-    price: 23,
+    price: 30,
     image: "/placeholder.svg",
     category: "tops",
     fabric: "algodon",
@@ -2554,24 +3016,27 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["12","14","16"],
-    audience: "nina",    tags: ["COD.225", "Nueva Colección Niña", "Algodón Licrado"],
-
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
     attributes: {
-        "material": "Algodón Licrado",
-        "detalles": [
-            "Doble broche en la espalda",
-            "Tiras regulables",
-            "Copas removibles"
-        ],
-        "beneficios": []
-    },
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
   },
 
   {
     slug: "top-orquidea",
     title: "Top Orquídea",
-    price: 23,
+    price: 30,
     image: "/placeholder.svg",
     category: "tops",
     fabric: "algodon",
@@ -2583,24 +3048,27 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["12","14","16"],
-    audience: "nina",    tags: ["COD.224", "Nueva Colección Niña", "Algodón Licrado"],
-
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
     attributes: {
-        "material": "Algodón Licrado",
-        "detalles": [
-            "Tiras regulables",
-            "Copas removibles",
-            "Elástico afelpeado"
-        ],
-        "beneficios": []
-    },
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
   },
 
   {
     slug: "top-tulipan",
     title: "Top Tulipán",
-    price: 23,
+    price: 30,
     image: "/placeholder.svg",
     category: "tops",
     fabric: "algodon",
@@ -2612,24 +3080,27 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["12","14","16"],
-    audience: "nina",    tags: ["COD.222", "Nueva Colección Niña", "Algodón Licrado"],
-
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
     attributes: {
-        "material": "Algodón Licrado",
-        "detalles": [
-            "Modelo deportivo",
-            "Copas removibles",
-            "Elástico afelpeado"
-        ],
-        "beneficios": []
-    },
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
   },
 
   {
     slug: "top-vani",
     title: "Top Vani",
-    price: 12,
+    price: 28,
     image: "/placeholder.svg",
     category: "tops",
     fabric: "algodon",
@@ -2641,18 +3112,21 @@ export const products: Product[] = [
         image: "/placeholder.svg",
       },
     ],
-    sizes: ["10","12","14","16"],
-    audience: "nina",    tags: ["COD.504", "Nueva Colección Niña", "Algodón Licrado"],
-
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
     attributes: {
-        "material": "Algodón Licrado",
-        "detalles": [
-            "Top básico deportivo",
-            "Diseño simple",
-            "Algodón licrado"
-        ],
-        "beneficios": []
-    },
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
   }
 ]
 
