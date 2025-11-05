@@ -33,5 +33,14 @@ next-env.d.ts
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# backups and temp files
 *.backup.tsx
-*.backup.tsx
+*.backup.ts
+data/backups/
+data/*-temp.txt
+data/*-new.ts
+data/*-final.ts
+scripts/extract-catalog.js
+scripts/extract-nina-products.js
+scripts/merge-nina.js

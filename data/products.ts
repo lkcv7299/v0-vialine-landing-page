@@ -3780,7 +3780,6 @@ export const products: Product[] = [
       beneficios: []
     }
   },
-,
 
   // PRODUCTOS DE NIÑA
   {

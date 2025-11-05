@@ -397,33 +397,51 @@ function generateProductsTS(catalogProducts, ninaProductsCode) {
   const categoryOrder = ['camisetas', 'tops', 'bodysuits', 'enterizos', 'leggings', 'pescador', 'torero', 'bikers', 'shorts'];
 
   // Generar productos por categoría
-  categoryOrder.forEach(cat => {
+  let isFirstCategory = true;
+  categoryOrder.forEach((cat, catIdx) => {
     if (byCategory[cat] && byCategory[cat].length > 0) {
       const categoryName = cat.toUpperCase();
+
+      // Add blank line before category (except first)
+      if (!isFirstCategory) {
+        lines.push('');
+      }
+      isFirstCategory = false;
+
       lines.push(`  // ${categoryName} (mujer)`);
 
       byCategory[cat].forEach((product, idx) => {
         const productCode = generateProductCode(product, '  ');
-        const comma = ',';
-        lines.push(productCode + comma);
+        // Always add comma - we'll handle the last one specially
+        lines.push(productCode + ',');
+        // Add blank line between products in same category
         if (idx < byCategory[cat].length - 1) {
           lines.push('');
         }
       });
-
-      lines.push('');
     }
   });
 
   // Productos de niña (preservados)
   if (ninaProductsCode.length > 0) {
+    lines.push('');
     lines.push('  // PRODUCTOS PARA NIÑA (preservados del archivo original)');
     ninaProductsCode.forEach((code, idx) => {
       const comma = idx < ninaProductsCode.length - 1 ? ',' : '';
       lines.push('  ' + code + comma);
     });
-    lines.push('');
+  } else {
+    // If no niña products, remove the trailing comma from the last mujer product
+    // Find the last line that ends with comma
+    for (let i = lines.length - 1; i >= 0; i--) {
+      if (lines[i].trim().endsWith(',')) {
+        lines[i] = lines[i].replace(/,$/, '');
+        break;
+      }
+    }
   }
+
+  lines.push('');
 
   lines.push(']');
   lines.push('');
