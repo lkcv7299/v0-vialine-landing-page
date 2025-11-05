@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useLayoutEffect } from 'react'
 
 interface ImageTransform {
   x: number
@@ -23,7 +23,28 @@ export function useImageTransform(
   imageIndex: number,
   currentContext?: 'card' | 'rail' | 'gallery'
 ) {
-  const [transform, setTransform] = useState<ImageTransform | null>(null)
+  const [isMounted, setIsMounted] = useState(false)
+
+  // ✅ Cargar transform sincrónicamente en el estado inicial para evitar flash
+  const [transform, setTransform] = useState<ImageTransform | null>(() => {
+    if (typeof window === 'undefined') return null
+
+    try {
+      const saved = localStorage.getItem('imageTransforms')
+      if (saved && currentContext) {
+        const transforms: ProductTransforms = JSON.parse(saved)
+        return transforms[productSlug]?.[colorSlug]?.[imageIndex]?.[currentContext] || null
+      }
+    } catch (e) {
+      console.error('Error loading initial transform:', e)
+    }
+    return null
+  })
+
+  // ✅ Marcar como montado ANTES del primer paint para evitar flash
+  useLayoutEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   useEffect(() => {
     // Función para cargar transforms
@@ -53,7 +74,7 @@ export function useImageTransform(
       }
     }
 
-    // Cargar al montar
+    // Recargar si cambian los parámetros
     loadTransforms()
 
     // Escuchar cambios en localStorage (para updates en tiempo real)
@@ -77,7 +98,7 @@ export function useImageTransform(
     }
   }, [productSlug, colorSlug, imageIndex, currentContext])
 
-  return transform
+  return { transform, isMounted }
 }
 
 export function getTransformStyle(transform: ImageTransform | null): React.CSSProperties {

@@ -4,6 +4,8 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut, Maximize2 } from "lucide-react"
 import { useImageDebug } from "@/contexts/ImageDebugContext"
+import { useImageTransform } from "@/hooks/useImageTransform"
+import { parseImagePath } from "@/lib/imageTransformUtils"
 
 // ✅ PRODUCT-SPECIFIC OVERRIDES - Ajustes visuales permanentes para productos específicos
 const PRODUCT_OVERRIDES: { [slug: string]: { scale: number; translateY: number; translateX: number } } = {
@@ -36,10 +38,26 @@ export default function ProductGallery({ images, productName, productSlug = "" }
   // ✅ Filter out any empty or invalid images
   const validImages = images.filter(img => img && img.trim() !== "")
 
+  // ✅ Parsear la imagen actual para obtener colorSlug e imageIndex
+  const currentImagePath = validImages[selectedIndex] || ''
+  const { productSlug: imageParsedSlug, colorSlug, imageIndex } = parseImagePath(currentImagePath)
+  const actualProductSlug = imageParsedSlug || productSlug
+
+  // ✅ Usar hook para obtener transform del debugger (MÁXIMA PRIORIDAD)
+  const { transform: debuggerTransform, isMounted } = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'gallery')
+
   // 🎨 Calcular estilo de imagen basado en tipo de producto
   const getImageTransform = () => {
     const slug = productSlug.toLowerCase()
     const imagePath = validImages[selectedIndex]?.toLowerCase() || ""
+
+    // ✅ PRIORIDAD 0 (MÁXIMA): Transform desde el debugger
+    if (debuggerTransform) {
+      return {
+        transform: `translate(${debuggerTransform.x}px, ${debuggerTransform.y}px) scale(${debuggerTransform.scale})`,
+        transformOrigin: 'center center'
+      }
+    }
 
     // ✅ PRIORIDAD 1: Buscar override PERMANENTE específico del producto
     const permanentOverride = PRODUCT_OVERRIDES[productSlug]
@@ -174,7 +192,7 @@ export default function ProductGallery({ images, productName, productSlug = "" }
         <img
           src={validImages[0]}
           alt={productName}
-          className="absolute inset-0 w-full h-[180%] object-cover"
+          className={`absolute inset-0 w-full h-[180%] object-cover ${!isMounted ? '[transition:none!important]' : ''}`}
           style={getImageTransform()}
         />
       </div>
@@ -190,7 +208,7 @@ export default function ProductGallery({ images, productName, productSlug = "" }
             <img
               src={validImages[selectedIndex]}
               alt={`${productName} - Imagen ${selectedIndex + 1}`}
-              className="absolute inset-0 w-full h-[180%] object-cover transition-transform duration-300"
+              className={`absolute inset-0 w-full h-[180%] object-cover transition-transform duration-300 ${!isMounted ? '[transition:none!important]' : ''}`}
               style={getImageTransform()}
             />
           </div>

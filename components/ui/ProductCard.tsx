@@ -18,6 +18,7 @@ const PRODUCT_OVERRIDES: { [slug: string]: { scale: number; translateY: number; 
   "top-soporte": { scale: 1.00, translateY: -20, translateX: 0 },
   "top-perla": { scale: 1.00, translateY: -4, translateX: 1 },
   "top-athena": { scale: 1.00, translateY: -5, translateX: 0 },
+  "top-luna": { scale: 1.50, translateY: 15, translateX: 2 },
   "enterizo-manga-cero": { scale: 1.00, translateY: -33, translateX: 0 },
   "legging-harmony": { scale: 1.05, translateY: -29, translateX: 0 },
   "pescador-realce": { scale: 1.00, translateY: -20, translateX: 0 },
@@ -51,7 +52,7 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
   const actualProductSlug = imageParsedSlug || slug
 
   // ✅ Usar hook para obtener transform del debugger (MÁXIMA PRIORIDAD)
-  const debuggerTransform = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'card')
+  const { transform: debuggerTransform, isMounted } = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'card')
 
   // Usar hover image si está disponible y estamos hovering
   const currentImage = isHovering && hoverImage ? hoverImage : displayImage
@@ -176,7 +177,7 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
           fill
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           quality={90}
-          className="object-cover"
+          className={`object-cover ${!isMounted ? '[transition:none!important]' : ''}`}
           style={getImageStyle()}
         />
 

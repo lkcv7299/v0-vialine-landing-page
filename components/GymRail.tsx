@@ -34,7 +34,7 @@ function RailItem({ item }: { item: Item }) {
   // Parsear imagen para obtener transform
   const { productSlug: imageParsedSlug, colorSlug, imageIndex } = parseImagePath(item.image)
   const actualProductSlug = imageParsedSlug || item.slug
-  const debuggerTransform = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'rail')
+  const { transform: debuggerTransform, isMounted } = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'rail')
 
   const isSelected =
     isFramingMode &&
@@ -124,7 +124,7 @@ function RailItem({ item }: { item: Item }) {
           fill
           sizes="(max-width: 768px) 50vw, 25vw"
           quality={90}
-          className="object-contain"
+          className={`object-contain ${!isMounted ? '[transition:none!important]' : ''}`}
           style={getImageStyle()}
         />
 

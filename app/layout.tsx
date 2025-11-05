@@ -14,6 +14,8 @@ import { CartProvider } from "@/contexts/CartContext"
 import SessionProvider from "@/components/providers/SessionProvider"
 import { Toaster } from "sonner"
 import { ImageDebugProvider } from "@/contexts/ImageDebugContext"
+import { ImageFramingProvider } from "@/contexts/ImageFramingContext"
+import { ImageFramingPanel } from "@/components/ImageFramingPanel"
 
 export const metadata: Metadata = {
   title: "Vialine | Activewear & ropa interior para mujer – Hecho en Perú",
@@ -99,13 +101,16 @@ export default function RootLayout({
           <CartProvider>
             <WishlistProvider>
               <ImageDebugProvider>
-                <ClientWrapper>
-                  <PromoBar />
-                  <SiteHeader />
-                  {children}
-                  <WhatsAppFloat />
-                  <Toaster position="bottom-right" richColors />
-                </ClientWrapper>
+                <ImageFramingProvider>
+                  <ClientWrapper>
+                    <PromoBar />
+                    <SiteHeader />
+                    {children}
+                    <WhatsAppFloat />
+                    <Toaster position="bottom-right" richColors />
+                    <ImageFramingPanel />
+                  </ClientWrapper>
+                </ImageFramingProvider>
               </ImageDebugProvider>
             </WishlistProvider>
           </CartProvider>
