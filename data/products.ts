@@ -1683,6 +1683,240 @@ export const products: Product[] = [
   },
 
   {
+    slug: "top-cod710",
+    title: "Top COD.710",
+    price: 29,
+    image: "/placeholder.svg",
+    category: "tops",
+    fabric: "algodon",
+    colors: [
+      {
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        image: "/placeholder.svg"
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/placeholder.svg"
+      },
+      {
+        name: "Melange",
+        slug: "melange",
+        hex: "#9CA3AF",
+        image: "/placeholder.svg"
+      },
+      {
+        name: "Beige",
+        slug: "beige",
+        hex: "#F5F5DC",
+        image: "/placeholder.svg"
+      }
+    ],
+    sizes: ["S", "M", "L", "XL"],
+    audience: "mujer",
+    tags: [
+      "COD.710",
+      "Colección Tops Algodón Licrado",
+      "Algodón Licrado"
+    ],
+    attributes: {
+      material: "Algodón Licrado",
+      detalles: [
+        "Copas internas removibles",
+        "Algodón licrado"
+      ],
+      beneficios: []
+    }
+  },
+
+  {
+    slug: "top-cod902",
+    title: "Top COD.902",
+    price: 28,
+    image: "/placeholder.svg",
+    category: "tops",
+    fabric: "algodon",
+    colors: [
+      {
+        name: "Beige",
+        slug: "beige",
+        hex: "#F5F5DC",
+        image: "/placeholder.svg"
+      }
+    ],
+    sizes: ["S", "M", "L", "XL"],
+    audience: "mujer",
+    tags: [
+      "COD.902",
+      "Colección Tops Algodón Licrado",
+      "Algodón Licrado"
+    ],
+    attributes: {
+      material: "Algodón Licrado",
+      detalles: [
+        "Copas internas removibles",
+        "Algodón licrado",
+        "Solo disponible en Beige"
+      ],
+      beneficios: []
+    }
+  },
+
+  {
+    slug: "top-cod402",
+    title: "Top COD.402",
+    price: 28,
+    image: "/placeholder.svg",
+    category: "tops",
+    fabric: "algodon",
+    colors: [
+      {
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        image: "/placeholder.svg"
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/placeholder.svg"
+      },
+      {
+        name: "Melange",
+        slug: "melange",
+        hex: "#9CA3AF",
+        image: "/placeholder.svg"
+      },
+      {
+        name: "Beige",
+        slug: "beige",
+        hex: "#F5F5DC",
+        image: "/placeholder.svg"
+      }
+    ],
+    sizes: ["S", "M", "L", "XL"],
+    audience: "mujer",
+    tags: [
+      "COD.402",
+      "Colección Tops Algodón Licrado",
+      "Algodón Licrado"
+    ],
+    attributes: {
+      material: "Algodón Licrado",
+      detalles: [
+        "Copas internas removibles",
+        "Algodón licrado"
+      ],
+      beneficios: []
+    }
+  },
+
+  {
+    slug: "top-cod391",
+    title: "Top COD.391",
+    price: 28,
+    image: "/placeholder.svg",
+    category: "tops",
+    fabric: "algodon",
+    colors: [
+      {
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        image: "/placeholder.svg"
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/placeholder.svg"
+      },
+      {
+        name: "Melange",
+        slug: "melange",
+        hex: "#9CA3AF",
+        image: "/placeholder.svg"
+      },
+      {
+        name: "Beige",
+        slug: "beige",
+        hex: "#F5F5DC",
+        image: "/placeholder.svg"
+      }
+    ],
+    sizes: ["S", "M", "L", "XL"],
+    audience: "mujer",
+    tags: [
+      "COD.391",
+      "Colección Tops Algodón Licrado",
+      "Algodón Licrado"
+    ],
+    attributes: {
+      material: "Algodón Licrado",
+      detalles: [
+        "Copas internas removibles",
+        "Algodón licrado"
+      ],
+      beneficios: []
+    }
+  },
+
+  {
+    slug: "top-cod901",
+    title: "Top COD.901",
+    price: 23,
+    image: "/placeholder.svg",
+    category: "tops",
+    fabric: "algodon",
+    colors: [
+      {
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        image: "/placeholder.svg"
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/placeholder.svg"
+      },
+      {
+        name: "Melange",
+        slug: "melange",
+        hex: "#9CA3AF",
+        image: "/placeholder.svg"
+      },
+      {
+        name: "Beige",
+        slug: "beige",
+        hex: "#F5F5DC",
+        image: "/placeholder.svg"
+      }
+    ],
+    sizes: ["S", "M", "L", "XL"],
+    audience: "mujer",
+    tags: [
+      "COD.901",
+      "Colección Tops Algodón Licrado",
+      "Algodón Licrado"
+    ],
+    attributes: {
+      material: "Algodón Licrado",
+      detalles: [
+        "Copas internas removibles",
+        "Tiras ajustables",
+        "Algodón licrado"
+      ],
+      beneficios: []
+    }
+  },
+
+  {
     slug: "enterizo-tiras",
     title: "Enterizo tiras",
     price: 49,
