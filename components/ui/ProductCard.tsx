@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import WishlistHeart from "@/components/WishlistHeart"
@@ -43,6 +43,8 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
   const displayImage = image || fallbackImage || "/placeholder.svg"
   const isOutOfStock = inventory === 0
   const { values } = useImageDebug()
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [containerWidth, setContainerWidth] = useState(350)
 
   // ✅ Modo Framing
   const { isFramingMode, selectedImage, setSelectedImage } = useImageFraming()
@@ -53,6 +55,19 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
 
   // ✅ Usar hook para obtener transform del debugger (MÁXIMA PRIORIDAD)
   const { transform: debuggerTransform, isMounted } = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'card')
+
+  // ✅ Medir el contenedor REAL y actualizar cuando cambie el tamaño
+  useEffect(() => {
+    const updateSize = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth)
+      }
+    }
+
+    updateSize()
+    window.addEventListener('resize', updateSize)
+    return () => window.removeEventListener('resize', updateSize)
+  }, [])
 
   // Usar hover image si está disponible y estamos hovering
   const currentImage = isHovering && hoverImage ? hoverImage : displayImage
@@ -85,16 +100,19 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
     const imagePath = displayImage.toLowerCase()
     const hoverScale = isHovering ? 1.05 : 1
 
-    // ✅ PRIORIDAD 0 (MÁXIMA): Transform desde el debugger - RESPONSIVE usando porcentajes
+    // ✅ PRIORIDAD 0 (MÁXIMA): Transform desde el debugger - ESCALADO PROPORCIONAL AL CONTENEDOR
     if (debuggerTransform) {
-      // Convertir pixels a porcentaje del contenedor
-      // Asumimos contenedor base de 350px (aprox tamaño del product card)
+      // Calcular factor de escala basado en el tamaño REAL del contenedor
+      // Los ajustes originales fueron hechos en contenedor de ~350px
       const baseContainerSize = 350
-      const xPercent = (debuggerTransform.x / baseContainerSize) * 100
-      const yPercent = (debuggerTransform.y / baseContainerSize) * 100
+      const scaleFactor = containerWidth / baseContainerSize
+
+      // Aplicar los valores EXACTOS del usuario, pero escalados proporcionalmente
+      const scaledX = debuggerTransform.x * scaleFactor
+      const scaledY = debuggerTransform.y * scaleFactor
 
       return {
-        transform: `translate(${xPercent}%, ${yPercent}%) scale(${debuggerTransform.scale * hoverScale})`,
+        transform: `translate(${scaledX}px, ${scaledY}px) scale(${debuggerTransform.scale * hoverScale})`,
         transformOrigin: 'center center'
       }
     }
@@ -171,6 +189,7 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
   const renderCardContent = () => (
     <>
       <div
+        ref={containerRef}
         className={`relative aspect-[3/4] w-full overflow-hidden rounded-md transition-all ${
           isFramingMode ? 'ring-2 ring-blue-400 ring-offset-2 hover:ring-blue-600' : ''
         } ${isSelected ? 'ring-4 ring-blue-600 ring-offset-4' : ''}`}

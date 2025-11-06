@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight, Star } from "lucide-react"
@@ -30,11 +30,26 @@ function RailItem({ item }: { item: Item }) {
   const [isHovering, setIsHovering] = useState(false)
   const { values } = useImageDebug()
   const { isFramingMode, selectedImage, setSelectedImage } = useImageFraming()
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [containerWidth, setContainerWidth] = useState(300)
 
   // Parsear imagen para obtener transform
   const { productSlug: imageParsedSlug, colorSlug, imageIndex } = parseImagePath(item.image)
   const actualProductSlug = imageParsedSlug || item.slug
   const { transform: debuggerTransform, isMounted } = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'rail')
+
+  // Medir el contenedor REAL y actualizar cuando cambie el tamaño
+  useEffect(() => {
+    const updateSize = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth)
+      }
+    }
+
+    updateSize()
+    window.addEventListener('resize', updateSize)
+    return () => window.removeEventListener('resize', updateSize)
+  }, [])
 
   const isSelected =
     isFramingMode &&
@@ -63,16 +78,19 @@ function RailItem({ item }: { item: Item }) {
     const productSlug = item.slug.toLowerCase()
     const imagePath = item.image.toLowerCase()
 
-    // PRIORIDAD 0: Transform del debugger - RESPONSIVE usando porcentajes
+    // PRIORIDAD 0: Transform del debugger - ESCALADO PROPORCIONAL AL CONTENEDOR
     if (debuggerTransform) {
-      // Convertir pixels a porcentaje del contenedor
-      // Asumimos contenedor base de 300px (aprox tamaño del rail item)
+      // Calcular factor de escala basado en el tamaño REAL del contenedor
+      // Los ajustes originales fueron hechos en contenedor de ~300px
       const baseContainerSize = 300
-      const xPercent = (debuggerTransform.x / baseContainerSize) * 100
-      const yPercent = (debuggerTransform.y / baseContainerSize) * 100
+      const scaleFactor = containerWidth / baseContainerSize
+
+      // Aplicar los valores EXACTOS del usuario, pero escalados proporcionalmente
+      const scaledX = debuggerTransform.x * scaleFactor
+      const scaledY = debuggerTransform.y * scaleFactor
 
       return {
-        transform: `translate(${xPercent}%, ${yPercent}%) scale(${debuggerTransform.scale})`,
+        transform: `translate(${scaledX}px, ${scaledY}px) scale(${debuggerTransform.scale})`,
         transformOrigin: 'center center'
       }
     }
@@ -119,6 +137,7 @@ function RailItem({ item }: { item: Item }) {
   const content = (
     <>
       <div
+        ref={containerRef}
         className={`relative w-full aspect-square overflow-hidden bg-neutral-100 mb-3 transition-all ${
           isSelected ? 'ring-4 ring-blue-600 ring-offset-4' : ''
         } ${isFramingMode && !isSelected ? 'ring-2 ring-blue-400 ring-offset-2 hover:ring-blue-600' : ''}`}
