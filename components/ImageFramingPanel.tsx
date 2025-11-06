@@ -223,7 +223,7 @@ export function ImageFramingPanel() {
                   Exportar
                 </Button>
               </div>
-              <Button onClick={clearAll} variant="destructive" size="sm" className="w-full">
+              <Button onClick={clearAll} variant="outline" size="sm" className="w-full border-red-600 text-red-600 hover:bg-red-50">
                 🗑️ Limpiar Todo
               </Button>
             </div>
@@ -261,7 +261,7 @@ export function ImageFramingPanel() {
                 <Download className="w-3 h-3 mr-1" />
                 Exportar Todo
               </Button>
-              <Button onClick={clearAll} variant="destructive" size="sm" className="w-full">
+              <Button onClick={clearAll} variant="outline" size="sm" className="w-full border-red-600 text-red-600 hover:bg-red-50">
                 🗑️ Limpiar Todo
               </Button>
             </div>
