@@ -63,22 +63,16 @@ function RailItem({ item }: { item: Item }) {
     const productSlug = item.slug.toLowerCase()
     const imagePath = item.image.toLowerCase()
 
-    // 🔍 DEBUG: Ver qué está pasando con los transforms
-    if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
-      console.log('🔍 GymRail Transform Debug:', {
-        itemSlug: item.slug,
-        actualProductSlug,
-        colorSlug,
-        imageIndex,
-        debuggerTransform,
-        imagePath: item.image
-      })
-    }
-
-    // PRIORIDAD 0: Transform del debugger - EXACTO en todos los dispositivos
+    // PRIORIDAD 0: Transform del debugger - RESPONSIVE usando porcentajes
     if (debuggerTransform) {
+      // Convertir pixels a porcentaje del contenedor
+      // Asumimos contenedor base de 300px (aprox tamaño del rail item)
+      const baseContainerSize = 300
+      const xPercent = (debuggerTransform.x / baseContainerSize) * 100
+      const yPercent = (debuggerTransform.y / baseContainerSize) * 100
+
       return {
-        transform: `translate(${debuggerTransform.x}px, ${debuggerTransform.y}px) scale(${debuggerTransform.scale})`,
+        transform: `translate(${xPercent}%, ${yPercent}%) scale(${debuggerTransform.scale})`,
         transformOrigin: 'center center'
       }
     }

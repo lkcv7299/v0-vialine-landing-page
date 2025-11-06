@@ -85,10 +85,16 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
     const imagePath = displayImage.toLowerCase()
     const hoverScale = isHovering ? 1.05 : 1
 
-    // ✅ PRIORIDAD 0 (MÁXIMA): Transform desde el debugger - EXACTO en todos los dispositivos
+    // ✅ PRIORIDAD 0 (MÁXIMA): Transform desde el debugger - RESPONSIVE usando porcentajes
     if (debuggerTransform) {
+      // Convertir pixels a porcentaje del contenedor
+      // Asumimos contenedor base de 350px (aprox tamaño del product card)
+      const baseContainerSize = 350
+      const xPercent = (debuggerTransform.x / baseContainerSize) * 100
+      const yPercent = (debuggerTransform.y / baseContainerSize) * 100
+
       return {
-        transform: `translate(${debuggerTransform.x}px, ${debuggerTransform.y}px) scale(${debuggerTransform.scale * hoverScale})`,
+        transform: `translate(${xPercent}%, ${yPercent}%) scale(${debuggerTransform.scale * hoverScale})`,
         transformOrigin: 'center center'
       }
     }
