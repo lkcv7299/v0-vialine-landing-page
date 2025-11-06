@@ -5,6 +5,7 @@ interface ImageTransform {
   y: number
   scale: number
   context?: 'card' | 'rail' | 'gallery'
+  containerWidth?: number
 }
 
 interface ProductTransforms {
