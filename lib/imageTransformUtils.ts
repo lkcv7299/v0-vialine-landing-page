@@ -26,8 +26,11 @@ export function parseImagePath(imagePath: string): {
       const parts = fullName.split('-')
       const colorSlug = parts[parts.length - 1] || ''
 
+      // Quitar el color del final para obtener el productSlug
+      const productSlug = parts.slice(0, -1).join('-')
+
       return {
-        productSlug: fullName, // Nombre completo sin número
+        productSlug, // Sin el color
         colorSlug,
         imageIndex: parseInt(imageNumber) - 1
       }
@@ -36,9 +39,10 @@ export function parseImagePath(imagePath: string): {
     // Sin número
     const parts = nameWithoutExt.split('-')
     const colorSlug = parts[parts.length - 1] || ''
+    const productSlug = parts.slice(0, -1).join('-')
 
     return {
-      productSlug: nameWithoutExt,
+      productSlug,
       colorSlug,
       imageIndex: 0
     }
