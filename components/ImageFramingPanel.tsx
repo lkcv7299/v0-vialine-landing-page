@@ -126,7 +126,7 @@ export function ImageFramingPanel() {
               <Slider
                 value={[currentTransform.x]}
                 onValueChange={([val]) =>
-                  setCurrentTransform((prev) => ({ ...prev, x: val }))
+                  setCurrentTransform({ ...currentTransform, x: val })
                 }
                 min={-500}
                 max={500}
@@ -137,10 +137,10 @@ export function ImageFramingPanel() {
                 type="number"
                 value={currentTransform.x}
                 onChange={(e) =>
-                  setCurrentTransform((prev) => ({
-                    ...prev,
+                  setCurrentTransform({
+                    ...currentTransform,
                     x: parseFloat(e.target.value) || 0,
-                  }))
+                  })
                 }
                 className="h-8 text-sm"
               />
@@ -155,7 +155,7 @@ export function ImageFramingPanel() {
               <Slider
                 value={[currentTransform.y]}
                 onValueChange={([val]) =>
-                  setCurrentTransform((prev) => ({ ...prev, y: val }))
+                  setCurrentTransform({ ...currentTransform, y: val })
                 }
                 min={-500}
                 max={500}
@@ -166,10 +166,10 @@ export function ImageFramingPanel() {
                 type="number"
                 value={currentTransform.y}
                 onChange={(e) =>
-                  setCurrentTransform((prev) => ({
-                    ...prev,
+                  setCurrentTransform({
+                    ...currentTransform,
                     y: parseFloat(e.target.value) || 0,
-                  }))
+                  })
                 }
                 className="h-8 text-sm"
               />
@@ -186,7 +186,7 @@ export function ImageFramingPanel() {
               <Slider
                 value={[currentTransform.scale]}
                 onValueChange={([val]) =>
-                  setCurrentTransform((prev) => ({ ...prev, scale: val }))
+                  setCurrentTransform({ ...currentTransform, scale: val })
                 }
                 min={0.5}
                 max={3}
@@ -197,10 +197,10 @@ export function ImageFramingPanel() {
                 type="number"
                 value={currentTransform.scale}
                 onChange={(e) =>
-                  setCurrentTransform((prev) => ({
-                    ...prev,
+                  setCurrentTransform({
+                    ...currentTransform,
                     scale: parseFloat(e.target.value) || 1,
-                  }))
+                  })
                 }
                 step={0.01}
                 className="h-8 text-sm"
