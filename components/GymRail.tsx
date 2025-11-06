@@ -63,14 +63,10 @@ function RailItem({ item }: { item: Item }) {
     const productSlug = item.slug.toLowerCase()
     const imagePath = item.image.toLowerCase()
 
-    // ✅ FACTOR RESPONSIVE: Escalar transforms según viewport width
-    const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 1920
-    const responsiveFactor = Math.max(0.2, Math.min(1.0, viewportWidth / 1920))
-
-    // PRIORIDAD 0: Transform del debugger
+    // PRIORIDAD 0: Transform del debugger - EXACTO en todos los dispositivos
     if (debuggerTransform) {
       return {
-        transform: `translate(${debuggerTransform.x * responsiveFactor}px, ${debuggerTransform.y * responsiveFactor}px) scale(${debuggerTransform.scale})`,
+        transform: `translate(${debuggerTransform.x}px, ${debuggerTransform.y}px) scale(${debuggerTransform.scale})`,
         transformOrigin: 'center center'
       }
     }

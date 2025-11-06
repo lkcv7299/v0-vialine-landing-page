@@ -85,17 +85,10 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
     const imagePath = displayImage.toLowerCase()
     const hoverScale = isHovering ? 1.05 : 1
 
-    // ✅ FACTOR RESPONSIVE: Escalar transforms según viewport width
-    // Desktop (1920px): factor = 1.0 (100% de los valores originales)
-    // Tablet (768px): factor = 0.4 (40% de los valores)
-    // Mobile (390px): factor = 0.2 (20% de los valores)
-    const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 1920
-    const responsiveFactor = Math.max(0.2, Math.min(1.0, viewportWidth / 1920))
-
-    // ✅ PRIORIDAD 0 (MÁXIMA): Transform desde el debugger
+    // ✅ PRIORIDAD 0 (MÁXIMA): Transform desde el debugger - EXACTO en todos los dispositivos
     if (debuggerTransform) {
       return {
-        transform: `translate(${debuggerTransform.x * responsiveFactor}px, ${debuggerTransform.y * responsiveFactor}px) scale(${debuggerTransform.scale * hoverScale})`,
+        transform: `translate(${debuggerTransform.x}px, ${debuggerTransform.y}px) scale(${debuggerTransform.scale * hoverScale})`,
         transformOrigin: 'center center'
       }
     }
