@@ -63,6 +63,18 @@ function RailItem({ item }: { item: Item }) {
     const productSlug = item.slug.toLowerCase()
     const imagePath = item.image.toLowerCase()
 
+    // 🔍 DEBUG: Ver qué está pasando con los transforms
+    if (typeof window !== 'undefined' && window.location.hostname !== 'localhost') {
+      console.log('🔍 GymRail Transform Debug:', {
+        itemSlug: item.slug,
+        actualProductSlug,
+        colorSlug,
+        imageIndex,
+        debuggerTransform,
+        imagePath: item.image
+      })
+    }
+
     // PRIORIDAD 0: Transform del debugger - EXACTO en todos los dispositivos
     if (debuggerTransform) {
       return {

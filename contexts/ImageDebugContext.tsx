@@ -12,12 +12,12 @@ const DEFAULT_VALUES = {
   cardBottomTranslateY: -3,
   cardBottomTranslateX: 0,
 
-  // Para GymRail (carruseles de home) - VALORES NEUTROS
-  railTopScale: 1.0,
-  railTopTranslateY: 0,
+  // Para GymRail (carruseles de home) - VALORES AJUSTADOS
+  railTopScale: 1.7,
+  railTopTranslateY: 15,
   railTopTranslateX: 0,
-  railBottomScale: 1.0,
-  railBottomTranslateY: 0,
+  railBottomScale: 1.5,
+  railBottomTranslateY: -15,
   railBottomTranslateX: 0,
 
   // Para productos de niña - con h-[180%]
