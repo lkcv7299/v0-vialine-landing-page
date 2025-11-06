@@ -1,44 +1,44 @@
 "use client"
 import { useEffect } from 'react'
 
-// Transformaciones del debugger guardadas
+// Transformaciones exactas del debugger
 const SAVED_TRANSFORMS = {
-  "camiseta-cuello-alto": {
+  "camiseta-cuello-alto-azul-marino-cuello-alto": {
     "azulmarino": {
       "0": {
         "card": { x: 0, y: 64, scale: 1.5, context: "card" }
       }
     }
   },
-  "camiseta-manga-larga": {
+  "camiseta-manga-larga-azul-marino-manga-larga-azul": {
     "marino": {
       "1": {
         "card": { x: 0, y: 0, scale: 1, context: "card" }
       }
     }
   },
-  "camiseta-manga-corta": {
+  "camiseta-manga-corta-azul-marino-camiseta": {
     "azulmarino": {
       "0": {
         "card": { x: 0, y: 64, scale: 1.5, context: "card" }
       }
     }
   },
-  "camiseta-gia": {
+  "camiseta-gia-blanco-camiseta-gia": {
     "blanco": {
       "0": {
         "card": { x: 6, y: 80, scale: 1.5, context: "card" }
       }
     }
   },
-  "short-slim": {
+  "short-slim-suplex-liso-premium-acero-short-slim": {
     "acero": {
       "0": {
         "card": { x: 0, y: -53, scale: 1.36, context: "card" }
       }
     }
   },
-  "short-ciclista": {
+  "short-ciclista-active": {
     "aqua": {
       "0": {
         "card": { x: 0, y: -69, scale: 1.49, context: "card" }
@@ -52,14 +52,14 @@ const SAVED_TRANSFORMS = {
       }
     }
   },
-  "short-brasil": {
+  "short-brasil-beige-short-brasil": {
     "beige": {
       "0": {
         "card": { x: 0, y: -69, scale: 1.49, context: "card" }
       }
     }
   },
-  "maxi-short": {
+  "maxi-short-beige-MAXI-SHORT": {
     "BEIGE": {
       "0": {
         "card": { x: 0, y: -69, scale: 1.49, context: "card" }
@@ -73,21 +73,21 @@ const SAVED_TRANSFORMS = {
       }
     }
   },
-  "mini-short": {
+  "mini-short-beige-mini-short": {
     "beige": {
       "0": {
         "card": { x: 0, y: -69, scale: 1.49, context: "card" }
       }
     }
   },
-  "body-manga-larga": {
+  "body-manga-larga-beige-manga-larga": {
     "beige": {
       "0": {
         "card": { x: 0, y: 64, scale: 1.5, context: "card" }
       }
     }
   },
-  "top-afrodita": {
+  "top-afrodita-suplex-liso-premium-azulino-afrodita": {
     "azulino": {
       "0": {
         "card": { x: 0, y: 2, scale: 1, context: "card" }
@@ -101,7 +101,7 @@ const SAVED_TRANSFORMS = {
       }
     }
   },
-  "top-paradise": {
+  "top-paradise-suplex-liso-premium-azulino-paradise": {
     "azulino": {
       "0": {
         "card": { x: 0, y: 0, scale: 1, context: "card" }
@@ -149,15 +149,28 @@ const SAVED_TRANSFORMS = {
         "card": { x: 0, y: 0, scale: 1, context: "card" }
       }
     }
+  },
+  "top-jungle": {
+    "azulino": {
+      "0": {
+        "card": { x: 0, y: 0, scale: 1, context: "card" }
+      }
+    }
+  },
+  "camiseta-tropical": {
+    "": {
+      "0": {
+        "undefined": { x: 0, y: 0, scale: 1 }
+      }
+    }
   }
 }
 
 export default function ImageTransformLoader() {
   useEffect(() => {
-    // Cargar transformaciones automáticamente en localStorage
     if (typeof window !== 'undefined') {
       localStorage.setItem('imageTransforms', JSON.stringify(SAVED_TRANSFORMS))
-      console.log('✅ Transformaciones cargadas en localStorage')
+      console.log('✅ Transformaciones cargadas:', Object.keys(SAVED_TRANSFORMS).length, 'productos')
     }
   }, [])
 
