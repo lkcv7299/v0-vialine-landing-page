@@ -51,17 +51,8 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
   const { productSlug: imageParsedSlug, colorSlug, imageIndex } = parseImagePath(displayImage)
   const actualProductSlug = imageParsedSlug || slug
 
-  // DEBUG
-  console.log('🔍', {
-    displayImage,
-    parsed: { productSlug: imageParsedSlug, colorSlug, imageIndex },
-    actualProductSlug
-  })
-
   // ✅ Usar hook para obtener transform del debugger (MÁXIMA PRIORIDAD)
   const { transform: debuggerTransform, isMounted } = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'card')
-
-  console.log('🎯', { actualProductSlug, debuggerTransform })
 
   // Usar hover image si está disponible y estamos hovering
   const currentImage = isHovering && hoverImage ? hoverImage : displayImage
