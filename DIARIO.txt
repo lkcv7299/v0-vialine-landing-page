@@ -6455,3 +6455,418 @@ Prioridad BAJA:
 ───────────────────────────────────────────────────────────────────────────────
   FIN DE SESIÓN 9
 ───────────────────────────────────────────────────────────────────────────────
+
+
+═══════════════════════════════════════════════════════════════════════════════
+  SESIÓN 10 - 5 de Noviembre 2025
+═══════════════════════════════════════════════════════════════════════════════
+
+OBJETIVO PRINCIPAL:
+  Recuperar transformaciones de imágenes perdidas después de eliminar debugger
+
+ESTADO INICIAL:
+  ❌ Todas las imágenes volvieron a sus posiciones originales (sin zoom/ajuste)
+  ❌ ImageTransformLoader existía pero no funcionaba correctamente
+  ❌ parseImagePath generaba slugs que no matcheaban con las keys del JSON
+
+ESTADO FINAL:
+  ✅ Sistema de transforms completamente funcional
+  ✅ Imágenes se cargan correctamente en /mujer y carrusel home
+  ✅ Build de Vercel exitoso
+  ✅ Debugger panel funciona solo en development
+
+
+───────────────────────────────────────────────────────────────────────────────
+  ARQUITECTURA DEL SISTEMA DE TRANSFORMS
+───────────────────────────────────────────────────────────────────────────────
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     FLUJO DE IMAGE TRANSFORMS                                │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+1. CARGA INICIAL (App Mount)
+   ────────────────────────────────────────────────────────────────────────
+   ImageTransformLoader.tsx
+     ↓
+   useEffect(() => {
+     localStorage.setItem('imageTransforms', JSON.stringify(SAVED_TRANSFORMS))
+   }, [])
+
+   ⚠️  CRÍTICO: Este componente debe estar en layout.tsx
+   ⚠️  Se ejecuta UNA VEZ al montar la app
+   ⚠️  Sobrescribe localStorage con los valores hardcodeados
+
+2. PARSING DE IMAGEN (Por cada ProductCard/GymRail)
+   ────────────────────────────────────────────────────────────────────────
+   Ruta imagen: "/productos/mujer/tops/camiseta-cuello-alto-azul-marino-cuello-alto-azulmarino0.webp"
+     ↓
+   parseImagePath(displayImage)
+     ↓
+   Extrae:
+     productSlug: "camiseta-cuello-alto-azul-marino-cuello-alto"  ← SIN color
+     colorSlug: "azulmarino"
+     imageIndex: 0
+
+   ⚠️  CRÍTICO: productSlug NO DEBE incluir el color al final
+   ⚠️  El color va SEPARADO en colorSlug
+
+3. RECUPERACIÓN DE TRANSFORM (Hook)
+   ────────────────────────────────────────────────────────────────────────
+   useImageTransform(productSlug, colorSlug, imageIndex, 'card')
+     ↓
+   Busca en localStorage:
+     transforms[productSlug][colorSlug][imageIndex][context]
+
+   Ejemplo:
+     transforms["camiseta-cuello-alto-azul-marino-cuello-alto"]["azulmarino"]["0"]["card"]
+     → { x: 0, y: 64, scale: 1.5 }
+
+4. APLICACIÓN DEL TRANSFORM (CSS)
+   ────────────────────────────────────────────────────────────────────────
+   ProductCard.tsx / GymRail.tsx
+     ↓
+   if (debuggerTransform) {
+     return {
+       transform: `translate(${x}px, ${y}px) scale(${scale})`,
+       transformOrigin: 'center center'
+     }
+   }
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     PRIORIDADES DE TRANSFORMS                                │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+PRIORIDAD 0 (MÁXIMA): Transform del debugger (localStorage)
+  → Si existe: se usa este y se ignoran todos los demás
+
+PRIORIDAD 1: PRODUCT_OVERRIDES hardcoded
+  → Overrides permanentes para productos específicos
+
+PRIORIDAD 2: Valores generales por tipo
+  → values.cardTopScale, values.railBottomScale, etc.
+
+
+───────────────────────────────────────────────────────────────────────────────
+  PROBLEMA RESUELTO 1: Transforms perdidos después de eliminar debugger
+───────────────────────────────────────────────────────────────────────────────
+
+❌ SÍNTOMA:
+  Usuario reportó: "sigue igual pendejo por las puras trabajamos tanto!?"
+  Todas las imágenes volvieron a posición default sin zoom/ajuste
+
+🔍 DIAGNÓSTICO:
+  1. En sesión anterior se eliminó el debugger panel completamente
+  2. El debugger era quien poblaba localStorage con los transforms
+  3. Al eliminarlo, localStorage quedó vacío
+  4. Los componentes no encontraban transforms → usaban fallbacks
+
+✅ SOLUCIÓN:
+  Crear ImageTransformLoader.tsx que auto-carga transforms en mount
+
+  Ubicación: components/ImageTransformLoader.tsx
+
+  Implementación:
+    - Hardcodear SAVED_TRANSFORMS con los valores del debugger
+    - useEffect ejecuta localStorage.setItem() al montar
+    - Incluye AMBOS contextos: "card" y "rail"
+    - Se importa en app/layout.tsx
+
+
+───────────────────────────────────────────────────────────────────────────────
+  PROBLEMA RESUELTO 2: parseImagePath incluía color en productSlug
+───────────────────────────────────────────────────────────────────────────────
+
+❌ SÍNTOMA:
+  Console.log mostraba:
+    actualProductSlug: "camiseta-cuello-alto-azul-marino-cuello-alto-azulmarino"
+    debuggerTransform: null
+
+  JSON keys eran:
+    "camiseta-cuello-alto-azul-marino-cuello-alto"
+
+  ❌ NO MATCHEABAN → transforms no se encontraban
+
+🔍 DIAGNÓSTICO:
+  parseImagePath estaba generando productSlug con el color incluido al final
+
+✅ SOLUCIÓN:
+  Modificar parseImagePath para REMOVER el color del productSlug
+
+  Ubicación: lib/imageTransformUtils.ts
+
+🎯 EJEMPLO DE TRANSFORMACIÓN:
+
+Input: "/productos/mujer/tops/camiseta-cuello-alto-azul-marino-cuello-alto-azulmarino0.webp"
+
+ANTES (incorrecto):
+  productSlug: "camiseta-cuello-alto-azul-marino-cuello-alto-azulmarino"
+  colorSlug: undefined
+  imageIndex: 0
+
+DESPUÉS (correcto):
+  productSlug: "camiseta-cuello-alto-azul-marino-cuello-alto"
+  colorSlug: "azulmarino"
+  imageIndex: 0
+
+
+───────────────────────────────────────────────────────────────────────────────
+  PROBLEMA RESUELTO 3: Errores de TypeScript en Vercel Build
+───────────────────────────────────────────────────────────────────────────────
+
+❌ ERROR 1: Function updater not assignable to ImageTransform
+
+Ubicación: components/ImageFramingPanel.tsx líneas 129, 158, 189
+
+🔍 CAUSA:
+  setCurrentTransform usaba function updater syntax pero TypeScript esperaba valor directo
+
+ANTES (incorrecto):
+  setCurrentTransform((prev) => ({ ...prev, x: val }))
+
+DESPUÉS (correcto):
+  setCurrentTransform({ ...currentTransform, x: val })
+
+✅ SOLUCIÓN:
+  Reemplazar 6 instancias (x, y, scale sliders + inputs)
+
+─────────────────────────────────────────────────────────────────────────────
+
+❌ ERROR 2: variant="destructive" no existe en Button component
+
+Ubicación: components/ImageFramingPanel.tsx líneas 226, 264
+
+🔍 CAUSA:
+  Button component solo acepta 4 variants: default, outline, ghost, link
+  No tiene variant "destructive"
+
+ANTES (incorrecto):
+  <Button onClick={clearAll} variant="destructive" size="sm" className="w-full">
+
+DESPUÉS (correcto):
+  <Button onClick={clearAll} variant="outline" size="sm"
+    className="w-full border-red-600 text-red-600 hover:bg-red-50">
+
+✅ SOLUCIÓN:
+  Usar variant="outline" + clases CSS para estilo rojo
+
+
+───────────────────────────────────────────────────────────────────────────────
+  ARCHIVOS MODIFICADOS EN ESTA SESIÓN
+───────────────────────────────────────────────────────────────────────────────
+
+✅ components/ImageTransformLoader.tsx
+   - Agregados 23 productos con transforms para "card" y "rail"
+   - Agregado rail context para carrusel
+
+✅ lib/imageTransformUtils.ts
+   - Fix crítico: productSlug ahora excluye el color
+   - colorSlug extraído correctamente
+
+✅ components/ImageFramingPanel.tsx
+   - Fix: Reemplazado function updater con valor directo (6 instancias)
+   - Fix: Cambiado variant="destructive" a variant="outline" (2 instancias)
+
+
+───────────────────────────────────────────────────────────────────────────────
+  COMMITS DE ESTA SESIÓN
+───────────────────────────────────────────────────────────────────────────────
+
+1. 4668a06 - Add rail transforms to ImageTransformLoader for carousel
+2. 20d6284 - Fix TypeScript build errors in ImageFramingPanel (function updater)
+3. 3494f01 - Fix Button variant error - remove destructive variant
+
+
+───────────────────────────────────────────────────────────────────────────────
+  LECCIONES APRENDIDAS - CRÍTICAS PARA FUTURAS SESIONES
+───────────────────────────────────────────────────────────────────────────────
+
+🔴 LECCIÓN 1: parseImagePath DEBE separar productSlug y colorSlug
+
+  ❌ NUNCA HACER:
+    productSlug: "camiseta-cuello-alto-azul-marino-cuello-alto-azulmarino"
+
+  ✅ SIEMPRE HACER:
+    productSlug: "camiseta-cuello-alto-azul-marino-cuello-alto"
+    colorSlug: "azulmarino"
+
+  💡 POR QUÉ:
+    - Las keys en SAVED_TRANSFORMS son productSlug[colorSlug]
+    - Si incluyes color en productSlug, NUNCA encontrará el match
+    - El color es una dimensión SEPARADA en la estructura de datos
+
+
+🔴 LECCIÓN 2: ImageTransformLoader debe incluir TODOS los contextos
+
+  ❌ NUNCA HACER:
+    Solo incluir "card" context
+
+  ✅ SIEMPRE HACER:
+    Incluir "card", "rail", "gallery" según dónde se use la imagen
+
+  💡 POR QUÉ:
+    - ProductCard usa context: "card"
+    - GymRail usa context: "rail"
+    - ProductGallery usa context: "gallery"
+    - Si falta un context, ese componente no encontrará su transform
+
+
+🔴 LECCIÓN 3: setState con function updater vs valor directo
+
+  Context: Si TypeScript da error de tipo en setState
+
+  ❌ NUNCA HACER:
+    setCurrentTransform((prev) => ({ ...prev, x: val }))
+
+  ✅ SIEMPRE HACER:
+    setCurrentTransform({ ...currentTransform, x: val })
+
+  💡 POR QUÉ:
+    - Algunos types de useState no aceptan function updater
+    - Vercel build TypeScript es MÁS ESTRICTO que local dev
+    - Usar valor directo es más simple y evita este error
+
+
+🔴 LECCIÓN 4: Conocer las variants disponibles en componentes
+
+  ❌ NUNCA ASUMIR:
+    Que un componente tiene variant="destructive" sin verificar
+
+  ✅ SIEMPRE VERIFICAR:
+    Leer components/ui/button.tsx para ver variants disponibles
+
+  💡 COMPONENTES CON VARIANTS LIMITADAS:
+    - Button: default, outline, ghost, link
+    - NO tiene: destructive, secondary, success, warning
+
+
+🔴 LECCIÓN 5: localStorage persistence requiere componente dedicado
+
+  ❌ NUNCA HACER:
+    Confiar en que el debugger siempre estará disponible
+
+  ✅ SIEMPRE HACER:
+    Crear ImageTransformLoader que persiste independientemente
+
+  💡 POR QUÉ:
+    - El debugger puede ser removido en producción
+    - Los transforms deben persistir sin debugger
+    - Un componente auto-loading garantiza que siempre estén disponibles
+
+
+🟡 LECCIÓN 6: Debugging console.log strategy
+
+  ✅ ESTRATEGIA EFECTIVA:
+    1. Agregar console.log al inicio de getImageStyle()
+    2. Log: actualProductSlug, colorSlug, imageIndex
+    3. Log: debuggerTransform (si existe o null)
+    4. Verificar que los slugs coincidan con las keys del JSON
+    5. REMOVER logs después de fix
+
+  💡 POR QUÉ:
+    - Muestra exactamente qué está buscando
+    - Muestra si encuentra o no el transform
+    - Permite verificar el mismatch de keys
+
+
+───────────────────────────────────────────────────────────────────────────────
+  CHECKLIST PARA DEBUGGING IMAGE TRANSFORMS
+───────────────────────────────────────────────────────────────────────────────
+
+Si las imágenes no se ven correctamente, verificar EN ORDEN:
+
+□ 1. ¿ImageTransformLoader está en layout.tsx?
+     Ubicación: app/layout.tsx
+     Debe estar DENTRO de ImageFramingProvider
+
+□ 2. ¿localStorage tiene 'imageTransforms'?
+     En browser console: localStorage.getItem('imageTransforms')
+     Debe retornar JSON con productos
+
+□ 3. ¿parseImagePath separa correctamente productSlug y colorSlug?
+     Agregar console.log en parseImagePath
+     Verificar que productSlug NO incluya color al final
+
+□ 4. ¿Las keys en SAVED_TRANSFORMS coinciden con productSlug?
+     Comparar:
+       - Output de parseImagePath
+       - Keys en ImageTransformLoader.tsx
+     Deben ser EXACTAMENTE iguales (case-sensitive)
+
+□ 5. ¿El context es correcto?
+     ProductCard → 'card'
+     GymRail → 'rail'
+     ProductGallery → 'gallery'
+
+□ 6. ¿El componente llama a useImageTransform?
+     Verificar que pasa productSlug, colorSlug, imageIndex, context
+
+□ 7. ¿getImageStyle aplica el transform correctamente?
+     Debe usar debuggerTransform si existe
+     Formato: `translate(${x}px, ${y}px) scale(${scale})`
+
+
+───────────────────────────────────────────────────────────────────────────────
+  CÓDIGO DE REFERENCIA RÁPIDA
+───────────────────────────────────────────────────────────────────────────────
+
+📄 CÓMO AGREGAR UN NUEVO PRODUCTO A TRANSFORMS:
+
+1. Abrir: components/ImageTransformLoader.tsx
+
+2. Agregar entrada en SAVED_TRANSFORMS siguiendo este patrón:
+
+  "nombre-producto-sin-color": {  // ← productSlug SIN color
+    "rojo": {                      // ← colorSlug
+      "0": {                       // ← imageIndex (0-based)
+        "card": {                  // ← Para ProductCard
+          x: 0,
+          y: 64,
+          scale: 1.5,
+          context: "card"
+        },
+        "rail": {                  // ← Para GymRail (carousel)
+          x: 0,
+          y: 163,
+          scale: 1.97,
+          context: "rail"
+        }
+      }
+    }
+  }
+
+3. NO REQUIERE restart del dev server
+   ✅ Los cambios se aplican en siguiente refresh
+
+
+───────────────────────────────────────────────────────────────────────────────
+  PENDIENTES PARA PRÓXIMA SESIÓN
+───────────────────────────────────────────────────────────────────────────────
+
+🟢 NADA PENDIENTE
+
+  ✅ Sistema de transforms completamente funcional
+  ✅ Build de Vercel exitoso
+  ✅ Imágenes se ven correctas en /mujer y carousel
+  ✅ Debugger panel funciona en dev mode
+
+
+───────────────────────────────────────────────────────────────────────────────
+  NOTAS ADICIONALES
+───────────────────────────────────────────────────────────────────────────────
+
+⚠️  IMPORTANTE: NO ELIMINAR ImageTransformLoader.tsx
+    Es el componente que mantiene los transforms persistentes
+    Sin él, todos los ajustes se pierden
+
+⚠️  IMPORTANTE: Al agregar nuevos productos con transforms
+    Verificar que las keys sigan el patrón:
+    [productSlug-sin-color][color][index][context]
+
+✅  DEBUGGER PANEL disponible presionando: Ctrl+Shift+F
+    Solo visible en development mode
+    No se muestra en producción (Vercel)
+
+
+───────────────────────────────────────────────────────────────────────────────
+  FIN DE SESIÓN 10
+───────────────────────────────────────────────────────────────────────────────
