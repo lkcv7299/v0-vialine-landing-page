@@ -85,49 +85,31 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
     const imagePath = displayImage.toLowerCase()
     const hoverScale = isHovering ? 1.05 : 1
 
-    // ⚠️ Detectar mobile para ajustar transforms
+    // ⚠️ EN MOBILE: NO aplicar NINGÚN transform, las imágenes originales se ven mejor
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
-
-    // ✅ PRIORIDAD 0 (MÁXIMA): Transform desde el debugger
-    if (debuggerTransform) {
-      // En mobile, reducir intensidad para evitar cortes visuales
-      if (isMobile) {
-        return {
-          transform: `translate(${debuggerTransform.x * 0.5}px, ${debuggerTransform.y * 0.5}px) scale(${(1 + (debuggerTransform.scale - 1) * 0.6) * hoverScale})`,
-          transformOrigin: 'center center'
-        }
+    if (isMobile) {
+      return {
+        transform: 'scale(1)',
+        transformOrigin: 'center center'
       }
+    }
+
+    // ✅ PRIORIDAD 0 (MÁXIMA): Transform desde el debugger - SOLO DESKTOP
+    if (debuggerTransform) {
       return {
         transform: `translate(${debuggerTransform.x}px, ${debuggerTransform.y}px) scale(${debuggerTransform.scale * hoverScale})`,
         transformOrigin: 'center center'
       }
     }
 
-    // ✅ PRIORIDAD 1: Buscar override PERMANENTE específico del producto
+    // ✅ PRIORIDAD 1: Buscar override PERMANENTE específico del producto - SOLO DESKTOP
     const permanentOverride = PRODUCT_OVERRIDES[slug]
     if (permanentOverride) {
-      // En mobile, reducir la intensidad de los overrides
-      if (isMobile) {
-        return {
-          transform: `scale(${1 + (permanentOverride.scale - 1) * 0.5 * hoverScale}) translateY(${permanentOverride.translateY * 0.4}%) translateX(${permanentOverride.translateX * 0.4}%)`,
-          transformOrigin: productSlug.includes('top') || productSlug.includes('camiseta') || productSlug.includes('body')
-            ? 'center top'
-            : 'center bottom'
-        }
-      }
       return {
         transform: `scale(${permanentOverride.scale * hoverScale}) translateY(${permanentOverride.translateY}%) translateX(${permanentOverride.translateX}%)`,
         transformOrigin: productSlug.includes('top') || productSlug.includes('camiseta') || productSlug.includes('body')
           ? 'center top'
           : 'center bottom'
-      }
-    }
-
-    // ⚠️ EN MOBILE: No aplicar transforms generales agresivos
-    if (isMobile) {
-      return {
-        transform: `scale(${isHovering ? 1.05 : 1})`,
-        transformOrigin: 'center center'
       }
     }
 
