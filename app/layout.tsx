@@ -16,6 +16,7 @@ import { Toaster } from "sonner"
 import { ImageDebugProvider } from "@/contexts/ImageDebugContext"
 import { ImageFramingProvider } from "@/contexts/ImageFramingContext"
 import { ImageFramingPanel } from "@/components/ImageFramingPanel"
+import ImageTransformLoader from "@/components/ImageTransformLoader"
 
 export const metadata: Metadata = {
   title: "Vialine | Activewear & ropa interior para mujer – Hecho en Perú",
@@ -102,13 +103,14 @@ export default function RootLayout({
             <WishlistProvider>
               <ImageDebugProvider>
                 <ImageFramingProvider>
+                  <ImageTransformLoader />
                   <ClientWrapper>
                     <PromoBar />
                     <SiteHeader />
                     {children}
                     <WhatsAppFloat />
                     <Toaster position="bottom-right" richColors />
-                    <ImageFramingPanel />
+                    {!isProduction && <ImageFramingPanel />}
                   </ClientWrapper>
                 </ImageFramingProvider>
               </ImageDebugProvider>
