@@ -93,7 +93,7 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
       // En mobile, reducir intensidad para evitar cortes visuales
       if (isMobile) {
         return {
-          transform: `translate(${debuggerTransform.x * 0.5}px, ${debuggerTransform.y * 0.5}px) scale(${(1 + (debuggerTransform.scale - 1) * 0.6)) * hoverScale})`,
+          transform: `translate(${debuggerTransform.x * 0.5}px, ${debuggerTransform.y * 0.5}px) scale(${(1 + (debuggerTransform.scale - 1) * 0.6) * hoverScale})`,
           transformOrigin: 'center center'
         }
       }
