@@ -63,24 +63,19 @@ function RailItem({ item }: { item: Item }) {
     const productSlug = item.slug.toLowerCase()
     const imagePath = item.image.toLowerCase()
 
-    // ⚠️ EN MOBILE: NO aplicar NINGÚN transform, las imágenes originales se ven mejor
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
-    if (isMobile) {
-      return {
-        transform: 'scale(1.0)',
-        transformOrigin: 'center center'
-      }
-    }
+    // ✅ FACTOR RESPONSIVE: Escalar transforms según viewport width
+    const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 1920
+    const responsiveFactor = Math.max(0.2, Math.min(1.0, viewportWidth / 1920))
 
-    // PRIORIDAD 0: Transform del debugger - SOLO DESKTOP
+    // PRIORIDAD 0: Transform del debugger
     if (debuggerTransform) {
       return {
-        transform: `translate(${debuggerTransform.x}px, ${debuggerTransform.y}px) scale(${debuggerTransform.scale})`,
+        transform: `translate(${debuggerTransform.x * responsiveFactor}px, ${debuggerTransform.y * responsiveFactor}px) scale(${debuggerTransform.scale})`,
         transformOrigin: 'center center'
       }
     }
 
-    // DESKTOP: Aplicar transforms generales normalmente
+    // Aplicar transforms generales normalmente
     // Productos superiores
     if (productSlug.includes('camiseta') ||
         productSlug.includes('top') ||
