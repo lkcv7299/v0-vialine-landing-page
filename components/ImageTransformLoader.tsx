@@ -178,7 +178,36 @@ const SAVED_TRANSFORMS = {
 export default function ImageTransformLoader() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('imageTransforms', JSON.stringify(SAVED_TRANSFORMS))
+      // ✅ SISTEMA NUEVO: Limpiamos los transforms antiguos que no tienen containerWidth
+      // El usuario necesita re-ajustar con Ctrl+Shift+F para que se guarde correctamente
+      const existingTransforms = localStorage.getItem('imageTransforms')
+
+      if (existingTransforms) {
+        try {
+          const parsed = JSON.parse(existingTransforms)
+          // Verificar si algún transform tiene containerWidth
+          let hasContainerWidth = false
+          Object.values(parsed).forEach((product: any) => {
+            Object.values(product || {}).forEach((color: any) => {
+              Object.values(color || {}).forEach((index: any) => {
+                Object.values(index || {}).forEach((transform: any) => {
+                  if (transform?.containerWidth) {
+                    hasContainerWidth = true
+                  }
+                })
+              })
+            })
+          })
+
+          // Si no tienen containerWidth, limpiar
+          if (!hasContainerWidth) {
+            console.log('🔄 Sistema actualizado: Limpiando transforms antiguos. Re-ajusta las imágenes con Ctrl+Shift+F')
+            localStorage.removeItem('imageTransforms')
+          }
+        } catch (e) {
+          console.error('Error verificando transforms:', e)
+        }
+      }
     }
   }, [])
 

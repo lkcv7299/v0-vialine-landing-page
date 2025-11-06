@@ -90,6 +90,7 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
         imageIndex,
         imagePath: currentImage,
         context: 'card',
+        containerWidth // ✅ NUEVO: Pasar el tamaño del contenedor
       })
     }
   }
@@ -102,9 +103,8 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
 
     // ✅ PRIORIDAD 0 (MÁXIMA): Transform desde el debugger - ESCALADO PROPORCIONAL AL CONTENEDOR
     if (debuggerTransform) {
-      // Calcular factor de escala basado en el tamaño REAL del contenedor
-      // Los ajustes originales fueron hechos en contenedor de ~350px
-      const baseContainerSize = 350
+      // ✅ USAR EL CONTAINER WIDTH GUARDADO (cuando se ajustó originalmente)
+      const baseContainerSize = debuggerTransform.containerWidth || 350
       const scaleFactor = containerWidth / baseContainerSize
 
       // Aplicar los valores EXACTOS del usuario, pero escalados proporcionalmente

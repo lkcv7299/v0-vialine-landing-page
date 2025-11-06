@@ -67,6 +67,7 @@ function RailItem({ item }: { item: Item }) {
         imageIndex,
         imagePath: item.image,
         context: 'rail',
+        containerWidth // ✅ NUEVO: Pasar el tamaño del contenedor
       })
     }
   }
@@ -80,9 +81,8 @@ function RailItem({ item }: { item: Item }) {
 
     // PRIORIDAD 0: Transform del debugger - ESCALADO PROPORCIONAL AL CONTENEDOR
     if (debuggerTransform) {
-      // Calcular factor de escala basado en el tamaño REAL del contenedor
-      // Los ajustes originales fueron hechos en contenedor de ~300px
-      const baseContainerSize = 300
+      // ✅ USAR EL CONTAINER WIDTH GUARDADO (cuando se ajustó originalmente)
+      const baseContainerSize = debuggerTransform.containerWidth || 300
       const scaleFactor = containerWidth / baseContainerSize
 
       // Aplicar los valores EXACTOS del usuario, pero escalados proporcionalmente

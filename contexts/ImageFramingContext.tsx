@@ -7,6 +7,7 @@ interface ImageTransform {
   y: number
   scale: number
   context?: 'card' | 'rail' | 'gallery' // Dónde se creó el transform
+  containerWidth?: number // ✅ NUEVO: Tamaño del contenedor cuando se ajustó
 }
 
 interface SelectedImage {
@@ -15,6 +16,7 @@ interface SelectedImage {
   imageIndex: number
   imagePath: string
   context: 'card' | 'rail' | 'gallery' // En qué contexto estamos
+  containerWidth?: number // ✅ NUEVO: Tamaño del contenedor actual
 }
 
 interface ImageFramingContextType {
@@ -72,7 +74,8 @@ export function ImageFramingProvider({ children }: { children: ReactNode }) {
 
     const transformWithContext = {
       ...currentTransform,
-      context: selectedImage.context
+      context: selectedImage.context,
+      containerWidth: selectedImage.containerWidth // ✅ NUEVO: Guardar tamaño del contenedor
     }
 
     const updated = {
