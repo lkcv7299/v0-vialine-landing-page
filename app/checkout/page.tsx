@@ -423,7 +423,7 @@ export default function CheckoutPage() {
           <p className="text-neutral-600 mb-6">Agrega productos para continuar con tu compra</p>
           <Link
             href="/mujer"
-            className="inline-flex items-center px-6 py-3 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition"
+            className="inline-flex items-center px-6 py-3 bg-neutral-900 text-white rounded-lg hover:bg-neutral-800 transition"
           >
             Ir a comprar
           </Link>
@@ -441,7 +441,7 @@ export default function CheckoutPage() {
         return (
           <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6">
             <div className="flex items-center gap-2 mb-6">
-              <User className="w-5 h-5 text-rose-600" />
+              <User className="w-5 h-5 text-neutral-900" />
               <h2 className="text-xl font-semibold">Información Personal</h2>
             </div>
 
@@ -452,7 +452,7 @@ export default function CheckoutPage() {
                 </label>
                 <input
                   {...register("firstName")}
-                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
+                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-600 focus:border-transparent outline-none"
                   placeholder="Juan"
                 />
                 {errors.firstName && (
@@ -466,7 +466,7 @@ export default function CheckoutPage() {
                 </label>
                 <input
                   {...register("lastName")}
-                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
+                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-600 focus:border-transparent outline-none"
                   placeholder="Pérez"
                 />
                 {errors.lastName && (
@@ -480,7 +480,7 @@ export default function CheckoutPage() {
                 </label>
                 <input
                   {...register("dni")}
-                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
+                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-600 focus:border-transparent outline-none"
                   placeholder="12345678"
                   maxLength={8}
                 />
@@ -498,7 +498,7 @@ export default function CheckoutPage() {
                   {...register("email")}
                   type="email"
                   readOnly={!!session?.user?.email}
-                  className={`w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none ${
+                  className={`w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-600 focus:border-transparent outline-none ${
                     session?.user?.email ? 'bg-neutral-50 cursor-not-allowed' : ''
                   }`}
                   placeholder="juan@ejemplo.com"
@@ -518,7 +518,7 @@ export default function CheckoutPage() {
                   type="tel"
                   inputMode="numeric"
                   pattern="[0-9]*"
-                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
+                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-600 focus:border-transparent outline-none"
                   placeholder="999 999 999"
                 />
                 {errors.phone && (
@@ -533,7 +533,7 @@ export default function CheckoutPage() {
         return (
           <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6">
             <div className="flex items-center gap-2 mb-6">
-              <MapPin className="w-5 h-5 text-rose-600" />
+              <MapPin className="w-5 h-5 text-neutral-900" />
               <h2 className="text-xl font-semibold">Dirección de Envío</h2>
             </div>
 
@@ -546,7 +546,7 @@ export default function CheckoutPage() {
                     onClick={() => setUseNewAddress(false)}
                     className={`flex-1 py-3 px-4 rounded-lg font-medium transition ${
                       !useNewAddress
-                        ? 'bg-rose-600 text-white'
+                        ? 'bg-neutral-900 text-white'
                         : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
                     }`}
                   >
@@ -560,7 +560,7 @@ export default function CheckoutPage() {
                     }}
                     className={`flex-1 py-3 px-4 rounded-lg font-medium transition ${
                       useNewAddress
-                        ? 'bg-rose-600 text-white'
+                        ? 'bg-neutral-900 text-white'
                         : 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200'
                     }`}
                   >
@@ -579,7 +579,7 @@ export default function CheckoutPage() {
                           onClick={() => handleAddressSelect(addr.id)}
                           className={`p-3 border-2 rounded-lg text-left transition ${
                             selectedAddressId === addr.id
-                              ? 'border-rose-600 bg-rose-50'
+                              ? 'border-neutral-900 bg-neutral-50'
                               : 'border-neutral-300 bg-white hover:border-neutral-400'
                           }`}
                         >
@@ -618,7 +618,7 @@ export default function CheckoutPage() {
                 </label>
                 <input
                   {...register("address")}
-                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
+                  className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-600 focus:border-transparent outline-none"
                   placeholder="Av. Principal 123"
                 />
                 {errors.address && (
@@ -633,7 +633,7 @@ export default function CheckoutPage() {
                   </label>
                   <input
                     {...register("district")}
-                    className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
+                    className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-600 focus:border-transparent outline-none"
                     placeholder="Miraflores"
                   />
                   {errors.district && (
@@ -647,7 +647,7 @@ export default function CheckoutPage() {
                   </label>
                   <input
                     {...register("city")}
-                    className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
+                    className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-600 focus:border-transparent outline-none"
                     placeholder="Lima"
                   />
                   {errors.city && (
@@ -663,7 +663,7 @@ export default function CheckoutPage() {
                   </label>
                   <input
                     {...register("postalCode")}
-                    className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
+                    className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-600 focus:border-transparent outline-none"
                     placeholder="15074"
                   />
                 </div>
@@ -674,7 +674,7 @@ export default function CheckoutPage() {
                   </label>
                   <input
                     {...register("reference")}
-                    className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none"
+                    className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-600 focus:border-transparent outline-none"
                     placeholder="Casa verde, 2do piso"
                   />
                 </div>
@@ -689,17 +689,17 @@ export default function CheckoutPage() {
             {/* Método de pago */}
             <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6">
               <div className="flex items-center gap-2 mb-6">
-                <CreditCard className="w-5 h-5 text-rose-600" />
+                <CreditCard className="w-5 h-5 text-neutral-900" />
                 <h2 className="text-xl font-semibold">Método de Pago</h2>
               </div>
 
               <div className="space-y-3">
-                <label className="flex items-center gap-3 p-4 border-2 border-neutral-200 rounded-lg cursor-pointer hover:border-rose-500 transition">
+                <label className="flex items-center gap-3 p-4 border-2 border-neutral-200 rounded-lg cursor-pointer hover:border-neutral-900 transition">
                   <input
                     {...register("paymentMethod")}
                     type="radio"
                     value="culqi"
-                    className="w-4 h-4 text-rose-600"
+                    className="w-4 h-4 text-neutral-900"
                   />
                   <div className="flex-1">
                     <span className="font-medium">💳 Tarjeta de crédito/débito / Yape</span>
@@ -715,7 +715,7 @@ export default function CheckoutPage() {
                 <input
                   {...register("acceptTerms")}
                   type="checkbox"
-                  className="mt-1 w-4 h-4 text-rose-600 border-neutral-300 rounded focus:ring-rose-600"
+                  className="mt-1 w-4 h-4 text-neutral-900 border-neutral-300 rounded focus:ring-neutral-600"
                 />
                 <span className="text-sm text-neutral-700">
                   Acepto los{" "}
@@ -739,7 +739,7 @@ export default function CheckoutPage() {
               <textarea
                 {...register("notes")}
                 rows={4}
-                className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-rose-500 focus:border-transparent outline-none resize-none"
+                className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-600 focus:border-transparent outline-none resize-none"
                 placeholder="Instrucciones especiales para la entrega..."
               />
             </div>
@@ -789,13 +789,13 @@ export default function CheckoutPage() {
                 <div className="flex flex-col items-center">
                   <div className={`flex items-center justify-center w-10 h-10 rounded-full font-semibold shadow-md transition ${
                     currentStep >= 1
-                      ? 'bg-rose-600 text-white'
+                      ? 'bg-neutral-900 text-white'
                       : 'bg-neutral-200 text-neutral-500'
                   }`}>
                     {currentStep > 1 ? <Check className="w-5 h-5" /> : <User className="w-5 h-5" />}
                   </div>
                   <span className={`mt-2 text-xs sm:text-sm font-medium ${
-                    currentStep >= 1 ? 'text-rose-600' : 'text-neutral-500'
+                    currentStep >= 1 ? 'text-neutral-900' : 'text-neutral-500'
                   }`}>
                     Información
                   </span>
@@ -804,7 +804,7 @@ export default function CheckoutPage() {
 
               {/* Línea divisoria */}
               <div className={`h-[2px] w-12 sm:w-24 transition ${
-                currentStep > 1 ? 'bg-rose-600' : 'bg-neutral-300'
+                currentStep > 1 ? 'bg-neutral-900' : 'bg-neutral-300'
               }`}></div>
 
               {/* Paso 2 */}
@@ -812,13 +812,13 @@ export default function CheckoutPage() {
                 <div className="flex flex-col items-center">
                   <div className={`flex items-center justify-center w-10 h-10 rounded-full font-semibold shadow-md transition ${
                     currentStep >= 2
-                      ? 'bg-rose-600 text-white'
+                      ? 'bg-neutral-900 text-white'
                       : 'bg-neutral-200 text-neutral-500'
                   }`}>
                     {currentStep > 2 ? <Check className="w-5 h-5" /> : <MapPin className="w-5 h-5" />}
                   </div>
                   <span className={`mt-2 text-xs sm:text-sm font-medium ${
-                    currentStep >= 2 ? 'text-rose-600' : 'text-neutral-500'
+                    currentStep >= 2 ? 'text-neutral-900' : 'text-neutral-500'
                   }`}>
                     Dirección
                   </span>
@@ -835,13 +835,13 @@ export default function CheckoutPage() {
                 <div className="flex flex-col items-center">
                   <div className={`flex items-center justify-center w-10 h-10 rounded-full font-semibold shadow-md transition ${
                     currentStep >= 3
-                      ? 'bg-rose-600 text-white'
+                      ? 'bg-neutral-900 text-white'
                       : 'bg-neutral-200 text-neutral-500'
                   }`}>
                     <Package className="w-5 h-5" />
                   </div>
                   <span className={`mt-2 text-xs sm:text-sm font-medium ${
-                    currentStep >= 3 ? 'text-rose-600' : 'text-neutral-500'
+                    currentStep >= 3 ? 'text-neutral-900' : 'text-neutral-500'
                   }`}>
                     Pago
                   </span>
@@ -874,7 +874,7 @@ export default function CheckoutPage() {
                     <button
                       type="button"
                       onClick={nextStep}
-                      className="flex-1 px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-700 transition flex items-center justify-center gap-2"
+                      className="flex-1 px-6 py-3 bg-neutral-900 text-white rounded-lg font-semibold hover:bg-neutral-800 transition flex items-center justify-center gap-2"
                     >
                       Siguiente
                       <ArrowRight className="w-5 h-5" />
@@ -883,7 +883,7 @@ export default function CheckoutPage() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="flex-1 px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-700 transition disabled:bg-neutral-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      className="flex-1 px-6 py-3 bg-neutral-900 text-white rounded-lg font-semibold hover:bg-neutral-800 transition disabled:bg-neutral-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
                       {isSubmitting ? (
                         <>

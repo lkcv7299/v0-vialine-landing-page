@@ -49,7 +49,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
             <Link
               href="/mujer"
               onClick={onClose}
-              className="inline-block px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-700 transition"
+              className="inline-block px-6 py-3 bg-neutral-900 text-white rounded-lg font-semibold hover:bg-neutral-800 transition"
             >
               Explorar productos
             </Link>
@@ -105,7 +105,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                             )
                           }
                           disabled={item.quantity <= 1}
-                          className="w-7 h-7 rounded-full border border-neutral-300 flex items-center justify-center hover:border-rose-600 hover:text-rose-600 transition disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-neutral-300 disabled:hover:text-neutral-900"
+                          className="w-7 h-7 rounded-full border border-neutral-300 flex items-center justify-center hover:border-neutral-900 hover:text-neutral-900 transition disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-neutral-300 disabled:hover:text-neutral-900"
                           aria-label="Disminuir cantidad"
                         >
                           <Minus className="w-3 h-3" />
@@ -125,7 +125,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                             )
                           }
                           disabled={item.quantity >= stockLimit}
-                          className="w-7 h-7 rounded-full border border-neutral-300 flex items-center justify-center hover:border-rose-600 hover:text-rose-600 transition disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-neutral-300 disabled:hover:text-neutral-900"
+                          className="w-7 h-7 rounded-full border border-neutral-300 flex items-center justify-center hover:border-neutral-900 hover:text-neutral-900 transition disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-neutral-300 disabled:hover:text-neutral-900"
                           aria-label="Aumentar cantidad"
                         >
                           <Plus className="w-3 h-3" />
@@ -189,7 +189,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
           {/* Total */}
           <div className="flex items-center justify-between pt-3 border-t border-neutral-200">
             <span className="text-lg font-bold text-neutral-900">Total</span>
-            <span className="text-2xl font-bold text-rose-600">
+            <span className="text-2xl font-bold text-neutral-900">
               S/ {(total + (total >= 269 ? 0 : 15)).toFixed(2)}
             </span>
           </div>
@@ -206,7 +206,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
             <Link
               href="/checkout"
               onClick={onClose}
-              className="block w-full bg-rose-600 text-white text-center py-3 rounded-lg font-bold hover:bg-rose-700 transition"
+              className="block w-full bg-neutral-900 text-white text-center py-3 rounded-lg font-bold hover:bg-neutral-800 transition"
             >
               Ir al checkout
             </Link>
