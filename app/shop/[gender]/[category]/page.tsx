@@ -97,13 +97,6 @@ function applyFilters(rows: any[], sp: Record<string, string | string[] | undefi
     filtered = filtered.filter((p) => p.category === sp.category)
   }
 
-  // ✨ NUEVO: Filtro de colección
-  if (sp.collection) {
-    filtered = filtered.filter((p) =>
-      p.tags?.some((t: string) => toSlug(t) === sp.collection)
-    )
-  }
-
   // Filtro de precio
   const minPrice = sp.minPrice ? parseFloat(sp.minPrice as string) : null
   const maxPrice = sp.maxPrice ? parseFloat(sp.maxPrice as string) : null

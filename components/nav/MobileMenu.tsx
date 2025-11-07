@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"
 import Drawer from "@/components/ui/Drawer"
 import { Menu, X } from "lucide-react"
 import { buildWhatsAppUrl } from "@/lib/contact"
-import { getCollectionsMenu, getFabricsMenu } from "@/data/menu"
+import { getFabricsMenu } from "@/data/menu"
 
 // ✅ RUTAS CORREGIDAS - Ahora usan /shop/gender/category igual que desktop
 const mujer = [
@@ -33,8 +33,7 @@ export default function MobileMenu() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
 
-  // ✨ Obtener colecciones y tejidos dinámicamente
-  const collections = getCollectionsMenu()
+  // ✨ Obtener tejidos dinámicamente
   const fabrics = getFabricsMenu()
 
   // Cerrar drawer cuando cambia la ruta
@@ -95,19 +94,7 @@ export default function MobileMenu() {
 
             <div className="h-6" /> {/* Espaciador */}
 
-            {/* ✨ NUEVA: Sección Colecciones */}
-            <Section
-              title="Por Colección"
-              items={collections.map(c => ({
-                label: `${c.label} (${c.count})`,
-                href: c.href
-              }))}
-              onLinkClick={() => setOpen(false)}
-            />
-
-            <div className="h-6" /> {/* Espaciador */}
-
-            {/* ✨ NUEVA: Sección Tejidos */}
+            {/* ✨ Sección Tejidos */}
             <Section
               title="Por Tejido"
               items={fabrics.map(f => ({

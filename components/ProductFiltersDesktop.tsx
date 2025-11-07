@@ -3,7 +3,7 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { X, Filter } from "lucide-react"
 import { useState, useEffect } from "react"
-import { getUniqueColors, getAllCollections, getUniqueFabrics } from "@/data/products"
+import { getUniqueColors, getUniqueFabrics } from "@/data/products"
 
 type ProductFiltersDesktopProps = {
   totalProducts: number
@@ -44,42 +44,40 @@ export default function ProductFiltersDesktop({ totalProducts, filteredCount }: 
   // ✅ Debouncing para precio (500ms después de dejar de escribir)
   useEffect(() => {
     const timer = setTimeout(() => {
-      apply((sp) => {
-        if (localMinPrice) {
-          sp.set("minPrice", localMinPrice)
-        } else {
-          sp.delete("minPrice")
-        }
-      })
+      const sp = new URLSearchParams(params?.toString())
+      if (localMinPrice) {
+        sp.set("minPrice", localMinPrice)
+      } else {
+        sp.delete("minPrice")
+      }
+      router.replace(`${pathname}?${sp.toString()}`, { scroll: false })
     }, 500)
     return () => clearTimeout(timer)
-  }, [localMinPrice])
+  }, [localMinPrice, params, pathname, router])
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      apply((sp) => {
-        if (localMaxPrice) {
-          sp.set("maxPrice", localMaxPrice)
-        } else {
-          sp.delete("maxPrice")
-        }
-      })
+      const sp = new URLSearchParams(params?.toString())
+      if (localMaxPrice) {
+        sp.set("maxPrice", localMaxPrice)
+      } else {
+        sp.delete("maxPrice")
+      }
+      router.replace(`${pathname}?${sp.toString()}`, { scroll: false })
     }, 500)
     return () => clearTimeout(timer)
-  }, [localMaxPrice])
+  }, [localMaxPrice, params, pathname, router])
 
   const isOn = (k: string, v: string) => params?.getAll(k).includes(v)
   const fabricOn = params?.get("fabric")
   const categoryOn = params?.get("category")
-  const collectionOn = params?.get("collection")
   const minPrice = params?.get("minPrice") || ""
   const maxPrice = params?.get("maxPrice") || ""
 
   // ✨ Opciones de filtros DINÁMICAS
-  const sizes = ["XS", "S", "M", "L", "XL"]
+  const sizes = ["S", "M", "L", "XL"]
   const colors = getUniqueColors()
   const fabrics = getUniqueFabrics()
-  const collections = getAllCollections()
   const categories = [
     { value: "leggings", label: "Leggings" },
     { value: "bikers", label: "Bikers" },
@@ -98,7 +96,6 @@ export default function ProductFiltersDesktop({ totalProducts, filteredCount }: 
     params?.getAll("color").length +
     (fabricOn ? 1 : 0) +
     (categoryOn ? 1 : 0) +
-    (collectionOn ? 1 : 0) +
     (minPrice ? 1 : 0) +
     (maxPrice ? 1 : 0)
 
@@ -121,11 +118,6 @@ export default function ProductFiltersDesktop({ totalProducts, filteredCount }: 
   if (categoryOn) {
     const category = categories.find((c) => c.value === categoryOn)
     activeFilters.push({ type: "category", value: categoryOn, label: category?.label || categoryOn })
-  }
-
-  if (collectionOn) {
-    const collection = collections.find((c) => c.slug === collectionOn)
-    activeFilters.push({ type: "collection", value: collectionOn, label: collection?.name || collectionOn })
   }
 
   if (minPrice) {
@@ -310,28 +302,6 @@ export default function ProductFiltersDesktop({ totalProducts, filteredCount }: 
                 ))}
               </div>
             </div>
-
-            {/* ✨ NUEVO: Filtro por colección */}
-            {collections.length > 0 && (
-              <div>
-                <h4 className="font-semibold text-neutral-900 mb-3">Colección</h4>
-                <div className="flex flex-wrap gap-2">
-                  {collections.map((c) => (
-                    <button
-                      key={c.slug}
-                      onClick={() => apply((sp) => toggleSingle(sp, "collection", c.slug))}
-                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                        collectionOn === c.slug
-                          ? "bg-neutral-900 text-white"
-                          : "bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
-                      }`}
-                    >
-                      {c.name} <span className="text-xs opacity-70">({c.count})</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
 
             {/* Ordenar por */}
             <div>
