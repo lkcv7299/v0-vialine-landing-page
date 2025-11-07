@@ -231,12 +231,11 @@ export default function ProductGallery({ images, productName, productSlug = "" }
   // Si solo hay una imagen, mostrar vista simple
   if (validImages.length === 1) {
     return (
-      <div className="relative aspect-square overflow-hidden rounded-2xl bg-neutral-100">
+      <div className="relative aspect-square overflow-hidden rounded-2xl bg-neutral-50">
         <img
           src={validImages[0]}
           alt={productName}
-          className={`absolute inset-0 w-full h-[180%] object-cover ${!isMounted ? '[transition:none!important]' : ''}`}
-          style={getImageTransform()}
+          className="w-full h-full object-contain"
         />
       </div>
     )
@@ -246,13 +245,12 @@ export default function ProductGallery({ images, productName, productSlug = "" }
     <>
       <div className="space-y-4">
         {/* Imagen principal */}
-        <div className="relative aspect-square overflow-hidden rounded-2xl bg-neutral-100 group cursor-zoom-in">
+        <div className="relative aspect-square overflow-hidden rounded-2xl bg-neutral-50 group cursor-zoom-in">
           <div onClick={openZoom} className="relative w-full h-full overflow-hidden">
             <img
               src={validImages[selectedIndex]}
               alt={`${productName} - Imagen ${selectedIndex + 1}`}
-              className={`absolute inset-0 w-full h-[180%] object-cover transition-transform duration-300 ${!isMounted ? '[transition:none!important]' : ''}`}
-              style={getImageTransform()}
+              className="w-full h-full object-contain transition-opacity duration-300"
             />
           </div>
 
