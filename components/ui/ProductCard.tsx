@@ -1,5 +1,5 @@
 "use client"
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useLayoutEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import WishlistHeart from "@/components/WishlistHeart"
@@ -44,7 +44,7 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
   const isOutOfStock = inventory === 0
   const { values } = useImageDebug()
   const containerRef = useRef<HTMLDivElement>(null)
-  const [containerWidth, setContainerWidth] = useState(350)
+  const [containerWidth, setContainerWidth] = useState<number | null>(null)
 
   // ✅ Modo Framing
   const { isFramingMode, selectedImage, setSelectedImage } = useImageFraming()
@@ -56,8 +56,8 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
   // ✅ Usar hook para obtener transform del debugger (MÁXIMA PRIORIDAD)
   const { transform: debuggerTransform, isMounted } = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'card')
 
-  // ✅ Medir el contenedor REAL y actualizar cuando cambie el tamaño
-  useEffect(() => {
+  // ✅ USAR useLayoutEffect para medir ANTES del primer paint (evita flash)
+  useLayoutEffect(() => {
     const updateSize = () => {
       if (containerRef.current) {
         setContainerWidth(containerRef.current.offsetWidth)
@@ -90,7 +90,7 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
         imageIndex,
         imagePath: currentImage,
         context: 'card',
-        containerWidth // ✅ NUEVO: Pasar el tamaño del contenedor
+        containerWidth: containerWidth || 350 // ✅ Usar valor medido o fallback
       })
     }
   }
@@ -105,7 +105,9 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
     if (debuggerTransform) {
       // ✅ USAR EL CONTAINER WIDTH GUARDADO (cuando se ajustó originalmente)
       const baseContainerSize = debuggerTransform.containerWidth || 350
-      const scaleFactor = containerWidth / baseContainerSize
+      // Si aún no hemos medido el contenedor, usar el tamaño base original
+      const currentContainerWidth = containerWidth || baseContainerSize
+      const scaleFactor = currentContainerWidth / baseContainerSize
 
       // Aplicar los valores EXACTOS del usuario, pero escalados proporcionalmente
       const scaledX = debuggerTransform.x * scaleFactor

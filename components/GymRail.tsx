@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState, useEffect } from "react"
+import { useRef, useState, useEffect, useLayoutEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight, Star } from "lucide-react"
@@ -31,15 +31,15 @@ function RailItem({ item }: { item: Item }) {
   const { values } = useImageDebug()
   const { isFramingMode, selectedImage, setSelectedImage } = useImageFraming()
   const containerRef = useRef<HTMLDivElement>(null)
-  const [containerWidth, setContainerWidth] = useState(300)
+  const [containerWidth, setContainerWidth] = useState<number | null>(null)
 
   // Parsear imagen para obtener transform
   const { productSlug: imageParsedSlug, colorSlug, imageIndex } = parseImagePath(item.image)
   const actualProductSlug = imageParsedSlug || item.slug
   const { transform: debuggerTransform, isMounted } = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'rail')
 
-  // Medir el contenedor REAL y actualizar cuando cambie el tamaño
-  useEffect(() => {
+  // ✅ USAR useLayoutEffect para medir ANTES del primer paint (evita flash)
+  useLayoutEffect(() => {
     const updateSize = () => {
       if (containerRef.current) {
         setContainerWidth(containerRef.current.offsetWidth)
@@ -67,7 +67,7 @@ function RailItem({ item }: { item: Item }) {
         imageIndex,
         imagePath: item.image,
         context: 'rail',
-        containerWidth // ✅ NUEVO: Pasar el tamaño del contenedor
+        containerWidth: containerWidth || 300 // ✅ Usar valor medido o fallback
       })
     }
   }
@@ -83,7 +83,9 @@ function RailItem({ item }: { item: Item }) {
     if (debuggerTransform) {
       // ✅ USAR EL CONTAINER WIDTH GUARDADO (cuando se ajustó originalmente)
       const baseContainerSize = debuggerTransform.containerWidth || 300
-      const scaleFactor = containerWidth / baseContainerSize
+      // Si aún no hemos medido el contenedor, usar el tamaño base original
+      const currentContainerWidth = containerWidth || baseContainerSize
+      const scaleFactor = currentContainerWidth / baseContainerSize
 
       // Aplicar los valores EXACTOS del usuario, pero escalados proporcionalmente
       const scaledX = debuggerTransform.x * scaleFactor
