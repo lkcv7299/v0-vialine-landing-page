@@ -102,8 +102,16 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
     const hoverScale = isHovering ? 1.05 : 1
 
     // ✅ PRIORIDAD 0 (MÁXIMA): Transform desde el debugger - ESCALADO PROPORCIONAL AL CONTENEDOR
-    // ⚠️ CRÍTICO: NO aplicar transform hasta que hayamos medido el contenedor (evita flash)
-    if (debuggerTransform && containerWidth !== null) {
+    if (debuggerTransform) {
+      // ⚠️ CRÍTICO: Si tenemos transform pero no hemos medido el contenedor, NO aplicar NINGÚN transform
+      // Esto evita el flash donde se aplica primero el transform general y luego el específico
+      if (containerWidth === null) {
+        return {
+          transform: 'none',
+          transformOrigin: 'center center'
+        }
+      }
+
       // ✅ USAR EL CONTAINER WIDTH GUARDADO (cuando se ajustó originalmente)
       const baseContainerSize = debuggerTransform.containerWidth || 350
       const scaleFactor = containerWidth / baseContainerSize
