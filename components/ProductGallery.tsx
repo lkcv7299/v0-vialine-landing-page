@@ -52,7 +52,7 @@ function ThumbnailImage({
           ? "ring-2 ring-white ring-offset-2 ring-offset-black"
           : "ring-1 ring-white/30 hover:ring-white/60 opacity-60 hover:opacity-100"
       }`
-    : `relative aspect-square overflow-hidden rounded-lg transition-all ${
+    : `relative aspect-[3/4] overflow-hidden rounded-lg transition-all ${
         isSelected
           ? "ring-2 ring-rose-600 ring-offset-2"
           : "ring-1 ring-neutral-200 hover:ring-neutral-400"
@@ -66,7 +66,7 @@ function ThumbnailImage({
       <img
         src={image}
         alt={inModal ? `Miniatura ${index + 1}` : `${productName} - Vista ${index + 1}`}
-        className="w-full h-full object-contain bg-neutral-50"
+        className="w-full h-full object-cover"
       />
     </button>
   )
@@ -231,11 +231,11 @@ export default function ProductGallery({ images, productName, productSlug = "" }
   // Si solo hay una imagen, mostrar vista simple
   if (validImages.length === 1) {
     return (
-      <div className="relative aspect-square overflow-hidden rounded-2xl bg-neutral-50">
+      <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-white">
         <img
           src={validImages[0]}
           alt={productName}
-          className="w-full h-full object-contain"
+          className="w-full h-full object-cover"
         />
       </div>
     )
@@ -245,12 +245,12 @@ export default function ProductGallery({ images, productName, productSlug = "" }
     <>
       <div className="space-y-4">
         {/* Imagen principal */}
-        <div className="relative aspect-square overflow-hidden rounded-2xl bg-neutral-50 group cursor-zoom-in">
+        <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-white group cursor-zoom-in">
           <div onClick={openZoom} className="relative w-full h-full overflow-hidden">
             <img
               src={validImages[selectedIndex]}
               alt={`${productName} - Imagen ${selectedIndex + 1}`}
-              className="w-full h-full object-contain transition-opacity duration-300"
+              className="w-full h-full object-cover transition-opacity duration-300"
             />
           </div>
 
