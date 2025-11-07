@@ -80,12 +80,11 @@ function RailItem({ item }: { item: Item }) {
     const imagePath = item.image.toLowerCase()
 
     // PRIORIDAD 0: Transform del debugger - ESCALADO PROPORCIONAL AL CONTENEDOR
-    if (debuggerTransform) {
+    // ⚠️ CRÍTICO: NO aplicar transform hasta que hayamos medido el contenedor (evita flash)
+    if (debuggerTransform && containerWidth !== null) {
       // ✅ USAR EL CONTAINER WIDTH GUARDADO (cuando se ajustó originalmente)
       const baseContainerSize = debuggerTransform.containerWidth || 300
-      // Si aún no hemos medido el contenedor, usar el tamaño base original
-      const currentContainerWidth = containerWidth || baseContainerSize
-      const scaleFactor = currentContainerWidth / baseContainerSize
+      const scaleFactor = containerWidth / baseContainerSize
 
       // Aplicar los valores EXACTOS del usuario, pero escalados proporcionalmente
       const scaledX = debuggerTransform.x * scaleFactor
