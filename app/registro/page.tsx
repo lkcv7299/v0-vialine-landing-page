@@ -134,7 +134,7 @@ export default function RegistroPage() {
             <p className="text-neutral-600 mb-6">
               Iniciando sesión automáticamente...
             </p>
-            <Loader2 className="w-6 h-6 animate-spin text-rose-600 mx-auto" />
+            <Loader2 className="w-6 h-6 animate-spin text-neutral-900 mx-auto" />
           </div>
         </div>
       </div>
@@ -180,7 +180,7 @@ export default function RegistroPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className="w-full pl-10 pr-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-600 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:border-transparent"
                   placeholder="María García"
                 />
               </div>
@@ -199,7 +199,7 @@ export default function RegistroPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full pl-10 pr-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-600 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:border-transparent"
                   placeholder="maria@email.com"
                 />
               </div>
@@ -218,7 +218,7 @@ export default function RegistroPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full pl-10 pr-12 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-600 focus:border-transparent"
+                  className="w-full pl-10 pr-12 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:border-transparent"
                   placeholder="Mínimo 6 caracteres"
                 />
                 <button
@@ -244,7 +244,7 @@ export default function RegistroPage() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
-                  className="w-full pl-10 pr-12 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-600 focus:border-transparent"
+                  className="w-full pl-10 pr-12 py-3 border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:border-transparent"
                   placeholder="Repite tu contraseña"
                 />
                 <button
@@ -264,7 +264,7 @@ export default function RegistroPage() {
                 type="checkbox"
                 checked={acceptedTerms}
                 onChange={(e) => setAcceptedTerms(e.target.checked)}
-                className="mt-1 w-4 h-4 text-rose-600 border-neutral-300 rounded focus:ring-rose-600"
+                className="mt-1 w-4 h-4 text-neutral-900 border-neutral-300 rounded focus:ring-neutral-600"
               />
               <label htmlFor="terms" className="text-sm text-neutral-600">
                 Acepto los{" "}
@@ -282,7 +282,7 @@ export default function RegistroPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-rose-600 text-white py-3 rounded-lg font-medium hover:bg-rose-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full bg-neutral-900 text-white py-3 rounded-lg font-medium hover:bg-neutral-800 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {loading ? (
                 <>

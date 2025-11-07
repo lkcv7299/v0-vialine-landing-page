@@ -21,7 +21,7 @@ export default function MiniCart({ onClose }: MiniCartProps) {
           <Link
             href="/shop/mujer/leggings"
             onClick={onClose}
-            className="inline-block rounded-full bg-rose-600 px-6 py-2 text-sm font-medium text-white hover:bg-rose-700 transition"
+            className="inline-block rounded-full bg-neutral-900 px-6 py-2 text-sm font-medium text-white hover:bg-neutral-800 transition"
           >
             Explorar productos
           </Link>
@@ -99,7 +99,7 @@ export default function MiniCart({ onClose }: MiniCartProps) {
         <Link
           href="/carrito"
           onClick={onClose}
-          className="block w-full rounded-full bg-rose-600 px-6 py-3 text-center text-sm font-medium text-white hover:bg-rose-700 transition"
+          className="block w-full rounded-full bg-neutral-900 px-6 py-3 text-center text-sm font-medium text-white hover:bg-neutral-800 transition"
         >
           Ver carrito completo
         </Link>

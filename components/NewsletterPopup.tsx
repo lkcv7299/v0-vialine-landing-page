@@ -163,7 +163,7 @@ export default function NewsletterPopup() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="tu@email.com"
-                      className="w-full px-4 py-3.5 border border-neutral-300 rounded-full focus:outline-none focus:ring-2 focus:ring-rose-600 focus:border-transparent transition-all text-neutral-900 placeholder:text-neutral-400"
+                      className="w-full px-4 py-3.5 border border-neutral-300 rounded-full focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:border-transparent transition-all text-neutral-900 placeholder:text-neutral-400"
                       disabled={isLoading}
                     />
                   </div>
@@ -182,7 +182,7 @@ export default function NewsletterPopup() {
                     className={`w-full py-3.5 rounded-full font-semibold transition-all ${
                       isLoading
                         ? "bg-neutral-300 text-neutral-500 cursor-not-allowed"
-                        : "bg-rose-600 text-white hover:bg-rose-700 active:scale-95"
+                        : "bg-neutral-900 text-white hover:bg-neutral-800 active:scale-95"
                     }`}
                   >
                     {isLoading ? "Suscribiendo..." : "Quiero mi descuento"}
