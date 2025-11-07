@@ -3134,3 +3134,57 @@ export const findProduct = (slug: string) => products.find((p) => p.slug === slu
 export const byCategory = (c: Product["category"]) => products.filter((p) => p.category === c)
 export const byFabric = (f: Product["fabric"]) => products.filter((p) => p.fabric === f)
 export const byAudience = (a: Product["audience"]) => products.filter((p) => p.audience === a)
+
+// ✨ NUEVAS FUNCIONES HELPER PARA FILTROS DINÁMICOS
+export function getUniqueColors(): string[] {
+  const colorsSet = new Set<string>()
+  products.forEach(product => {
+    product.colors.forEach(colorObj => {
+      const colorName = typeof colorObj === 'string' ? colorObj : colorObj.name
+      colorsSet.add(colorName)
+    })
+  })
+  return Array.from(colorsSet).sort()
+}
+
+export function getAllCollections(): Array<{ name: string; slug: string; count: number }> {
+  const collectionsMap = new Map<string, number>()
+
+  products.forEach(product => {
+    if (product.tags) {
+      product.tags.forEach(tag => {
+        // Filtrar solo tags que parecen colecciones (excluir COD.XXX)
+        if (!tag.startsWith('COD.') && tag.length > 3) {
+          const current = collectionsMap.get(tag) || 0
+          collectionsMap.set(tag, current + 1)
+        }
+      })
+    }
+  })
+
+  return Array.from(collectionsMap.entries())
+    .map(([name, count]) => ({
+      name,
+      slug: name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, ''),
+      count
+    }))
+    .sort((a, b) => b.count - a.count) // Ordenar por popularidad
+}
+
+export function getUniqueFabrics(): Array<{ name: string; slug: string; count: number }> {
+  const fabricsMap = new Map<string, number>()
+
+  products.forEach(product => {
+    const fabric = product.fabric
+    const current = fabricsMap.get(fabric) || 0
+    fabricsMap.set(fabric, current + 1)
+  })
+
+  return Array.from(fabricsMap.entries())
+    .map(([name, count]) => ({
+      name,
+      slug: name.toLowerCase().replace(/\s+/g, '-'),
+      count
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name))
+}
