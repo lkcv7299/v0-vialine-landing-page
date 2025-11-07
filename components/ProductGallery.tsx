@@ -1,12 +1,11 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut, Maximize2 } from "lucide-react"
 import { useImageDebug } from "@/contexts/ImageDebugContext"
 import { useImageTransform } from "@/hooks/useImageTransform"
 import { parseImagePath } from "@/lib/imageTransformUtils"
-import { useImageFraming } from "@/contexts/ImageFramingContext"
 
 // ✅ PRODUCT-SPECIFIC OVERRIDES - Ajustes visuales permanentes para productos específicos
 const PRODUCT_OVERRIDES: { [slug: string]: { scale: number; translateY: number; translateX: number } } = {
@@ -30,13 +29,12 @@ type ProductGalleryProps = {
   productSlug?: string
 }
 
-// ✅ Componente para thumbnail individual con transforms proporcionales
+// ✅ Componente para thumbnail - Muestra imagen completa sin recortes
 function ThumbnailImage({
   image,
   index,
   isSelected,
   productName,
-  productSlug,
   onClick,
   inModal = false
 }: {
@@ -44,74 +42,9 @@ function ThumbnailImage({
   index: number
   isSelected: boolean
   productName: string
-  productSlug: string
   onClick: () => void
   inModal?: boolean
 }) {
-  const containerRef = useRef<HTMLButtonElement>(null)
-  const [containerWidth, setContainerWidth] = useState(inModal ? 64 : 80) // Different sizes for modal vs gallery
-  const { isFramingMode, selectedImage: framingSelectedImage, setSelectedImage } = useImageFraming()
-
-  // Parsear imagen para obtener transform
-  const { productSlug: imageParsedSlug, colorSlug, imageIndex } = parseImagePath(image)
-  const actualProductSlug = imageParsedSlug || productSlug
-  const { transform: debuggerTransform, isMounted } = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'gallery')
-
-  // Medir el contenedor REAL y actualizar cuando cambie el tamaño
-  useEffect(() => {
-    const updateSize = () => {
-      if (containerRef.current) {
-        setContainerWidth(containerRef.current.offsetWidth)
-      }
-    }
-
-    updateSize()
-    window.addEventListener('resize', updateSize)
-    return () => window.removeEventListener('resize', updateSize)
-  }, [])
-
-  const isFramingSelected =
-    isFramingMode &&
-    framingSelectedImage?.productSlug === actualProductSlug &&
-    framingSelectedImage?.colorSlug === colorSlug &&
-    framingSelectedImage?.imageIndex === imageIndex &&
-    framingSelectedImage?.context === 'gallery'
-
-  const handleClick = (e: React.MouseEvent) => {
-    if (isFramingMode && !inModal) {
-      e.preventDefault()
-      e.stopPropagation()
-      setSelectedImage({
-        productSlug: actualProductSlug,
-        colorSlug: colorSlug || '',
-        imageIndex,
-        imagePath: image,
-        context: 'gallery',
-        containerWidth
-      })
-    } else {
-      onClick()
-    }
-  }
-
-  const getImageStyle = () => {
-    // PRIORIDAD 0: Transform del debugger - ESCALADO PROPORCIONAL AL CONTENEDOR
-    if (debuggerTransform) {
-      const baseContainerSize = debuggerTransform.containerWidth || (inModal ? 64 : 80)
-      const scaleFactor = containerWidth / baseContainerSize
-
-      const scaledX = debuggerTransform.x * scaleFactor
-      const scaledY = debuggerTransform.y * scaleFactor
-
-      return {
-        transform: `translate(${scaledX}px, ${scaledY}px) scale(${debuggerTransform.scale})`,
-        transformOrigin: 'center center'
-      }
-    }
-
-    return {}
-  }
-
   // Clases específicas para modal vs gallery
   const buttonClasses = inModal
     ? `relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden transition-all ${
@@ -120,32 +53,20 @@ function ThumbnailImage({
           : "ring-1 ring-white/30 hover:ring-white/60 opacity-60 hover:opacity-100"
       }`
     : `relative aspect-square overflow-hidden rounded-lg transition-all ${
-        isFramingSelected
-          ? 'ring-4 ring-blue-600 ring-offset-2'
-          : isFramingMode && !isFramingSelected
-          ? 'ring-2 ring-blue-400 ring-offset-2 hover:ring-blue-600'
-          : isSelected
+        isSelected
           ? "ring-2 ring-rose-600 ring-offset-2"
           : "ring-1 ring-neutral-200 hover:ring-neutral-400"
-      } ${isFramingMode ? 'cursor-crosshair' : 'cursor-pointer'}`
+      }`
 
   return (
     <button
-      ref={containerRef}
-      onClick={handleClick}
+      onClick={onClick}
       className={buttonClasses}
     >
-      {isFramingMode && !inModal && (
-        <div className="absolute top-1 right-1 bg-blue-600 text-white px-1.5 py-0.5 rounded text-[8px] font-medium shadow-lg z-10">
-          Click
-        </div>
-      )}
-
       <img
         src={image}
         alt={inModal ? `Miniatura ${index + 1}` : `${productName} - Vista ${index + 1}`}
-        className={`absolute inset-0 w-full h-full object-cover ${!isMounted ? '[transition:none!important]' : ''}`}
-        style={getImageStyle()}
+        className="w-full h-full object-contain bg-neutral-50"
       />
     </button>
   )
@@ -383,7 +304,7 @@ export default function ProductGallery({ images, productName, productSlug = "" }
         )}
       </div>
 
-      {/* Thumbnails (miniaturas) - CON TRANSFORMS PROPORCIONALES */}
+      {/* Thumbnails (miniaturas) - Imagen completa sin recortes */}
       {validImages.length > 1 && (
         <div className="grid grid-cols-4 gap-3">
           {validImages.map((image, index) => (
@@ -393,7 +314,6 @@ export default function ProductGallery({ images, productName, productSlug = "" }
               index={index}
               isSelected={index === selectedIndex}
               productName={productName}
-              productSlug={productSlug}
               onClick={() => setSelectedIndex(index)}
             />
           ))}
@@ -485,7 +405,7 @@ export default function ProductGallery({ images, productName, productSlug = "" }
             </>
           )}
 
-          {/* Thumbnails en modal - CON TRANSFORMS PROPORCIONALES */}
+          {/* Thumbnails en modal - Imagen completa sin recortes */}
           {validImages.length > 1 && (
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 max-w-[90vw] overflow-x-auto px-4 pb-2">
               {validImages.map((image, index) => (
@@ -495,7 +415,6 @@ export default function ProductGallery({ images, productName, productSlug = "" }
                   index={index}
                   isSelected={index === selectedIndex}
                   productName={productName}
-                  productSlug={productSlug}
                   onClick={() => setSelectedIndex(index)}
                   inModal={true}
                 />
