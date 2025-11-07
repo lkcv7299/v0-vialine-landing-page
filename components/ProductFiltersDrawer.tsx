@@ -9,6 +9,7 @@ import { getUniqueColors, getUniqueFabrics } from "@/data/products"
 type ProductFiltersDrawerProps = {
   totalProducts: number
   filteredCount: number
+  gender?: string
 }
 
 function toggleMulti(sp: URLSearchParams, key: string, val: string) {
@@ -23,7 +24,7 @@ function toggleSingle(sp: URLSearchParams, key: string, val: string) {
   else sp.set(key, val)
 }
 
-export default function ProductFiltersDrawer({ totalProducts, filteredCount }: ProductFiltersDrawerProps) {
+export default function ProductFiltersDrawer({ totalProducts, filteredCount, gender }: ProductFiltersDrawerProps) {
   const [open, setOpen] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
@@ -77,7 +78,7 @@ export default function ProductFiltersDrawer({ totalProducts, filteredCount }: P
   const maxPrice = params?.get("maxPrice") || ""
 
   // ✨ Opciones de filtros DINÁMICAS
-  const sizes = ["S", "M", "L", "XL"]
+  const sizes = gender === "nina" ? ["2", "4", "6", "8", "10", "12"] : ["S", "M", "L", "XL"]
   const colors = getUniqueColors()
   const fabrics = getUniqueFabrics()
   const categories = [

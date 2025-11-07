@@ -142,12 +142,12 @@ export default async function Page({ params, searchParams }: Params) {
 
       {/* Filtros */}
       <div className="flex gap-8 lg:gap-12 mb-8">
-        <ProductFiltersDesktop totalProducts={allRows.length} filteredCount={filteredRows.length} />
+        <ProductFiltersDesktop totalProducts={allRows.length} filteredCount={filteredRows.length} gender={genderSlug} />
 
         <div className="flex-1">
           {/* Filtros móvil */}
           <div className="lg:hidden mb-6">
-            <ProductFiltersDrawer totalProducts={allRows.length} filteredCount={filteredRows.length} />
+            <ProductFiltersDrawer totalProducts={allRows.length} filteredCount={filteredRows.length} gender={genderSlug} />
           </div>
 
           <ul className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-6">

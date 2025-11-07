@@ -44,3 +44,7 @@ data/*-final.ts
 scripts/extract-catalog.js
 scripts/extract-nina-products.js
 scripts/merge-nina.js
+
+# temp files
+nul
+logs_result.json
