@@ -66,7 +66,7 @@ function ThumbnailImage({
       <img
         src={image}
         alt={inModal ? `Miniatura ${index + 1}` : `${productName} - Vista ${index + 1}`}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-contain"
       />
     </button>
   )
@@ -235,7 +235,7 @@ export default function ProductGallery({ images, productName, productSlug = "" }
         <img
           src={validImages[0]}
           alt={productName}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
         />
       </div>
     )
@@ -250,7 +250,7 @@ export default function ProductGallery({ images, productName, productSlug = "" }
             <img
               src={validImages[selectedIndex]}
               alt={`${productName} - Imagen ${selectedIndex + 1}`}
-              className="w-full h-full object-cover transition-opacity duration-300"
+              className="w-full h-full object-contain transition-opacity duration-300"
             />
           </div>
 
