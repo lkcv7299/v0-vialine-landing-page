@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import Drawer from "@/components/ui/Drawer"
 import { Menu, X } from "lucide-react"
 import { buildWhatsAppUrl } from "@/lib/contact"
+import { getCollectionsMenu, getFabricsMenu } from "@/data/menu"
 
 // ✅ RUTAS CORREGIDAS - Ahora usan /shop/gender/category igual que desktop
 const mujer = [
@@ -31,6 +32,10 @@ const nina = [
 export default function MobileMenu() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
+
+  // ✨ Obtener colecciones y tejidos dinámicamente
+  const collections = getCollectionsMenu()
+  const fabrics = getFabricsMenu()
 
   // Cerrar drawer cuando cambia la ruta
   useEffect(() => {
@@ -79,17 +84,41 @@ export default function MobileMenu() {
 
           {/* ========== NAVEGACIÓN ========== */}
           <nav className="flex-1 overflow-y-auto px-4 py-4">
-            
+
             {/* Sección Mujer */}
             <Section title="Mujer" items={mujer} onLinkClick={() => setOpen(false)} />
-            
+
             <div className="h-6" /> {/* Espaciador */}
-            
+
             {/* Sección Niña */}
             <Section title="Niña" items={nina} onLinkClick={() => setOpen(false)} />
-            
+
             <div className="h-6" /> {/* Espaciador */}
-            
+
+            {/* ✨ NUEVA: Sección Colecciones */}
+            <Section
+              title="Por Colección"
+              items={collections.map(c => ({
+                label: `${c.label} (${c.count})`,
+                href: c.href
+              }))}
+              onLinkClick={() => setOpen(false)}
+            />
+
+            <div className="h-6" /> {/* Espaciador */}
+
+            {/* ✨ NUEVA: Sección Tejidos */}
+            <Section
+              title="Por Tejido"
+              items={fabrics.map(f => ({
+                label: `${f.label} (${f.count})`,
+                href: f.href
+              }))}
+              onLinkClick={() => setOpen(false)}
+            />
+
+            <div className="h-6" /> {/* Espaciador */}
+
             {/* Sección Ayuda */}
             <Section
               title="Ayuda"
@@ -107,7 +136,7 @@ export default function MobileMenu() {
           <div className="border-t border-neutral-200 p-4 space-y-3 bg-white">
             <Link
               href="/mujer"
-              className="block w-full rounded-xl bg-rose-600 text-white text-center py-3 font-semibold hover:bg-rose-700 transition"
+              className="block w-full rounded-xl bg-neutral-900 text-white text-center py-3 font-semibold hover:bg-neutral-800 transition"
               onClick={() => setOpen(false)}
             >
               Comprar Mujer

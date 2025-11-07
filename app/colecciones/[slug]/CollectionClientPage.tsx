@@ -96,8 +96,8 @@ export default function CollectionClientPage({ collection, slug }: { collection:
                     onClick={() => toggleSize(size)}
                     className={`px-3 py-1 text-sm rounded-lg border transition ${
                       selectedSizes.includes(size)
-                        ? "bg-rose-600 text-white border-rose-600"
-                        : "bg-white text-neutral-700 border-neutral-300 hover:border-rose-400"
+                        ? "bg-neutral-900 text-white border-neutral-900"
+                        : "bg-white text-neutral-700 border-neutral-300 hover:border-neutral-400"
                     }`}
                   >
                     {size}
@@ -115,8 +115,8 @@ export default function CollectionClientPage({ collection, slug }: { collection:
                     onClick={() => toggleFabric(fabric)}
                     className={`px-3 py-1 text-sm rounded-lg border transition ${
                       selectedFabrics.includes(fabric)
-                        ? "bg-rose-600 text-white border-rose-600"
-                        : "bg-white text-neutral-700 border-neutral-300 hover:border-rose-400"
+                        ? "bg-neutral-900 text-white border-neutral-900"
+                        : "bg-white text-neutral-700 border-neutral-300 hover:border-neutral-400"
                     }`}
                   >
                     {fabric}
@@ -130,7 +130,7 @@ export default function CollectionClientPage({ collection, slug }: { collection:
               <select
                 value={sortBy}
                 onChange={(e) => handleSortChange(e.target.value)}
-                className="px-3 py-1 text-sm rounded-lg border border-neutral-300 bg-white text-neutral-700 focus:outline-none focus:ring-2 focus:ring-rose-500"
+                className="px-3 py-1 text-sm rounded-lg border border-neutral-300 bg-white text-neutral-700 focus:outline-none focus:ring-2 focus:ring-neutral-600"
               >
                 {sortOptions.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -145,7 +145,7 @@ export default function CollectionClientPage({ collection, slug }: { collection:
 
       <main className="mx-auto max-w-6xl px-4 py-10">
         <div className="flex justify-end mb-8">
-          <a href="/#colecciones" className="text-sm text-rose-700 hover:text-rose-600 underline underline-offset-4">
+          <a href="/#colecciones" className="text-sm text-neutral-900 hover:text-neutral-600 underline underline-offset-4">
             Volver a colecciones
           </a>
         </div>
@@ -169,7 +169,7 @@ export default function CollectionClientPage({ collection, slug }: { collection:
                 <h3 className="font-semibold text-neutral-900">{product.name}</h3>
                 <p className="text-sm text-neutral-600 mt-1">{product.fabric}</p>
                 <div className="flex items-center justify-between mt-2">
-                  <p className="text-lg font-bold text-rose-600">S/ {product.price}</p>
+                  <p className="text-lg font-bold text-neutral-900">S/ {product.price}</p>
                   <div className="flex gap-1.5">
                     {product.colors.map((color, idx) => (
                       <div
@@ -197,7 +197,7 @@ export default function CollectionClientPage({ collection, slug }: { collection:
             href={buildWhatsAppUrl("Hola Vialine")}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-5 py-3 rounded-2xl text-white font-semibold tracking-wide shadow-lg hover:bg-rose-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-700 transition uppercase bg-rose-600"
+            className="inline-flex items-center justify-center px-5 py-3 rounded-2xl text-white font-semibold tracking-wide shadow-lg hover:bg-neutral-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900 transition uppercase bg-neutral-900"
           >
             Comprar por WhatsApp
           </a>

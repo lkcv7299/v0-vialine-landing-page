@@ -1,3 +1,5 @@
+import { getAllCollections, getUniqueFabrics } from "./products"
+
 export const WOMEN_MENU = {
   rootHref: "/mujer",
   clothing: [
@@ -31,4 +33,23 @@ export const GIRL_MENU = {
     { label: "Popular ahora", href: "/nina#popular" },
     { label: "Novedades", href: "/nina#novedades" },
   ],
+}
+
+// ✨ NUEVAS SECCIONES DINÁMICAS
+export function getCollectionsMenu() {
+  const collections = getAllCollections()
+  return collections.map(c => ({
+    label: c.name,
+    href: `/colecciones/${c.slug}`,
+    count: c.count
+  }))
+}
+
+export function getFabricsMenu() {
+  const fabrics = getUniqueFabrics()
+  return fabrics.map(f => ({
+    label: f.name,
+    href: `/tejido/${f.slug}`,
+    count: f.count
+  }))
 }
