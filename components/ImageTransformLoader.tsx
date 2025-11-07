@@ -1,175 +1,175 @@
 "use client"
 import { useEffect } from 'react'
 
-// Transformaciones exactas del debugger
+// ✅ Transformaciones con containerWidth - Sistema proporcional
 const SAVED_TRANSFORMS = {
   "camiseta-cuello-alto-azul-marino-cuello-alto": {
     "azulmarino": {
       "0": {
-        "card": { x: 0, y: 64, scale: 1.5, context: "card" },
-        "rail": { x: 0, y: 163, scale: 1.97, context: "rail" }
+        "rail": { "x": 0, "y": 110, "scale": 1.68, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": 48, "scale": 1.35, "context": "card", "containerWidth": 220 }
       }
     }
   },
   "camiseta-manga-larga-azul-marino-manga-larga-azul": {
     "marino": {
       "1": {
-        "card": { x: 0, y: 0, scale: 1, context: "card" },
-        "rail": { x: 0, y: 108, scale: 1.5, context: "rail" }
+        "rail": { "x": 0, "y": 133, "scale": 1.62, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
     }
   },
   "camiseta-manga-corta-azul-marino-camiseta": {
     "azulmarino": {
       "0": {
-        "card": { x: 0, y: 64, scale: 1.5, context: "card" },
-        "rail": { x: 0, y: 119, scale: 1.74, context: "rail" }
+        "rail": { "x": 0, "y": 110, "scale": 1.68, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": 53, "scale": 1.38, "context": "card", "containerWidth": 220 }
+      }
+    }
+  },
+  "camiseta-tropical": {
+    "placeholder.svg": {
+      "0": {
+        "rail": { "x": 0, "y": 0, "scale": 1, "context": "rail", "containerWidth": 483 }
       }
     }
   },
   "camiseta-gia-blanco-camiseta-gia": {
     "blanco": {
       "0": {
-        "card": { x: 6, y: 80, scale: 1.5, context: "card" },
-        "rail": { x: 0, y: 131, scale: 1.69, context: "rail" }
+        "rail": { "x": 0, "y": 122, "scale": 1.68, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": 64, "scale": 1.38, "context": "card", "containerWidth": 220 }
       }
     }
   },
   "short-slim-suplex-liso-premium-acero-short-slim": {
     "acero": {
       "0": {
-        "card": { x: 0, y: -53, scale: 1.36, context: "card" },
-        "rail": { x: 0, y: -128, scale: 1.53, context: "rail" }
+        "rail": { "x": 0, "y": -158, "scale": 1.68, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": -25, "scale": 1.25, "context": "card", "containerWidth": 220 }
       }
     }
   },
   "short-ciclista-active": {
     "aqua": {
       "0": {
-        "card": { x: 0, y: -69, scale: 1.49, context: "card" },
-        "rail": { x: 0, y: -122, scale: 1.7, context: "rail" }
+        "rail": { "x": 0, "y": -99, "scale": 1.51, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": -64, "scale": 1.44, "context": "card", "containerWidth": 220 }
       }
     }
   },
   "short-lux": {
     "aqua": {
       "0": {
-        "card": { x: 0, y: -60, scale: 1.4, context: "card" },
-        "rail": { x: 0, y: -122, scale: 1.57, context: "rail" }
+        "rail": { "x": 0, "y": -108, "scale": 1.51, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": -57, "scale": 1.4, "context": "card", "containerWidth": 220 }
       }
     }
   },
   "short-brasil-beige-short-brasil": {
     "beige": {
       "0": {
-        "card": { x: 0, y: -69, scale: 1.49, context: "card" },
-        "rail": { x: 0, y: -122, scale: 1.57, context: "rail" }
+        "rail": { "x": 0, "y": -106, "scale": 1.51, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": -64, "scale": 1.44, "context": "card", "containerWidth": 220 }
       }
     }
   },
   "maxi-short-beige-MAXI-SHORT": {
     "BEIGE": {
       "0": {
-        "card": { x: 0, y: -69, scale: 1.49, context: "card" },
-        "rail": { x: 0, y: -122, scale: 1.57, context: "rail" }
+        "rail": { "x": 0, "y": -103, "scale": 1.51, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": -64, "scale": 1.44, "context": "card", "containerWidth": 220 }
+      }
+    }
+  },
+  "camiseta-deportiva": {
+    "placeholder.svg": {
+      "0": {
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
     }
   },
   "short-clasico": {
     "negro": {
       "0": {
-        "card": { x: 0, y: -69, scale: 1.49, context: "card" }
+        "card": { "x": 0, "y": -62, "scale": 1.44, "context": "card", "containerWidth": 220 }
       }
     }
   },
   "mini-short-beige-mini-short": {
     "beige": {
       "0": {
-        "card": { x: 0, y: -69, scale: 1.49, context: "card" }
+        "card": { "x": 0, "y": -64, "scale": 1.44, "context": "card", "containerWidth": 220 }
+      }
+    }
+  },
+  "body-manga-corta-suplex-azul": {
+    "marino": {
+      "0": {
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
     }
   },
   "body-manga-larga-beige-manga-larga": {
     "beige": {
       "0": {
-        "card": { x: 0, y: 64, scale: 1.5, context: "card" }
+        "card": { "x": 0, "y": 53, "scale": 1.38, "context": "card", "containerWidth": 220 }
       }
     }
   },
   "top-afrodita-suplex-liso-premium-azulino-afrodita": {
     "azulino": {
       "0": {
-        "card": { x: 0, y: 2, scale: 1, context: "card" }
+        "card": { "x": 0, "y": 0, "scale": 1.01, "context": "card", "containerWidth": 220 }
       }
     }
   },
   "top-venus": {
     "azulino": {
       "0": {
-        "card": { x: 0, y: 0, scale: 1, context: "card" }
-      }
-    }
-  },
-  "top-paradise-suplex-liso-premium-azulino-paradise": {
-    "azulino": {
-      "0": {
-        "card": { x: 0, y: 0, scale: 1, context: "card" }
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
     }
   },
   "top-soporte": {
     "beige": {
       "0": {
-        "card": { x: 0, y: 0, scale: 1, context: "card" }
-      }
-    }
-  },
-  "top-arena": {
-    "blanco": {
-      "0": {
-        "card": { x: 0, y: 0, scale: 1, context: "card" }
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
     }
   },
   "top-zafiro": {
     "blanco": {
       "0": {
-        "card": { x: 0, y: 0, scale: 1, context: "card" }
-      }
-    }
-  },
-  "top-perla": {
-    "blanco": {
-      "0": {
-        "card": { x: 0, y: 0, scale: 1, context: "card" }
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
     }
   },
   "top-luna": {
     "beige": {
       "0": {
-        "card": { x: 9, y: 64, scale: 1.5, context: "card" }
+        "card": { "x": 0, "y": 44, "scale": 1.31, "context": "card", "containerWidth": 220 }
+      }
+    }
+  },
+  "top-arena": {
+    "blanco": {
+      "0": {
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
+      }
+    }
+  },
+  "top-perla": {
+    "blanco": {
+      "0": {
+        "card": { "x": 0, "y": 0, "scale": 1.04, "context": "card", "containerWidth": 220 }
       }
     }
   },
   "enterizo-manga-cero": {
     "azulino": {
       "0": {
-        "card": { x: 0, y: 0, scale: 1, context: "card" }
-      }
-    }
-  },
-  "top-jungle": {
-    "azulino": {
-      "0": {
-        "card": { x: 0, y: 0, scale: 1, context: "card" }
-      }
-    }
-  },
-  "camiseta-tropical": {
-    "": {
-      "0": {
-        "undefined": { x: 0, y: 0, scale: 1 }
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
     }
   }
@@ -178,36 +178,12 @@ const SAVED_TRANSFORMS = {
 export default function ImageTransformLoader() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      // ✅ SISTEMA NUEVO: Limpiamos los transforms antiguos que no tienen containerWidth
-      // El usuario necesita re-ajustar con Ctrl+Shift+F para que se guarde correctamente
-      const existingTransforms = localStorage.getItem('imageTransforms')
+      // Cargar los transforms al localStorage
+      localStorage.setItem('imageTransforms', JSON.stringify(SAVED_TRANSFORMS))
+      console.log('✅ Transforms cargados con containerWidth:', Object.keys(SAVED_TRANSFORMS).length, 'productos')
 
-      if (existingTransforms) {
-        try {
-          const parsed = JSON.parse(existingTransforms)
-          // Verificar si algún transform tiene containerWidth
-          let hasContainerWidth = false
-          Object.values(parsed).forEach((product: any) => {
-            Object.values(product || {}).forEach((color: any) => {
-              Object.values(color || {}).forEach((index: any) => {
-                Object.values(index || {}).forEach((transform: any) => {
-                  if (transform?.containerWidth) {
-                    hasContainerWidth = true
-                  }
-                })
-              })
-            })
-          })
-
-          // Si no tienen containerWidth, limpiar
-          if (!hasContainerWidth) {
-            console.log('🔄 Sistema actualizado: Limpiando transforms antiguos. Re-ajusta las imágenes con Ctrl+Shift+F')
-            localStorage.removeItem('imageTransforms')
-          }
-        } catch (e) {
-          console.error('Error verificando transforms:', e)
-        }
-      }
+      // Emitir evento para actualizar las imágenes
+      window.dispatchEvent(new CustomEvent('imageTransformsUpdated'))
     }
   }, [])
 
