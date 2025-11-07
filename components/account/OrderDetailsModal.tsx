@@ -169,14 +169,14 @@ export default function OrderDetailsModal({ order, isOpen, onClose }: OrderDetai
           {/* Content */}
           <div className="p-6 space-y-6">
             {/* Estado del pedido */}
-            <div className="bg-rose-50 border border-rose-200 rounded-lg p-4">
+            <div className="bg-neutral-50 border border-neutral-200 rounded-lg p-4">
               <div className="flex items-center gap-3">
-                <Package className="w-6 h-6 text-rose-600" />
+                <Package className="w-6 h-6 text-neutral-900" />
                 <div>
-                  <p className="text-sm font-medium text-rose-900">
+                  <p className="text-sm font-medium text-neutral-900">
                     Estado actual
                   </p>
-                  <p className="text-lg font-bold text-rose-600">
+                  <p className="text-lg font-bold text-neutral-900">
                     {getStatusText(order.status)}
                   </p>
                 </div>
@@ -191,7 +191,7 @@ export default function OrderDetailsModal({ order, isOpen, onClose }: OrderDetai
                   {/* Línea de progreso */}
                   <div className="absolute top-5 left-0 right-0 h-1 bg-neutral-200">
                     <div
-                      className="h-full bg-rose-600 transition-all duration-500"
+                      className="h-full bg-neutral-900 transition-all duration-500"
                       style={{
                         width: `${(getTimeline().filter(s => s.completed).length - 1) / (getTimeline().length - 1) * 100}%`
                       }}
@@ -207,9 +207,9 @@ export default function OrderDetailsModal({ order, isOpen, onClose }: OrderDetai
                           <div
                             className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 transition-all ${
                               step.completed
-                                ? "bg-rose-600 text-white"
+                                ? "bg-neutral-900 text-white"
                                 : "bg-neutral-200 text-neutral-400"
-                            } ${step.active ? "ring-4 ring-rose-200" : ""}`}
+                            } ${step.active ? "ring-4 ring-neutral-200" : ""}`}
                           >
                             <StepIcon className="w-5 h-5" />
                           </div>
@@ -231,7 +231,7 @@ export default function OrderDetailsModal({ order, isOpen, onClose }: OrderDetai
               {/* Información de contacto */}
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-neutral-900 flex items-center gap-2">
-                  <Mail className="w-5 h-5 text-rose-600" />
+                  <Mail className="w-5 h-5 text-neutral-900" />
                   Información de contacto
                 </h3>
                 <div className="bg-neutral-50 rounded-lg p-4 space-y-2">
@@ -259,7 +259,7 @@ export default function OrderDetailsModal({ order, isOpen, onClose }: OrderDetai
               {/* Dirección de envío */}
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold text-neutral-900 flex items-center gap-2">
-                  <MapPin className="w-5 h-5 text-rose-600" />
+                  <MapPin className="w-5 h-5 text-neutral-900" />
                   Dirección de envío
                 </h3>
                 <div className="bg-neutral-50 rounded-lg p-4 space-y-2">
@@ -289,7 +289,7 @@ export default function OrderDetailsModal({ order, isOpen, onClose }: OrderDetai
             {/* Método de pago */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-neutral-900 flex items-center gap-2">
-                <CreditCard className="w-5 h-5 text-rose-600" />
+                <CreditCard className="w-5 h-5 text-neutral-900" />
                 Método de pago
               </h3>
               <div className="bg-neutral-50 rounded-lg p-4">
@@ -302,7 +302,7 @@ export default function OrderDetailsModal({ order, isOpen, onClose }: OrderDetai
             {/* Productos */}
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-neutral-900 flex items-center gap-2">
-                <Package className="w-5 h-5 text-rose-600" />
+                <Package className="w-5 h-5 text-neutral-900" />
                 Productos ({order.items.length})
               </h3>
               <div className="border border-neutral-200 rounded-lg overflow-hidden">
@@ -358,7 +358,7 @@ export default function OrderDetailsModal({ order, isOpen, onClose }: OrderDetai
               </div>
               <div className="pt-3 border-t-2 border-neutral-300 flex justify-between">
                 <span className="text-lg font-bold text-neutral-900">Total</span>
-                <span className="text-2xl font-bold text-rose-600">
+                <span className="text-2xl font-bold text-neutral-900">
                   S/ {order.total.toFixed(2)}
                 </span>
               </div>
@@ -381,7 +381,7 @@ export default function OrderDetailsModal({ order, isOpen, onClose }: OrderDetai
           <div className="sticky bottom-0 bg-white border-t border-neutral-200 p-6">
             <button
               onClick={onClose}
-              className="w-full py-3 px-6 bg-rose-600 text-white font-semibold rounded-lg hover:bg-rose-700 transition-colors"
+              className="w-full py-3 px-6 bg-neutral-900 text-white font-semibold rounded-lg hover:bg-neutral-800 transition-colors"
             >
               Cerrar
             </button>

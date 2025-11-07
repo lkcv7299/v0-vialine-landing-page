@@ -128,7 +128,7 @@ export default function SiteHeader() {
                             setShowAccountMenu(false)
                             signOut({ callbackUrl: '/' })
                           }}
-                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-rose-600 hover:bg-rose-50 transition w-full"
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-900 hover:bg-neutral-50 transition w-full"
                         >
                           <LogOut className="w-4 h-4" />
                           Cerrar sesión
