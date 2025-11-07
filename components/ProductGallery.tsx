@@ -29,7 +29,7 @@ type ProductGalleryProps = {
   productSlug?: string
 }
 
-// ✅ Componente para thumbnail - Muestra imagen completa sin recortes
+// ✅ Componente para thumbnail - Muestra imagen completa sin recortes con diseño mejorado
 function ThumbnailImage({
   image,
   index,
@@ -47,15 +47,15 @@ function ThumbnailImage({
 }) {
   // Clases específicas para modal vs gallery
   const buttonClasses = inModal
-    ? `relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden transition-all ${
+    ? `relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden transition-all duration-200 ${
         isSelected
           ? "ring-2 ring-white ring-offset-2 ring-offset-black"
           : "ring-1 ring-white/30 hover:ring-white/60 opacity-60 hover:opacity-100"
       }`
-    : `relative aspect-[3/4] overflow-hidden rounded-lg transition-all ${
+    : `group relative aspect-[3/4] overflow-hidden rounded-xl transition-all duration-300 cursor-pointer ${
         isSelected
-          ? "ring-2 ring-rose-600 ring-offset-2"
-          : "ring-1 ring-neutral-200 hover:ring-neutral-400"
+          ? "ring-2 ring-rose-600 shadow-lg shadow-rose-200/50 scale-[0.98]"
+          : "ring-1 ring-neutral-200 hover:ring-2 hover:ring-rose-400 hover:shadow-md"
       }`
 
   return (
@@ -63,11 +63,27 @@ function ThumbnailImage({
       onClick={onClick}
       className={buttonClasses}
     >
-      <img
-        src={image}
-        alt={inModal ? `Miniatura ${index + 1}` : `${productName} - Vista ${index + 1}`}
-        className="w-full h-full object-contain"
-      />
+      <div className={`relative w-full h-full bg-gradient-to-br from-neutral-50 to-neutral-100 ${isSelected ? 'bg-white' : ''}`}>
+        <img
+          src={image}
+          alt={inModal ? `Miniatura ${index + 1}` : `${productName} - Vista ${index + 1}`}
+          className={`w-full h-full object-contain transition-all duration-300 ${
+            isSelected ? 'scale-100' : 'group-hover:scale-105'
+          }`}
+        />
+        {/* Checkmark indicator when selected (only for gallery, not modal) */}
+        {!inModal && isSelected && (
+          <div className="absolute top-2 right-2 w-6 h-6 bg-rose-600 rounded-full flex items-center justify-center shadow-lg">
+            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+        )}
+        {/* Hover overlay (only for non-selected thumbnails) */}
+        {!isSelected && !inModal && (
+          <div className="absolute inset-0 bg-rose-600/0 group-hover:bg-rose-600/5 transition-colors duration-300" />
+        )}
+      </div>
     </button>
   )
 }

@@ -1,10 +1,11 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Check, Share2 } from "lucide-react"
+import { Check, Share2, Heart, Package, Truck, Shield } from "lucide-react"
 import type { Product } from "@/data/products"
 import { buildWhatsAppUrl } from "@/lib/contact"
 import { useCart } from "@/contexts/CartContext"
+import { useWishlist } from "@/components/providers/WishlistContext"
 import ProductGallery from "@/components/ProductGallery"
 import SizeGuideModal from "@/components/SizeGuideModal"
 import StockIndicator from "@/components/StockIndicator"
@@ -69,12 +70,14 @@ export default function ProductDetailCard({ product }: { product: Product }) {
   const [selectedSize, setSelectedSize] = useState("")
   const [quantity, setQuantity] = useState(1)
   const [added, setAdded] = useState(false)
-  const [activeTab, setActiveTab] = useState<"cuidados" | "envios">("cuidados")
   const [currentImages, setCurrentImages] = useState<string[]>([])
   const [isLoadingGallery, setIsLoadingGallery] = useState(false)
-  const { addItem} = useCart()
+  const { addItem } = useCart()
+  const { has, toggle } = useWishlist()
+  const [isWishlistAnimating, setIsWishlistAnimating] = useState(false)
 
   const isOutOfStock = product.inventory === 0
+  const isInWishlist = has(product.slug)
 
   // ✅ Auto-select first color and load its gallery on mount
   useEffect(() => {
@@ -163,66 +166,117 @@ export default function ProductDetailCard({ product }: { product: Product }) {
     }
   }
 
+  const handleWishlistToggle = () => {
+    setIsWishlistAnimating(true)
+    toggle(product.slug)
+    toast.success(isInWishlist ? "Eliminado de favoritos" : "Agregado a favoritos")
+    setTimeout(() => setIsWishlistAnimating(false), 600)
+  }
+
   const isButtonDisabled = !selectedColorName || !selectedSize || isOutOfStock
+
+  // Extract product code from tags
+  const productCode = product.tags?.find(tag => tag.startsWith("COD.")) || ""
+
+  // Filter out material from detalles to avoid duplication
+  const uniqueDetalles = product.attributes?.detalles?.filter(detalle => {
+    const detalleLower = detalle.toLowerCase()
+    const materialLower = product.attributes?.material?.toLowerCase() || ""
+    return detalleLower !== materialLower
+  }) || []
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-8">
-      <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+      <div className="grid md:grid-cols-2 gap-8 lg:gap-16">
+        {/* GALLERY - Left Side */}
         <div className={`transition-opacity duration-300 ${isLoadingGallery ? 'opacity-50' : 'opacity-100'}`}>
           <ProductGallery images={currentImages} productName={product.title} productSlug={product.slug} />
         </div>
 
-        <div>
-          <div className="flex items-start justify-between gap-4">
-            <h1 className="text-3xl md:text-4xl font-bold text-neutral-900">{product.title}</h1>
-            <button
-              onClick={handleShare}
-              className="flex-shrink-0 p-2 rounded-full hover:bg-neutral-100 transition text-neutral-600 hover:text-rose-600"
-              aria-label="Compartir producto"
-            >
-              <Share2 className="w-5 h-5" />
-            </button>
-          </div>
-          <p className="mt-4 text-3xl font-bold text-rose-600">
-            S/ {product.price.toFixed(2)}
-          </p>
-
-          {/* STOCK INDICATOR - NUEVO */}
-          <div className="mt-4">
-            <StockIndicator inventory={product.inventory} productSlug={product.slug} />
-          </div>
-
-          {product.attributes && (
-            <div className="mt-6 space-y-3">
-              <div className="flex items-start gap-2 text-sm text-neutral-600">
-                <Check className="w-5 h-5 text-rose-600 flex-shrink-0 mt-0.5" />
-                <span>{product.attributes.material}</span>
+        {/* PRODUCT INFO - Right Side */}
+        <div className="space-y-7">
+          {/* Header: Title + Actions */}
+          <div>
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1">
+                <h1 className="text-2xl md:text-3xl font-bold text-neutral-900 tracking-tight">
+                  {product.title}
+                </h1>
+                {/* Product Code */}
+                {productCode && (
+                  <p className="mt-1.5 text-sm text-neutral-500">
+                    Producto {productCode}
+                  </p>
+                )}
               </div>
-              {product.attributes.detalles && product.attributes.detalles.map((detalle, i) => (
-                <div key={i} className="flex items-start gap-2 text-sm text-neutral-600">
-                  <Check className="w-5 h-5 text-rose-600 flex-shrink-0 mt-0.5" />
-                  <span>{detalle}</span>
-                </div>
-              ))}
+
+              {/* Action Buttons */}
+              <div className="flex gap-2 flex-shrink-0">
+                <button
+                  onClick={handleWishlistToggle}
+                  className={`p-2 rounded-full transition-all duration-200 ${
+                    isInWishlist
+                      ? "bg-rose-50 text-rose-600"
+                      : "bg-neutral-50 text-neutral-600 hover:bg-neutral-100 hover:text-rose-600"
+                  } ${isWishlistAnimating ? "scale-110" : "scale-100"}`}
+                  aria-label={isInWishlist ? "Quitar de favoritos" : "Agregar a favoritos"}
+                >
+                  <Heart
+                    className={`w-5 h-5 transition-all duration-300 ${
+                      isInWishlist ? "fill-rose-600" : ""
+                    }`}
+                  />
+                </button>
+                <button
+                  onClick={handleShare}
+                  className="p-2 rounded-full bg-neutral-50 hover:bg-neutral-100 transition text-neutral-600 hover:text-rose-600"
+                  aria-label="Compartir producto"
+                >
+                  <Share2 className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Price */}
+            <div className="flex items-baseline gap-3 mt-5">
+              <p className="text-3xl font-semibold text-neutral-900">
+                S/ {product.price.toFixed(2)}
+              </p>
+              {product.originalPrice && (
+                <p className="text-lg font-medium text-neutral-400 line-through">
+                  S/ {product.originalPrice.toFixed(2)}
+                </p>
+              )}
+            </div>
+
+            {/* Stock Indicator */}
+            <div className="mt-3">
+              <StockIndicator inventory={product.inventory} productSlug={product.slug} />
+            </div>
+          </div>
+
+          {/* Material & Key Features - Lululemon Style */}
+          {product.attributes?.material && (
+            <div className="space-y-2">
+              <p className="text-sm font-semibold text-neutral-900">Material</p>
+              <p className="text-sm text-neutral-700">{product.attributes.material}</p>
             </div>
           )}
 
-          <div className="mt-8">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-base font-bold text-neutral-900">Color</h3>
-              {selectedColorName && (
-                <span className="text-sm text-neutral-600 font-medium animate-fade-in">
-                  {selectedColorName}
-                </span>
-              )}
+          {/* Color Selection - Lululemon/Gymshark Style */}
+          <div className="space-y-3">
+            <div className="flex items-baseline justify-between">
+              <h3 className="text-sm font-semibold text-neutral-900">
+                Color: {selectedColorName && <span className="font-normal text-neutral-600">{selectedColorName}</span>}
+              </h3>
+              <span className="text-xs text-neutral-500">{product.colors.length} colores</span>
             </div>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2">
               {product.colors.map((color, index) => {
                 const colorName = typeof color === "string" ? color : color.name
                 const colorSlug = typeof color === "object" ? color.slug : ""
                 const colorHex = typeof color === "object" ? color.hex : null
                 const isSelected = selectedColorName === colorName
-                // Use slug as key (unique), fallback to index if string
                 const uniqueKey = typeof color === "object" ? color.slug : `${colorName}-${index}`
 
                 return (
@@ -230,115 +284,68 @@ export default function ProductDetailCard({ product }: { product: Product }) {
                     key={uniqueKey}
                     onClick={() => typeof color === "object" && handleColorChange(color.slug, color.name)}
                     disabled={isOutOfStock || typeof color === "string"}
-                    className={`group relative flex items-center gap-2.5 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 border-2 ${
+                    className={`relative px-4 py-2 rounded-lg text-xs font-medium transition-all duration-200 border ${
                       isOutOfStock
                         ? "bg-neutral-100 text-neutral-400 cursor-not-allowed border-neutral-200"
                         : isSelected
-                        ? "bg-rose-600 text-white shadow-lg shadow-rose-200 border-rose-600 scale-105"
-                        : "bg-white text-neutral-900 hover:bg-neutral-50 hover:border-rose-300 hover:shadow-md border-neutral-200"
+                        ? "bg-neutral-900 text-white border-neutral-900"
+                        : "bg-white text-neutral-700 border-neutral-300 hover:border-neutral-900"
                     }`}
                   >
-                    <span>{colorName}</span>
-                    {isSelected && (
-                      <span className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-                        <Check className="w-3 h-3 text-white" />
-                      </span>
-                    )}
+                    {colorName}
                   </button>
                 )
               })}
             </div>
           </div>
 
-          <div className="mt-7">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-base font-bold text-neutral-900">Talla</h3>
+          {/* Size Selection - Lululemon/Gymshark Style */}
+          <div className="space-y-3">
+            <div className="flex items-baseline justify-between">
+              <h3 className="text-sm font-semibold text-neutral-900">
+                Talla: {selectedSize && <span className="font-normal text-neutral-600">{selectedSize}</span>}
+              </h3>
               <SizeGuideModal category={product.category} />
             </div>
-            <div className="flex flex-wrap gap-3">
+            <div className="grid grid-cols-4 gap-2">
               {product.sizes.map((size) => (
                 <button
                   key={size}
                   onClick={() => setSelectedSize(size)}
                   disabled={isOutOfStock}
-                  className={`relative min-w-[56px] px-5 py-3 rounded-xl text-sm font-bold transition-all duration-300 border-2 ${
+                  className={`py-3 rounded-lg text-sm font-medium transition-all duration-200 border ${
                     isOutOfStock
                       ? "bg-neutral-100 text-neutral-400 cursor-not-allowed border-neutral-200"
                       : selectedSize === size
-                      ? "bg-rose-600 text-white shadow-lg shadow-rose-200 border-rose-600 scale-105"
-                      : "bg-white text-neutral-900 hover:bg-neutral-50 hover:border-rose-300 hover:shadow-md border-neutral-200"
+                      ? "bg-neutral-900 text-white border-neutral-900"
+                      : "bg-white text-neutral-700 border-neutral-300 hover:border-neutral-900"
                   }`}
                 >
                   {size}
-                  {selectedSize === size && (
-                    <span className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-                      <Check className="w-3 h-3 text-white" />
-                    </span>
-                  )}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Quantity Selector */}
-          <div className="mt-7">
-            <h3 className="text-base font-bold text-neutral-900 mb-4">Cantidad</h3>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-3 bg-neutral-50 rounded-xl p-2 border-2 border-neutral-200">
-                <button
-                  onClick={decrementQuantity}
-                  disabled={isOutOfStock || quantity <= 1}
-                  className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold text-lg transition-all duration-200 ${
-                    isOutOfStock || quantity <= 1
-                      ? "text-neutral-300 cursor-not-allowed"
-                      : "text-neutral-900 hover:bg-rose-100 hover:text-rose-600 active:scale-95"
-                  }`}
-                >
-                  −
-                </button>
-                <span className="text-xl font-bold text-neutral-900 min-w-[48px] text-center">
-                  {quantity}
-                </span>
-                <button
-                  onClick={incrementQuantity}
-                  disabled={isOutOfStock}
-                  className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold text-lg transition-all duration-200 ${
-                    isOutOfStock
-                      ? "text-neutral-300 cursor-not-allowed"
-                      : "text-neutral-900 hover:bg-rose-100 hover:text-rose-600 active:scale-95"
-                  }`}
-                >
-                  +
-                </button>
-              </div>
-              {!isOutOfStock && (
-                <span className="text-sm text-neutral-600 font-medium">
-                  {product.inventory && product.inventory < 10
-                    ? `Solo ${product.inventory} disponibles`
-                    : "Disponible"}
-                </span>
-              )}
-            </div>
-          </div>
-
-          <div className="mt-9 space-y-4">
+          {/* CTA Buttons - Gymshark Style */}
+          <div className="space-y-3 pt-2">
             <button
               onClick={handleAddToCart}
               disabled={isButtonDisabled}
-              className={`w-full py-4 rounded-2xl font-bold text-base transition-all duration-300 flex items-center justify-center gap-2 shadow-lg ${
+              className={`w-full py-4 rounded-md font-semibold text-sm transition-all duration-200 ${
                 isButtonDisabled
-                  ? "bg-neutral-200 text-neutral-400 cursor-not-allowed shadow-none"
+                  ? "bg-neutral-200 text-neutral-400 cursor-not-allowed"
                   : added
-                  ? "bg-green-600 text-white shadow-green-200 scale-[0.98]"
-                  : "bg-gradient-to-r from-rose-600 to-rose-500 text-white hover:from-rose-700 hover:to-rose-600 hover:shadow-xl hover:shadow-rose-200 active:scale-[0.98]"
+                  ? "bg-green-600 text-white"
+                  : "bg-neutral-900 text-white hover:bg-neutral-800"
               }`}
             >
               {isOutOfStock
                 ? "Agotado"
                 : added
                 ? <>
-                    <Check className="w-5 h-5" />
-                    ¡Agregado al carrito!
+                    <Check className="w-4 h-4 inline-block mr-1" />
+                    Agregado al carrito
                   </>
                 : "Agregar al carrito"}
             </button>
@@ -346,124 +353,73 @@ export default function ProductDetailCard({ product }: { product: Product }) {
             <button
               onClick={handleBuyNow}
               disabled={isButtonDisabled}
-              className={`w-full py-4 rounded-2xl font-bold text-base transition-all duration-300 border-2 ${
+              className={`w-full py-4 rounded-md font-semibold text-sm transition-all duration-200 border ${
                 isButtonDisabled
-                  ? "bg-neutral-100 border-neutral-200 text-neutral-400 cursor-not-allowed"
-                  : "bg-neutral-900 border-neutral-900 text-white hover:bg-neutral-800 hover:border-neutral-800 hover:shadow-lg active:scale-[0.98]"
+                  ? "bg-white border-neutral-200 text-neutral-400 cursor-not-allowed"
+                  : "bg-white border-neutral-900 text-neutral-900 hover:bg-neutral-50"
               }`}
             >
               {isOutOfStock ? "No disponible" : "Comprar ahora"}
             </button>
           </div>
 
-          <div className="mt-8 space-y-4 text-sm text-neutral-600">
-            <div className="flex items-center gap-2">
-              <Check className="w-5 h-5 text-rose-600" />
-              <span>Envío gratis en compras mayores a S/ 269</span>
+          {/* Shipping & Returns Info - Lululemon Style */}
+          <div className="border-t border-neutral-200 pt-6 space-y-3 text-sm">
+            <div className="flex items-start gap-3">
+              <Truck className="w-5 h-5 text-neutral-900 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="font-semibold text-neutral-900">Envío gratis</p>
+                <p className="text-neutral-600 text-xs mt-0.5">En compras mayores a S/ 269</p>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <Check className="w-5 h-5 text-rose-600" />
-              <span>Entrega en Lima: 24-48 horas</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Check className="w-5 h-5 text-rose-600" />
-              <span>Hecho en Perú con materiales de calidad</span>
+            <div className="flex items-start gap-3">
+              <Package className="w-5 h-5 text-neutral-900 flex-shrink-0 mt-0.5" />
+              <div>
+                <p className="font-semibold text-neutral-900">Entrega rápida</p>
+                <p className="text-neutral-600 text-xs mt-0.5">Lima: 24-48 horas | Provincias: 3-5 días</p>
+              </div>
             </div>
           </div>
 
-          {product.attributes?.beneficios && (
-            <div className="mt-8 p-6 bg-neutral-50 rounded-xl border border-neutral-200">
-              <h3 className="text-sm font-semibold text-neutral-900 mb-3">Beneficios</h3>
-              <ul className="space-y-2">
-                {product.attributes.beneficios.map((beneficio, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-neutral-600">
-                    <Check className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
-                    <span>{beneficio}</span>
-                  </li>
-                ))}
+          {/* Product Details - Lululemon/Gymshark Style (no tabs, direct info) */}
+          <div className="border-t border-neutral-200 pt-6 space-y-6">
+            {/* Características - Only show non-duplicate details */}
+            {uniqueDetalles.length > 0 && (
+              <div>
+                <h3 className="text-sm font-semibold text-neutral-900 mb-3">Características del producto</h3>
+                <ul className="space-y-2">
+                  {uniqueDetalles.map((detalle, i) => (
+                    <li key={i} className="text-sm text-neutral-700 pl-0">
+                      • {detalle}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Beneficios */}
+            {product.attributes?.beneficios && product.attributes.beneficios.length > 0 && (
+              <div>
+                <h3 className="text-sm font-semibold text-neutral-900 mb-3">¿Por qué te encantará?</h3>
+                <ul className="space-y-2">
+                  {product.attributes.beneficios.map((beneficio, i) => (
+                    <li key={i} className="text-sm text-neutral-700 pl-0">
+                      • {beneficio}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Cuidados */}
+            <div>
+              <h3 className="text-sm font-semibold text-neutral-900 mb-3">Cuidado del producto</h3>
+              <ul className="space-y-2 text-sm text-neutral-700">
+                <li>• Lavar a máquina en agua fría (máx. 30°C)</li>
+                <li>• No usar blanqueador</li>
+                <li>• Secar a la sombra</li>
+                <li>• Planchar a baja temperatura</li>
               </ul>
-            </div>
-          )}
-
-          {/* Tabs Cuidados y Envíos */}
-          <div className="mt-8 border border-neutral-200 rounded-xl overflow-hidden">
-            {/* Tab Headers */}
-            <div className="flex border-b border-neutral-200">
-              <button
-                onClick={() => setActiveTab("cuidados")}
-                className={`flex-1 px-6 py-4 text-sm font-semibold transition ${
-                  activeTab === "cuidados"
-                    ? "bg-rose-600 text-white"
-                    : "bg-white text-neutral-700 hover:bg-neutral-50"
-                }`}
-              >
-                Cuidados
-              </button>
-              <button
-                onClick={() => setActiveTab("envios")}
-                className={`flex-1 px-6 py-4 text-sm font-semibold transition ${
-                  activeTab === "envios"
-                    ? "bg-rose-600 text-white"
-                    : "bg-white text-neutral-700 hover:bg-neutral-50"
-                }`}
-              >
-                Envíos
-              </button>
-            </div>
-
-            {/* Tab Content */}
-            <div className="p-6 bg-white">
-              {activeTab === "cuidados" && (
-                <div className="space-y-3 text-sm text-neutral-600">
-                  <p className="font-semibold text-neutral-900 mb-3">Instrucciones de cuidado:</p>
-                  <div className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
-                    <span>Lavar a máquina en agua fría (máx. 30°C)</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
-                    <span>No usar blanqueador</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
-                    <span>Secar a la sombra, evitar luz solar directa</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
-                    <span>Planchar a baja temperatura si es necesario</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
-                    <span>No lavar en seco</span>
-                  </div>
-                </div>
-              )}
-
-              {activeTab === "envios" && (
-                <div className="space-y-3 text-sm text-neutral-600">
-                  <p className="font-semibold text-neutral-900 mb-3">Información de envío:</p>
-                  <div className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
-                    <span><strong>Lima Metropolitana:</strong> Entrega en 24-48 horas hábiles</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
-                    <span><strong>Provincias:</strong> Entrega en 3-5 días hábiles</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
-                    <span><strong>Envío gratis:</strong> En compras mayores a S/ 269</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
-                    <span><strong>Costo de envío:</strong> S/ 15 para compras menores a S/ 269</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <Check className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
-                    <span>Tracking disponible para todos los envíos</span>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
