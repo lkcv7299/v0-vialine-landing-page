@@ -6870,3 +6870,52 @@ Si las imágenes no se ven correctamente, verificar EN ORDEN:
 ───────────────────────────────────────────────────────────────────────────────
   FIN DE SESIÓN 10
 ───────────────────────────────────────────────────────────────────────────────
+
+
+===================================================================
+  SESI�N 11 - CORRECCI�N CR�TICA DE FILTROS Y SIMPLIFICACI�N  
+===================================================================
+
+Fecha: 2025-01-07 (Continuaci�n)
+
+PROBLEMAS RESUELTOS:
+? ERROR CR�TICO: Filtros no funcionaban (useEffect deps faltantes)
+? Colecciones agregadas sin aprobaci�n del usuario
+? Talla XS innecesaria
+? Tallas de ni�a incorrectas (deb�an ser num�ricas)
+
+SOLUCIONES IMPLEMENTADAS:
+? Arreglados useEffect con deps completas: [localMinPrice, params, pathname, router]
+? Eliminadas colecciones de MegaMenu (4?3 cols), MobileMenu y filtros
+? Eliminada talla XS (ahora: S, M, L, XL para mujer)
+? Tallas din�micas por g�nero:
+   - Mujer: S, M, L, XL
+   - Ni�a: 2, 4, 6, 8, 10, 12
+
+COMMITS:
+- 300c706: Correcci�n cr�tica filtros + eliminaci�n colecciones
+- 5130ba6: Tallas din�micas por g�nero
+
+ARQUITECTURA FINAL DE FILTROS:
+1. Precio (rango con debouncing 500ms)
+2. Categor�a (single select, 9 opciones)
+3. Talla (multi select, din�mico por gender)
+4. Color (multi select, 25 colores din�micos)
+5. Tejido (single select, Suplex/Algod�n con contador)
+6. Ordenar (select dropdown, 6 opciones)
+
+NAVEGACI�N:
+- MegaMenu: 3 columnas (Ropa | Por Tejido | CTA)
+- MobileMenu: Mujer, Ni�a, Por Tejido, Ayuda
+- Sin colecciones en navegaci�n principal
+
+ESTADO: ~95% COMPLETITUD
+- Filtros funcionando correctamente
+- Navegaci�n simplificada
+- Tallas contextuales por g�nero
+
+PENDIENTE: Hacer audit completo para identificar el 5% restante
+
+===================================================================
+  FIN DE SESI�N 11
+===================================================================
