@@ -3,7 +3,7 @@ export type Product = {
   title: string
   price: number
   image: string // path under /public/productos/<category>/<slug>.jpg
-  category: "leggings" | "bikers" | "shorts" | "tops" | "bodysuits" | "camisetas" | "enterizos" | "pescador" | "torero"
+  category: "leggings" | "bikers" | "shorts" | "tops" | "bodysuits" | "camisetas" | "enterizos" | "pescador" | "torero" | "cafarenas" | "pantys"
   fabric: "suplex" | "algodon"
   colors: string[] | { name: string; slug: string; hex: string; image?: string; images?: string[] }[] // Support single image or gallery
   sizes: string[]
@@ -21,7 +21,6 @@ export type Product = {
 }
 
 export const products: Product[] = [
-
   {
     slug: "camiseta-cuello-alto",
     title: "Camiseta cuello alto",
@@ -345,66 +344,6 @@ export const products: Product[] = [
   },
 
   {
-    slug: "camiseta-tropical",
-    title: "Camiseta tropical",
-    price: 21,
-    originalPrice: 35,
-    badge: "oferta",
-    image: "/placeholder.svg",
-    category: "camisetas",
-    fabric: "algodon",
-    colors: [
-      {
-        name: "Camiseta",
-        slug: "camiseta",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
-    ],
-    sizes: ["S","M","L","XL"],
-    audience: "mujer",    tags: ["COD.388", "Colección Camisetas Algodón Licrado", "Algodón Licrado"],
-
-    inventory: 10,
-      attributes: {
-        "material": "Algodón Licrado",
-        "detalles": [
-            "Diseño tropical",
-            "Algodón licrado"
-        ],
-        "beneficios": []
-    },
-  },
-
-  {
-    slug: "camiseta-deportiva",
-    title: "Camiseta deportiva",
-    price: 24,
-    image: "/placeholder.svg",
-    category: "camisetas",
-    fabric: "algodon",
-    colors: [
-      {
-        name: "Camiseta",
-        slug: "camiseta",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
-    ],
-    sizes: ["S","M","L","XL"],
-    audience: "mujer",    tags: ["COD.386", "Colección Camisetas Algodón Licrado", "Algodón Licrado"],
-
-    inventory: 12,
-    attributes: {
-        "material": "Algodón Licrado",
-        "detalles": [
-            "Diseño deportivo",
-            "Algodón licrado"
-        ],
-        "beneficios": []
-    },
-  },
-
-  {
     slug: "camiseta-gia",
     title: "Camiseta Gia",
     price: 27,
@@ -461,34 +400,6 @@ export const products: Product[] = [
     "Ideal para uso diario"
   ]
 },
-  },
-
-  {
-    slug: "camiseta-tiras-fijas",
-    title: "Camiseta tiras fijas",
-    price: 21,
-    image: "/placeholder.svg",
-    category: "camisetas",
-    fabric: "algodon",
-    colors: [
-      {
-        name: "Camiseta",
-        slug: "camiseta",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
-    ],
-    sizes: ["S","M","L"],
-    audience: "mujer",    tags: ["COD.384", "Colección Camisetas Algodón Licrado", "Algodón Licrado"],
-
-    attributes: {
-        "material": "Algodón Licrado",
-        "detalles": [
-            "Diseño con tiras finas",
-            "Algodón licrado"
-        ],
-        "beneficios": []
-    },
   },
 
   {
@@ -1449,35 +1360,6 @@ export const products: Product[] = [
   },
 
   {
-    slug: "top-minerva",
-    title: "Top Minerva",
-    price: 32,
-    image: "/placeholder.svg",
-    category: "tops",
-    fabric: "algodon",
-    colors: [
-      {
-        name: "Top",
-        slug: "top",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
-    ],
-    sizes: ["S","M","L"],
-    audience: "mujer",    tags: ["COD.214", "Colección Tops Suplex", "Suplex + Algodón"],
-
-    attributes: {
-        "material": "Suplex + Algodón",
-        "detalles": [
-            "Forro interno de algodón",
-            "Diseño deportivo",
-            "Sin copas removibles"
-        ],
-        "beneficios": []
-    },
-  },
-
-  {
     slug: "top-paradise",
     title: "Top Paradise",
     price: 32,
@@ -1622,38 +1504,6 @@ export const products: Product[] = [
             "Forro interno de algodón",
             "Copas removibles y lavables",
             "Diseño deportivo"
-        ],
-        "beneficios": []
-    },
-  },
-
-  {
-    slug: "top-astrid",
-    title: "Top Astrid",
-    price: 32,
-    image: "/placeholder.svg",
-    category: "tops",
-    fabric: "algodon",
-    colors: [
-      {
-        name: "Top",
-        slug: "top",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
-    ],
-    sizes: ["S","M","L"],
-    audience: "mujer",    tags: ["COD.S-107", "Colección Especial Suplex", "Suplex + Algodón Licrado"],
-
-    attributes: {
-        "material": "Suplex + Algodón Licrado",
-        "detalles": [
-            "Forro interno de algodón licrado",
-            "Copas removibles y lavables",
-            "Pretina tipo faja",
-            "Suplex liso interno",
-            "Tejido spandex",
-            "Ideal para yoga/gym"
         ],
         "beneficios": []
     },
@@ -1815,38 +1665,6 @@ export const products: Product[] = [
   },
 
   {
-    slug: "top-urban",
-    title: "Top Urban",
-    price: 34,
-    image: "/placeholder.svg",
-    category: "tops",
-    fabric: "algodon",
-    colors: [
-      {
-        name: "Top",
-        slug: "top",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
-    ],
-    sizes: ["XS", "S", "M", "L", "XL"],
-    audience: "mujer",
-    attributes: {
-  material: "Algodón Premium",
-  detalles: [
-    "Diseño deportivo elegante",
-    "Soporte medio confortable",
-    "Tejido elástico"
-  ],
-  beneficios: [
-    "Comodidad absoluta",
-    "Transpirable y fresco",
-    "Perfecto para el día a día"
-  ]
-},
-  },
-
-  {
     slug: "top-luna",
     title: "Top Luna",
     price: 28,
@@ -1929,6 +1747,504 @@ export const products: Product[] = [
                 "/productos/mujer/tops/top-perla-blanco5.webp"
             ]
         }
+    ],
+    sizes: ["XS", "S", "M", "L", "XL"],
+    audience: "mujer",
+    attributes: {
+  material: "Algodón Premium",
+  detalles: [
+    "Diseño deportivo elegante",
+    "Soporte medio confortable",
+    "Tejido elástico"
+  ],
+  beneficios: [
+    "Comodidad absoluta",
+    "Transpirable y fresco",
+    "Perfecto para el día a día"
+  ]
+},
+  },
+
+  {
+    slug: "enterizo-tiras",
+    title: "Enterizo tiras",
+    price: 49,
+    image: "/productos/mujer/enterizo/enterizo-tiras-azulino.webp",
+    category: "enterizos",
+    fabric: "suplex",
+    colors: [
+      {
+        name: "Azul",
+        slug: "azul",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/enterizo/enterizo-tiras-azulino.webp",
+      },
+      {
+        name: "Charcoal",
+        slug: "charcol",
+        hex: "#5A5A5A",
+        image: "/productos/mujer/enterizo/enterizo-tiras-charcol.webp",
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/productos/mujer/enterizo/enterizo-tiras-negro.webp",
+      },
+      {
+        name: "Rojo",
+        slug: "rojo",
+        hex: "#D22B2B",
+        image: "/productos/mujer/enterizo/enterizo-tiras-rojo.webp",
+      },
+      {
+      name: "Azulino",
+      slug: "azulino",
+      hex: "#3A53A4",
+      images: [
+        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino1.webp",
+        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino2.webp",
+        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino3.webp",
+        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino4.webp",
+        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino5.webp"
+      ]
+    },
+      {
+      name: "Blanco",
+      slug: "blanco",
+      hex: "#FFFFFF",
+      images: [
+        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco1.webp",
+        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco2.webp",
+        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco3.webp",
+        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco4.webp",
+        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco5.webp"
+      ]
+    },
+      {
+      name: "Charcoal",
+      slug: "charcoal",
+      hex: "#5A5A5A",
+      images: [
+        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal1.webp",
+        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal2.webp",
+        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal3.webp",
+        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal4.webp",
+        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal5.webp"
+      ]
+    },
+    ],
+    sizes: ["S","M","L"],
+    audience: "mujer",
+    tags: [
+      "COD.219","enterizo", "enterizo tiras", "enterizos", "enterizos dama", "línea suplex dama", "dama", "damas", "tiras"],
+    attributes: {
+        "material": "Suplex",
+        "detalles": [
+            "Suplex liso de alta elongación",
+            "Diseño con tiras"
+        ],
+        "beneficios": []
+    },
+  },
+
+  {
+    slug: "enterizo-manga-cero",
+    title: "Enterizo manga cero",
+    price: 49,
+    image: "/productos/mujer/enterizo/enterizo-manga-cero-azulino.webp",
+    category: "enterizos",
+    fabric: "suplex",
+    colors: [
+      {
+        name: "Azul",
+        slug: "azul",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/enterizo/enterizo-manga-cero-azulino.webp",
+      },
+      {
+        name: "Charcoal",
+        slug: "charcol",
+        hex: "#5A5A5A",
+        image: "/productos/mujer/enterizo/enterizo-manga-cero-charcol.webp",
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/productos/mujer/enterizo/enterizo-manga-cero-negro.webp",
+      },
+      {
+        name: "Rojo",
+        slug: "rojo",
+        hex: "#D22B2B",
+        image: "/productos/mujer/enterizo/enterizo-manga-cero-rojo.webp",
+      },
+      {
+      name: "Azulino",
+      slug: "azulino",
+      hex: "#3A53A4",
+      images: [
+        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-Manga-cero-azulino1.webp",
+        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino2.webp",
+        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino3.webp",
+        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino4.webp",
+        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino5.webp",
+        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino6.webp"
+      ]
+    },
+      {
+      name: "Blanco",
+      slug: "blanco",
+      hex: "#FFFFFF",
+      images: [
+        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco1.webp",
+        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco2.webp",
+        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco3.webp",
+        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco4.webp",
+        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco5.webp",
+        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco6.webp"
+      ]
+    },
+    ],
+    sizes: ["S","M","L"],
+    audience: "mujer",
+    tags: [
+      "COD.221","enterizo", "enterizo manga cero", "enterizos", "enterizos dama", "línea suplex dama", "dama", "damas"],
+    attributes: {
+        "material": "Suplex",
+        "detalles": [
+            "Suplex liso de alta elongación",
+            "Manga cero (sin mangas)"
+        ],
+        "beneficios": []
+    },
+  },
+
+  {
+    slug: "legging-slim",
+    title: "Legging Slim",
+    price: 59,
+    image: "/productos/mujer/legging/legging-slim-azul-marino.webp",
+    category: "leggings",
+    fabric: "suplex",
+    colors: [
+      {
+        name: "Azul Marino",
+        slug: "azul-marino",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/legging/legging-slim-azul-marino.webp",
+      },
+      {
+        name: "Azul",
+        slug: "azul",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/legging/legging-slim-azulino.webp",
+      },
+      {
+      name: "Blanco",
+      slug: "blanco",
+      hex: "#FFFFFF",
+      images: [
+        "/productos/mujer/legging/legging-slim-blanco.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-blanco-legging-slim-blanco1.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-blanco-legging-slim-blanco2.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-blanco-legging-slim-blanco3.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-blanco-legging-slim-blanco4.webp"
+      ]
+    },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/productos/mujer/legging/legging-slim-negro.webp",
+      },
+      {
+        name: "Rojo",
+        slug: "rojo",
+        hex: "#D22B2B",
+        image: "/productos/mujer/legging/legging-slim-rojo.webp",
+      },
+      {
+      name: "Acero",
+      slug: "acero",
+      hex: "#808080",
+      images: [
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero1.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero2.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero3.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero4.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero5.webp"
+      ]
+    },
+      {
+      name: "Aqua",
+      slug: "aqua",
+      hex: "#00FFFF",
+      images: [
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua1.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua2.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua3.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua4.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua5.webp"
+      ]
+    },
+      {
+      name: "Azulino",
+      slug: "azulino",
+      hex: "#3A53A4",
+      images: [
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-1.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-2.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-3.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-4.webp"
+      ]
+    },
+      {
+      name: "Camel",
+      slug: "camel",
+      hex: "#C19A6B",
+      images: [
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-camel-legging-slim-camel1.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-camel-legging-slim-camel2.webp",
+        "/productos/mujer/legging/legging-slim-suplex-liso-premium-camel-legging-slim-camel3.webp"
+      ]
+    },
+    ],
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.S-1011", "Colección Especial Suplex", "Suplex Liso"],
+
+    attributes: {
+        "material": "Suplex Liso",
+        "detalles": [
+            "Suplex liso",
+            "Diseño slim",
+            "Alta variedad de colores (10 colores)"
+        ],
+        "beneficios": []
+    },
+  },
+
+  {
+    slug: "legging-clasica",
+    title: "Legging Clásica",
+    price: 32,
+    image: "/productos/mujer/legging/legging-clasica-azul-marino.webp",
+    category: "leggings",
+    fabric: "suplex",
+    colors: [
+      {
+        name: "Azul Marino",
+        slug: "azul-marino",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/legging/legging-clasica-azul-marino.webp",
+      },
+      {
+      name: "Blanco",
+      slug: "blanco",
+      hex: "#FFFFFF",
+      images: [
+        "/productos/mujer/legging/legging-clasica-gamusa-blanco.webp",
+        "/productos/mujer/legging/legging-clasica-gamusa-azul-marino.webp",
+        "/productos/mujer/legging/legging-clasica-gamusa-melange.webp",
+        "/productos/mujer/legging/legging-clasica-gamusa-negro.webp"
+      ]
+    },
+      {
+        name: "Melange",
+        slug: "melange",
+        hex: "#B8B8B8",
+        image: "/productos/mujer/legging/legging-clasica-gamusa-melange.webp",
+      },
+      {
+      name: "Negro",
+      slug: "negro",
+      hex: "#000000",
+      images: [
+        "/productos/mujer/legging/legging-clasica-gamusa-negro.webp",
+        "/productos/mujer/legging/legging-clasica-gamusa-azul-marino.webp",
+        "/productos/mujer/legging/legging-clasica-gamusa-blanco.webp",
+        "/productos/mujer/legging/legging-clasica-gamusa-melange.webp"
+      ]
+    },
+    ],
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.371", "Línea Nice - Leggings Algodón Licrado", "Algodón Licra"],
+
+    attributes: {
+        "material": "Algodón Licra",
+        "detalles": [
+            "Algodón licra",
+            "Legging clásica",
+            "Marca Nice"
+        ],
+        "beneficios": []
+    },
+  },
+
+  {
+    slug: "camiseta-tropical",
+    title: "Camiseta tropical",
+    price: 21,
+    originalPrice: 35,
+    badge: "oferta",
+    image: "/placeholder.svg",
+    category: "camisetas",
+    fabric: "algodon",
+    colors: [
+      {
+        name: "Camiseta",
+        slug: "camiseta",
+        hex: "#CCCCCC",
+        image: "/placeholder.svg",
+      },
+    ],
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.388", "Colección Camisetas Algodón Licrado", "Algodón Licrado"],
+
+    inventory: 10,
+      attributes: {
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Diseño tropical",
+            "Algodón licrado"
+        ],
+        "beneficios": []
+    },
+  },
+
+  {
+    slug: "camiseta-deportiva",
+    title: "Camiseta deportiva",
+    price: 24,
+    image: "/placeholder.svg",
+    category: "camisetas",
+    fabric: "algodon",
+    colors: [
+      {
+        name: "Camiseta",
+        slug: "camiseta",
+        hex: "#CCCCCC",
+        image: "/placeholder.svg",
+      },
+    ],
+    sizes: ["S","M","L","XL"],
+    audience: "mujer",    tags: ["COD.386", "Colección Camisetas Algodón Licrado", "Algodón Licrado"],
+
+    inventory: 12,
+    attributes: {
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Diseño deportivo",
+            "Algodón licrado"
+        ],
+        "beneficios": []
+    },
+  },
+
+  {
+    slug: "camiseta-tiras-fijas",
+    title: "Camiseta tiras fijas",
+    price: 21,
+    image: "/placeholder.svg",
+    category: "camisetas",
+    fabric: "algodon",
+    colors: [
+      {
+        name: "Camiseta",
+        slug: "camiseta",
+        hex: "#CCCCCC",
+        image: "/placeholder.svg",
+      },
+    ],
+    sizes: ["S","M","L"],
+    audience: "mujer",    tags: ["COD.384", "Colección Camisetas Algodón Licrado", "Algodón Licrado"],
+
+    attributes: {
+        "material": "Algodón Licrado",
+        "detalles": [
+            "Diseño con tiras finas",
+            "Algodón licrado"
+        ],
+        "beneficios": []
+    },
+  },
+
+  {
+    slug: "top-minerva",
+    title: "Top Minerva",
+    price: 32,
+    image: "/placeholder.svg",
+    category: "tops",
+    fabric: "algodon",
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/placeholder.svg",
+      },
+    ],
+    sizes: ["S","M","L"],
+    audience: "mujer",    tags: ["COD.214", "Colección Tops Suplex", "Suplex + Algodón"],
+
+    attributes: {
+        "material": "Suplex + Algodón",
+        "detalles": [
+            "Forro interno de algodón",
+            "Diseño deportivo",
+            "Sin copas removibles"
+        ],
+        "beneficios": []
+    },
+  },
+
+  {
+    slug: "top-astrid",
+    title: "Top Astrid",
+    price: 32,
+    image: "/placeholder.svg",
+    category: "tops",
+    fabric: "algodon",
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/placeholder.svg",
+      },
+    ],
+    sizes: ["S","M","L"],
+    audience: "mujer",    tags: ["COD.S-107", "Colección Especial Suplex", "Suplex + Algodón Licrado"],
+
+    attributes: {
+        "material": "Suplex + Algodón Licrado",
+        "detalles": [
+            "Forro interno de algodón licrado",
+            "Copas removibles y lavables",
+            "Pretina tipo faja",
+            "Suplex liso interno",
+            "Tejido spandex",
+            "Ideal para yoga/gym"
+        ],
+        "beneficios": []
+    },
+  },
+
+  {
+    slug: "top-urban",
+    title: "Top Urban",
+    price: 34,
+    image: "/placeholder.svg",
+    category: "tops",
+    fabric: "algodon",
+    colors: [
+      {
+        name: "Top",
+        slug: "top",
+        hex: "#CCCCCC",
+        image: "/placeholder.svg",
+      },
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
     audience: "mujer",
@@ -2122,226 +2438,6 @@ export const products: Product[] = [
   },
 
   {
-    slug: "enterizo-tiras",
-    title: "Enterizo tiras",
-    price: 49,
-    image: "/productos/mujer/enterizo/enterizo-tiras-azulino.webp",
-    category: "enterizos",
-    fabric: "suplex",
-    colors: [
-      {
-        name: "Azul",
-        slug: "azul",
-        hex: "#1E3A8A",
-        image: "/productos/mujer/enterizo/enterizo-tiras-azulino.webp",
-      },
-      {
-        name: "Charcoal",
-        slug: "charcol",
-        hex: "#5A5A5A",
-        image: "/productos/mujer/enterizo/enterizo-tiras-charcol.webp",
-      },
-      {
-        name: "Negro",
-        slug: "negro",
-        hex: "#000000",
-        image: "/productos/mujer/enterizo/enterizo-tiras-negro.webp",
-      },
-      {
-        name: "Rojo",
-        slug: "rojo",
-        hex: "#D22B2B",
-        image: "/productos/mujer/enterizo/enterizo-tiras-rojo.webp",
-      },
-      {
-      name: "Azulino",
-      slug: "azulino",
-      hex: "#3A53A4",
-      images: [
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino1.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino2.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino3.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino4.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino5.webp"
-      ]
-    },
-      {
-      name: "Blanco",
-      slug: "blanco",
-      hex: "#FFFFFF",
-      images: [
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco1.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco2.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco3.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco4.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco5.webp"
-      ]
-    },
-      {
-      name: "Charcoal",
-      slug: "charcoal",
-      hex: "#5A5A5A",
-      images: [
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal1.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal2.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal3.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal4.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal5.webp"
-      ]
-    },
-    ],
-    sizes: ["S","M","L"],
-    audience: "mujer",
-    tags: [
-      "COD.219","enterizo", "enterizo tiras", "enterizos", "enterizos dama", "línea suplex dama", "dama", "damas", "tiras"],
-    attributes: {
-        "material": "Suplex",
-        "detalles": [
-            "Suplex liso de alta elongación",
-            "Diseño con tiras"
-        ],
-        "beneficios": []
-    },
-  },
-
-  {
-    slug: "enterizo-manga-cero",
-    title: "Enterizo manga cero",
-    price: 49,
-    image: "/productos/mujer/enterizo/enterizo-manga-cero-azulino.webp",
-    category: "enterizos",
-    fabric: "suplex",
-    colors: [
-      {
-        name: "Azul",
-        slug: "azul",
-        hex: "#1E3A8A",
-        image: "/productos/mujer/enterizo/enterizo-manga-cero-azulino.webp",
-      },
-      {
-        name: "Charcoal",
-        slug: "charcol",
-        hex: "#5A5A5A",
-        image: "/productos/mujer/enterizo/enterizo-manga-cero-charcol.webp",
-      },
-      {
-        name: "Negro",
-        slug: "negro",
-        hex: "#000000",
-        image: "/productos/mujer/enterizo/enterizo-manga-cero-negro.webp",
-      },
-      {
-        name: "Rojo",
-        slug: "rojo",
-        hex: "#D22B2B",
-        image: "/productos/mujer/enterizo/enterizo-manga-cero-rojo.webp",
-      },
-      {
-      name: "Azulino",
-      slug: "azulino",
-      hex: "#3A53A4",
-      images: [
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-Manga-cero-azulino1.webp",
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino2.webp",
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino3.webp",
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino4.webp",
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino5.webp",
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino6.webp"
-      ]
-    },
-      {
-      name: "Blanco",
-      slug: "blanco",
-      hex: "#FFFFFF",
-      images: [
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco1.webp",
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco2.webp",
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco3.webp",
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco4.webp",
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco5.webp",
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco6.webp"
-      ]
-    },
-    ],
-    sizes: ["S","M","L"],
-    audience: "mujer",
-    tags: [
-      "COD.221","enterizo", "enterizo manga cero", "enterizos", "enterizos dama", "línea suplex dama", "dama", "damas"],
-    attributes: {
-        "material": "Suplex",
-        "detalles": [
-            "Suplex liso de alta elongación",
-            "Manga cero (sin mangas)"
-        ],
-        "beneficios": []
-    },
-  },
-
-  {
-    slug: "enterizo-manga-corta-nina",
-    title: "Enterizo manga corta Niña",
-    price: 38,
-    image: "/placeholder.svg",
-    category: "enterizos",
-    fabric: "suplex",
-    colors: [
-      {
-        name: "Enterizo",
-        slug: "enterizo",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
-    ],
-    sizes: ["2", "4", "6", "8", "10", "12"],
-    audience: "nina",
-    attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
-  ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
-  ]
-},
-  },
-
-  {
-    slug: "enterizo-manga-larga-nina",
-    title: "Enterizo manga larga Niña",
-    price: 42,
-    image: "/placeholder.svg",
-    category: "enterizos",
-    fabric: "suplex",
-    colors: [
-      {
-        name: "Enterizo",
-        slug: "enterizo",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
-    ],
-    sizes: ["2", "4", "6", "8", "10", "12"],
-    audience: "nina",
-    attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
-  ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
-  ]
-},
-  },
-
-  {
     slug: "legging-slim-suplex-perchado",
     title: "Legging Slim Suplex Perchado",
     price: 59,
@@ -2366,110 +2462,6 @@ export const products: Product[] = [
             "Externo liso",
             "Interno afranelado medio (abrigado)",
             "Diseño slim"
-        ],
-        "beneficios": []
-    },
-  },
-
-  {
-    slug: "legging-slim",
-    title: "Legging Slim",
-    price: 59,
-    image: "/productos/mujer/legging/legging-slim-azul-marino.webp",
-    category: "leggings",
-    fabric: "suplex",
-    colors: [
-      {
-        name: "Azul Marino",
-        slug: "azul-marino",
-        hex: "#1E3A8A",
-        image: "/productos/mujer/legging/legging-slim-azul-marino.webp",
-      },
-      {
-        name: "Azul",
-        slug: "azul",
-        hex: "#1E3A8A",
-        image: "/productos/mujer/legging/legging-slim-azulino.webp",
-      },
-      {
-      name: "Blanco",
-      slug: "blanco",
-      hex: "#FFFFFF",
-      images: [
-        "/productos/mujer/legging/legging-slim-blanco.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-blanco-legging-slim-blanco1.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-blanco-legging-slim-blanco2.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-blanco-legging-slim-blanco3.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-blanco-legging-slim-blanco4.webp"
-      ]
-    },
-      {
-        name: "Negro",
-        slug: "negro",
-        hex: "#000000",
-        image: "/productos/mujer/legging/legging-slim-negro.webp",
-      },
-      {
-        name: "Rojo",
-        slug: "rojo",
-        hex: "#D22B2B",
-        image: "/productos/mujer/legging/legging-slim-rojo.webp",
-      },
-      {
-      name: "Acero",
-      slug: "acero",
-      hex: "#808080",
-      images: [
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero1.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero2.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero3.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero4.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero5.webp"
-      ]
-    },
-      {
-      name: "Aqua",
-      slug: "aqua",
-      hex: "#00FFFF",
-      images: [
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua1.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua2.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua3.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua4.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua5.webp"
-      ]
-    },
-      {
-      name: "Azulino",
-      slug: "azulino",
-      hex: "#3A53A4",
-      images: [
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-1.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-2.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-3.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-4.webp"
-      ]
-    },
-      {
-      name: "Camel",
-      slug: "camel",
-      hex: "#C19A6B",
-      images: [
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-camel-legging-slim-camel1.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-camel-legging-slim-camel2.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-camel-legging-slim-camel3.webp"
-      ]
-    },
-    ],
-    sizes: ["S","M","L","XL"],
-    audience: "mujer",    tags: ["COD.S-1011", "Colección Especial Suplex", "Suplex Liso"],
-
-    attributes: {
-        "material": "Suplex Liso",
-        "detalles": [
-            "Suplex liso",
-            "Diseño slim",
-            "Alta variedad de colores (10 colores)"
         ],
         "beneficios": []
     },
@@ -2583,63 +2575,6 @@ export const products: Product[] = [
   },
 
   {
-    slug: "legging-clasica",
-    title: "Legging Clásica",
-    price: 32,
-    image: "/productos/mujer/legging/legging-clasica-azul-marino.webp",
-    category: "leggings",
-    fabric: "suplex",
-    colors: [
-      {
-        name: "Azul Marino",
-        slug: "azul-marino",
-        hex: "#1E3A8A",
-        image: "/productos/mujer/legging/legging-clasica-azul-marino.webp",
-      },
-      {
-      name: "Blanco",
-      slug: "blanco",
-      hex: "#FFFFFF",
-      images: [
-        "/productos/mujer/legging/legging-clasica-gamusa-blanco.webp",
-        "/productos/mujer/legging/legging-clasica-gamusa-azul-marino.webp",
-        "/productos/mujer/legging/legging-clasica-gamusa-melange.webp",
-        "/productos/mujer/legging/legging-clasica-gamusa-negro.webp"
-      ]
-    },
-      {
-        name: "Melange",
-        slug: "melange",
-        hex: "#B8B8B8",
-        image: "/productos/mujer/legging/legging-clasica-gamusa-melange.webp",
-      },
-      {
-      name: "Negro",
-      slug: "negro",
-      hex: "#000000",
-      images: [
-        "/productos/mujer/legging/legging-clasica-gamusa-negro.webp",
-        "/productos/mujer/legging/legging-clasica-gamusa-azul-marino.webp",
-        "/productos/mujer/legging/legging-clasica-gamusa-blanco.webp",
-        "/productos/mujer/legging/legging-clasica-gamusa-melange.webp"
-      ]
-    },
-    ],
-    sizes: ["S","M","L","XL"],
-    audience: "mujer",    tags: ["COD.371", "Línea Nice - Leggings Algodón Licrado", "Algodón Licra"],
-
-    attributes: {
-        "material": "Algodón Licra",
-        "detalles": [
-            "Algodón licra",
-            "Legging clásica",
-            "Marca Nice"
-        ],
-        "beneficios": []
-    },
-  },
-
-  {
     slug: "legging-clasica-gamuza",
     title: "Legging Clásica Gamuza",
     price: 35,
@@ -2666,38 +2601,6 @@ export const products: Product[] = [
         ],
         "beneficios": []
     },
-  },
-
-  {
-    slug: "legging-nina",
-    title: "Legging Niña",
-    price: 32,
-    image: "/placeholder.svg",
-    category: "leggings",
-    fabric: "suplex",
-    colors: [
-      {
-        name: "Legging",
-        slug: "legging",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
-    ],
-    sizes: ["2", "4", "6", "8", "10", "12"],
-    audience: "nina",
-    attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Pretina ancha para mejor soporte",
-    "Corte ajustado sin transparencias",
-    "Costuras planas"
-  ],
-  beneficios: [
-    "Se adapta al cuerpo como una segunda piel",
-    "Te mantiene fresca y seca durante el entrenamiento",
-    "Alta resistencia y durabilidad"
-  ]
-},
   },
 
   {
@@ -2842,19 +2745,370 @@ export const products: Product[] = [
   },
 
   {
+    slug: "enterizo-manga-corta-nina",
+    title: "Enterizo manga corta Niña",
+    price: 38,
+    image: "/productos/nina/enterizos/enterizo-manga-corta-nina-amarillo1.webp",
+    category: "enterizos",
+    fabric: "suplex",
+    colors: [
+        {
+            "name": "Amarillo",
+            "slug": "amarillo",
+            "hex": "#FFD700",
+            "image": "/productos/nina/enterizos/enterizo-manga-corta-nina-amarillo1.webp",
+            "images": [
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-amarillo1.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-amarillo2.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-amarillo3.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-amarillo4.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-amarillo5.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-amarillo6.webp"
+            ]
+        },
+        {
+            "name": "Beige",
+            "slug": "beige",
+            "hex": "#F5F5DC",
+            "image": "/productos/nina/enterizos/enterizo-manga-corta-nina-beige1.webp",
+            "images": [
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-beige1.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-beige2.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-beige3.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-beige4.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-beige5.webp"
+            ]
+        },
+        {
+            "name": "Blanco",
+            "slug": "blanco",
+            "hex": "#FFFFFF",
+            "image": "/productos/nina/enterizos/enterizo-manga-corta-nina-blanco1.webp",
+            "images": [
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-blanco1.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-blanco2.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-blanco3.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-blanco4.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-blanco5.webp"
+            ]
+        },
+        {
+            "name": "Lila",
+            "slug": "lila",
+            "hex": "#C8A2C8",
+            "image": "/productos/nina/enterizos/enterizo-manga-corta-nina-lila1.webp",
+            "images": [
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-lila1.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-lila2.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-lila3.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-lila4.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-lila5.webp"
+            ]
+        },
+        {
+            "name": "Negro",
+            "slug": "negro",
+            "hex": "#000000",
+            "image": "/productos/nina/enterizos/enterizo-manga-corta-nina-negro1.webp",
+            "images": [
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-negro1.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-negro2.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-negro3.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-negro4.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-negro5.webp"
+            ]
+        },
+        {
+            "name": "Rojo",
+            "slug": "rojo",
+            "hex": "#FF0000",
+            "image": "/productos/nina/enterizos/enterizo-manga-corta-nina-rojo1.webp",
+            "images": [
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-rojo1.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-rojo2.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-rojo3.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-rojo4.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-rojo5.webp"
+            ]
+        },
+        {
+            "name": "Rosado",
+            "slug": "rosado",
+            "hex": "#FFB6C1",
+            "image": "/productos/nina/enterizos/enterizo-manga-corta-nina-rosado1.webp",
+            "images": [
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-rosado1.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-rosado2.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-rosado3.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-rosado4.webp"
+            ]
+        },
+        {
+            "name": "Verde",
+            "slug": "verde",
+            "hex": "#00FF00",
+            "image": "/productos/nina/enterizos/enterizo-manga-corta-nina-verde1.webp",
+            "images": [
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-verde1.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-verde2.webp",
+                "/productos/nina/enterizos/enterizo-manga-corta-nina-verde3.webp"
+            ]
+        }
+    ],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
+  },
+
+  {
+    slug: "enterizo-manga-larga-nina",
+    title: "Enterizo manga larga Niña",
+    price: 42,
+    image: "/productos/nina/enterizos/enterizo-manga-larga-nina-amarillo1.webp",
+    category: "enterizos",
+    fabric: "suplex",
+    colors: [
+        {
+            "name": "Amarillo",
+            "slug": "amarillo",
+            "hex": "#FFD700",
+            "image": "/productos/nina/enterizos/enterizo-manga-larga-nina-amarillo1.webp",
+            "images": [
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-amarillo1.webp",
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-amarillo2.webp",
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-amarillo3.webp",
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-amarillo4.webp",
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-amarillo5.webp"
+            ]
+        },
+        {
+            "name": "Blanco",
+            "slug": "blanco",
+            "hex": "#FFFFFF",
+            "image": "/productos/nina/enterizos/enterizo-manga-larga-nina-blanco1.webp",
+            "images": [
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-blanco1.webp",
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-blanco2.webp",
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-blanco3.webp",
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-blanco4.webp",
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-blanco5.webp"
+            ]
+        },
+        {
+            "name": "Negro",
+            "slug": "negro",
+            "hex": "#000000",
+            "image": "/productos/nina/enterizos/enterizo-manga-larga-nina-negro1.webp",
+            "images": [
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-negro1.webp",
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-negro2.webp",
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-negro3.webp",
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-negro4.webp"
+            ]
+        },
+        {
+            "name": "Rojo",
+            "slug": "rojo",
+            "hex": "#FF0000",
+            "image": "/productos/nina/enterizos/enterizo-manga-larga-nina-rojo1.webp",
+            "images": [
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-rojo1.webp",
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-rojo2.webp",
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-rojo3.webp",
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-rojo4.webp"
+            ]
+        },
+        {
+            "name": "Rosado",
+            "slug": "rosado",
+            "hex": "#FFB6C1",
+            "image": "/productos/nina/enterizos/enterizo-manga-larga-nina-rosado1.webp",
+            "images": [
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-rosado1.webp",
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-rosado2.webp",
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-rosado3.webp",
+                "/productos/nina/enterizos/enterizo-manga-larga-nina-rosado4.webp"
+            ]
+        }
+    ],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
+  },
+
+  {
+    slug: "legging-nina",
+    title: "Legging Niña",
+    price: 32,
+    image: "/productos/nina/leggings/legging-nina-blanco1.webp",
+    category: "leggings",
+    fabric: "suplex",
+    colors: [
+        {
+            "name": "Blanco",
+            "slug": "blanco",
+            "hex": "#FFFFFF",
+            "image": "/productos/nina/leggings/legging-nina-blanco1.webp",
+            "images": [
+                "/productos/nina/leggings/legging-nina-blanco1.webp",
+                "/productos/nina/leggings/legging-nina-blanco2.webp",
+                "/productos/nina/leggings/legging-nina-blanco3.webp",
+                "/productos/nina/leggings/legging-nina-blanco4.webp",
+                "/productos/nina/leggings/legging-nina-blanco5.webp"
+            ]
+        },
+        {
+            "name": "Negro",
+            "slug": "negro",
+            "hex": "#000000",
+            "image": "/productos/nina/leggings/legging-nina-negro1.webp",
+            "images": [
+                "/productos/nina/leggings/legging-nina-negro1.webp",
+                "/productos/nina/leggings/legging-nina-negro2.webp",
+                "/productos/nina/leggings/legging-nina-negro3.webp",
+                "/productos/nina/leggings/legging-nina-negro4.webp",
+                "/productos/nina/leggings/legging-nina-negro5.webp"
+            ]
+        },
+        {
+            "name": "Rojo",
+            "slug": "rojo",
+            "hex": "#FF0000",
+            "image": "/productos/nina/leggings/legging-nina-rojo1.webp",
+            "images": [
+                "/productos/nina/leggings/legging-nina-rojo1.webp",
+                "/productos/nina/leggings/legging-nina-rojo2.webp",
+                "/productos/nina/leggings/legging-nina-rojo3.webp",
+                "/productos/nina/leggings/legging-nina-rojo4.webp"
+            ]
+        },
+        {
+            "name": "Rosado",
+            "slug": "rosado",
+            "hex": "#FFB6C1",
+            "image": "/productos/nina/leggings/legging-nina-rosado1.webp",
+            "images": [
+                "/productos/nina/leggings/legging-nina-rosado1.webp",
+                "/productos/nina/leggings/legging-nina-rosado2.webp",
+                "/productos/nina/leggings/legging-nina-rosado3.webp",
+                "/productos/nina/leggings/legging-nina-rosado4.webp",
+                "/productos/nina/leggings/legging-nina-rosado5.webp"
+            ]
+        }
+    ],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Pretina ancha para mejor soporte",
+    "Corte ajustado sin transparencias",
+    "Costuras planas"
+  ],
+  beneficios: [
+    "Se adapta al cuerpo como una segunda piel",
+    "Te mantiene fresca y seca durante el entrenamiento",
+    "Alta resistencia y durabilidad"
+  ]
+},
+  },
+
+  {
     slug: "cafarena-nina",
     title: "Cafarena Niña",
     price: 28,
-    image: "/placeholder.svg",
-    category: "shorts",
+    image: "/productos/nina/cafarenas/cafarena-nina-azulmarino1.webp",
+    category: "cafarenas",
     fabric: "suplex",
     colors: [
-      {
-        name: "Cafarena",
-        slug: "cafarena",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
+        {
+            "name": "Azul Marino",
+            "slug": "azulmarino",
+            "hex": "#1B3A6B",
+            "image": "/productos/nina/cafarenas/cafarena-nina-azulmarino1.webp",
+            "images": [
+                "/productos/nina/cafarenas/cafarena-nina-azulmarino1.webp",
+                "/productos/nina/cafarenas/cafarena-nina-azulmarino2.webp",
+                "/productos/nina/cafarenas/cafarena-nina-azulmarino3.webp",
+                "/productos/nina/cafarenas/cafarena-nina-azulmarino4.webp",
+                "/productos/nina/cafarenas/cafarena-nina-azulmarino5.webp"
+            ]
+        },
+        {
+            "name": "Blanco",
+            "slug": "blanco",
+            "hex": "#FFFFFF",
+            "image": "/productos/nina/cafarenas/cafarena-nina-blanco1.webp",
+            "images": [
+                "/productos/nina/cafarenas/cafarena-nina-blanco1.webp",
+                "/productos/nina/cafarenas/cafarena-nina-blanco2.webp",
+                "/productos/nina/cafarenas/cafarena-nina-blanco3.webp",
+                "/productos/nina/cafarenas/cafarena-nina-blanco4.webp",
+                "/productos/nina/cafarenas/cafarena-nina-blanco5.webp"
+            ]
+        },
+        {
+            "name": "Negro",
+            "slug": "negro",
+            "hex": "#000000",
+            "image": "/productos/nina/cafarenas/cafarena-nina-negro1.webp",
+            "images": [
+                "/productos/nina/cafarenas/cafarena-nina-negro1.webp",
+                "/productos/nina/cafarenas/cafarena-nina-negro2.webp",
+                "/productos/nina/cafarenas/cafarena-nina-negro3.webp",
+                "/productos/nina/cafarenas/cafarena-nina-negro4.webp",
+                "/productos/nina/cafarenas/cafarena-nina-negro5.webp"
+            ]
+        },
+        {
+            "name": "Rojo",
+            "slug": "rojo",
+            "hex": "#FF0000",
+            "image": "/productos/nina/cafarenas/cafarena-nina-rojo1.webp",
+            "images": [
+                "/productos/nina/cafarenas/cafarena-nina-rojo1.webp",
+                "/productos/nina/cafarenas/cafarena-nina-rojo2.webp",
+                "/productos/nina/cafarenas/cafarena-nina-rojo3.webp",
+                "/productos/nina/cafarenas/cafarena-nina-rojo4.webp",
+                "/productos/nina/cafarenas/cafarena-nina-rojo5.webp"
+            ]
+        },
+        {
+            "name": "Rosado",
+            "slug": "rosado",
+            "hex": "#FFB6C1",
+            "image": "/productos/nina/cafarenas/cafarena-nina-rosado1.webp",
+            "images": [
+                "/productos/nina/cafarenas/cafarena-nina-rosado1.webp",
+                "/productos/nina/cafarenas/cafarena-nina-rosado2.webp",
+                "/productos/nina/cafarenas/cafarena-nina-rosado3.webp",
+                "/productos/nina/cafarenas/cafarena-nina-rosado4.webp"
+            ]
+        }
     ],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
@@ -2877,16 +3131,71 @@ export const products: Product[] = [
     slug: "panty-nina",
     title: "Panty Niña",
     price: 22,
-    image: "/placeholder.svg",
-    category: "shorts",
+    image: "/productos/nina/pantys/panty-nina-azulmarino1.webp",
+    category: "pantys",
     fabric: "suplex",
     colors: [
-      {
-        name: "Panty",
-        slug: "panty",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
+        {
+            "name": "Azul Marino",
+            "slug": "azulmarino",
+            "hex": "#1B3A6B",
+            "image": "/productos/nina/pantys/panty-nina-azulmarino1.webp",
+            "images": [
+                "/productos/nina/pantys/panty-nina-azulmarino1.webp",
+                "/productos/nina/pantys/panty-nina-azulmarino2.webp",
+                "/productos/nina/pantys/panty-nina-azulmarino3.webp",
+                "/productos/nina/pantys/panty-nina-azulmarino4.webp",
+                "/productos/nina/pantys/panty-nina-azulmarino5.webp"
+            ]
+        },
+        {
+            "name": "Blanco",
+            "slug": "blanco",
+            "hex": "#FFFFFF",
+            "image": "/productos/nina/pantys/panty-nina-blanco1.webp",
+            "images": [
+                "/productos/nina/pantys/panty-nina-blanco1.webp",
+                "/productos/nina/pantys/panty-nina-blanco2.webp",
+                "/productos/nina/pantys/panty-nina-blanco3.webp",
+                "/productos/nina/pantys/panty-nina-blanco4.webp"
+            ]
+        },
+        {
+            "name": "Negro",
+            "slug": "negro",
+            "hex": "#000000",
+            "image": "/productos/nina/pantys/panty-nina-negro1.webp",
+            "images": [
+                "/productos/nina/pantys/panty-nina-negro1.webp",
+                "/productos/nina/pantys/panty-nina-negro2.webp",
+                "/productos/nina/pantys/panty-nina-negro3.webp",
+                "/productos/nina/pantys/panty-nina-negro4.webp"
+            ]
+        },
+        {
+            "name": "Rojo",
+            "slug": "rojo",
+            "hex": "#FF0000",
+            "image": "/productos/nina/pantys/panty-nina-rojo1.webp",
+            "images": [
+                "/productos/nina/pantys/panty-nina-rojo1.webp",
+                "/productos/nina/pantys/panty-nina-rojo2.webp",
+                "/productos/nina/pantys/panty-nina-rojo3.webp",
+                "/productos/nina/pantys/panty-nina-rojo4.webp"
+            ]
+        },
+        {
+            "name": "Rosado",
+            "slug": "rosado",
+            "hex": "#FFB6C1",
+            "image": "/productos/nina/pantys/panty-nina-rosado1.webp",
+            "images": [
+                "/productos/nina/pantys/panty-nina-rosado1.webp",
+                "/productos/nina/pantys/panty-nina-rosado2.webp",
+                "/productos/nina/pantys/panty-nina-rosado3.webp",
+                "/productos/nina/pantys/panty-nina-rosado4.webp"
+            ]
+        }
     ],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
@@ -2909,16 +3218,61 @@ export const products: Product[] = [
     slug: "maxi-short-nina",
     title: "Maxi Short Niña",
     price: 26,
-    image: "/placeholder.svg",
+    image: "/productos/nina/shorts/maxi-short-nina-azulmarino1.webp",
     category: "shorts",
     fabric: "suplex",
     colors: [
-      {
-        name: "Maxi",
-        slug: "maxi",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
+        {
+            "name": "Azul Marino",
+            "slug": "azulmarino",
+            "hex": "#1B3A6B",
+            "image": "/productos/nina/shorts/maxi-short-nina-azulmarino1.webp",
+            "images": [
+                "/productos/nina/shorts/maxi-short-nina-azulmarino1.webp",
+                "/productos/nina/shorts/maxi-short-nina-azulmarino2.webp",
+                "/productos/nina/shorts/maxi-short-nina-azulmarino3.webp",
+                "/productos/nina/shorts/maxi-short-nina-azulmarino4.webp",
+                "/productos/nina/shorts/maxi-short-nina-azulmarino5.webp"
+            ]
+        },
+        {
+            "name": "Blanco",
+            "slug": "blanco",
+            "hex": "#FFFFFF",
+            "image": "/productos/nina/shorts/maxi-short-nina-blanco1.webp",
+            "images": [
+                "/productos/nina/shorts/maxi-short-nina-blanco1.webp",
+                "/productos/nina/shorts/maxi-short-nina-blanco2.webp",
+                "/productos/nina/shorts/maxi-short-nina-blanco3.webp",
+                "/productos/nina/shorts/maxi-short-nina-blanco4.webp",
+                "/productos/nina/shorts/maxi-short-nina-blanco5.webp"
+            ]
+        },
+        {
+            "name": "Negro",
+            "slug": "negro",
+            "hex": "#000000",
+            "image": "/productos/nina/shorts/maxi-short-nina-negro1.webp",
+            "images": [
+                "/productos/nina/shorts/maxi-short-nina-negro1.webp",
+                "/productos/nina/shorts/maxi-short-nina-negro2.webp",
+                "/productos/nina/shorts/maxi-short-nina-negro3.webp",
+                "/productos/nina/shorts/maxi-short-nina-negro4.webp"
+            ]
+        },
+        {
+            "name": "Rojo",
+            "slug": "rojo",
+            "hex": "#FF0000",
+            "image": "/productos/nina/shorts/maxi-short-nina-rojo1.webp",
+            "images": [
+                "/productos/nina/shorts/maxi-short-nina-rojo1.webp",
+                "/productos/nina/shorts/maxi-short-nina-rojo2.webp",
+                "/productos/nina/shorts/maxi-short-nina-rojo3.webp",
+                "/productos/nina/shorts/maxi-short-nina-rojo4.webp",
+                "/productos/nina/shorts/maxi-short-nina-rojo5.webp"
+            ]
+        }
     ],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
@@ -2941,16 +3295,61 @@ export const products: Product[] = [
     slug: "short-juvenil-nina",
     title: "Short Juvenil Niña",
     price: 24,
-    image: "/placeholder.svg",
+    image: "/productos/nina/shorts/short-juvenil-nina-azulmarino1.webp",
     category: "shorts",
     fabric: "suplex",
     colors: [
-      {
-        name: "Short",
-        slug: "short",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
+        {
+            "name": "Azul Marino",
+            "slug": "azulmarino",
+            "hex": "#1B3A6B",
+            "image": "/productos/nina/shorts/short-juvenil-nina-azulmarino1.webp",
+            "images": [
+                "/productos/nina/shorts/short-juvenil-nina-azulmarino1.webp",
+                "/productos/nina/shorts/short-juvenil-nina-azulmarino2.webp",
+                "/productos/nina/shorts/short-juvenil-nina-azulmarino3.webp",
+                "/productos/nina/shorts/short-juvenil-nina-azulmarino4.webp",
+                "/productos/nina/shorts/short-juvenil-nina-azulmarino5.webp"
+            ]
+        },
+        {
+            "name": "Blanco",
+            "slug": "blanco",
+            "hex": "#FFFFFF",
+            "image": "/productos/nina/shorts/short-juvenil-nina-blanco1.webp",
+            "images": [
+                "/productos/nina/shorts/short-juvenil-nina-blanco1.webp",
+                "/productos/nina/shorts/short-juvenil-nina-blanco2.webp",
+                "/productos/nina/shorts/short-juvenil-nina-blanco3.webp",
+                "/productos/nina/shorts/short-juvenil-nina-blanco4.webp",
+                "/productos/nina/shorts/short-juvenil-nina-blanco5.webp"
+            ]
+        },
+        {
+            "name": "Negro",
+            "slug": "negro",
+            "hex": "#000000",
+            "image": "/productos/nina/shorts/short-juvenil-nina-negro1.webp",
+            "images": [
+                "/productos/nina/shorts/short-juvenil-nina-negro1.webp",
+                "/productos/nina/shorts/short-juvenil-nina-negro2.webp",
+                "/productos/nina/shorts/short-juvenil-nina-negro3.webp",
+                "/productos/nina/shorts/short-juvenil-nina-negro4.webp"
+            ]
+        },
+        {
+            "name": "Rojo",
+            "slug": "rojo",
+            "hex": "#FF0000",
+            "image": "/productos/nina/shorts/short-juvenil-nina-rojo1.webp",
+            "images": [
+                "/productos/nina/shorts/short-juvenil-nina-rojo1.webp",
+                "/productos/nina/shorts/short-juvenil-nina-rojo2.webp",
+                "/productos/nina/shorts/short-juvenil-nina-rojo3.webp",
+                "/productos/nina/shorts/short-juvenil-nina-rojo4.webp",
+                "/productos/nina/shorts/short-juvenil-nina-rojo5.webp"
+            ]
+        }
     ],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
@@ -2973,16 +3372,47 @@ export const products: Product[] = [
     slug: "top-jazmin",
     title: "Top Jazmín",
     price: 30,
-    image: "/placeholder.svg",
+    image: "/productos/nina/tops/top-jazmin-beige1.webp",
     category: "tops",
     fabric: "algodon",
     colors: [
-      {
-        name: "Top",
-        slug: "top",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
+        {
+            "name": "Beige",
+            "slug": "beige",
+            "hex": "#F5F5DC",
+            "image": "/productos/nina/tops/top-jazmin-beige1.webp",
+            "images": [
+                "/productos/nina/tops/top-jazmin-beige1.webp",
+                "/productos/nina/tops/top-jazmin-beige2.webp",
+                "/productos/nina/tops/top-jazmin-beige3.webp",
+                "/productos/nina/tops/top-jazmin-beige4.webp",
+                "/productos/nina/tops/top-jazmin-beige5.webp"
+            ]
+        },
+        {
+            "name": "Blanco",
+            "slug": "blanco",
+            "hex": "#FFFFFF",
+            "image": "/productos/nina/tops/top-jazmin-blanco1.webp",
+            "images": [
+                "/productos/nina/tops/top-jazmin-blanco1.webp",
+                "/productos/nina/tops/top-jazmin-blanco2.webp",
+                "/productos/nina/tops/top-jazmin-blanco3.webp",
+                "/productos/nina/tops/top-jazmin-blanco4.webp"
+            ]
+        },
+        {
+            "name": "Negro",
+            "slug": "negro",
+            "hex": "#000000",
+            "image": "/productos/nina/tops/top-jazmin-negro1.webp",
+            "images": [
+                "/productos/nina/tops/top-jazmin-negro1.webp",
+                "/productos/nina/tops/top-jazmin-negro2.webp",
+                "/productos/nina/tops/top-jazmin-negro3.webp",
+                "/productos/nina/tops/top-jazmin-negro4.webp"
+            ]
+        }
     ],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
@@ -3005,16 +3435,113 @@ export const products: Product[] = [
     slug: "top-margarita",
     title: "Top Margarita",
     price: 30,
-    image: "/placeholder.svg",
+    image: "/productos/nina/tops/top-margarita-beige1.webp",
     category: "tops",
     fabric: "algodon",
     colors: [
-      {
-        name: "Top",
-        slug: "top",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
+        {
+            "name": "Beige",
+            "slug": "beige",
+            "hex": "#F5F5DC",
+            "image": "/productos/nina/tops/top-margarita-beige1.webp",
+            "images": [
+                "/productos/nina/tops/top-margarita-beige1.webp",
+                "/productos/nina/tops/top-margarita-beige2.webp",
+                "/productos/nina/tops/top-margarita-beige3.webp",
+                "/productos/nina/tops/top-margarita-beige4.webp",
+                "/productos/nina/tops/top-margarita-beige5.webp",
+                "/productos/nina/tops/top-margarita-beige6.webp"
+            ]
+        },
+        {
+            "name": "Blanco",
+            "slug": "blanco",
+            "hex": "#FFFFFF",
+            "image": "/productos/nina/tops/top-margarita-blanco1.webp",
+            "images": [
+                "/productos/nina/tops/top-margarita-blanco1.webp",
+                "/productos/nina/tops/top-margarita-blanco2.webp",
+                "/productos/nina/tops/top-margarita-blanco3.webp",
+                "/productos/nina/tops/top-margarita-blanco4.webp",
+                "/productos/nina/tops/top-margarita-blanco5.webp"
+            ]
+        },
+        {
+            "name": "Negro",
+            "slug": "negro",
+            "hex": "#000000",
+            "image": "/productos/nina/tops/top-margarita-negro1.webp",
+            "images": [
+                "/productos/nina/tops/top-margarita-negro1.webp",
+                "/productos/nina/tops/top-margarita-negro2.webp",
+                "/productos/nina/tops/top-margarita-negro3.webp",
+                "/productos/nina/tops/top-margarita-negro4.webp",
+                "/productos/nina/tops/top-margarita-negro5.webp"
+            ]
+        }
+    ],
+    sizes: ["2", "4", "6", "8", "10", "12"],
+    audience: "nina",
+    attributes: {
+  material: "Suplex liso",
+  detalles: [
+    "Diseño especial para niñas",
+    "Ajuste cómodo y seguro",
+    "Fácil de poner y quitar"
+  ],
+  beneficios: [
+    "Perfecta para actividades deportivas",
+    "Resistente al uso diario",
+    "Mantiene su forma después de lavados"
+  ]
+},
+  },
+
+  {
+    slug: "top-vani",
+    title: "Top Vani",
+    price: 28,
+    image: "/productos/nina/tops/top-vani-blanco1.webp",
+    category: "tops",
+    fabric: "algodon",
+    colors: [
+        {
+            "name": "Blanco",
+            "slug": "blanco",
+            "hex": "#FFFFFF",
+            "image": "/productos/nina/tops/top-vani-blanco1.webp",
+            "images": [
+                "/productos/nina/tops/top-vani-blanco1.webp",
+                "/productos/nina/tops/top-vani-blanco2.webp",
+                "/productos/nina/tops/top-vani-blanco3.webp",
+                "/productos/nina/tops/top-vani-blanco4.webp"
+            ]
+        },
+        {
+            "name": "Negro",
+            "slug": "negro",
+            "hex": "#000000",
+            "image": "/productos/nina/tops/top-vani-negro1.webp",
+            "images": [
+                "/productos/nina/tops/top-vani-negro1.webp",
+                "/productos/nina/tops/top-vani-negro2.webp",
+                "/productos/nina/tops/top-vani-negro3.webp",
+                "/productos/nina/tops/top-vani-negro4.webp"
+            ]
+        },
+        {
+            "name": "Rojo",
+            "slug": "rojo",
+            "hex": "#FF0000",
+            "image": "/productos/nina/tops/top-vani-rojo1.webp",
+            "images": [
+                "/productos/nina/tops/top-vani-rojo1.webp",
+                "/productos/nina/tops/top-vani-rojo2.webp",
+                "/productos/nina/tops/top-vani-rojo3.webp",
+                "/productos/nina/tops/top-vani-rojo4.webp",
+                "/productos/nina/tops/top-vani-rojo5.webp"
+            ]
+        }
     ],
     sizes: ["2", "4", "6", "8", "10", "12"],
     audience: "nina",
@@ -3097,48 +3624,17 @@ export const products: Product[] = [
 },
   },
 
-  {
-    slug: "top-vani",
-    title: "Top Vani",
-    price: 28,
-    image: "/placeholder.svg",
-    category: "tops",
-    fabric: "algodon",
-    colors: [
-      {
-        name: "Top",
-        slug: "top",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
-      },
-    ],
-    sizes: ["2", "4", "6", "8", "10", "12"],
-    audience: "nina",
-    attributes: {
-  material: "Suplex liso",
-  detalles: [
-    "Diseño especial para niñas",
-    "Ajuste cómodo y seguro",
-    "Fácil de poner y quitar"
-  ],
-  beneficios: [
-    "Perfecta para actividades deportivas",
-    "Resistente al uso diario",
-    "Mantiene su forma después de lavados"
-  ]
-},
-  }
 ]
 
-export const findProduct = (slug: string) => products.find((p) => p.slug === slug)
-export const byCategory = (c: Product["category"]) => products.filter((p) => p.category === c)
-export const byFabric = (f: Product["fabric"]) => products.filter((p) => p.fabric === f)
-export const byAudience = (a: Product["audience"]) => products.filter((p) => p.audience === a)
+export const findProduct = (slug: string) => products.filter(p => p && p.slug).find((p) => p.slug === slug)
+export const byCategory = (c: Product["category"]) => products.filter((p) => p && p.category === c)
+export const byFabric = (f: Product["fabric"]) => products.filter((p) => p && p.fabric === f)
+export const byAudience = (a: Product["audience"]) => products.filter((p) => p && p.audience === a)
 
 // ✨ NUEVAS FUNCIONES HELPER PARA FILTROS DINÁMICOS
 export function getUniqueColors(): string[] {
   const colorsSet = new Set<string>()
-  products.forEach(product => {
+  products.filter(p => p && p.colors).forEach(product => {
     product.colors.forEach(colorObj => {
       const colorName = typeof colorObj === 'string' ? colorObj : colorObj.name
       colorsSet.add(colorName)
@@ -3150,7 +3646,7 @@ export function getUniqueColors(): string[] {
 export function getAllCollections(): Array<{ name: string; slug: string; count: number }> {
   const collectionsMap = new Map<string, number>()
 
-  products.forEach(product => {
+  products.filter(p => p && p.tags).forEach(product => {
     if (product.tags) {
       product.tags.forEach(tag => {
         // Filtrar solo tags que parecen colecciones (excluir COD.XXX)
@@ -3174,7 +3670,7 @@ export function getAllCollections(): Array<{ name: string; slug: string; count: 
 export function getUniqueFabrics(): Array<{ name: string; slug: string; count: number }> {
   const fabricsMap = new Map<string, number>()
 
-  products.forEach(product => {
+  products.filter(p => p && p.fabric).forEach(product => {
     const fabric = product.fabric
     const current = fabricsMap.get(fabric) || 0
     fabricsMap.set(fabric, current + 1)

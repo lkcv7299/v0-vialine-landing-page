@@ -1,11 +1,216 @@
 {
   "summary": {
-    "totalImages": 711,
-    "referenced": 80,
-    "unused": 631,
-    "unusedSizeMB": 245.53
+    "totalImages": 885,
+    "referenced": 39,
+    "unused": 847,
+    "unusedSizeMB": 251.43
   },
   "byProduct": {
+    "short-ciclista-active": {
+      "images": [
+        {
+          "filename": "short-ciclista-active-aqua2.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-aqua2.webp",
+          "size": 25958
+        },
+        {
+          "filename": "short-ciclista-active-aqua3.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-aqua3.webp",
+          "size": 23010
+        },
+        {
+          "filename": "short-ciclista-active-aqua4.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-aqua4.webp",
+          "size": 15338
+        },
+        {
+          "filename": "short-ciclista-active-aqua5.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-aqua5.webp",
+          "size": 19476
+        },
+        {
+          "filename": "short-ciclista-active-azulino1.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-azulino1.webp",
+          "size": 21902
+        },
+        {
+          "filename": "short-ciclista-active-azulino2.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-azulino2.webp",
+          "size": 22028
+        },
+        {
+          "filename": "short-ciclista-active-azulino3.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-azulino3.webp",
+          "size": 19474
+        },
+        {
+          "filename": "short-ciclista-active-azulino4.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-azulino4.webp",
+          "size": 19338
+        },
+        {
+          "filename": "short-ciclista-active-azulino5.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-azulino5.webp",
+          "size": 26078
+        },
+        {
+          "filename": "short-ciclista-active-blanco1.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-blanco1.webp",
+          "size": 20052
+        },
+        {
+          "filename": "short-ciclista-active-blanco2.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-blanco2.webp",
+          "size": 18742
+        },
+        {
+          "filename": "short-ciclista-active-blanco3.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-blanco3.webp",
+          "size": 19332
+        },
+        {
+          "filename": "short-ciclista-active-blanco4.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-blanco4.webp",
+          "size": 14230
+        },
+        {
+          "filename": "short-ciclista-active-blanco5.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-blanco5.webp",
+          "size": 16872
+        },
+        {
+          "filename": "short-ciclista-active-charcoal1.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-charcoal1.webp",
+          "size": 32594
+        },
+        {
+          "filename": "short-ciclista-active-charcoal2.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-charcoal2.webp",
+          "size": 31322
+        },
+        {
+          "filename": "short-ciclista-active-charcoal3.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-charcoal3.webp",
+          "size": 32780
+        },
+        {
+          "filename": "short-ciclista-active-charcoal4.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-charcoal4.webp",
+          "size": 52472
+        },
+        {
+          "filename": "short-ciclista-active-charcoal5.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-charcoal5.webp",
+          "size": 57742
+        },
+        {
+          "filename": "short-ciclista-active-melange1.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-melange1.webp",
+          "size": 24522
+        },
+        {
+          "filename": "short-ciclista-active-melange2.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-melange2.webp",
+          "size": 27832
+        },
+        {
+          "filename": "short-ciclista-active-melange3.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-melange3.webp",
+          "size": 25506
+        },
+        {
+          "filename": "short-ciclista-active-melange4.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-melange4.webp",
+          "size": 25920
+        },
+        {
+          "filename": "short-ciclista-active-melange5.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-melange5.webp",
+          "size": 39688
+        },
+        {
+          "filename": "short-ciclista-active-melon1.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-melon1.webp",
+          "size": 18598
+        },
+        {
+          "filename": "short-ciclista-active-melon2.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-melon2.webp",
+          "size": 20486
+        },
+        {
+          "filename": "short-ciclista-active-melon3.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-melon3.webp",
+          "size": 17860
+        },
+        {
+          "filename": "short-ciclista-active-melon4.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-melon4.webp",
+          "size": 13992
+        },
+        {
+          "filename": "short-ciclista-active-melon5.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-melon5.webp",
+          "size": 20314
+        },
+        {
+          "filename": "short-ciclista-active-negro1.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-negro1.webp",
+          "size": 22354
+        },
+        {
+          "filename": "short-ciclista-active-negro2.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-negro2.webp",
+          "size": 24330
+        },
+        {
+          "filename": "short-ciclista-active-negro3.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-negro3.webp",
+          "size": 21980
+        },
+        {
+          "filename": "short-ciclista-active-negro4.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-negro4.webp",
+          "size": 16888
+        },
+        {
+          "filename": "short-ciclista-active-negro5.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-negro5.webp",
+          "size": 20408
+        },
+        {
+          "filename": "short-ciclista-active-rojo1.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-rojo1.webp",
+          "size": 24262
+        },
+        {
+          "filename": "short-ciclista-active-rojo2.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-rojo2.webp",
+          "size": 28172
+        },
+        {
+          "filename": "short-ciclista-active-rojo3.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-rojo3.webp",
+          "size": 27038
+        },
+        {
+          "filename": "short-ciclista-active-rojo4.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-rojo4.webp",
+          "size": 26934
+        },
+        {
+          "filename": "short-ciclista-active-rojo5.webp",
+          "relativePath": "productos/mujer/bikers/short-ciclista-active-rojo5.webp",
+          "size": 21808
+        },
+        {
+          "filename": "short-ciclista-active.webp",
+          "relativePath": "productos/mujer/short/short-ciclista-active.webp",
+          "size": 15692
+        }
+      ],
+      "totalSize": 973324
+    },
     "body-manga-corta": {
       "images": [
         {
@@ -1366,6 +1571,16 @@
       ],
       "totalSize": 34730498
     },
+    "camiseta-deportiva": {
+      "images": [
+        {
+          "filename": "camiseta-deportiva.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-deportiva.webp",
+          "size": 3216
+        }
+      ],
+      "totalSize": 3216
+    },
     "camiseta-gia": {
       "images": [
         {
@@ -2151,6 +2366,26 @@
       ],
       "totalSize": 40450636
     },
+    "camiseta-tiras-fijas": {
+      "images": [
+        {
+          "filename": "camiseta-tiras-fijas.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-tiras-fijas.webp",
+          "size": 8766
+        }
+      ],
+      "totalSize": 8766
+    },
+    "camiseta-tropical": {
+      "images": [
+        {
+          "filename": "camiseta-tropical.webp",
+          "relativePath": "productos/mujer/camisetas/camiseta-tropical.webp",
+          "size": 3228
+        }
+      ],
+      "totalSize": 3228
+    },
     "legging-clasica": {
       "images": [
         {
@@ -2169,6 +2404,11 @@
           "size": 6748
         },
         {
+          "filename": "legging-clasica-gamuza.webp",
+          "relativePath": "productos/mujer/legging/legging-clasica-gamuza.webp",
+          "size": 7698
+        },
+        {
           "filename": "legging-clasica-melange.webp",
           "relativePath": "productos/mujer/legging/legging-clasica-melange.webp",
           "size": 79440
@@ -2179,7 +2419,17 @@
           "size": 60702
         }
       ],
-      "totalSize": 249010
+      "totalSize": 256708
+    },
+    "legging-functional": {
+      "images": [
+        {
+          "filename": "legging-functional.webp",
+          "relativePath": "productos/mujer/legging/legging-functional.webp",
+          "size": 133792
+        }
+      ],
+      "totalSize": 133792
     },
     "unknown": {
       "images": [
@@ -2491,6 +2741,41 @@
       ],
       "totalSize": 24603310
     },
+    "legging-harmony": {
+      "images": [
+        {
+          "filename": "legging-harmony-azulino.webp",
+          "relativePath": "productos/mujer/legging/legging-harmony-azulino.webp",
+          "size": 8024
+        },
+        {
+          "filename": "legging-harmony-charcol.webp",
+          "relativePath": "productos/mujer/legging/legging-harmony-charcol.webp",
+          "size": 10164
+        },
+        {
+          "filename": "legging-harmony-negro.webp",
+          "relativePath": "productos/mujer/legging/legging-harmony-negro.webp",
+          "size": 6398
+        },
+        {
+          "filename": "legging-harmony-rojo.webp",
+          "relativePath": "productos/mujer/legging/legging-harmony-rojo.webp",
+          "size": 7136
+        }
+      ],
+      "totalSize": 31722
+    },
+    "legging-realce-fresh-terry": {
+      "images": [
+        {
+          "filename": "legging-realce-fresh-terry.webp",
+          "relativePath": "productos/mujer/legging/legging-realce-fresh-terry.webp",
+          "size": 12642
+        }
+      ],
+      "totalSize": 12642
+    },
     "legging-slim": {
       "images": [
         {
@@ -2652,9 +2937,59 @@
           "filename": "legging-slim-suplex-liso-premium-camel.webp",
           "relativePath": "productos/mujer/legging/legging-slim-suplex-liso-premium-camel.webp",
           "size": 261664
+        },
+        {
+          "filename": "legging-slim-suplex-perchado.webp",
+          "relativePath": "productos/mujer/legging/legging-slim-suplex-perchado.webp",
+          "size": 117914
         }
       ],
-      "totalSize": 9146440
+      "totalSize": 9264354
+    },
+    "pescador-dynamic": {
+      "images": [
+        {
+          "filename": "pescador-dynamic-azulino.webp",
+          "relativePath": "productos/mujer/pescador/pescador-dynamic-azulino.webp",
+          "size": 71736
+        },
+        {
+          "filename": "pescador-dynamic-charcol.webp",
+          "relativePath": "productos/mujer/pescador/pescador-dynamic-charcol.webp",
+          "size": 11984
+        },
+        {
+          "filename": "pescador-dynamic-negro.webp",
+          "relativePath": "productos/mujer/pescador/pescador-dynamic-negro.webp",
+          "size": 8006
+        },
+        {
+          "filename": "pescador-dynamic-rojo.webp",
+          "relativePath": "productos/mujer/pescador/pescador-dynamic-rojo.webp",
+          "size": 7538
+        }
+      ],
+      "totalSize": 99264
+    },
+    "pescador-realce": {
+      "images": [
+        {
+          "filename": "pescador-realce-azulino.webp",
+          "relativePath": "productos/mujer/pescador/pescador-realce-azulino.webp",
+          "size": 9300
+        },
+        {
+          "filename": "pescador-realce-negro.webp",
+          "relativePath": "productos/mujer/pescador/pescador-realce-negro.webp",
+          "size": 101370
+        },
+        {
+          "filename": "pescador-realce-rojo.webp",
+          "relativePath": "productos/mujer/pescador/pescador-realce-rojo.webp",
+          "size": 70292
+        }
+      ],
+      "totalSize": 180962
     },
     "maxi-short": {
       "images": [
@@ -2737,9 +3072,14 @@
           "filename": "maxi-short-negro.webp",
           "relativePath": "productos/mujer/short/maxi-short-negro.webp",
           "size": 249984
+        },
+        {
+          "filename": "maxi-short-nina.webp",
+          "relativePath": "productos/nina/shorts/maxi-short-nina.webp",
+          "size": 6970
         }
       ],
-      "totalSize": 4649238
+      "totalSize": 4656208
     },
     "mini-short": {
       "images": [
@@ -2921,6 +3261,241 @@
       ],
       "totalSize": 4625282
     },
+    "short-clasico": {
+      "images": [
+        {
+          "filename": "short-clasico.webp",
+          "relativePath": "productos/mujer/short/short-clasico.webp",
+          "size": 3256
+        },
+        {
+          "filename": "short-clasico-negro2.webp",
+          "relativePath": "productos/mujer/shorts/short-clasico-negro2.webp",
+          "size": 22028
+        },
+        {
+          "filename": "short-clasico-negro3.webp",
+          "relativePath": "productos/mujer/shorts/short-clasico-negro3.webp",
+          "size": 22198
+        },
+        {
+          "filename": "short-clasico-negro4.webp",
+          "relativePath": "productos/mujer/shorts/short-clasico-negro4.webp",
+          "size": 20876
+        },
+        {
+          "filename": "short-clasico-rojo1.webp",
+          "relativePath": "productos/mujer/shorts/short-clasico-rojo1.webp",
+          "size": 21766
+        },
+        {
+          "filename": "short-clasico-rojo2.webp",
+          "relativePath": "productos/mujer/shorts/short-clasico-rojo2.webp",
+          "size": 23758
+        },
+        {
+          "filename": "short-clasico-rojo3.webp",
+          "relativePath": "productos/mujer/shorts/short-clasico-rojo3.webp",
+          "size": 22682
+        },
+        {
+          "filename": "short-clasico-rojo4.webp",
+          "relativePath": "productos/mujer/shorts/short-clasico-rojo4.webp",
+          "size": 23324
+        },
+        {
+          "filename": "short-clasico-rojo5.webp",
+          "relativePath": "productos/mujer/shorts/short-clasico-rojo5.webp",
+          "size": 19782
+        },
+        {
+          "filename": "short-clasico-rojo6.webp",
+          "relativePath": "productos/mujer/shorts/short-clasico-rojo6.webp",
+          "size": 20788
+        }
+      ],
+      "totalSize": 200458
+    },
+    "short-lux": {
+      "images": [
+        {
+          "filename": "short-lux.webp",
+          "relativePath": "productos/mujer/short/short-lux.webp",
+          "size": 8536
+        },
+        {
+          "filename": "short-lux-aqua2.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-aqua2.webp",
+          "size": 28226
+        },
+        {
+          "filename": "short-lux-aqua3.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-aqua3.webp",
+          "size": 24904
+        },
+        {
+          "filename": "short-lux-aqua4.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-aqua4.webp",
+          "size": 23134
+        },
+        {
+          "filename": "short-lux-aqua5.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-aqua5.webp",
+          "size": 21122
+        },
+        {
+          "filename": "short-lux-azulino1.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-azulino1.webp",
+          "size": 25302
+        },
+        {
+          "filename": "short-lux-azulino2.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-azulino2.webp",
+          "size": 24166
+        },
+        {
+          "filename": "short-lux-azulino3.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-azulino3.webp",
+          "size": 25346
+        },
+        {
+          "filename": "short-lux-azulino4.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-azulino4.webp",
+          "size": 19992
+        },
+        {
+          "filename": "short-lux-azulino5.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-azulino5.webp",
+          "size": 22152
+        },
+        {
+          "filename": "short-lux-blanco1.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-blanco1.webp",
+          "size": 21394
+        },
+        {
+          "filename": "short-lux-blanco2.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-blanco2.webp",
+          "size": 20136
+        },
+        {
+          "filename": "short-lux-blanco3.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-blanco3.webp",
+          "size": 22632
+        },
+        {
+          "filename": "short-lux-blanco4.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-blanco4.webp",
+          "size": 19076
+        },
+        {
+          "filename": "short-lux-blanco5.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-blanco5.webp",
+          "size": 17660
+        },
+        {
+          "filename": "short-lux-charcoal1.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-charcoal1.webp",
+          "size": 31688
+        },
+        {
+          "filename": "short-lux-charcoal2.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-charcoal2.webp",
+          "size": 28440
+        },
+        {
+          "filename": "short-lux-charcoal3.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-charcoal3.webp",
+          "size": 33310
+        },
+        {
+          "filename": "short-lux-charcoal4.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-charcoal4.webp",
+          "size": 30132
+        },
+        {
+          "filename": "short-lux-charcoal5.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-charcoal5.webp",
+          "size": 49786
+        },
+        {
+          "filename": "short-lux-melange1.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-melange1.webp",
+          "size": 25924
+        },
+        {
+          "filename": "short-lux-melange2.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-melange2.webp",
+          "size": 26212
+        },
+        {
+          "filename": "short-lux-melange3.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-melange3.webp",
+          "size": 29440
+        },
+        {
+          "filename": "short-lux-melange4.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-melange4.webp",
+          "size": 38744
+        },
+        {
+          "filename": "short-lux-melange5.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-melange5.webp",
+          "size": 36140
+        },
+        {
+          "filename": "short-lux-melon1.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-melon1.webp",
+          "size": 24216
+        },
+        {
+          "filename": "short-lux-melon2.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-melon2.webp",
+          "size": 21908
+        },
+        {
+          "filename": "short-lux-melon3.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-melon3.webp",
+          "size": 19750
+        },
+        {
+          "filename": "short-lux-negro1.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-negro1.webp",
+          "size": 21514
+        },
+        {
+          "filename": "short-lux-negro2.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-negro2.webp",
+          "size": 21120
+        },
+        {
+          "filename": "short-lux-negro3.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-negro3.webp",
+          "size": 14926
+        },
+        {
+          "filename": "short-lux-rojo1.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-rojo1.webp",
+          "size": 24062
+        },
+        {
+          "filename": "short-lux-rojo2.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-rojo2.webp",
+          "size": 25030
+        },
+        {
+          "filename": "short-lux-rojo3.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-rojo3.webp",
+          "size": 20846
+        },
+        {
+          "filename": "short-lux-rojo4.webp",
+          "relativePath": "productos/mujer/shorts/short-lux-rojo4.webp",
+          "size": 22434
+        }
+      ],
+      "totalSize": 869400
+    },
     "short-slim": {
       "images": [
         {
@@ -3026,6 +3601,16 @@
       ],
       "totalSize": 5416998
     },
+    "straple-chanel": {
+      "images": [
+        {
+          "filename": "straple-chanel.webp",
+          "relativePath": "productos/mujer/tops/straple-chanel.webp",
+          "size": 3436
+        }
+      ],
+      "totalSize": 3436
+    },
     "top-afrodita": {
       "images": [
         {
@@ -3115,6 +3700,251 @@
         }
       ],
       "totalSize": 12895268
+    },
+    "top-arena": {
+      "images": [
+        {
+          "filename": "top-arena-blanco2.webp",
+          "relativePath": "productos/mujer/tops/top-arena-blanco2.webp",
+          "size": 30706
+        },
+        {
+          "filename": "top-arena-blanco3.webp",
+          "relativePath": "productos/mujer/tops/top-arena-blanco3.webp",
+          "size": 33968
+        },
+        {
+          "filename": "top-arena-blanco4.webp",
+          "relativePath": "productos/mujer/tops/top-arena-blanco4.webp",
+          "size": 37130
+        },
+        {
+          "filename": "top-arena.webp",
+          "relativePath": "productos/mujer/tops/top-arena.webp",
+          "size": 18514
+        }
+      ],
+      "totalSize": 120318
+    },
+    "top-astrid": {
+      "images": [
+        {
+          "filename": "top-astrid.webp",
+          "relativePath": "productos/mujer/tops/top-astrid.webp",
+          "size": 24396
+        }
+      ],
+      "totalSize": 24396
+    },
+    "top-athena": {
+      "images": [
+        {
+          "filename": "top-athena.webp",
+          "relativePath": "productos/mujer/tops/top-athena.webp",
+          "size": 4538
+        }
+      ],
+      "totalSize": 4538
+    },
+    "top-brigid": {
+      "images": [
+        {
+          "filename": "top-brigid.webp",
+          "relativePath": "productos/mujer/tops/top-brigid.webp",
+          "size": 3618
+        }
+      ],
+      "totalSize": 3618
+    },
+    "top-deportivo": {
+      "images": [
+        {
+          "filename": "top-deportivo.webp",
+          "relativePath": "productos/mujer/tops/top-deportivo.webp",
+          "size": 4162
+        }
+      ],
+      "totalSize": 4162
+    },
+    "top-jolie": {
+      "images": [
+        {
+          "filename": "top-jolie.webp",
+          "relativePath": "productos/mujer/tops/top-jolie.webp",
+          "size": 4666
+        }
+      ],
+      "totalSize": 4666
+    },
+    "top-jungle": {
+      "images": [
+        {
+          "filename": "top-jungle-azulino2.webp",
+          "relativePath": "productos/mujer/tops/top-jungle-azulino2.webp",
+          "size": 68030
+        },
+        {
+          "filename": "top-jungle-azulino3.webp",
+          "relativePath": "productos/mujer/tops/top-jungle-azulino3.webp",
+          "size": 70684
+        },
+        {
+          "filename": "top-jungle-azulino4.webp",
+          "relativePath": "productos/mujer/tops/top-jungle-azulino4.webp",
+          "size": 76024
+        },
+        {
+          "filename": "top-jungle-charcoal1.webp",
+          "relativePath": "productos/mujer/tops/top-jungle-charcoal1.webp",
+          "size": 50024
+        },
+        {
+          "filename": "top-jungle-charcoal2.webp",
+          "relativePath": "productos/mujer/tops/top-jungle-charcoal2.webp",
+          "size": 47300
+        },
+        {
+          "filename": "top-jungle-charcoal3.webp",
+          "relativePath": "productos/mujer/tops/top-jungle-charcoal3.webp",
+          "size": 40466
+        },
+        {
+          "filename": "top-jungle-charcoal4.webp",
+          "relativePath": "productos/mujer/tops/top-jungle-charcoal4.webp",
+          "size": 41730
+        },
+        {
+          "filename": "top-jungle-negro1.webp",
+          "relativePath": "productos/mujer/tops/top-jungle-negro1.webp",
+          "size": 32734
+        },
+        {
+          "filename": "top-jungle-negro2.webp",
+          "relativePath": "productos/mujer/tops/top-jungle-negro2.webp",
+          "size": 24398
+        },
+        {
+          "filename": "top-jungle-negro3.webp",
+          "relativePath": "productos/mujer/tops/top-jungle-negro3.webp",
+          "size": 24888
+        },
+        {
+          "filename": "top-jungle-negro4.webp",
+          "relativePath": "productos/mujer/tops/top-jungle-negro4.webp",
+          "size": 20656
+        },
+        {
+          "filename": "top-jungle-rojo1.webp",
+          "relativePath": "productos/mujer/tops/top-jungle-rojo1.webp",
+          "size": 52744
+        },
+        {
+          "filename": "top-jungle-rojo2.webp",
+          "relativePath": "productos/mujer/tops/top-jungle-rojo2.webp",
+          "size": 41180
+        },
+        {
+          "filename": "top-jungle-rojo3.webp",
+          "relativePath": "productos/mujer/tops/top-jungle-rojo3.webp",
+          "size": 56154
+        },
+        {
+          "filename": "top-jungle-rojo4.webp",
+          "relativePath": "productos/mujer/tops/top-jungle-rojo4.webp",
+          "size": 53154
+        },
+        {
+          "filename": "top-jungle.webp",
+          "relativePath": "productos/mujer/tops/top-jungle.webp",
+          "size": 45532
+        }
+      ],
+      "totalSize": 745698
+    },
+    "top-luna": {
+      "images": [
+        {
+          "filename": "top-luna-beige2.webp",
+          "relativePath": "productos/mujer/tops/top-luna-beige2.webp",
+          "size": 22380
+        },
+        {
+          "filename": "top-luna-beige3.webp",
+          "relativePath": "productos/mujer/tops/top-luna-beige3.webp",
+          "size": 27236
+        },
+        {
+          "filename": "top-luna-beige4.webp",
+          "relativePath": "productos/mujer/tops/top-luna-beige4.webp",
+          "size": 30000
+        },
+        {
+          "filename": "top-luna-beige5.webp",
+          "relativePath": "productos/mujer/tops/top-luna-beige5.webp",
+          "size": 60996
+        },
+        {
+          "filename": "top-luna-blanco1.webp",
+          "relativePath": "productos/mujer/tops/top-luna-blanco1.webp",
+          "size": 22128
+        },
+        {
+          "filename": "top-luna-blanco2.webp",
+          "relativePath": "productos/mujer/tops/top-luna-blanco2.webp",
+          "size": 20742
+        },
+        {
+          "filename": "top-luna-blanco3.webp",
+          "relativePath": "productos/mujer/tops/top-luna-blanco3.webp",
+          "size": 31002
+        },
+        {
+          "filename": "top-luna-blanco4.webp",
+          "relativePath": "productos/mujer/tops/top-luna-blanco4.webp",
+          "size": 25870
+        },
+        {
+          "filename": "top-luna-blanco5.webp",
+          "relativePath": "productos/mujer/tops/top-luna-blanco5.webp",
+          "size": 53270
+        },
+        {
+          "filename": "top-luna-negro1.webp",
+          "relativePath": "productos/mujer/tops/top-luna-negro1.webp",
+          "size": 19098
+        },
+        {
+          "filename": "top-luna-negro2.webp",
+          "relativePath": "productos/mujer/tops/top-luna-negro2.webp",
+          "size": 19400
+        },
+        {
+          "filename": "top-luna-negro3.webp",
+          "relativePath": "productos/mujer/tops/top-luna-negro3.webp",
+          "size": 36562
+        },
+        {
+          "filename": "top-luna-negro4.webp",
+          "relativePath": "productos/mujer/tops/top-luna-negro4.webp",
+          "size": 31266
+        },
+        {
+          "filename": "top-luna-negro5.webp",
+          "relativePath": "productos/mujer/tops/top-luna-negro5.webp",
+          "size": 46690
+        }
+      ],
+      "totalSize": 446640
+    },
+    "top-minerva": {
+      "images": [
+        {
+          "filename": "top-minerva.webp",
+          "relativePath": "productos/mujer/tops/top-minerva.webp",
+          "size": 21514
+        }
+      ],
+      "totalSize": 21514
     },
     "top-paradise": {
       "images": [
@@ -3245,6 +4075,451 @@
         }
       ],
       "totalSize": 16003694
+    },
+    "top-perla": {
+      "images": [
+        {
+          "filename": "top-perla-blanco2.webp",
+          "relativePath": "productos/mujer/tops/top-perla-blanco2.webp",
+          "size": 34804
+        },
+        {
+          "filename": "top-perla-blanco3.webp",
+          "relativePath": "productos/mujer/tops/top-perla-blanco3.webp",
+          "size": 32258
+        },
+        {
+          "filename": "top-perla-blanco4.webp",
+          "relativePath": "productos/mujer/tops/top-perla-blanco4.webp",
+          "size": 35056
+        },
+        {
+          "filename": "top-perla-blanco5.webp",
+          "relativePath": "productos/mujer/tops/top-perla-blanco5.webp",
+          "size": 30582
+        },
+        {
+          "filename": "top-perla.webp",
+          "relativePath": "productos/mujer/tops/top-perla.webp",
+          "size": 8930
+        }
+      ],
+      "totalSize": 141630
+    },
+    "top-soporte": {
+      "images": [
+        {
+          "filename": "top-soporte-beige2.webp",
+          "relativePath": "productos/mujer/tops/top-soporte-beige2.webp",
+          "size": 34372
+        },
+        {
+          "filename": "top-soporte-beige3.webp",
+          "relativePath": "productos/mujer/tops/top-soporte-beige3.webp",
+          "size": 27854
+        },
+        {
+          "filename": "top-soporte-beige4.webp",
+          "relativePath": "productos/mujer/tops/top-soporte-beige4.webp",
+          "size": 27318
+        },
+        {
+          "filename": "top-soporte-beige5.webp",
+          "relativePath": "productos/mujer/tops/top-soporte-beige5.webp",
+          "size": 27762
+        },
+        {
+          "filename": "top-soporte-blanco1.webp",
+          "relativePath": "productos/mujer/tops/top-soporte-blanco1.webp",
+          "size": 31688
+        },
+        {
+          "filename": "top-soporte-blanco2.webp",
+          "relativePath": "productos/mujer/tops/top-soporte-blanco2.webp",
+          "size": 25024
+        },
+        {
+          "filename": "top-soporte-blanco3.webp",
+          "relativePath": "productos/mujer/tops/top-soporte-blanco3.webp",
+          "size": 32552
+        },
+        {
+          "filename": "top-soporte-blanco4.webp",
+          "relativePath": "productos/mujer/tops/top-soporte-blanco4.webp",
+          "size": 27334
+        },
+        {
+          "filename": "top-soporte-blanco5.webp",
+          "relativePath": "productos/mujer/tops/top-soporte-blanco5.webp",
+          "size": 29110
+        },
+        {
+          "filename": "top-soporte-negro1.webp",
+          "relativePath": "productos/mujer/tops/top-soporte-negro1.webp",
+          "size": 28430
+        },
+        {
+          "filename": "top-soporte-negro2.webp",
+          "relativePath": "productos/mujer/tops/top-soporte-negro2.webp",
+          "size": 36338
+        },
+        {
+          "filename": "top-soporte-negro3.webp",
+          "relativePath": "productos/mujer/tops/top-soporte-negro3.webp",
+          "size": 29012
+        },
+        {
+          "filename": "top-soporte-negro4.webp",
+          "relativePath": "productos/mujer/tops/top-soporte-negro4.webp",
+          "size": 33378
+        },
+        {
+          "filename": "top-soporte.webp",
+          "relativePath": "productos/mujer/tops/top-soporte.webp",
+          "size": 22226
+        }
+      ],
+      "totalSize": 412398
+    },
+    "top-tira-fijas": {
+      "images": [
+        {
+          "filename": "top-tira-fijas.webp",
+          "relativePath": "productos/mujer/tops/top-tira-fijas.webp",
+          "size": 3924
+        }
+      ],
+      "totalSize": 3924
+    },
+    "top-urban": {
+      "images": [
+        {
+          "filename": "top-urban.webp",
+          "relativePath": "productos/mujer/tops/top-urban.webp",
+          "size": 8896
+        }
+      ],
+      "totalSize": 8896
+    },
+    "top-venus": {
+      "images": [
+        {
+          "filename": "top-venus-azulino2.webp",
+          "relativePath": "productos/mujer/tops/top-venus-azulino2.webp",
+          "size": 72226
+        },
+        {
+          "filename": "top-venus-azulino3.webp",
+          "relativePath": "productos/mujer/tops/top-venus-azulino3.webp",
+          "size": 70182
+        },
+        {
+          "filename": "top-venus-azulino4.webp",
+          "relativePath": "productos/mujer/tops/top-venus-azulino4.webp",
+          "size": 75470
+        },
+        {
+          "filename": "top-venus-blanco1.webp",
+          "relativePath": "productos/mujer/tops/top-venus-blanco1.webp",
+          "size": 34816
+        },
+        {
+          "filename": "top-venus-blanco2.webp",
+          "relativePath": "productos/mujer/tops/top-venus-blanco2.webp",
+          "size": 28640
+        },
+        {
+          "filename": "top-venus-blanco3.webp",
+          "relativePath": "productos/mujer/tops/top-venus-blanco3.webp",
+          "size": 36780
+        },
+        {
+          "filename": "top-venus-blanco4.webp",
+          "relativePath": "productos/mujer/tops/top-venus-blanco4.webp",
+          "size": 33024
+        },
+        {
+          "filename": "top-venus-blanco5.webp",
+          "relativePath": "productos/mujer/tops/top-venus-blanco5.webp",
+          "size": 32866
+        },
+        {
+          "filename": "top-venus-charcoal1.webp",
+          "relativePath": "productos/mujer/tops/top-venus-charcoal1.webp",
+          "size": 47628
+        },
+        {
+          "filename": "top-venus-charcoal2.webp",
+          "relativePath": "productos/mujer/tops/top-venus-charcoal2.webp",
+          "size": 42738
+        },
+        {
+          "filename": "top-venus-charcoal3.webp",
+          "relativePath": "productos/mujer/tops/top-venus-charcoal3.webp",
+          "size": 33412
+        },
+        {
+          "filename": "top-venus-charcoal4.webp",
+          "relativePath": "productos/mujer/tops/top-venus-charcoal4.webp",
+          "size": 44084
+        },
+        {
+          "filename": "top-venus-charcoal5.webp",
+          "relativePath": "productos/mujer/tops/top-venus-charcoal5.webp",
+          "size": 44720
+        },
+        {
+          "filename": "top-venus-negro1.webp",
+          "relativePath": "productos/mujer/tops/top-venus-negro1.webp",
+          "size": 28494
+        },
+        {
+          "filename": "top-venus-negro2.webp",
+          "relativePath": "productos/mujer/tops/top-venus-negro2.webp",
+          "size": 29294
+        },
+        {
+          "filename": "top-venus-negro3.webp",
+          "relativePath": "productos/mujer/tops/top-venus-negro3.webp",
+          "size": 29026
+        },
+        {
+          "filename": "top-venus-negro4.webp",
+          "relativePath": "productos/mujer/tops/top-venus-negro4.webp",
+          "size": 28422
+        },
+        {
+          "filename": "top-venus-negro5.webp",
+          "relativePath": "productos/mujer/tops/top-venus-negro5.webp",
+          "size": 32316
+        },
+        {
+          "filename": "top-venus-rojo1.webp",
+          "relativePath": "productos/mujer/tops/top-venus-rojo1.webp",
+          "size": 47076
+        },
+        {
+          "filename": "top-venus-rojo2.webp",
+          "relativePath": "productos/mujer/tops/top-venus-rojo2.webp",
+          "size": 46252
+        },
+        {
+          "filename": "top-venus-rojo3.webp",
+          "relativePath": "productos/mujer/tops/top-venus-rojo3.webp",
+          "size": 49880
+        },
+        {
+          "filename": "top-venus-rojo4.webp",
+          "relativePath": "productos/mujer/tops/top-venus-rojo4.webp",
+          "size": 56182
+        },
+        {
+          "filename": "top-venus-rojo5.webp",
+          "relativePath": "productos/mujer/tops/top-venus-rojo5.webp",
+          "size": 68298
+        },
+        {
+          "filename": "top-venus-rojo6.webp",
+          "relativePath": "productos/mujer/tops/top-venus-rojo6.webp",
+          "size": 74534
+        },
+        {
+          "filename": "top-venus.webp",
+          "relativePath": "productos/mujer/tops/top-venus.webp",
+          "size": 24124
+        }
+      ],
+      "totalSize": 1110484
+    },
+    "top-zafiro": {
+      "images": [
+        {
+          "filename": "top-zafiro-blanco2.webp",
+          "relativePath": "productos/mujer/tops/top-zafiro-blanco2.webp",
+          "size": 28890
+        },
+        {
+          "filename": "top-zafiro-blanco3.webp",
+          "relativePath": "productos/mujer/tops/top-zafiro-blanco3.webp",
+          "size": 34644
+        },
+        {
+          "filename": "top-zafiro-blanco4.webp",
+          "relativePath": "productos/mujer/tops/top-zafiro-blanco4.webp",
+          "size": 28484
+        },
+        {
+          "filename": "top-zafiro-blanco5.webp",
+          "relativePath": "productos/mujer/tops/top-zafiro-blanco5.webp",
+          "size": 34072
+        },
+        {
+          "filename": "top-zafiro-negro1.webp",
+          "relativePath": "productos/mujer/tops/top-zafiro-negro1.webp",
+          "size": 78436
+        },
+        {
+          "filename": "top-zafiro-negro2.webp",
+          "relativePath": "productos/mujer/tops/top-zafiro-negro2.webp",
+          "size": 30540
+        },
+        {
+          "filename": "top-zafiro-negro3.webp",
+          "relativePath": "productos/mujer/tops/top-zafiro-negro3.webp",
+          "size": 34394
+        },
+        {
+          "filename": "top-zafiro-negro4.webp",
+          "relativePath": "productos/mujer/tops/top-zafiro-negro4.webp",
+          "size": 36316
+        },
+        {
+          "filename": "top-zafiro-negro5.webp",
+          "relativePath": "productos/mujer/tops/top-zafiro-negro5.webp",
+          "size": 29852
+        },
+        {
+          "filename": "top-zafiro.webp",
+          "relativePath": "productos/mujer/tops/top-zafiro.webp",
+          "size": 18706
+        }
+      ],
+      "totalSize": 354334
+    },
+    "torero-energy": {
+      "images": [
+        {
+          "filename": "torero-energy-azulino.webp",
+          "relativePath": "productos/mujer/torero/torero-energy-azulino.webp",
+          "size": 8462
+        },
+        {
+          "filename": "torero-energy-charcol.webp",
+          "relativePath": "productos/mujer/torero/torero-energy-charcol.webp",
+          "size": 9176
+        },
+        {
+          "filename": "torero-energy-negro.webp",
+          "relativePath": "productos/mujer/torero/torero-energy-negro.webp",
+          "size": 13450
+        },
+        {
+          "filename": "torero-energy-rojo.webp",
+          "relativePath": "productos/mujer/torero/torero-energy-rojo.webp",
+          "size": 7244
+        }
+      ],
+      "totalSize": 38332
+    },
+    "cafarena-nina": {
+      "images": [
+        {
+          "filename": "cafarena-nina.webp",
+          "relativePath": "productos/nina/cafarenas/cafarena-nina.webp",
+          "size": 9512
+        }
+      ],
+      "totalSize": 9512
+    },
+    "enterizo-manga-corta-nina": {
+      "images": [
+        {
+          "filename": "enterizo-manga-corta-nina.webp",
+          "relativePath": "productos/nina/enterizos/enterizo-manga-corta-nina.webp",
+          "size": 6688
+        }
+      ],
+      "totalSize": 6688
+    },
+    "enterizo-manga-larga-nina": {
+      "images": [
+        {
+          "filename": "enterizo-manga-larga-nina.webp",
+          "relativePath": "productos/nina/enterizos/enterizo-manga-larga-nina.webp",
+          "size": 6686
+        }
+      ],
+      "totalSize": 6686
+    },
+    "legging-nina": {
+      "images": [
+        {
+          "filename": "legging-nina.webp",
+          "relativePath": "productos/nina/leggins/legging-nina.webp",
+          "size": 6878
+        }
+      ],
+      "totalSize": 6878
+    },
+    "panty-nina": {
+      "images": [
+        {
+          "filename": "panty-nina.webp",
+          "relativePath": "productos/nina/pantys/panty-nina.webp",
+          "size": 9600
+        }
+      ],
+      "totalSize": 9600
+    },
+    "short-juvenil-nina": {
+      "images": [
+        {
+          "filename": "short-juvenil-nina.webp",
+          "relativePath": "productos/nina/shorts/short-juvenil-nina.webp",
+          "size": 7238
+        }
+      ],
+      "totalSize": 7238
+    },
+    "top-jazmin": {
+      "images": [
+        {
+          "filename": "top-jazmin.webp",
+          "relativePath": "productos/nina/tops/top-jazmin.webp",
+          "size": 10046
+        }
+      ],
+      "totalSize": 10046
+    },
+    "top-margarita": {
+      "images": [
+        {
+          "filename": "top-margarita.webp",
+          "relativePath": "productos/nina/tops/top-margarita.webp",
+          "size": 9118
+        }
+      ],
+      "totalSize": 9118
+    },
+    "top-orquidea": {
+      "images": [
+        {
+          "filename": "top-orquidea.webp",
+          "relativePath": "productos/nina/tops/top-orquidea.webp",
+          "size": 9124
+        }
+      ],
+      "totalSize": 9124
+    },
+    "top-tulipan": {
+      "images": [
+        {
+          "filename": "top-tulipan.webp",
+          "relativePath": "productos/nina/tops/top-tulipan.webp",
+          "size": 7994
+        }
+      ],
+      "totalSize": 7994
+    },
+    "top-vani": {
+      "images": [
+        {
+          "filename": "top-vani.webp",
+          "relativePath": "productos/nina/tops/top-vani.webp",
+          "size": 6928
+        }
+      ],
+      "totalSize": 6928
     }
   }
 }

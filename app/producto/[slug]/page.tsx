@@ -38,7 +38,11 @@ type ProductPageProps = {
 }
 
 export function generateStaticParams() {
-  return products.map((product) => ({ slug: product.slug }))
+  return products
+    .filter((product) => product && product.slug)
+    .map((product) => ({
+      slug: product.slug
+    }))
 }
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
