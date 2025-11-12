@@ -4,7 +4,7 @@ import { useState } from "react"
 import { X, Ruler } from "lucide-react"
 import Link from "next/link"
 
-type ProductCategory = "leggings" | "bikers" | "shorts" | "tops" | "bodysuits" | "camisetas" | "enterizos" | "pescador" | "torero"
+type ProductCategory = "leggings" | "bikers" | "shorts" | "tops" | "bodysuits" | "camisetas" | "enterizos" | "pescador" | "torero" | "cafarenas" | "pantys"
 
 interface SizeGuideModalProps {
   category?: ProductCategory
@@ -12,7 +12,7 @@ interface SizeGuideModalProps {
 
 // ✅ Mapear categorías a tipos de tabla
 function getSizeGuideType(category: ProductCategory): "bottoms" | "tops" | "all" {
-  const bottomsCategories: ProductCategory[] = ["leggings", "bikers", "shorts", "pescador", "torero"]
+  const bottomsCategories: ProductCategory[] = ["leggings", "bikers", "shorts", "pescador", "torero", "cafarenas", "pantys"]
   const topsCategories: ProductCategory[] = ["tops", "bodysuits", "camisetas"]
 
   if (bottomsCategories.includes(category)) return "bottoms"
