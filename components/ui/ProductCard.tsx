@@ -210,7 +210,8 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
           alt={title}
           fill
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          quality={90}
+          quality={75}
+          loading="lazy"
           className={`object-cover ${!isMounted ? '[transition:none!important]' : ''}`}
           style={getImageStyle()}
         />

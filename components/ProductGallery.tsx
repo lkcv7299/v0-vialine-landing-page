@@ -64,10 +64,14 @@ function ThumbnailImage({
       className={buttonClasses}
     >
       <div className={`relative w-full h-full bg-gradient-to-br from-neutral-50 to-neutral-100 ${isSelected ? 'bg-white' : ''}`}>
-        <img
+        <Image
           src={image}
           alt={inModal ? `Miniatura ${index + 1}` : `${productName} - Vista ${index + 1}`}
-          className={`w-full h-full object-contain transition-all duration-300 ${
+          fill
+          sizes={inModal ? "64px" : "25vw"}
+          quality={60}
+          loading="lazy"
+          className={`object-contain transition-all duration-300 ${
             isSelected ? 'scale-100' : 'group-hover:scale-105'
           }`}
         />
@@ -248,10 +252,14 @@ export default function ProductGallery({ images, productName, productSlug = "" }
   if (validImages.length === 1) {
     return (
       <div className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-white">
-        <img
+        <Image
           src={validImages[0]}
           alt={productName}
-          className="w-full h-full object-contain"
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          quality={85}
+          priority
+          className="object-contain"
         />
       </div>
     )
