@@ -7,14 +7,11 @@ export default function HeroNina() {
       {/* Imagen de fondo */}
       <div className="absolute inset-0">
         <Image
-          src="/hero-nina.jpg"
+          src="/hero-nina-new.png"
           alt="Colección Niña"
           fill
           priority
-          className="object-cover"
-          style={{
-            objectPosition: "center center",
-          }}
+          className="object-cover object-right md:object-center"
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-black/20" />

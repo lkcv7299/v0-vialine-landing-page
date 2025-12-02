@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { byAudience, type Product } from "@/data/products"
 import GymRail from "@/components/GymRail"
-import Hero from "@/components/Hero"
+import HeroMujerVideo from "@/components/Hero/HeroMujerVideo"
 import HeroNina from "@/components/Hero/HeroNina"
 import { FABRICS } from "@/data/fabrics"
 
@@ -73,17 +73,8 @@ export default function VialineHome() {
 
   return (
     <>
-      {/* HERO MUJER - FUERA DEL MAIN PARA FULLWIDTH */}
-      <Hero
-        image="/hero-woman.jpg"
-        kicker="VIALINE · LÍNEA SUPLEX"
-        title="Básicos que rinden"
-        description="Set suplex: top soporte medio + legging tiro alto. Ajuste que estiliza, opacidad total."
-        primary={{ href: "/mujer", label: "Comprar Mujer" }}
-        secondary={{ href: "/tejido/suplex", label: "Ver Tejidos" }}
-        objectPositionDesktop="78% 42%"
-        objectPositionMobile="68% 36%"
-      />
+      {/* HERO MUJER CON VIDEO - FUERA DEL MAIN PARA FULLWIDTH */}
+      <HeroMujerVideo />
 
       <main className="min-h-screen bg-neutral-50 text-neutral-900">
         <GymRail title="Popular ahora (Mujer)" viewAllHref="/mujer" items={popularMujer} />
