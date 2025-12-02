@@ -1,33 +1,32 @@
 "use client"
 
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import MuxPlayer from "@mux/mux-player-react"
+
+// ✅ PLAYBACK ID del video en MUX
+// Para obtener uno nuevo: ve a /admin/videos y sube el video
+const MUX_PLAYBACK_ID = "PENDING_UPLOAD" // TODO: Reemplazar con el playback ID real
 
 export default function HeroMujerVideo() {
-  const [isLoaded, setIsLoaded] = useState(false)
-
-  useEffect(() => {
-    // Delay para que el video cargue después del contenido inicial
-    const timer = setTimeout(() => setIsLoaded(true), 100)
-    return () => clearTimeout(timer)
-  }, [])
-
   return (
     <section className="relative h-[85vh] min-h-[600px] w-full overflow-hidden bg-neutral-900">
-      {/* Video de fondo */}
+      {/* Video de fondo con MUX */}
       <div className="absolute inset-0">
-        {isLoaded && (
-          <iframe
-            src="https://www.youtube.com/embed/p_6WJfu1Dy0?autoplay=1&mute=1&loop=1&playlist=p_6WJfu1Dy0&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=https://vialine.pe"
-            title="Vialine Hero Video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            className="absolute w-[300%] h-[300%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-            style={{
-              border: 'none',
-              minWidth: '100%',
-              minHeight: '100%',
-            }}
-          />
+        {MUX_PLAYBACK_ID !== "PENDING_UPLOAD" ? (
+          <div className="absolute inset-0 w-full h-full overflow-hidden">
+            <MuxPlayer
+              playbackId={MUX_PLAYBACK_ID}
+              streamType="on-demand"
+              autoPlay="muted"
+              muted
+              loop
+              playsInline
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto pointer-events-none [&::part(controls)]:hidden"
+            />
+          </div>
+        ) : (
+          // Fallback mientras no hay video: imagen estática
+          <div className="absolute inset-0 bg-gradient-to-br from-neutral-800 to-neutral-900" />
         )}
         {/* Overlay oscuro para legibilidad del texto */}
         <div className="absolute inset-0 bg-black/40" />
