@@ -5,7 +5,7 @@ import MuxPlayer from "@mux/mux-player-react"
 
 // ✅ PLAYBACK ID del video en MUX
 // Para obtener uno nuevo: ve a /admin/videos y sube el video
-const MUX_PLAYBACK_ID = "PENDING_UPLOAD" // TODO: Reemplazar con el playback ID real
+const MUX_PLAYBACK_ID = "OjLydFTbm6HM1BVE01hqt8W76K3D1NXoktv6HJ5SfTqA"
 
 export default function HeroMujerVideo() {
   return (
