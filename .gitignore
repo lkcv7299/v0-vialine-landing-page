@@ -48,3 +48,8 @@ scripts/merge-nina.js
 # temp files
 nul
 logs_result.json
+
+# Video files
+*.mov
+*.mp4
+dev-output.log
