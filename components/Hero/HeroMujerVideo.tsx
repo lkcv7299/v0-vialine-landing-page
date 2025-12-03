@@ -10,19 +10,23 @@ const MUX_PLAYBACK_ID = "OjLydFTbm6HM1BVE01hqt8W76K3D1NXoktv6HJ5SfTqA"
 export default function HeroMujerVideo() {
   return (
     <section className="relative h-[85vh] min-h-[600px] w-full overflow-hidden bg-neutral-900">
-      {/* Video de fondo con MUX */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 w-full h-full overflow-hidden">
-          <MuxPlayer
-            playbackId={MUX_PLAYBACK_ID}
-            streamType="on-demand"
-            autoPlay="muted"
-            muted
-            loop
-            playsInline
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto pointer-events-none [&::part(controls)]:hidden"
-          />
-        </div>
+      {/* Video de fondo con MUX - Cover effect */}
+      <div className="absolute inset-0 overflow-hidden">
+        <MuxPlayer
+          playbackId={MUX_PLAYBACK_ID}
+          streamType="on-demand"
+          autoPlay="muted"
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          style={{
+            // CSS custom properties oficiales de MUX para object-fit
+            '--media-object-fit': 'cover',
+            '--media-object-position': 'center',
+            '--controls': 'none',
+          } as React.CSSProperties}
+        />
         {/* Overlay oscuro para legibilidad del texto */}
         <div className="absolute inset-0 bg-black/40" />
       </div>

@@ -11,7 +11,7 @@ export default function HeroNina() {
           alt="Colección Niña"
           fill
           priority
-          className="object-cover object-right md:object-center"
+          className="object-cover object-center"
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-black/20" />
