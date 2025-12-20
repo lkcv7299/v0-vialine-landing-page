@@ -19,13 +19,7 @@ export default function HeroMujerVideo() {
           muted
           loop
           playsInline
-          className="absolute inset-0 w-full h-full pointer-events-none"
-          style={{
-            // CSS custom properties oficiales de MUX para object-fit
-            '--media-object-fit': 'cover',
-            '--media-object-position': 'center',
-            '--controls': 'none',
-          } as React.CSSProperties}
+          className="absolute inset-0 w-full h-full pointer-events-none [--media-object-fit:cover] [--media-object-position:center] [--controls:none]"
         />
         {/* Overlay oscuro para legibilidad del texto */}
         <div className="absolute inset-0 bg-black/40" />
