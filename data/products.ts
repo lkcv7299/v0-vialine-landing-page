@@ -604,7 +604,7 @@ export const products: Product[] = [
     slug: "short-lux",
     title: "Short Lux",
     price: 28,
-    image: "/productos/mujer/shorts/short-lux-aqua1.webp",
+    image: "/productos/mujer/short/short-lux-aqua1.webp",
     category: "bikers",
     fabric: "suplex",
     colors: [
@@ -612,99 +612,99 @@ export const products: Product[] = [
             "name": "Aqua",
             "slug": "aqua",
             "hex": "#00CED1",
-            "image": "/productos/mujer/shorts/short-lux-aqua1.webp",
+            "image": "/productos/mujer/short/short-lux-aqua1.webp",
             "images": [
-                "/productos/mujer/shorts/short-lux-aqua1.webp",
-                "/productos/mujer/shorts/short-lux-aqua2.webp",
-                "/productos/mujer/shorts/short-lux-aqua3.webp",
-                "/productos/mujer/shorts/short-lux-aqua4.webp",
-                "/productos/mujer/shorts/short-lux-aqua5.webp"
+                "/productos/mujer/short/short-lux-aqua1.webp",
+                "/productos/mujer/short/short-lux-aqua2.webp",
+                "/productos/mujer/short/short-lux-aqua3.webp",
+                "/productos/mujer/short/short-lux-aqua4.webp",
+                "/productos/mujer/short/short-lux-aqua5.webp"
             ]
         },
         {
             "name": "Azulino",
             "slug": "azulino",
             "hex": "#87CEEB",
-            "image": "/productos/mujer/shorts/short-lux-azulino1.webp",
+            "image": "/productos/mujer/short/short-lux-azulino1.webp",
             "images": [
-                "/productos/mujer/shorts/short-lux-azulino1.webp",
-                "/productos/mujer/shorts/short-lux-azulino2.webp",
-                "/productos/mujer/shorts/short-lux-azulino3.webp",
-                "/productos/mujer/shorts/short-lux-azulino4.webp",
-                "/productos/mujer/shorts/short-lux-azulino5.webp"
+                "/productos/mujer/short/short-lux-azulino1.webp",
+                "/productos/mujer/short/short-lux-azulino2.webp",
+                "/productos/mujer/short/short-lux-azulino3.webp",
+                "/productos/mujer/short/short-lux-azulino4.webp",
+                "/productos/mujer/short/short-lux-azulino5.webp"
             ]
         },
         {
             "name": "Blanco",
             "slug": "blanco",
             "hex": "#FFFFFF",
-            "image": "/productos/mujer/shorts/short-lux-blanco1.webp",
+            "image": "/productos/mujer/short/short-lux-blanco1.webp",
             "images": [
-                "/productos/mujer/shorts/short-lux-blanco1.webp",
-                "/productos/mujer/shorts/short-lux-blanco2.webp",
-                "/productos/mujer/shorts/short-lux-blanco3.webp",
-                "/productos/mujer/shorts/short-lux-blanco4.webp",
-                "/productos/mujer/shorts/short-lux-blanco5.webp"
+                "/productos/mujer/short/short-lux-blanco1.webp",
+                "/productos/mujer/short/short-lux-blanco2.webp",
+                "/productos/mujer/short/short-lux-blanco3.webp",
+                "/productos/mujer/short/short-lux-blanco4.webp",
+                "/productos/mujer/short/short-lux-blanco5.webp"
             ]
         },
         {
             "name": "Charcoal",
             "slug": "charcoal",
             "hex": "#36454F",
-            "image": "/productos/mujer/shorts/short-lux-charcoal1.webp",
+            "image": "/productos/mujer/short/short-lux-charcoal1.webp",
             "images": [
-                "/productos/mujer/shorts/short-lux-charcoal1.webp",
-                "/productos/mujer/shorts/short-lux-charcoal2.webp",
-                "/productos/mujer/shorts/short-lux-charcoal3.webp",
-                "/productos/mujer/shorts/short-lux-charcoal4.webp",
-                "/productos/mujer/shorts/short-lux-charcoal5.webp"
+                "/productos/mujer/short/short-lux-charcoal1.webp",
+                "/productos/mujer/short/short-lux-charcoal2.webp",
+                "/productos/mujer/short/short-lux-charcoal3.webp",
+                "/productos/mujer/short/short-lux-charcoal4.webp",
+                "/productos/mujer/short/short-lux-charcoal5.webp"
             ]
         },
         {
             "name": "Melange",
             "slug": "melange",
             "hex": "#D3D3D3",
-            "image": "/productos/mujer/shorts/short-lux-melange1.webp",
+            "image": "/productos/mujer/short/short-lux-melange1.webp",
             "images": [
-                "/productos/mujer/shorts/short-lux-melange1.webp",
-                "/productos/mujer/shorts/short-lux-melange2.webp",
-                "/productos/mujer/shorts/short-lux-melange3.webp",
-                "/productos/mujer/shorts/short-lux-melange4.webp",
-                "/productos/mujer/shorts/short-lux-melange5.webp"
+                "/productos/mujer/short/short-lux-melange1.webp",
+                "/productos/mujer/short/short-lux-melange2.webp",
+                "/productos/mujer/short/short-lux-melange3.webp",
+                "/productos/mujer/short/short-lux-melange4.webp",
+                "/productos/mujer/short/short-lux-melange5.webp"
             ]
         },
         {
             "name": "Melon",
             "slug": "melon",
             "hex": "#FEBAAD",
-            "image": "/productos/mujer/shorts/short-lux-melon1.webp",
+            "image": "/productos/mujer/short/short-lux-melon1.webp",
             "images": [
-                "/productos/mujer/shorts/short-lux-melon1.webp",
-                "/productos/mujer/shorts/short-lux-melon2.webp",
-                "/productos/mujer/shorts/short-lux-melon3.webp"
+                "/productos/mujer/short/short-lux-melon1.webp",
+                "/productos/mujer/short/short-lux-melon2.webp",
+                "/productos/mujer/short/short-lux-melon3.webp"
             ]
         },
         {
             "name": "Negro",
             "slug": "negro",
             "hex": "#000000",
-            "image": "/productos/mujer/shorts/short-lux-negro1.webp",
+            "image": "/productos/mujer/short/short-lux-negro1.webp",
             "images": [
-                "/productos/mujer/shorts/short-lux-negro1.webp",
-                "/productos/mujer/shorts/short-lux-negro2.webp",
-                "/productos/mujer/shorts/short-lux-negro3.webp"
+                "/productos/mujer/short/short-lux-negro1.webp",
+                "/productos/mujer/short/short-lux-negro2.webp",
+                "/productos/mujer/short/short-lux-negro3.webp"
             ]
         },
         {
             "name": "Rojo",
             "slug": "rojo",
             "hex": "#FF0000",
-            "image": "/productos/mujer/shorts/short-lux-rojo1.webp",
+            "image": "/productos/mujer/short/short-lux-rojo1.webp",
             "images": [
-                "/productos/mujer/shorts/short-lux-rojo1.webp",
-                "/productos/mujer/shorts/short-lux-rojo2.webp",
-                "/productos/mujer/shorts/short-lux-rojo3.webp",
-                "/productos/mujer/shorts/short-lux-rojo4.webp"
+                "/productos/mujer/short/short-lux-rojo1.webp",
+                "/productos/mujer/short/short-lux-rojo2.webp",
+                "/productos/mujer/short/short-lux-rojo3.webp",
+                "/productos/mujer/short/short-lux-rojo4.webp"
             ]
         }
     ],
@@ -844,7 +844,7 @@ export const products: Product[] = [
     slug: "short-clasico",
     title: "Short clásico",
     price: 16,
-    image: "/productos/mujer/shorts/short-clasico-negro1.webp",
+    image: "/productos/mujer/short/short-clasico-negro1.webp",
     category: "shorts",
     fabric: "suplex",
     colors: [
@@ -852,26 +852,26 @@ export const products: Product[] = [
             "name": "Negro",
             "slug": "negro",
             "hex": "#000000",
-            "image": "/productos/mujer/shorts/short-clasico-negro1.webp",
+            "image": "/productos/mujer/short/short-clasico-negro1.webp",
             "images": [
-                "/productos/mujer/shorts/short-clasico-negro1.webp",
-                "/productos/mujer/shorts/short-clasico-negro2.webp",
-                "/productos/mujer/shorts/short-clasico-negro3.webp",
-                "/productos/mujer/shorts/short-clasico-negro4.webp"
+                "/productos/mujer/short/short-clasico-negro1.webp",
+                "/productos/mujer/short/short-clasico-negro2.webp",
+                "/productos/mujer/short/short-clasico-negro3.webp",
+                "/productos/mujer/short/short-clasico-negro4.webp"
             ]
         },
         {
             "name": "Rojo",
             "slug": "rojo",
             "hex": "#FF0000",
-            "image": "/productos/mujer/shorts/short-clasico-rojo1.webp",
+            "image": "/productos/mujer/short/short-clasico-rojo1.webp",
             "images": [
-                "/productos/mujer/shorts/short-clasico-rojo1.webp",
-                "/productos/mujer/shorts/short-clasico-rojo2.webp",
-                "/productos/mujer/shorts/short-clasico-rojo3.webp",
-                "/productos/mujer/shorts/short-clasico-rojo4.webp",
-                "/productos/mujer/shorts/short-clasico-rojo5.webp",
-                "/productos/mujer/shorts/short-clasico-rojo6.webp"
+                "/productos/mujer/short/short-clasico-rojo1.webp",
+                "/productos/mujer/short/short-clasico-rojo2.webp",
+                "/productos/mujer/short/short-clasico-rojo3.webp",
+                "/productos/mujer/short/short-clasico-rojo4.webp",
+                "/productos/mujer/short/short-clasico-rojo5.webp",
+                "/productos/mujer/short/short-clasico-rojo6.webp"
             ]
         }
     ],
@@ -1769,70 +1769,46 @@ export const products: Product[] = [
     slug: "enterizo-tiras",
     title: "Enterizo tiras",
     price: 49,
-    image: "/productos/mujer/enterizo/enterizo-tiras-azulino.webp",
+    image: "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino1.webp",
     category: "enterizos",
     fabric: "suplex",
     colors: [
       {
-        name: "Azul",
-        slug: "azul",
-        hex: "#1E3A8A",
-        image: "/productos/mujer/enterizo/enterizo-tiras-azulino.webp",
+        name: "Azulino",
+        slug: "azulino",
+        hex: "#3A53A4",
+        images: [
+          "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino1.webp",
+          "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino2.webp",
+          "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino3.webp",
+          "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino4.webp",
+          "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino5.webp"
+        ]
+      },
+      {
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        images: [
+          "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco1.webp",
+          "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco2.webp",
+          "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco3.webp",
+          "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco4.webp",
+          "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco5.webp"
+        ]
       },
       {
         name: "Charcoal",
-        slug: "charcol",
+        slug: "charcoal",
         hex: "#5A5A5A",
-        image: "/productos/mujer/enterizo/enterizo-tiras-charcol.webp",
+        images: [
+          "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal1.webp",
+          "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal2.webp",
+          "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal3.webp",
+          "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal4.webp",
+          "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal5.webp"
+        ]
       },
-      {
-        name: "Negro",
-        slug: "negro",
-        hex: "#000000",
-        image: "/productos/mujer/enterizo/enterizo-tiras-negro.webp",
-      },
-      {
-        name: "Rojo",
-        slug: "rojo",
-        hex: "#D22B2B",
-        image: "/productos/mujer/enterizo/enterizo-tiras-rojo.webp",
-      },
-      {
-      name: "Azulino",
-      slug: "azulino",
-      hex: "#3A53A4",
-      images: [
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino1.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino2.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino3.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino4.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino5.webp"
-      ]
-    },
-      {
-      name: "Blanco",
-      slug: "blanco",
-      hex: "#FFFFFF",
-      images: [
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco1.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco2.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco3.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco4.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-blanco-enterizo-blanco5.webp"
-      ]
-    },
-      {
-      name: "Charcoal",
-      slug: "charcoal",
-      hex: "#5A5A5A",
-      images: [
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal1.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal2.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal3.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal4.webp",
-        "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-charcoal-enterizo-charcoal5.webp"
-      ]
-    },
     ],
     sizes: ["S","M","L"],
     audience: "mujer",
@@ -1852,60 +1828,36 @@ export const products: Product[] = [
     slug: "enterizo-manga-cero",
     title: "Enterizo manga cero",
     price: 49,
-    image: "/productos/mujer/enterizo/enterizo-manga-cero-azulino.webp",
+    image: "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-Manga-cero-azulino1.webp",
     category: "enterizos",
     fabric: "suplex",
     colors: [
       {
-        name: "Azul",
-        slug: "azul",
-        hex: "#1E3A8A",
-        image: "/productos/mujer/enterizo/enterizo-manga-cero-azulino.webp",
+        name: "Azulino",
+        slug: "azulino",
+        hex: "#3A53A4",
+        images: [
+          "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-Manga-cero-azulino1.webp",
+          "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino2.webp",
+          "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino3.webp",
+          "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino4.webp",
+          "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino5.webp",
+          "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino6.webp"
+        ]
       },
       {
-        name: "Charcoal",
-        slug: "charcol",
-        hex: "#5A5A5A",
-        image: "/productos/mujer/enterizo/enterizo-manga-cero-charcol.webp",
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        images: [
+          "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco1.webp",
+          "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco2.webp",
+          "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco3.webp",
+          "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco4.webp",
+          "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco5.webp",
+          "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco6.webp"
+        ]
       },
-      {
-        name: "Negro",
-        slug: "negro",
-        hex: "#000000",
-        image: "/productos/mujer/enterizo/enterizo-manga-cero-negro.webp",
-      },
-      {
-        name: "Rojo",
-        slug: "rojo",
-        hex: "#D22B2B",
-        image: "/productos/mujer/enterizo/enterizo-manga-cero-rojo.webp",
-      },
-      {
-      name: "Azulino",
-      slug: "azulino",
-      hex: "#3A53A4",
-      images: [
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-Manga-cero-azulino1.webp",
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino2.webp",
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino3.webp",
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino4.webp",
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino5.webp",
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-manga-cero-azulino6.webp"
-      ]
-    },
-      {
-      name: "Blanco",
-      slug: "blanco",
-      hex: "#FFFFFF",
-      images: [
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco1.webp",
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco2.webp",
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco3.webp",
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco4.webp",
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco5.webp",
-        "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-blanco-manga-cero-blanco6.webp"
-      ]
-    },
     ],
     sizes: ["S","M","L"],
     audience: "mujer",
@@ -1925,7 +1877,7 @@ export const products: Product[] = [
     slug: "legging-slim",
     title: "Legging Slim",
     price: 59,
-    image: "/productos/mujer/legging/legging-slim-azul-marino.webp",
+    image: "/productos/mujer/legging/legging-slim-suplex-liso-premium-azul-marino-legging-azul-marino1.webp",
     category: "leggings",
     fabric: "suplex",
     colors: [
@@ -1933,155 +1885,85 @@ export const products: Product[] = [
         name: "Azul Marino",
         slug: "azul-marino",
         hex: "#1E3A8A",
-        image: "/productos/mujer/legging/legging-slim-azul-marino.webp",
+        images: [
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-azul-marino-legging-azul-marino1.webp",
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-azul-marino-legging-azul-marino2.webp",
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-azul-marino-legging-azul-marino3.webp",
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-azul-marino-legging-azul-marino4.webp"
+        ]
       },
       {
-        name: "Azul",
-        slug: "azul",
-        hex: "#1E3A8A",
-        image: "/productos/mujer/legging/legging-slim-azulino.webp",
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        images: [
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-blanco-legging-slim-blanco1.webp",
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-blanco-legging-slim-blanco2.webp",
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-blanco-legging-slim-blanco3.webp",
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-blanco-legging-slim-blanco4.webp"
+        ]
       },
       {
-      name: "Blanco",
-      slug: "blanco",
-      hex: "#FFFFFF",
-      images: [
-        "/productos/mujer/legging/legging-slim-blanco.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-blanco-legging-slim-blanco1.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-blanco-legging-slim-blanco2.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-blanco-legging-slim-blanco3.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-blanco-legging-slim-blanco4.webp"
-      ]
-    },
-      {
-        name: "Negro",
-        slug: "negro",
-        hex: "#000000",
-        image: "/productos/mujer/legging/legging-slim-negro.webp",
+        name: "Acero",
+        slug: "acero",
+        hex: "#808080",
+        images: [
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero1.webp",
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero2.webp",
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero3.webp",
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero4.webp",
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero5.webp"
+        ]
       },
       {
-        name: "Rojo",
-        slug: "rojo",
-        hex: "#D22B2B",
-        image: "/productos/mujer/legging/legging-slim-rojo.webp",
+        name: "Aqua",
+        slug: "aqua",
+        hex: "#00FFFF",
+        images: [
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua1.webp",
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua2.webp",
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua3.webp",
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua4.webp",
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua5.webp"
+        ]
       },
       {
-      name: "Acero",
-      slug: "acero",
-      hex: "#808080",
-      images: [
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero1.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero2.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero3.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero4.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-acero-legging-slim-acero5.webp"
-      ]
-    },
+        name: "Azulino",
+        slug: "azulino",
+        hex: "#3A53A4",
+        images: [
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-1.webp",
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-2.webp",
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-3.webp",
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-4.webp"
+        ]
+      },
       {
-      name: "Aqua",
-      slug: "aqua",
-      hex: "#00FFFF",
-      images: [
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua1.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua2.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua3.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua4.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-aqua-legging-slim-aqua5.webp"
-      ]
-    },
-      {
-      name: "Azulino",
-      slug: "azulino",
-      hex: "#3A53A4",
-      images: [
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-1.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-2.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-3.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-azulino-legging-slim-azulino-4.webp"
-      ]
-    },
-      {
-      name: "Camel",
-      slug: "camel",
-      hex: "#C19A6B",
-      images: [
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-camel-legging-slim-camel1.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-camel-legging-slim-camel2.webp",
-        "/productos/mujer/legging/legging-slim-suplex-liso-premium-camel-legging-slim-camel3.webp"
-      ]
-    },
+        name: "Camel",
+        slug: "camel",
+        hex: "#C19A6B",
+        images: [
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-camel-legging-slim-camel1.webp",
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-camel-legging-slim-camel2.webp",
+          "/productos/mujer/legging/legging-slim-suplex-liso-premium-camel-legging-slim-camel3.webp"
+        ]
+      },
     ],
     sizes: ["S","M","L","XL"],
-    audience: "mujer",    tags: ["COD.S-1011", "Colección Especial Suplex", "Suplex Liso"],
-
+    audience: "mujer",
+    tags: ["COD.S-1011", "Colección Especial Suplex", "Suplex Liso"],
     attributes: {
         "material": "Suplex Liso",
         "detalles": [
             "Suplex liso",
             "Diseño slim",
-            "Alta variedad de colores (10 colores)"
+            "Alta variedad de colores"
         ],
         "beneficios": []
     },
   },
 
-  {
-    slug: "legging-clasica",
-    title: "Legging Clásica",
-    price: 32,
-    image: "/productos/mujer/legging/legging-clasica-azul-marino.webp",
-    category: "leggings",
-    fabric: "suplex",
-    colors: [
-      {
-        name: "Azul Marino",
-        slug: "azul-marino",
-        hex: "#1E3A8A",
-        image: "/productos/mujer/legging/legging-clasica-azul-marino.webp",
-      },
-      {
-      name: "Blanco",
-      slug: "blanco",
-      hex: "#FFFFFF",
-      images: [
-        "/productos/mujer/legging/legging-clasica-gamusa-blanco.webp",
-        "/productos/mujer/legging/legging-clasica-gamusa-azul-marino.webp",
-        "/productos/mujer/legging/legging-clasica-gamusa-melange.webp",
-        "/productos/mujer/legging/legging-clasica-gamusa-negro.webp"
-      ]
-    },
-      {
-        name: "Melange",
-        slug: "melange",
-        hex: "#B8B8B8",
-        image: "/productos/mujer/legging/legging-clasica-gamusa-melange.webp",
-      },
-      {
-      name: "Negro",
-      slug: "negro",
-      hex: "#000000",
-      images: [
-        "/productos/mujer/legging/legging-clasica-gamusa-negro.webp",
-        "/productos/mujer/legging/legging-clasica-gamusa-azul-marino.webp",
-        "/productos/mujer/legging/legging-clasica-gamusa-blanco.webp",
-        "/productos/mujer/legging/legging-clasica-gamusa-melange.webp"
-      ]
-    },
-    ],
-    sizes: ["S","M","L","XL"],
-    audience: "mujer",    tags: ["COD.371", "Línea Nice - Leggings Algodón Licrado", "Algodón Licra"],
-
-    attributes: {
-        "material": "Algodón Licra",
-        "detalles": [
-            "Algodón licra",
-            "Legging clásica",
-            "Marca Nice"
-        ],
-        "beneficios": []
-    },
-  },
-
+  
   {
     slug: "camiseta-tropical",
     title: "Camiseta tropical",

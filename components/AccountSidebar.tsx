@@ -8,21 +8,11 @@ export default function AccountSidebar() {
   const pathname = usePathname()
   const router = useRouter()
 
-  // ✅ Logout simplificado - el middleware maneja todo
   const handleSignOut = async () => {
     try {
-      console.log("🔄 Cerrando sesión...")
-
-      // Ejecutar signOut (agrega user a blacklist)
       await signOut({ redirect: false })
-
-      console.log("✅ SignOut completado, redirigiendo...")
-
-      // Hard navigation para limpiar cache
       window.location.href = "/"
-
-    } catch (error) {
-      console.error("❌ Error:", error)
+    } catch {
       window.location.href = "/"
     }
   }

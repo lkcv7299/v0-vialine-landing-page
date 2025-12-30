@@ -591,12 +591,7 @@ const SAVED_TRANSFORMS = {
 export default function ImageTransformLoader() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      // Cargar los transforms al localStorage
       localStorage.setItem('imageTransforms', JSON.stringify(SAVED_TRANSFORMS))
-      console.log('✅ Transforms cargados con containerWidth:', Object.keys(SAVED_TRANSFORMS).length, 'productos')
-      console.log('🔄 Deployed at:', new Date().toISOString())
-
-      // Emitir evento para actualizar las imágenes
       window.dispatchEvent(new CustomEvent('imageTransformsUpdated'))
     }
   }, [])

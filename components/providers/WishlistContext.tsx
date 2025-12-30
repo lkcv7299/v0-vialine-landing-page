@@ -115,10 +115,8 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
       if (data.success) {
         setItems(data.items)
       }
-
-      console.log(`✅ Migrated ${itemsToMigrate.length} items to DB`)
-    } catch (error) {
-      console.error("Error migrating wishlist:", error)
+    } catch {
+      // Silent fail for wishlist migration
     }
   }
 
