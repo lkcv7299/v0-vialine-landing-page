@@ -6,7 +6,7 @@ export default function WhatsAppFloat() {
       href={buildWhatsAppUrl("Hola Vialine, quiero información")}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-4 right-4 z-50 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl ring-1 ring-black/5 hover:scale-105 transition"
+      className="fixed bottom-20 right-4 z-50 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl ring-1 ring-black/5 hover:scale-105 transition"
       aria-label="Contactar por WhatsApp"
     >
       <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">

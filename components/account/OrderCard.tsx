@@ -84,13 +84,21 @@ export default function OrderCard({ order, onViewDetails }: OrderCardProps) {
           bg: "bg-red-50",
           border: "border-red-200",
         }
+      case "pending_payment":
+        return {
+          icon: Clock,
+          text: "Pendiente de pago",
+          color: "text-amber-600",
+          bg: "bg-amber-50",
+          border: "border-amber-200",
+        }
       default:
         return {
-          icon: Package,
-          text: "Desconocido",
-          color: "text-gray-600",
-          bg: "bg-gray-50",
-          border: "border-gray-200",
+          icon: Clock,
+          text: "En proceso",
+          color: "text-blue-600",
+          bg: "bg-blue-50",
+          border: "border-blue-200",
         }
     }
   }

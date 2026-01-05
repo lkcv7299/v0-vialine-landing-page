@@ -106,21 +106,21 @@ export default function VialineHome() {
               <Link
                 key={fabric.slug}
                 href={`/tejido/${fabric.slug}`}
-                className="group rounded-3xl border border-neutral-200 bg-white p-6 hover:shadow-lg transition"
+                className="group rounded-3xl border border-neutral-200 bg-white p-6 hover:shadow-lg transition overflow-hidden"
               >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h3 className="text-lg md:text-xl font-medium">{fabric.name}</h3>
-                    <p className="mt-1 text-sm text-neutral-600 max-w-prose">{fabric.summary}</p>
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-lg md:text-xl font-medium truncate">{fabric.name}</h3>
+                    <p className="mt-1 text-sm text-neutral-600 line-clamp-2">{fabric.summary}</p>
                   </div>
-                  <div className="h-14 w-14 rounded-2xl bg-neutral-100 grid place-content-center text-xs text-neutral-500">
+                  <div className="h-14 w-14 flex-shrink-0 rounded-2xl bg-neutral-100 grid place-content-center text-xs text-neutral-500 font-medium">
                     {fabric.name.substring(0, 2)}
                   </div>
                 </div>
-                <div className="mt-4 inline-flex items-center text-sm text-neutral-900">
+                <div className="mt-4 inline-flex items-center text-sm text-neutral-900 font-medium group-hover:text-rose-600 transition-colors">
                   Descubrir
                   <svg
-                    className="ml-2 h-4 w-4"
+                    className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"

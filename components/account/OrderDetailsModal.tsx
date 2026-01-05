@@ -94,6 +94,8 @@ export default function OrderDetailsModal({ order, isOpen, onClose }: OrderDetai
     switch (status) {
       case "pending":
         return "Pendiente"
+      case "pending_payment":
+        return "Pendiente de pago"
       case "processing":
         return "Procesando"
       case "shipped":
@@ -103,7 +105,7 @@ export default function OrderDetailsModal({ order, isOpen, onClose }: OrderDetai
       case "cancelled":
         return "Cancelado"
       default:
-        return status
+        return "En proceso"
     }
   }
 

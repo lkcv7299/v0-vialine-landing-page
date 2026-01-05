@@ -3325,6 +3325,12 @@ export function getAllCollections(): Array<{ name: string; slug: string; count: 
 }
 
 export function getUniqueFabrics(): Array<{ name: string; slug: string; count: number }> {
+  // Mapeo de slug a nombre con tilde correcto
+  const fabricNames: Record<string, string> = {
+    'algodon': 'Algodón',
+    'suplex': 'Suplex'
+  }
+
   const fabricsMap = new Map<string, number>()
 
   products.filter(p => p && p.fabric).forEach(product => {
@@ -3334,9 +3340,9 @@ export function getUniqueFabrics(): Array<{ name: string; slug: string; count: n
   })
 
   return Array.from(fabricsMap.entries())
-    .map(([name, count]) => ({
-      name,
-      slug: name.toLowerCase().replace(/\s+/g, '-'),
+    .map(([slug, count]) => ({
+      name: fabricNames[slug] || slug.charAt(0).toUpperCase() + slug.slice(1),
+      slug: slug.toLowerCase().replace(/\s+/g, '-'),
       count
     }))
     .sort((a, b) => a.name.localeCompare(b.name))

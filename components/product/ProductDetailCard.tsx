@@ -327,17 +327,17 @@ export default function ProductDetailCard({ product }: { product: Product }) {
             </div>
           </div>
 
-          {/* CTA Buttons - Gymshark Style */}
+          {/* CTA Buttons - HIGH CONTRAST */}
           <div className="space-y-3 pt-2">
             <button
               onClick={handleAddToCart}
               disabled={isButtonDisabled}
-              className={`w-full py-4 rounded-md font-semibold text-sm transition-all duration-200 ${
+              className={`w-full py-4 rounded-lg font-bold text-base transition-all duration-200 shadow-sm ${
                 isButtonDisabled
-                  ? "bg-neutral-200 text-neutral-400 cursor-not-allowed"
+                  ? "bg-neutral-300 text-neutral-500 cursor-not-allowed"
                   : added
-                  ? "bg-green-600 text-white"
-                  : "bg-neutral-900 text-white hover:bg-neutral-800"
+                  ? "bg-green-600 text-white shadow-green-200"
+                  : "bg-rose-600 text-white hover:bg-rose-700 shadow-rose-200 hover:shadow-md"
               }`}
             >
               {isOutOfStock
@@ -353,10 +353,10 @@ export default function ProductDetailCard({ product }: { product: Product }) {
             <button
               onClick={handleBuyNow}
               disabled={isButtonDisabled}
-              className={`w-full py-4 rounded-md font-semibold text-sm transition-all duration-200 border ${
+              className={`w-full py-4 rounded-lg font-bold text-base transition-all duration-200 border-2 ${
                 isButtonDisabled
-                  ? "bg-white border-neutral-200 text-neutral-400 cursor-not-allowed"
-                  : "bg-white border-neutral-900 text-neutral-900 hover:bg-neutral-50"
+                  ? "bg-white border-neutral-300 text-neutral-400 cursor-not-allowed"
+                  : "bg-white border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-white"
               }`}
             >
               {isOutOfStock ? "No disponible" : "Comprar ahora"}
