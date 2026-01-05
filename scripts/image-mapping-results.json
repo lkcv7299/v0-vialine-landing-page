@@ -1,0 +1,106 @@
+{
+  "camiseta-deportiva": {
+    "negro": [
+      "/productos/mujer/camisetas/camiseta-deportiva-negro1.webp"
+    ],
+    "vino": [
+      "/productos/mujer/camisetas/camiseta-deportiva-vino1.webp",
+      "/productos/mujer/camisetas/camiseta-deportiva-vino2.webp",
+      "/productos/mujer/camisetas/camiseta-deportiva-vino3.webp",
+      "/productos/mujer/camisetas/camiseta-deportiva-vino4.webp"
+    ]
+  },
+  "camiseta-tiras-fijas": {
+    "blanco": [
+      "/productos/mujer/camisetas/camiseta-tiras-fijas-blanco1.webp",
+      "/productos/mujer/camisetas/camiseta-tiras-fijas-blanco2.webp",
+      "/productos/mujer/camisetas/camiseta-tiras-fijas-blanco3.webp"
+    ]
+  },
+  "camiseta-tropical": {
+    "blanco": [
+      "/productos/mujer/camisetas/camiseta-tropical-blanco1.webp",
+      "/productos/mujer/camisetas/camiseta-tropical-blanco2.webp"
+    ]
+  },
+  "legging-realce-fresh-terry": {
+    "charcoal": [
+      "/productos/mujer/legging/legging-realce-fresh-terry-charcoal1.webp"
+    ],
+    "melange": [
+      "/productos/mujer/legging/legging-realce-fresh-terry-melange1.webp"
+    ],
+    "negro": [
+      "/productos/mujer/legging/legging-realce-fresh-terry-negro1.webp",
+      "/productos/mujer/legging/legging-realce-fresh-terry-negro2.webp"
+    ],
+    "vino": [
+      "/productos/mujer/legging/legging-realce-fresh-terry-vino1.webp",
+      "/productos/mujer/legging/legging-realce-fresh-terry-vino2.webp"
+    ]
+  },
+  "legging-clasica-gamuza": {
+    "blanco": [
+      "/productos/mujer/legging/legging-clasica-gamuza-blanco1.webp",
+      "/productos/mujer/legging/legging-clasica-gamuza-blanco2.webp",
+      "/productos/mujer/legging/legging-clasica-gamuza-blanco3.webp",
+      "/productos/mujer/legging/legging-clasica-gamuza-blanco4.webp",
+      "/productos/mujer/legging/legging-clasica-gamuza-blanco5.webp"
+    ]
+  },
+  "legging-functional": {
+    "azul-marino": [
+      "/productos/mujer/legging/legging-functional-azul-marino1.webp"
+    ],
+    "negro": [
+      "/productos/mujer/legging/legging-functional-negro1.webp",
+      "/productos/mujer/legging/legging-functional-negro2.webp"
+    ]
+  },
+  "legging-slim-suplex-perchado": {
+    "azul-marino": [
+      "/productos/mujer/legging/legging-slim-suplex-perchado-azul-marino1.webp",
+      "/productos/mujer/legging/legging-slim-suplex-perchado-azul-marino2.webp",
+      "/productos/mujer/legging/legging-slim-suplex-perchado-azul-marino3.webp",
+      "/productos/mujer/legging/legging-slim-suplex-perchado-azul-marino4.webp"
+    ],
+    "negro": [
+      "/productos/mujer/legging/legging-slim-suplex-perchado-negro1.webp",
+      "/productos/mujer/legging/legging-slim-suplex-perchado-negro2.webp"
+    ]
+  },
+  "pescador-realce": {
+    "azulino": [
+      "/productos/mujer/pescador/pescador-realce-azulino1.webp",
+      "/productos/mujer/pescador/pescador-realce-azulino2.webp"
+    ],
+    "negro": [
+      "/productos/mujer/pescador/pescador-realce-negro1.webp",
+      "/productos/mujer/pescador/pescador-realce-negro2.webp"
+    ],
+    "rojo": [
+      "/productos/mujer/pescador/pescador-realce-rojo1.webp",
+      "/productos/mujer/pescador/pescador-realce-rojo2.webp"
+    ]
+  },
+  "top-deportivo": {
+    "blanco": [
+      "/productos/mujer/tops/top-deportivo-blanco1.webp"
+    ],
+    "negro": [
+      "/productos/mujer/tops/top-deportivo-negro1.webp"
+    ]
+  },
+  "straple-chanel": {
+    "blanco": [
+      "/productos/mujer/tops/straple-chanel-blanco1.webp",
+      "/productos/mujer/tops/straple-chanel-blanco2.webp"
+    ]
+  },
+  "top-tira-fijas": {
+    "blanco": [
+      "/productos/mujer/tops/top-tira-fijas-blanco1.webp",
+      "/productos/mujer/tops/top-tira-fijas-blanco2.webp"
+    ]
+  }
+}

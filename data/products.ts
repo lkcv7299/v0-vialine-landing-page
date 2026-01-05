@@ -1970,15 +1970,18 @@ export const products: Product[] = [
     price: 21,
     originalPrice: 35,
     badge: "oferta",
-    image: "/placeholder.svg",
+    image: "/productos/mujer/camisetas/camiseta-tropical-blanco1.webp",
     category: "camisetas",
     fabric: "algodon",
     colors: [
       {
-        name: "Camiseta",
-        slug: "camiseta",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        images: [
+          "/productos/mujer/camisetas/camiseta-tropical-blanco1.webp",
+          "/productos/mujer/camisetas/camiseta-tropical-blanco2.webp"
+        ],
       },
     ],
     sizes: ["S","M","L","XL"],
@@ -1999,15 +2002,26 @@ export const products: Product[] = [
     slug: "camiseta-deportiva",
     title: "Camiseta deportiva",
     price: 24,
-    image: "/placeholder.svg",
+    image: "/productos/mujer/camisetas/camiseta-deportiva-negro1.webp",
     category: "camisetas",
     fabric: "algodon",
     colors: [
       {
-        name: "Camiseta",
-        slug: "camiseta",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/productos/mujer/camisetas/camiseta-deportiva-negro1.webp",
+      },
+      {
+        name: "Vino",
+        slug: "vino",
+        hex: "#722F37",
+        images: [
+          "/productos/mujer/camisetas/camiseta-deportiva-vino1.webp",
+          "/productos/mujer/camisetas/camiseta-deportiva-vino2.webp",
+          "/productos/mujer/camisetas/camiseta-deportiva-vino3.webp",
+          "/productos/mujer/camisetas/camiseta-deportiva-vino4.webp"
+        ],
       },
     ],
     sizes: ["S","M","L","XL"],
@@ -2028,15 +2042,19 @@ export const products: Product[] = [
     slug: "camiseta-tiras-fijas",
     title: "Camiseta tiras fijas",
     price: 21,
-    image: "/placeholder.svg",
+    image: "/productos/mujer/camisetas/camiseta-tiras-fijas-blanco1.webp",
     category: "camisetas",
     fabric: "algodon",
     colors: [
       {
-        name: "Camiseta",
-        slug: "camiseta",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        images: [
+          "/productos/mujer/camisetas/camiseta-tiras-fijas-blanco1.webp",
+          "/productos/mujer/camisetas/camiseta-tiras-fijas-blanco2.webp",
+          "/productos/mujer/camisetas/camiseta-tiras-fijas-blanco3.webp"
+        ],
       },
     ],
     sizes: ["S","M","L"],
@@ -2059,15 +2077,18 @@ export const products: Product[] = [
     slug: "straple-chanel",
     title: "Straple Chanel",
     price: 23,
-    image: "/placeholder.svg",
+    image: "/productos/mujer/tops/straple-chanel-blanco1.webp",
     category: "tops",
     fabric: "algodon",
     colors: [
       {
-        name: "Straple",
-        slug: "straple",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        images: [
+          "/productos/mujer/tops/straple-chanel-blanco1.webp",
+          "/productos/mujer/tops/straple-chanel-blanco2.webp"
+        ],
       },
     ],
     sizes: ["S","M","L","XL"],
@@ -2088,15 +2109,21 @@ export const products: Product[] = [
     slug: "top-deportivo",
     title: "Top Deportivo",
     price: 14,
-    image: "/placeholder.svg",
+    image: "/productos/mujer/tops/top-deportivo-blanco1.webp",
     category: "tops",
     fabric: "algodon",
     colors: [
       {
-        name: "Top",
-        slug: "top",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        image: "/productos/mujer/tops/top-deportivo-blanco1.webp",
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        image: "/productos/mujer/tops/top-deportivo-negro1.webp",
       },
     ],
     sizes: ["S","M","L"],
@@ -2117,15 +2144,18 @@ export const products: Product[] = [
     slug: "top-tira-fijas",
     title: "Top tira fijas",
     price: 14,
-    image: "/placeholder.svg",
+    image: "/productos/mujer/tops/top-tira-fijas-blanco1.webp",
     category: "tops",
     fabric: "algodon",
     colors: [
       {
-        name: "Top",
-        slug: "top",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        images: [
+          "/productos/mujer/tops/top-tira-fijas-blanco1.webp",
+          "/productos/mujer/tops/top-tira-fijas-blanco2.webp"
+        ],
       },
     ],
     sizes: ["S","M","L"],
@@ -2149,15 +2179,29 @@ export const products: Product[] = [
     slug: "legging-slim-suplex-perchado",
     title: "Legging Slim Suplex Perchado",
     price: 59,
-    image: "/placeholder.svg",
+    image: "/productos/mujer/legging/legging-slim-suplex-perchado-azul-marino1.webp",
     category: "leggings",
     fabric: "suplex",
     colors: [
       {
-        name: "Legging",
-        slug: "legging",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
+        name: "Azul Marino",
+        slug: "azul-marino",
+        hex: "#1E3A8A",
+        images: [
+          "/productos/mujer/legging/legging-slim-suplex-perchado-azul-marino1.webp",
+          "/productos/mujer/legging/legging-slim-suplex-perchado-azul-marino2.webp",
+          "/productos/mujer/legging/legging-slim-suplex-perchado-azul-marino3.webp",
+          "/productos/mujer/legging/legging-slim-suplex-perchado-azul-marino4.webp"
+        ],
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        images: [
+          "/productos/mujer/legging/legging-slim-suplex-perchado-negro1.webp",
+          "/productos/mujer/legging/legging-slim-suplex-perchado-negro2.webp"
+        ],
       },
     ],
     sizes: ["S","M","L","XL"],
@@ -2179,15 +2223,24 @@ export const products: Product[] = [
     slug: "legging-functional",
     title: "Legging Functional",
     price: 55,
-    image: "/placeholder.svg",
+    image: "/productos/mujer/legging/legging-functional-azul-marino1.webp",
     category: "leggings",
     fabric: "suplex",
     colors: [
       {
-        name: "Legging",
-        slug: "legging",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
+        name: "Azul Marino",
+        slug: "azul-marino",
+        hex: "#1E3A8A",
+        image: "/productos/mujer/legging/legging-functional-azul-marino1.webp",
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        images: [
+          "/productos/mujer/legging/legging-functional-negro1.webp",
+          "/productos/mujer/legging/legging-functional-negro2.webp"
+        ],
       },
     ],
     sizes: ["S","M","L"],
@@ -2210,15 +2263,39 @@ export const products: Product[] = [
     slug: "legging-realce-fresh-terry",
     title: "Legging Realce Fresh Terry",
     price: 48,
-    image: "/placeholder.svg",
+    image: "/productos/mujer/legging/legging-realce-fresh-terry-negro1.webp",
     category: "leggings",
     fabric: "suplex",
     colors: [
       {
-        name: "Legging",
-        slug: "legging",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
+        name: "Charcoal",
+        slug: "charcoal",
+        hex: "#5A5A5A",
+        image: "/productos/mujer/legging/legging-realce-fresh-terry-charcoal1.webp",
+      },
+      {
+        name: "Melange",
+        slug: "melange",
+        hex: "#9CA3AF",
+        image: "/productos/mujer/legging/legging-realce-fresh-terry-melange1.webp",
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        images: [
+          "/productos/mujer/legging/legging-realce-fresh-terry-negro1.webp",
+          "/productos/mujer/legging/legging-realce-fresh-terry-negro2.webp"
+        ],
+      },
+      {
+        name: "Vino",
+        slug: "vino",
+        hex: "#722F37",
+        images: [
+          "/productos/mujer/legging/legging-realce-fresh-terry-vino1.webp",
+          "/productos/mujer/legging/legging-realce-fresh-terry-vino2.webp"
+        ],
       },
     ],
     sizes: ["S","M","L","XL","XXL"],
@@ -2239,15 +2316,21 @@ export const products: Product[] = [
     slug: "legging-clasica-gamuza",
     title: "Legging Clásica Gamuza",
     price: 35,
-    image: "/placeholder.svg",
+    image: "/productos/mujer/legging/legging-clasica-gamuza-blanco1.webp",
     category: "leggings",
     fabric: "suplex",
     colors: [
       {
-        name: "Legging",
-        slug: "legging",
-        hex: "#CCCCCC",
-        image: "/placeholder.svg",
+        name: "Blanco",
+        slug: "blanco",
+        hex: "#FFFFFF",
+        images: [
+          "/productos/mujer/legging/legging-clasica-gamuza-blanco1.webp",
+          "/productos/mujer/legging/legging-clasica-gamuza-blanco2.webp",
+          "/productos/mujer/legging/legging-clasica-gamuza-blanco3.webp",
+          "/productos/mujer/legging/legging-clasica-gamuza-blanco4.webp",
+          "/productos/mujer/legging/legging-clasica-gamuza-blanco5.webp"
+        ],
       },
     ],
     sizes: ["S","M","L","XL"],
@@ -2268,27 +2351,36 @@ export const products: Product[] = [
     slug: "pescador-realce",
     title: "Pescador realce",
     price: 48,
-    image: "/placeholder.svg",
+    image: "/productos/mujer/pescador/pescador-realce-azulino1.webp",
     category: "pescador",
     fabric: "suplex",
     colors: [
       {
-        name: "Azul",
-        slug: "azul",
-        hex: "#1E3A8A",
-        image: "/placeholder.svg",
+        name: "Azulino",
+        slug: "azulino",
+        hex: "#3A53A4",
+        images: [
+          "/productos/mujer/pescador/pescador-realce-azulino1.webp",
+          "/productos/mujer/pescador/pescador-realce-azulino2.webp"
+        ],
       },
       {
         name: "Negro",
         slug: "negro",
         hex: "#000000",
-        image: "/placeholder.svg",
+        images: [
+          "/productos/mujer/pescador/pescador-realce-negro1.webp",
+          "/productos/mujer/pescador/pescador-realce-negro2.webp"
+        ],
       },
       {
         name: "Rojo",
         slug: "rojo",
         hex: "#D22B2B",
-        image: "/placeholder.svg",
+        images: [
+          "/productos/mujer/pescador/pescador-realce-rojo1.webp",
+          "/productos/mujer/pescador/pescador-realce-rojo2.webp"
+        ],
       },
     ],
     sizes: ["S","M","L","XL"],
