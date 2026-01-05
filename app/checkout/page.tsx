@@ -37,8 +37,11 @@ const checkoutSchema = z.object({
   firstName: z.string().min(2, "Nombre debe tener al menos 2 caracteres"),
   lastName: z.string().min(2, "Apellido debe tener al menos 2 caracteres"),
   dni: z.string()
-    .length(8, "El DNI debe tener exactamente 8 dígitos")
-    .regex(/^\d+$/, "El DNI solo debe contener números"),
+    .regex(/^\d*$/, "El DNI solo debe contener números")
+    .optional()
+    .refine((val) => !val || val.length === 8, {
+      message: "El DNI debe tener 8 dígitos si lo proporcionas",
+    }),
   email: z.string().email("Email inválido"),
   phone: z.string()
     .min(9, "Teléfono inválido")
@@ -50,7 +53,7 @@ const checkoutSchema = z.object({
     .regex(/^\d*$/, "El código postal solo debe contener números")
     .optional(),
   reference: z.string().optional(),
-  paymentMethod: z.enum(["culqi"]),
+  paymentMethod: z.enum(["culqi", "contra_entrega"]),
   notes: z.string().optional(),
   acceptTerms: z.boolean().refine((val) => val === true, {
     message: "Debes aceptar los términos y condiciones",
@@ -219,12 +222,11 @@ export default function CheckoutPage() {
   }, [culqiLoaded])
 
   // ====================================
-  // GENERAR ORDER ID
+  // GENERAR ORDER ID (formato simplificado: VL-XXXXX)
   // ====================================
   const generateOrderId = () => {
-    const timestamp = Date.now().toString().slice(-8)
-    const random = Math.random().toString(36).substring(2, 6).toUpperCase()
-    return `VL${timestamp}${random}`
+    const random = Math.random().toString(36).substring(2, 7).toUpperCase()
+    return `VL-${random}`
   }
 
   // ====================================
@@ -321,7 +323,7 @@ export default function CheckoutPage() {
 
     // Validar solo los campos del paso actual
     if (currentStep === 1) {
-      fieldsToValidate = ['firstName', 'lastName', 'dni', 'email', 'phone']
+      fieldsToValidate = ['firstName', 'lastName', 'email', 'phone']
     } else if (currentStep === 2) {
       fieldsToValidate = ['address', 'district', 'city']
     }
@@ -403,6 +405,15 @@ export default function CheckoutPage() {
       window.vialineOrderId = orderId
       setCurrentOrderId(orderId)
 
+      // Si es pago contra entrega, completar directamente
+      if (data.paymentMethod === 'contra_entrega') {
+        console.log('🚚 Pago contra entrega seleccionado')
+        clearCart()
+        toast.success('¡Pedido creado! Te contactaremos pronto.')
+        router.push(`/checkout/confirmacion?orderId=${orderId}`)
+        return
+      }
+
       console.log('💳 Método Culqi seleccionado, abriendo modal...')
       openCulqiCheckout()
 
@@ -476,7 +487,7 @@ export default function CheckoutPage() {
 
               <div>
                 <label className="block text-sm font-medium text-neutral-700 mb-2">
-                  DNI *
+                  DNI <span className="text-neutral-400 font-normal">(opcional, para boleta)</span>
                 </label>
                 <input
                   {...register("dni")}
@@ -694,7 +705,9 @@ export default function CheckoutPage() {
               </div>
 
               <div className="space-y-3">
-                <label className="flex items-center gap-3 p-4 border-2 border-neutral-200 rounded-lg cursor-pointer hover:border-neutral-900 transition">
+                <label className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition ${
+                  paymentMethod === 'culqi' ? 'border-neutral-900 bg-neutral-50' : 'border-neutral-200 hover:border-neutral-400'
+                }`}>
                   <input
                     {...register("paymentMethod")}
                     type="radio"
@@ -705,6 +718,24 @@ export default function CheckoutPage() {
                     <span className="font-medium">💳 Tarjeta de crédito/débito / Yape</span>
                     <p className="text-xs text-neutral-500 mt-1">Pago seguro con Culqi (incluye Yape)</p>
                   </div>
+                </label>
+
+                <label className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition ${
+                  paymentMethod === 'contra_entrega' ? 'border-neutral-900 bg-neutral-50' : 'border-neutral-200 hover:border-neutral-400'
+                }`}>
+                  <input
+                    {...register("paymentMethod")}
+                    type="radio"
+                    value="contra_entrega"
+                    className="w-4 h-4 text-neutral-900"
+                  />
+                  <div className="flex-1">
+                    <span className="font-medium">🚚 Pago contra entrega</span>
+                    <p className="text-xs text-neutral-500 mt-1">Paga en efectivo o Yape/Plin cuando recibas tu pedido</p>
+                  </div>
+                  <span className="bg-green-100 text-green-700 text-xs font-semibold px-2 py-1 rounded-full">
+                    Popular
+                  </span>
                 </label>
               </div>
             </div>

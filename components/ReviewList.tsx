@@ -154,6 +154,7 @@ export default function ReviewList({ productSlug }: ReviewListProps) {
 
   const averageRating = stats.average_rating || 0
   const reviewCount = stats.total_reviews || 0
+  const MIN_REVIEWS_FOR_RATING = 5 // Solo mostrar rating promedio con 5+ reseñas
 
   // Formatear fecha
   function formatDate(dateString: string): string {
@@ -195,7 +196,7 @@ export default function ReviewList({ productSlug }: ReviewListProps) {
           )}
         </div>
 
-        {reviewCount > 0 && (
+        {reviewCount >= MIN_REVIEWS_FOR_RATING && (
           <>
             <div className="flex items-center gap-4 mb-6">
               <ReviewStars rating={averageRating} size="lg" />
