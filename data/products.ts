@@ -3289,12 +3289,18 @@ export const byFabric = (f: Product["fabric"]) => products.filter((p) => p && p.
 export const byAudience = (a: Product["audience"]) => products.filter((p) => p && p.audience === a)
 
 // ✨ NUEVAS FUNCIONES HELPER PARA FILTROS DINÁMICOS
+// Lista de valores que NO son colores válidos (para filtrar datos incorrectos)
+const INVALID_COLOR_NAMES = ['Top', 'top', 'Placeholder', 'placeholder', 'N/A', 'n/a']
+
 export function getUniqueColors(): string[] {
   const colorsSet = new Set<string>()
   products.filter(p => p && p.colors).forEach(product => {
     product.colors.forEach(colorObj => {
       const colorName = typeof colorObj === 'string' ? colorObj : colorObj.name
-      colorsSet.add(colorName)
+      // Filtrar nombres de color inválidos
+      if (colorName && !INVALID_COLOR_NAMES.includes(colorName)) {
+        colorsSet.add(colorName)
+      }
     })
   })
   return Array.from(colorsSet).sort()

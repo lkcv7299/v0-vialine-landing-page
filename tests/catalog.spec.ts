@@ -157,8 +157,9 @@ test.describe('Catálogo y Filtros Tests', () => {
     if (await sortDropdown.count() > 0) {
       console.log('✓ Dropdown de ordenamiento encontrado')
 
-      // Intentar seleccionar una opción
-      if (sortDropdown.tagName === 'select') {
+      // Intentar seleccionar una opción si es un select
+      const tagName = await sortDropdown.evaluate(el => el.tagName.toLowerCase())
+      if (tagName === 'select') {
         await sortDropdown.selectOption({ index: 1 })
         await page.waitForTimeout(1000)
 

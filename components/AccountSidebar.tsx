@@ -44,7 +44,7 @@ export default function AccountSidebar() {
     <>
       {/* Mobile: Horizontal scrollable tabs */}
       <div className="lg:hidden bg-white border-b border-gray-200 sticky top-16 z-10">
-        <div className="flex overflow-x-auto scrollbar-hide px-4 py-2 gap-2">
+        <div className="flex overflow-x-auto scrollbar-hide px-4 py-3 gap-2 snap-x snap-mandatory">
           {menuItems.map((item) => {
             const Icon = item.icon
             const isActive = pathname === item.href
@@ -53,14 +53,14 @@ export default function AccountSidebar() {
               <button
                 key={item.href}
                 onClick={() => router.push(item.href)}
-                className={`flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-colors whitespace-nowrap ${
+                className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-full font-medium transition-colors whitespace-nowrap snap-start text-sm ${
                   isActive
                     ? "bg-rose-600 text-white"
                     : "bg-gray-100 text-gray-700 active:bg-gray-200"
                 }`}
               >
                 <Icon className="h-4 w-4" />
-                <span className="text-sm">{item.label}</span>
+                <span>{item.label}</span>
               </button>
             )
           })}
@@ -68,11 +68,13 @@ export default function AccountSidebar() {
           {/* Mobile Logout */}
           <button
             onClick={handleSignOut}
-            className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium bg-red-50 text-red-600 active:bg-red-100 transition-colors whitespace-nowrap"
+            className="flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-full font-medium bg-red-50 text-red-600 active:bg-red-100 transition-colors whitespace-nowrap snap-start text-sm"
           >
             <LogOut className="h-4 w-4" />
-            <span className="text-sm">Salir</span>
+            <span>Salir</span>
           </button>
+          {/* Spacer para asegurar que el último tab sea visible */}
+          <div className="flex-shrink-0 w-2" aria-hidden="true" />
         </div>
       </div>
 

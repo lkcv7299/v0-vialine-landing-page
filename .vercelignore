@@ -1,0 +1,12 @@
+# Ignore large image folders
+drive-download-*
+*.raw
+*.psd
+
+# Development files
+playwright-report
+test-results
+.playwright
+
+# Large node_modules cache
+node_modules/.cache

@@ -6,6 +6,7 @@ import type { Product } from "@/data/products"
 import { buildWhatsAppUrl } from "@/lib/contact"
 import { useCart } from "@/contexts/CartContext"
 import { useWishlist } from "@/components/providers/WishlistContext"
+import { trackViewItem, trackAddToWishlist } from "@/lib/analytics"
 import ProductGallery from "@/components/ProductGallery"
 import SizeGuideModal from "@/components/SizeGuideModal"
 import StockIndicator from "@/components/StockIndicator"
@@ -92,6 +93,14 @@ export default function ProductDetailCard({ product }: { product: Product }) {
       const fallbackImages = getProductImages(product)
       setCurrentImages(fallbackImages)
     }
+
+    // Track product view
+    trackViewItem({
+      id: product.slug,
+      name: product.title,
+      price: product.price,
+      category: product.category,
+    })
   }, [product])
 
   // Update gallery when color changes - show ONLY selected color's images with smooth transition
@@ -171,6 +180,15 @@ export default function ProductDetailCard({ product }: { product: Product }) {
     toggle(product.slug)
     toast.success(isInWishlist ? "Eliminado de favoritos" : "Agregado a favoritos")
     setTimeout(() => setIsWishlistAnimating(false), 600)
+
+    // Track add to wishlist (only when adding, not removing)
+    if (!isInWishlist) {
+      trackAddToWishlist({
+        id: product.slug,
+        name: product.title,
+        price: product.price,
+      })
+    }
   }
 
   const isButtonDisabled = !selectedColorName || !selectedSize || isOutOfStock
@@ -359,7 +377,7 @@ export default function ProductDetailCard({ product }: { product: Product }) {
                   : "bg-white border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-white"
               }`}
             >
-              {isOutOfStock ? "No disponible" : "Comprar ahora"}
+              {isOutOfStock ? "No disponible" : "Consultar por WhatsApp"}
             </button>
           </div>
 
@@ -424,6 +442,50 @@ export default function ProductDetailCard({ product }: { product: Product }) {
           </div>
         </div>
       </div>
+
+      {/* Mobile Sticky CTA Footer - Solo en mobile */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200 p-3 z-30 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+        <div className="flex items-center gap-3 max-w-7xl mx-auto">
+          {/* Price */}
+          <div className="flex-shrink-0">
+            <p className="text-lg font-bold text-neutral-900">
+              S/ {product.price.toFixed(2)}
+            </p>
+            {product.originalPrice && (
+              <p className="text-xs text-neutral-400 line-through">
+                S/ {product.originalPrice.toFixed(2)}
+              </p>
+            )}
+          </div>
+
+          {/* Add to Cart Button */}
+          <button
+            onClick={handleAddToCart}
+            disabled={isButtonDisabled}
+            className={`flex-1 py-3 rounded-lg font-bold text-sm transition-all ${
+              isButtonDisabled
+                ? "bg-neutral-300 text-neutral-500 cursor-not-allowed"
+                : added
+                ? "bg-green-600 text-white"
+                : "bg-rose-600 text-white active:bg-rose-700"
+            }`}
+          >
+            {isOutOfStock
+              ? "Agotado"
+              : added
+              ? <>
+                  <Check className="w-4 h-4 inline-block mr-1" />
+                  Agregado
+                </>
+              : !selectedColorName || !selectedSize
+              ? "Selecciona opciones"
+              : "Agregar al carrito"}
+          </button>
+        </div>
+      </div>
+
+      {/* Spacer para que el contenido no quede tapado por el footer sticky */}
+      <div className="lg:hidden h-20" aria-hidden="true" />
     </main>
   )
 }

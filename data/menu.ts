@@ -1,4 +1,5 @@
 import { getAllCollections, getUniqueFabrics } from "./products"
+import { FABRICS, fabricFamilies } from "./fabrics"
 
 export const WOMEN_MENU = {
   rootHref: "/mujer",
@@ -52,4 +53,32 @@ export function getFabricsMenu() {
     href: `/tejido/${f.slug}`,
     count: f.count
   }))
+}
+
+// Menu de tejidos con variantes (nuevo sistema profesional)
+export function getFabricsMenuExpanded() {
+  return [
+    {
+      family: "suplex",
+      familyName: fabricFamilies.suplex.name,
+      familyIcon: "Zap",
+      variants: FABRICS.filter(f => f.family === "suplex").map(f => ({
+        label: f.name,
+        shortLabel: f.name.replace("Suplex ", ""),
+        href: `/tejido/${f.slug}`,
+        description: f.summary
+      }))
+    },
+    {
+      family: "algodon",
+      familyName: fabricFamilies.algodon.name,
+      familyIcon: "Feather",
+      variants: FABRICS.filter(f => f.family === "algodon").map(f => ({
+        label: f.name,
+        shortLabel: f.name.replace("Algodón ", ""),
+        href: `/tejido/${f.slug}`,
+        description: f.summary
+      }))
+    }
+  ]
 }

@@ -138,7 +138,7 @@ export default function CarritoPage() {
                     <p className="text-sm text-neutral-600 mb-2">
                       {item.selectedColor} • {item.selectedSize}
                     </p>
-                    <p className="text-lg font-bold text-rose-600">S/ {item.product.price.toFixed(2)}</p>
+                    <p className="text-lg font-bold text-rose-600 whitespace-nowrap">S/ {item.product.price.toFixed(2)}</p>
                   </div>
 
                   {/* Acciones */}
@@ -212,13 +212,13 @@ export default function CarritoPage() {
                 Código de cupón
               </label>
               {appliedCoupon ? (
-                <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+                <div className="p-3 bg-rose-50 border border-rose-200 rounded-lg">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-semibold text-green-700">
+                      <p className="text-sm font-semibold text-rose-700">
                         {appliedCoupon.code}
                       </p>
-                      <p className="text-xs text-green-600">
+                      <p className="text-xs text-rose-600">
                         Cupón aplicado -
                         {appliedCoupon.type === "percentage"
                           ? ` ${appliedCoupon.discount}% de descuento`
@@ -227,7 +227,7 @@ export default function CarritoPage() {
                     </div>
                     <button
                       onClick={handleRemoveCoupon}
-                      className="text-green-600 hover:text-green-700 text-sm font-medium"
+                      className="text-rose-600 hover:text-rose-700 text-sm font-medium"
                     >
                       Quitar
                     </button>
@@ -269,27 +269,27 @@ export default function CarritoPage() {
 
               {appliedCoupon && discount > 0 && (
                 <div className="flex justify-between text-sm">
-                  <span className="text-green-600">Descuento ({appliedCoupon.code})</span>
-                  <span className="font-semibold text-green-600">- S/ {discount.toFixed(2)}</span>
+                  <span className="text-rose-600">Descuento ({appliedCoupon.code})</span>
+                  <span className="font-semibold text-rose-600">- S/ {discount.toFixed(2)}</span>
                 </div>
               )}
 
               <div className="flex justify-between text-sm">
                 <span className="text-neutral-600">Envío</span>
-                <span className={`font-semibold ${shippingCost === 0 ? "text-green-600" : ""}`}>
+                <span className={`font-semibold ${shippingCost === 0 ? "text-rose-600" : ""}`}>
                   {shippingCost === 0 ? "¡GRATIS!" : `S/ ${shippingCost.toFixed(2)}`}
                 </span>
               </div>
 
               {/* Barra de progreso para envío gratis */}
               {remainingForFreeShipping > 0 && (
-                <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
-                  <p className="text-sm text-green-700 font-medium mb-2">
+                <div className="mt-4 p-3 bg-rose-50 border border-rose-200 rounded-lg">
+                  <p className="text-sm text-rose-700 font-medium mb-2">
                     ¡Agrega S/ {remainingForFreeShipping.toFixed(2)} más para envío gratis!
                   </p>
-                  <div className="w-full bg-green-200 rounded-full h-2">
+                  <div className="w-full bg-rose-200 rounded-full h-2">
                     <div
-                      className="bg-green-600 h-2 rounded-full transition-all duration-300"
+                      className="bg-rose-600 h-2 rounded-full transition-all duration-300"
                       style={{ width: `${Math.min((total / FREE_SHIPPING_THRESHOLD) * 100, 100)}%` }}
                     />
                   </div>
@@ -334,8 +334,8 @@ export default function CarritoPage() {
       {/* Trust badges */}
       <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
         <div className="flex items-center gap-3 p-4 bg-neutral-50 rounded-lg">
-          <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-            <svg className="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center flex-shrink-0">
+            <svg className="w-5 h-5 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>

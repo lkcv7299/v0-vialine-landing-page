@@ -121,39 +121,39 @@ export default function AccountPage() {
 
             {/* Main Content */}
             <div className="lg:col-span-3 space-y-6">
-            {/* Welcome Card */}
-            <div className="bg-gradient-to-r from-rose-500 to-pink-500 rounded-lg p-6 text-white">
-              <div className="flex items-center space-x-4">
-                <div className="bg-white/20 rounded-full p-3">
-                  <User className="h-8 w-8" />
+            {/* Welcome Card - Más compacto en mobile */}
+            <div className="bg-gradient-to-r from-rose-500 to-pink-500 rounded-lg p-4 lg:p-6 text-white">
+              <div className="flex items-center space-x-3 lg:space-x-4">
+                <div className="bg-white/20 rounded-full p-2 lg:p-3">
+                  <User className="h-6 w-6 lg:h-8 lg:w-8" />
                 </div>
-                <div>
-                  <h2 className="text-2xl font-bold">{userName}</h2>
-                  <p className="text-rose-100">{session.user?.email}</p>
+                <div className="min-w-0 flex-1">
+                  <h2 className="text-lg lg:text-2xl font-bold truncate">{userName}</h2>
+                  <p className="text-rose-100 text-sm lg:text-base truncate">{session.user?.email}</p>
                 </div>
               </div>
             </div>
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Stats Grid - 2x2 en mobile, 4 cols en desktop */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
               {quickStats.map((stat, index) => {
                 const Icon = stat.icon
                 return (
                   <div
                     key={index}
-                    className="bg-white rounded-lg p-6 shadow-sm border border-gray-200"
+                    className="bg-white rounded-lg p-3 lg:p-5 shadow-sm border border-gray-200"
                   >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-gray-600 mb-1">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2">
+                      <div className={`${stat.bgColor} rounded-full p-2 lg:p-3 w-fit lg:order-2`}>
+                        <Icon className={`h-4 w-4 lg:h-6 lg:w-6 ${stat.color}`} />
+                      </div>
+                      <div className="lg:order-1">
+                        <p className="text-xs lg:text-sm text-gray-600 mb-0.5 lg:mb-1 line-clamp-1">
                           {stat.label}
                         </p>
-                        <p className="text-2xl font-bold text-gray-900">
+                        <p className="text-lg lg:text-2xl font-bold text-gray-900">
                           {stat.value}
                         </p>
-                      </div>
-                      <div className={`${stat.bgColor} rounded-full p-3`}>
-                        <Icon className={`h-6 w-6 ${stat.color}`} />
                       </div>
                     </div>
                   </div>
@@ -161,37 +161,37 @@ export default function AccountPage() {
               })}
             </div>
 
-            {/* Quick Actions */}
-            <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
-              <h3 className="text-lg font-semibold mb-4">Accesos Rápidos</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Quick Actions - Grid compacto en mobile */}
+            <div className="bg-white rounded-lg p-4 lg:p-6 shadow-sm border border-gray-200">
+              <h3 className="text-base lg:text-lg font-semibold mb-3 lg:mb-4">Accesos Rápidos</h3>
+              <div className="grid grid-cols-3 gap-2 lg:gap-4">
                 <button
                   onClick={() => router.push("/mujer")}
-                  className="p-4 border border-gray-200 rounded-lg hover:border-rose-300 hover:bg-rose-50 transition-colors"
+                  className="p-3 lg:p-4 border border-gray-200 rounded-lg hover:border-rose-300 hover:bg-rose-50 active:bg-rose-100 transition-colors text-left"
                 >
-                  <p className="font-medium text-gray-900">Seguir comprando</p>
-                  <p className="text-sm text-gray-600 mt-1">
-                    Explora nuestros productos
+                  <p className="font-medium text-gray-900 text-sm lg:text-base">Comprar</p>
+                  <p className="text-xs lg:text-sm text-gray-600 mt-0.5 lg:mt-1 hidden lg:block">
+                    Explora productos
                   </p>
                 </button>
 
                 <button
                   onClick={() => router.push("/account/pedidos")}
-                  className="p-4 border border-gray-200 rounded-lg hover:border-rose-300 hover:bg-rose-50 transition-colors"
+                  className="p-3 lg:p-4 border border-gray-200 rounded-lg hover:border-rose-300 hover:bg-rose-50 active:bg-rose-100 transition-colors text-left"
                 >
-                  <p className="font-medium text-gray-900">Mis Pedidos</p>
-                  <p className="text-sm text-gray-600 mt-1">
-                    Ver historial completo
+                  <p className="font-medium text-gray-900 text-sm lg:text-base">Pedidos</p>
+                  <p className="text-xs lg:text-sm text-gray-600 mt-0.5 lg:mt-1 hidden lg:block">
+                    Ver historial
                   </p>
                 </button>
 
                 <button
                   onClick={() => router.push("/wishlist")}
-                  className="p-4 border border-gray-200 rounded-lg hover:border-rose-300 hover:bg-rose-50 transition-colors"
+                  className="p-3 lg:p-4 border border-gray-200 rounded-lg hover:border-rose-300 hover:bg-rose-50 active:bg-rose-100 transition-colors text-left"
                 >
-                  <p className="font-medium text-gray-900">Favoritos</p>
-                  <p className="text-sm text-gray-600 mt-1">
-                    Productos guardados
+                  <p className="font-medium text-gray-900 text-sm lg:text-base">Favoritos</p>
+                  <p className="text-xs lg:text-sm text-gray-600 mt-0.5 lg:mt-1 hidden lg:block">
+                    Guardados
                   </p>
                 </button>
               </div>

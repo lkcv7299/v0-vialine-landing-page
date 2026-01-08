@@ -68,7 +68,14 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
     try {
       const s = localStorage.getItem("wishlist")
       if (s) {
-        setItems(JSON.parse(s))
+        const parsed = JSON.parse(s)
+        // Deduplicar usando Set
+        const uniqueItems = [...new Set(parsed as string[])]
+        setItems(uniqueItems)
+        // Si había duplicados, guardar la versión limpia
+        if (uniqueItems.length !== parsed.length) {
+          localStorage.setItem("wishlist", JSON.stringify(uniqueItems))
+        }
       }
     } catch (error) {
       console.error("Error loading from localStorage:", error)
@@ -150,7 +157,11 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
           })
 
           if (res.ok) {
-            setItems((prev) => [...prev, slug])
+            // Usar Set para evitar duplicados
+            setItems((prev) => {
+              if (prev.includes(slug)) return prev
+              return [...prev, slug]
+            })
             toast.success("Agregado a favoritos")
           } else {
             const data = await res.json()
@@ -167,9 +178,13 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
       }
     } else {
       // Usuario guest: usar localStorage
-      const newItems = isInWishlist
-        ? items.filter((x) => x !== slug)
-        : [...items, slug]
+      let newItems: string[]
+      if (isInWishlist) {
+        newItems = items.filter((x) => x !== slug)
+      } else {
+        // Evitar duplicados
+        newItems = items.includes(slug) ? items : [...items, slug]
+      }
 
       setItems(newItems)
       localStorage.setItem("wishlist", JSON.stringify(newItems))

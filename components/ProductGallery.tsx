@@ -75,14 +75,6 @@ function ThumbnailImage({
             isSelected ? 'scale-100' : 'group-hover:scale-105'
           }`}
         />
-        {/* Checkmark indicator when selected (only for gallery, not modal) */}
-        {!inModal && isSelected && (
-          <div className="absolute top-2 right-2 w-6 h-6 bg-rose-600 rounded-full flex items-center justify-center shadow-lg">
-            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-        )}
         {/* Hover overlay (only for non-selected thumbnails) */}
         {!isSelected && !inModal && (
           <div className="absolute inset-0 bg-rose-600/0 group-hover:bg-rose-600/5 transition-colors duration-300" />

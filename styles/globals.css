@@ -123,3 +123,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Padding inferior para evitar que WhatsApp tape contenido en mobile */
+@media (max-width: 768px) {
+  main,
+  .page-content,
+  .main-content {
+    padding-bottom: 100px;
+  }
+}

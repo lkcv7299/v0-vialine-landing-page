@@ -9,6 +9,7 @@ import ClientWrapper from "@/components/ClientWrapper"
 import GoogleAnalytics from "@/components/GoogleAnalytics"
 import MetaPixel from "@/components/MetaPixel"
 import Clarity from "@/components/Clarity"
+import { Analytics } from "@vercel/analytics/react"
 import { WishlistProvider } from "@/components/providers/WishlistContext"
 import { CartProvider } from "@/contexts/CartContext"
 import SessionProvider from "@/components/providers/SessionProvider"
@@ -75,6 +76,7 @@ export default function RootLayout({
             <GoogleAnalytics />
             <MetaPixel />
             <Clarity />
+            <Analytics />
           </>
         )}
 
@@ -109,7 +111,15 @@ export default function RootLayout({
                     <SiteHeader />
                     {children}
                     <WhatsAppFloat />
-                    <Toaster position="bottom-right" richColors />
+                    <Toaster
+                      position="bottom-right"
+                      toastOptions={{
+                        classNames: {
+                          success: 'bg-rose-600 text-white border-rose-600',
+                          error: 'bg-red-600 text-white border-red-600',
+                        },
+                      }}
+                    />
                     {!isProduction && <ImageFramingPanel />}
                   </ClientWrapper>
                 </ImageFramingProvider>

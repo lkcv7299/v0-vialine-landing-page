@@ -62,56 +62,55 @@ export default function WishlistPage() {
 
   return (
     <main className="min-h-screen bg-white">
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-neutral-900 flex items-center gap-3">
-              <Heart className="w-8 h-8 text-rose-600 fill-rose-600" />
-              Mis Favoritos
+      <div className="container mx-auto px-3 lg:px-4 py-6 lg:py-8">
+        {/* Header - Más compacto en mobile */}
+        <div className="flex items-center justify-between mb-5 lg:mb-8 gap-3">
+          <div className="min-w-0">
+            <h1 className="text-xl lg:text-3xl font-bold text-neutral-900 flex items-center gap-2 lg:gap-3">
+              <Heart className="w-6 h-6 lg:w-8 lg:h-8 text-rose-600 fill-rose-600 flex-shrink-0" />
+              <span className="truncate">Mis Favoritos</span>
             </h1>
-            <p className="text-neutral-600 mt-2">
-              {items.length} {items.length === 1 ? "producto guardado" : "productos guardados"}
+            <p className="text-neutral-600 mt-1 lg:mt-2 text-sm lg:text-base">
+              {items.length} {items.length === 1 ? "producto" : "productos"}
             </p>
           </div>
 
-          {/* Botón compartir */}
+          {/* Botón compartir - Ahora usa rose en vez de green */}
           <button
             onClick={handleShare}
-            className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white font-semibold rounded-full hover:bg-green-700 transition-colors shadow-md hover:shadow-lg"
+            className="flex-shrink-0 flex items-center gap-1.5 lg:gap-2 px-3 lg:px-4 py-2 bg-rose-600 text-white font-semibold rounded-full hover:bg-rose-700 active:bg-rose-800 transition-colors shadow-sm text-sm lg:text-base"
           >
-            <Share2 className="w-5 h-5" />
-            <span className="hidden sm:inline">Compartir por WhatsApp</span>
-            <span className="sm:hidden">Compartir</span>
+            <Share2 className="w-4 h-4 lg:w-5 lg:h-5" />
+            <span className="hidden sm:inline">Compartir</span>
           </button>
         </div>
 
-        {/* Grid de productos */}
-        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {/* Grid de productos - 2 cols en mobile */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-6">
           {wishlistProducts.map((product) => (
             <ProductCard key={product!.slug} product={product!} />
           ))}
         </div>
 
-        {/* Call to action */}
-        <div className="mt-12 p-8 bg-neutral-50 rounded-2xl border border-neutral-200 text-center">
-          <h2 className="text-xl font-bold text-neutral-900 mb-2">
+        {/* Call to action - Más compacto en mobile */}
+        <div className="mt-8 lg:mt-12 p-5 lg:p-8 bg-neutral-50 rounded-xl lg:rounded-2xl border border-neutral-200 text-center">
+          <h2 className="text-lg lg:text-xl font-bold text-neutral-900 mb-1.5 lg:mb-2">
             ¿Lista para comprar?
           </h2>
-          <p className="text-neutral-600 mb-6">
-            Agrega tus favoritos al carrito y finaliza tu compra por WhatsApp
+          <p className="text-neutral-600 mb-4 lg:mb-6 text-sm lg:text-base">
+            Agrega tus favoritos al carrito
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-2 lg:gap-4">
             <Link
               href="/carrito"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-rose-600 text-white font-semibold rounded-full hover:bg-rose-700 transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-5 lg:px-6 py-2.5 lg:py-3 bg-rose-600 text-white font-semibold rounded-full hover:bg-rose-700 active:bg-rose-800 transition-colors text-sm lg:text-base"
             >
-              <ShoppingBag className="w-5 h-5" />
+              <ShoppingBag className="w-4 h-4 lg:w-5 lg:h-5" />
               Ver carrito
             </Link>
             <Link
               href="/mujer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-neutral-900 text-white font-semibold rounded-full hover:bg-neutral-800 transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-5 lg:px-6 py-2.5 lg:py-3 bg-neutral-900 text-white font-semibold rounded-full hover:bg-neutral-800 active:bg-neutral-700 transition-colors text-sm lg:text-base"
             >
               Seguir comprando
             </Link>

@@ -3,6 +3,7 @@ import { byAudience, type Product } from "@/data/products"
 import GymRail from "@/components/GymRail"
 import HeroMujerVideo from "@/components/Hero/HeroMujerVideo"
 import HeroNina from "@/components/Hero/HeroNina"
+import Footer from "@/components/Footer"
 import { FABRICS } from "@/data/fabrics"
 
 // Helper para obtener imagen primaria del producto
@@ -138,27 +139,10 @@ export default function VialineHome() {
           </div>
         </section>
 
-        {/* FOOTER MINIMAL */}
-        <footer className="border-t border-neutral-200">
-          <div className="mx-auto max-w-7xl px-4 md:px-6 py-10 text-sm text-neutral-600 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <p>© {new Date().getFullYear()} Vialine. Hecho con amor en Perú.</p>
-            <nav className="flex gap-6">
-              <Link href="/envios" className="hover:text-neutral-900">
-                Envíos
-              </Link>
-              <Link href="/cambios" className="hover:text-neutral-900">
-                Cambios & devoluciones
-              </Link>
-              <Link href="/tallas" className="hover:text-neutral-900">
-                Guía de tallas
-              </Link>
-              <Link href="/contacto" className="hover:text-neutral-900">
-                Contacto
-              </Link>
-            </nav>
-          </div>
-        </footer>
       </main>
+
+      {/* FOOTER PROFESIONAL */}
+      <Footer />
     </>
   )
 }

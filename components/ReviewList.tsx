@@ -231,7 +231,7 @@ export default function ReviewList({ productSlug }: ReviewListProps) {
                     </span>
                     <div className="flex-1 h-2 bg-neutral-200 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-yellow-400 transition-all"
+                        className="h-full bg-amber-500 transition-all"
                         style={{ width: `${percentage}%` }}
                       />
                     </div>
@@ -289,7 +289,7 @@ export default function ReviewList({ productSlug }: ReviewListProps) {
                   <Star
                     className={`w-8 h-8 transition ${
                       star <= (hoverRating || rating)
-                        ? "fill-yellow-400 text-yellow-400"
+                        ? "fill-amber-500 text-amber-500"
                         : "text-neutral-300"
                     }`}
                   />

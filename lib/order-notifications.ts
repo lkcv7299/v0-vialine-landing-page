@@ -28,7 +28,7 @@ type OrderData = {
   subtotal: number
   shippingCost: number
   total: number
-  paymentMethod: "culqi" | "yape" | "contraentrega"
+  paymentMethod: "culqi" | "contra_entrega"
   notes: string
   createdAt: string
   paymentConfirmed?: boolean // Nuevo flag para indicar si el pago ya fue confirmado
@@ -301,8 +301,7 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
                           </h2>
                           <p style="margin: 0; font-size: 15px; font-weight: 600; color: #111827; padding: 12px; background-color: #ffffff; border-radius: 6px;">
                             ${orderData.paymentMethod === 'culqi' ? '💳 Tarjeta de Crédito/Débito (Culqi)' :
-                              orderData.paymentMethod === 'contraentrega' ? '💵 Pago Contra Entrega' :
-                              '📱 Yape'}
+                              '💵 Pago Contra Entrega'}
                           </p>
                           ${orderData.notes ? `
                           <h2 style="margin: 20px 0 12px 0; font-size: 16px; font-weight: 700; color: #e11d48; text-transform: uppercase; letter-spacing: 0.5px;">

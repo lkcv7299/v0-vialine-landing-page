@@ -225,22 +225,22 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
 
         {!isFramingMode && <WishlistHeart slug={slug} />}
 
-        {/* Badge NUEVO o OFERTA - Paleta unificada negra (menos invasivo) */}
+        {/* Badge NUEVO o OFERTA - Estilo unificado */}
         {badge && !isOutOfStock && (
-          <span className={`absolute left-2 bottom-2 rounded-sm px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide shadow-sm ${
+          <span className={`absolute left-2 bottom-2 rounded-sm px-2 py-1 text-[10px] font-semibold uppercase tracking-wide shadow-sm ${
             badge === "nuevo"
-              ? "bg-black/70 text-white"
-              : "bg-black/70 text-red-400"
+              ? "bg-neutral-900 text-white"
+              : "bg-rose-600 text-white"
           }`}>
             {badge === "nuevo" ? "Nuevo" : "Oferta"}
           </span>
         )}
 
-        {/* Badge AGOTADO - Paleta unificada */}
+        {/* Badge AGOTADO - Estilo unificado con los demás badges */}
         {isOutOfStock && (
           <>
             <div className="absolute inset-0 bg-black/10" />
-            <span className="absolute bottom-2 left-2 bg-black/75 text-white px-2 py-1 text-[11px] font-medium uppercase tracking-wide rounded-sm shadow-sm">
+            <span className="absolute left-2 bottom-2 bg-neutral-900 text-white px-2 py-1 text-[10px] font-semibold uppercase tracking-wide rounded-sm shadow-sm">
               Agotado
             </span>
           </>

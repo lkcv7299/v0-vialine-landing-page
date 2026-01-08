@@ -3,6 +3,7 @@
 import { Heart } from "lucide-react"
 import { useWishlist } from "./providers/WishlistContext"
 import { useState } from "react"
+import { toast } from "sonner"
 
 export default function WishlistHeart({ slug }: { slug: string }) {
   const { has, toggle } = useWishlist()
@@ -12,11 +13,14 @@ export default function WishlistHeart({ slug }: { slug: string }) {
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    
+
     // Trigger animación
     setIsAnimating(true)
     toggle(slug)
-    
+
+    // Mostrar toast de feedback
+    toast.success(active ? "Eliminado de favoritos" : "Agregado a favoritos")
+
     // Reset animación
     setTimeout(() => setIsAnimating(false), 600)
   }

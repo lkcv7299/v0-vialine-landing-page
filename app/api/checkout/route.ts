@@ -32,7 +32,7 @@ type CheckoutRequest = {
   subtotal: number
   shippingCost: number
   total: number
-  paymentMethod: "culqi" | "yape" | "contraentrega"
+  paymentMethod: "culqi" | "contra_entrega"
   notes: string
 }
 
@@ -40,9 +40,13 @@ type CheckoutRequest = {
 // FUNCIÓN AUXILIAR: Generar Order ID
 // ====================================
 function generateOrderId(): string {
-  const timestamp = Date.now()
-  const random = Math.floor(Math.random() * 10000)
-  return `VL${timestamp}${random}`
+  // Formato simplificado: VL-XXXXX (5 caracteres alfanuméricos)
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+  let id = ''
+  for (let i = 0; i < 5; i++) {
+    id += chars.charAt(Math.floor(Math.random() * chars.length))
+  }
+  return `VL-${id}`
 }
 
 // ====================================

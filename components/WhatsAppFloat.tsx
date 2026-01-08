@@ -1,6 +1,16 @@
+"use client"
+
+import { usePathname } from "next/navigation"
 import { buildWhatsAppUrl } from "@/lib/contact"
 
 export default function WhatsAppFloat() {
+  const pathname = usePathname()
+
+  // Ocultar en páginas de checkout para no tapar el botón de confirmar
+  if (pathname?.startsWith("/checkout")) {
+    return null
+  }
+
   return (
     <a
       href={buildWhatsAppUrl("Hola Vialine, quiero información")}

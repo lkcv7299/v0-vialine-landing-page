@@ -130,7 +130,7 @@ test.describe('Dashboard de Usuario Tests', () => {
       const url = page.url()
       console.log(`URL de pedidos: ${url}`)
 
-      expect(url).toContain('pedidos') || expect(url).toContain('orders')
+      expect(url.includes('pedidos') || url.includes('orders')).toBeTruthy()
     } else {
       // Intentar URL directa
       await page.goto('http://localhost:3000/account/pedidos')
@@ -222,7 +222,7 @@ test.describe('Dashboard de Usuario Tests', () => {
       const url = page.url()
       console.log(`URL de wishlist: ${url}`)
 
-      expect(url).toContain('wishlist') || expect(url).toContain('favorito')
+      expect(url.includes('wishlist') || url.includes('favorito')).toBeTruthy()
     } else {
       // Intentar URL directa
       await page.goto('http://localhost:3000/wishlist')

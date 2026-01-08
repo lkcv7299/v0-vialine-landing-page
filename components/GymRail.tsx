@@ -234,17 +234,17 @@ export default function GymRail({ title, viewAllHref, items }: GymRailProps) {
         <div className="flex items-end justify-between">
           <div>
             <p className="text-xs font-semibold text-neutral-500 tracking-wide uppercase mb-1">
-              WOMENS
+              MUJER
             </p>
             <h2 className="text-2xl md:text-3xl font-bold text-neutral-900">
               {title}
             </h2>
           </div>
-          <Link 
+          <Link
             href={viewAllHref}
             className="text-sm font-semibold underline hover:no-underline"
           >
-            View All
+            Ver todo
           </Link>
         </div>
       </div>

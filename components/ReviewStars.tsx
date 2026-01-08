@@ -30,7 +30,7 @@ export default function ReviewStars({
             key={star}
             className={`${starSize} ${
               star <= rating
-                ? "fill-yellow-400 text-yellow-400"
+                ? "fill-amber-500 text-amber-500"
                 : "fill-neutral-200 text-neutral-200"
             }`}
           />

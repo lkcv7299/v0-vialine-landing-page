@@ -55,19 +55,19 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
             </Link>
           </div>
         ) : (
-          <div className="p-4 space-y-4">
+          <div className="p-3 lg:p-4 space-y-3 lg:space-y-4">
             {items.map((item) => {
               const itemKey = `${item.product.slug}-${item.selectedColor}-${item.selectedSize}`
               const stockLimit = item.product.inventory || 999
               const imagePath = getProductColorImage(item.product, item.selectedColor, 0)
 
               return (
-                <div key={itemKey} className="flex gap-4 pb-4 border-b border-neutral-200 last:border-0">
-                  {/* Image */}
+                <div key={itemKey} className="flex gap-3 lg:gap-4 pb-3 lg:pb-4 border-b border-neutral-200 last:border-0">
+                  {/* Image - Más pequeña en mobile */}
                   <Link
                     href={`/producto/${item.product.slug}`}
                     onClick={onClose}
-                    className="relative w-24 h-24 rounded-lg overflow-hidden bg-neutral-100 flex-shrink-0 hover:opacity-80 transition"
+                    className="relative w-20 h-20 lg:w-24 lg:h-24 rounded-lg overflow-hidden bg-neutral-100 flex-shrink-0 hover:opacity-80 transition"
                   >
                     <img
                       src={imagePath}
@@ -163,11 +163,11 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
         )}
       </div>
 
-      {/* Footer */}
+      {/* Footer - Más compacto en mobile */}
       {items.length > 0 && (
-        <div className="border-t border-neutral-200 p-4 space-y-4 bg-white">
+        <div className="border-t border-neutral-200 p-3 lg:p-4 space-y-3 lg:space-y-4 bg-white">
           {/* Subtotal */}
-          <div className="space-y-2">
+          <div className="space-y-1.5 lg:space-y-2">
             <div className="flex items-center justify-between text-sm">
               <span className="text-neutral-600">Subtotal</span>
               <span className="font-semibold text-neutral-900">
@@ -178,7 +178,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
               <span className="text-neutral-600">Envío</span>
               <span className="text-neutral-600">
                 {total >= 269 ? (
-                  <span className="text-green-600 font-medium">Gratis</span>
+                  <span className="text-rose-600 font-medium">Gratis</span>
                 ) : (
                   "S/ 15.00"
                 )}
@@ -187,9 +187,9 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
           </div>
 
           {/* Total */}
-          <div className="flex items-center justify-between pt-3 border-t border-neutral-200">
-            <span className="text-lg font-bold text-neutral-900">Total</span>
-            <span className="text-2xl font-bold text-neutral-900">
+          <div className="flex items-center justify-between pt-2 lg:pt-3 border-t border-neutral-200">
+            <span className="text-base lg:text-lg font-bold text-neutral-900">Total</span>
+            <span className="text-xl lg:text-2xl font-bold text-neutral-900">
               S/ {(total + (total >= 269 ? 0 : 15)).toFixed(2)}
             </span>
           </div>
@@ -201,19 +201,19 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
             </p>
           )}
 
-          {/* Action Buttons */}
+          {/* Action Buttons - Más compactos en mobile */}
           <div className="space-y-2">
             <Link
               href="/checkout"
               onClick={onClose}
-              className="block w-full bg-neutral-900 text-white text-center py-3 rounded-lg font-bold hover:bg-neutral-800 transition"
+              className="block w-full bg-rose-600 text-white text-center py-2.5 lg:py-3 rounded-lg font-bold text-sm lg:text-base hover:bg-rose-700 active:bg-rose-800 transition"
             >
               Ir al checkout
             </Link>
             <Link
               href="/carrito"
               onClick={onClose}
-              className="block w-full border-2 border-neutral-300 text-neutral-900 text-center py-3 rounded-lg font-semibold hover:border-neutral-400 transition"
+              className="block w-full border-2 border-neutral-300 text-neutral-900 text-center py-2.5 lg:py-3 rounded-lg font-semibold text-sm lg:text-base hover:border-neutral-400 active:bg-neutral-100 transition"
             >
               Ver carrito completo
             </Link>

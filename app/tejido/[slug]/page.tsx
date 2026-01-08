@@ -1,9 +1,16 @@
 import { notFound } from "next/navigation"
 import { byFabric, type Product } from "@/data/products"
-import ProductGrid from "@/components/ProductGrid"
 import ProductFiltersDesktop from "@/components/ProductFiltersDesktop"
 import ProductFiltersDrawer from "@/components/ProductFiltersDrawer"
-import { FABRIC_LOOKUP, type FabricSlug } from "@/data/fabrics"
+import ProductListWithLoadMore from "@/components/ProductListWithLoadMore"
+import {
+  FABRIC_LOOKUP,
+  getFullFabricInfo,
+  isNewFabricSlug,
+  NEW_TO_LEGACY_FABRIC
+} from "@/data/fabrics"
+import type { FabricSlug as NewFabricSlug } from "@/types/fabric"
+import type { Metadata } from "next"
 
 function applyFilters(items: Product[], q: { get: (k: string) => string | null; getAll: (k: string) => string[] }) {
   let out = [...items]
@@ -40,14 +47,9 @@ function applyFilters(items: Product[], q: { get: (k: string) => string | null; 
     )
   }
 
-  const fabric = q.get("fabric")
-  if (fabric) out = out.filter((p) => p.fabric === fabric)
-
-  // ✅ FIX: Agregar filtro por categoría (Leggings, Tops, etc.)
   const category = q.get("category")
   if (category) out = out.filter((p) => p.category === category)
 
-  // ✅ FIX: Agregar filtro por precio
   const minPrice = q.get("minPrice")
   if (minPrice) {
     const min = parseFloat(minPrice)
@@ -67,6 +69,25 @@ function applyFilters(items: Product[], q: { get: (k: string) => string | null; 
   return out
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const fabricInfo = getFullFabricInfo(slug)
+
+  if (!fabricInfo) {
+    return { title: "Tejido no encontrado" }
+  }
+
+  return {
+    title: fabricInfo.seo.title,
+    description: fabricInfo.seo.description,
+    keywords: fabricInfo.seo.keywords
+  }
+}
+
 export default async function FabricPage({
   params,
   searchParams,
@@ -74,15 +95,23 @@ export default async function FabricPage({
   params: Promise<{ slug: string }>
   searchParams: Promise<Record<string, string | string[]> | undefined>
 }) {
-  // ✅ AWAIT params y searchParams (Next.js 15)
   const { slug } = await params
   const search = await searchParams
-  
-  const fabric = slug as FabricSlug
-  const fabricInfo = FABRIC_LOOKUP[fabric]
-  if (!fabricInfo) return notFound()
 
-  const baseProducts = byFabric(fabric)
+  // Obtener info básica del fabric
+  const basicInfo = FABRIC_LOOKUP[slug]
+  if (!basicInfo) return notFound()
+
+  // Obtener info completa del nuevo sistema
+  const fabricInfo = getFullFabricInfo(slug)
+
+  // Determinar qué slug usar para buscar productos
+  let productSearchSlug = slug
+  if (isNewFabricSlug(slug)) {
+    productSearchSlug = NEW_TO_LEGACY_FABRIC[slug as NewFabricSlug]
+  }
+
+  const baseProducts = byFabric(productSearchSlug as "suplex" | "algodon")
 
   const filteredProducts = applyFilters(baseProducts, {
     get: (k) => (search?.[k] as string) ?? null,
@@ -92,32 +121,40 @@ export default async function FabricPage({
     },
   })
 
+  const displayName = fabricInfo?.name || basicInfo.name
+  const tagline = fabricInfo?.tagline || basicInfo.summary
+
+  // Load More: mostrar primeros 24 productos inicialmente
+  const itemsPerPage = 24
+  const initialItems = filteredProducts.slice(0, itemsPerPage)
+
   return (
-    <main className="mx-auto max-w-7xl px-4 py-10">
-      {/* Header */}
+    <main className="mx-auto max-w-7xl px-4 md:px-6 py-8">
+      {/* Header de la página - mismo estilo que /mujer */}
       <div className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-neutral-900">{fabricInfo.name}</h1>
-        <p className="mt-2 text-neutral-700">{fabricInfo.summary}</p>
-        {fabricInfo.description && <p className="mt-4 text-neutral-600">{fabricInfo.description}</p>}
-        <p className="mt-4 text-neutral-600">
-          {filteredProducts.length} {filteredProducts.length === 1 ? "producto" : "productos"}
-        </p>
+        <h1 className="text-3xl md:text-4xl font-bold text-neutral-900">{displayName}</h1>
+        {tagline && (
+          <p className="text-neutral-600 mt-2">{tagline}</p>
+        )}
       </div>
 
-      {/* Layout con filtros */}
-      <div className="grid lg:grid-cols-[280px_1fr] gap-8">
-        {/* Sidebar Desktop - Solo visible en lg+ */}
+      {/* Mobile: Filtros arriba */}
+      <div className="lg:hidden mb-6">
+        <ProductFiltersDrawer totalProducts={baseProducts.length} filteredCount={filteredProducts.length} />
+      </div>
+
+      {/* Layout desktop: Sidebar + Grid */}
+      <div className="flex gap-6">
+        {/* Sidebar desktop (solo visible lg+) */}
         <ProductFiltersDesktop totalProducts={baseProducts.length} filteredCount={filteredProducts.length} />
 
-        {/* Main Content */}
-        <div className="min-w-0">
-          {/* Drawer Mobile - Solo visible en móvil */}
-          <div className="lg:hidden mb-6">
-            <ProductFiltersDrawer totalProducts={baseProducts.length} filteredCount={filteredProducts.length} />
-          </div>
-
-          {/* Product Grid */}
-          <ProductGrid items={filteredProducts} />
+        {/* Grid de productos con Load More */}
+        <div className="flex-1">
+          <ProductListWithLoadMore
+            initialItems={initialItems}
+            allItems={filteredProducts}
+            itemsPerPage={itemsPerPage}
+          />
         </div>
       </div>
     </main>

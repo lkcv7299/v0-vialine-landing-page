@@ -16,6 +16,9 @@
     "images:unused": "node scripts/find-unused-images.js",
     "images:missing": "node scripts/find-missing-images.js",
     "images:webp": "node scripts/convert-to-webp.mjs public/products",
+    "images:optimize": "node scripts/optimize-images.mjs",
+    "images:optimize:dry": "node scripts/optimize-images.mjs --dry-run",
+    "images:finalize": "node scripts/finalize-optimized-images.mjs",
     "scrape": "node scripts/scrape-vialine.js",
     "map": "node scripts/map-folders-to-products.js",
     "auto-import": "npm run scrape && npm run map"

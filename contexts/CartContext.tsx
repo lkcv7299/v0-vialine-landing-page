@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import type { Product } from '@/data/products'
 import { toast } from 'sonner'
+import { trackAddToCart } from '@/lib/analytics'
 
 export type CartItem = {
   product: Product
@@ -105,6 +106,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
 
       toast.success(`${quantity > 1 ? `${quantity} productos agregados` : 'Producto agregado'} al carrito`)
+
+      // Track add to cart event
+      trackAddToCart({
+        id: product.slug,
+        name: product.title,
+        price: product.price,
+        quantity: quantity,
+      })
+
       return [...current, { product, quantity, selectedColor: color, selectedSize: size }]
     })
   }
