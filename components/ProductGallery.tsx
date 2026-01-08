@@ -1,26 +1,8 @@
 "use client"
 
-import { useState, useEffect, useRef, useLayoutEffect } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut, Maximize2 } from "lucide-react"
-import { useImageTransform } from "@/hooks/useImageTransform"
-import { parseImagePath } from "@/lib/imageTransformUtils"
-
-// ✅ PRODUCT-SPECIFIC OVERRIDES - Ajustes visuales permanentes para productos específicos
-const PRODUCT_OVERRIDES: { [slug: string]: { scale: number; translateY: number; translateX: number } } = {
-  "short-slim": { scale: 1.00, translateY: -20, translateX: 0 },
-  "camiseta-tropical": { scale: 1.00, translateY: 3, translateX: 1 },
-  "maxi-short": { scale: 1.05, translateY: 0, translateX: 0 },
-  "body-manga-corta": { scale: 1.00, translateY: -1, translateX: 0 },
-  "top-minerva": { scale: 1.00, translateY: -12, translateX: -1 },
-  "top-soporte": { scale: 1.00, translateY: -20, translateX: 0 },
-  "top-perla": { scale: 1.00, translateY: -4, translateX: 1 },
-  "top-athena": { scale: 1.00, translateY: -5, translateX: 0 },
-  "enterizo-manga-cero": { scale: 1.00, translateY: -33, translateX: 0 },
-  "legging-harmony": { scale: 1.05, translateY: -29, translateX: 0 },
-  "pescador-realce": { scale: 1.00, translateY: -20, translateX: 0 },
-  "torero-energy": { scale: 1.00, translateY: 0, translateX: 0 },
-}
 
 type ProductGalleryProps = {
   images: string[]
@@ -28,15 +10,14 @@ type ProductGalleryProps = {
   productSlug?: string
 }
 
-// ✅ Componente para thumbnail - Aplica los mismos transforms que ProductCard
+// ✅ Componente para thumbnail - Estilo minimalista tipo Lululemon
 function ThumbnailImage({
   image,
   index,
   isSelected,
   productName,
   onClick,
-  inModal = false,
-  fallbackSlug = ""
+  inModal = false
 }: {
   image: string
   index: number
@@ -44,86 +25,18 @@ function ThumbnailImage({
   productName: string
   onClick: () => void
   inModal?: boolean
-  fallbackSlug?: string
 }) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [containerWidth, setContainerWidth] = useState<number | null>(null)
-
-  // Parsear la imagen para obtener el transform correcto
-  const { productSlug: imageParsedSlug, colorSlug, imageIndex } = parseImagePath(image)
-  const actualProductSlug = imageParsedSlug || fallbackSlug
-
-  // Usar hook para obtener transform guardado (usando contexto 'card' como ProductCard)
-  const { transform: savedTransform, isMounted } = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'card')
-
-  // Medir contenedor
-  useLayoutEffect(() => {
-    const updateSize = () => {
-      if (containerRef.current) {
-        setContainerWidth(containerRef.current.offsetWidth)
-      }
-    }
-
-    updateSize()
-    window.addEventListener('resize', updateSize)
-    return () => window.removeEventListener('resize', updateSize)
-  }, [])
-
-  // Calcular estilo de imagen (igual que ProductCard)
-  const getImageStyle = () => {
-    const productSlug = actualProductSlug.toLowerCase()
-    const imagePath = image.toLowerCase()
-
-    // PRIORIDAD 0: Transform guardado - ESCALADO PROPORCIONAL AL CONTENEDOR
-    if (savedTransform) {
-      if (containerWidth === null) {
-        return {
-          transform: 'none',
-          transformOrigin: 'center center'
-        }
-      }
-
-      const baseContainerSize = savedTransform.containerWidth || 220
-      const scaleFactor = containerWidth / baseContainerSize
-
-      const scaledX = savedTransform.x * scaleFactor
-      const scaledY = savedTransform.y * scaleFactor
-
-      return {
-        transform: `translate(${scaledX}px, ${scaledY}px) scale(${savedTransform.scale})`,
-        transformOrigin: 'center center'
-      }
-    }
-
-    // PRIORIDAD 1: Override específico del producto
-    const permanentOverride = PRODUCT_OVERRIDES[actualProductSlug]
-    if (permanentOverride) {
-      return {
-        transform: `scale(${permanentOverride.scale}) translateY(${permanentOverride.translateY}%) translateX(${permanentOverride.translateX}%)`,
-        transformOrigin: productSlug.includes('top') || productSlug.includes('camiseta') || productSlug.includes('body')
-          ? 'center top'
-          : 'center bottom'
-      }
-    }
-
-    // Default
-    return {
-      transform: 'scale(1)',
-      transformOrigin: 'center center'
-    }
-  }
-
-  // Clases específicas para modal vs gallery
+  // Clases minimalistas - pequeñas, cuadradas, sutiles
   const buttonClasses = inModal
-    ? `relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden transition-all duration-200 ${
+    ? `relative w-12 h-12 flex-shrink-0 rounded overflow-hidden transition-all duration-150 ${
         isSelected
-          ? "ring-2 ring-white ring-offset-2 ring-offset-black"
-          : "ring-1 ring-white/30 hover:ring-white/60 opacity-60 hover:opacity-100"
+          ? "ring-1 ring-white"
+          : "opacity-50 hover:opacity-80"
       }`
-    : `group relative aspect-[3/4] overflow-hidden rounded-xl transition-all duration-300 cursor-pointer ${
+    : `relative w-14 h-14 rounded overflow-hidden transition-all duration-150 cursor-pointer ${
         isSelected
-          ? "ring-2 ring-rose-600 shadow-lg shadow-rose-200/50 scale-[0.98]"
-          : "ring-1 ring-neutral-200 hover:ring-2 hover:ring-rose-400 hover:shadow-md"
+          ? "ring-2 ring-neutral-900"
+          : "ring-1 ring-neutral-200 hover:ring-neutral-400"
       }`
 
   return (
@@ -131,24 +44,16 @@ function ThumbnailImage({
       onClick={onClick}
       className={buttonClasses}
     >
-      <div
-        ref={containerRef}
-        className={`relative w-full h-full bg-gradient-to-br from-neutral-50 to-neutral-100 ${isSelected ? 'bg-white' : ''}`}
-      >
+      <div className="relative w-full h-full bg-white">
         <Image
           src={image}
-          alt={inModal ? `Miniatura ${index + 1}` : `${productName} - Vista ${index + 1}`}
+          alt={inModal ? `Vista ${index + 1}` : `${productName} - Vista ${index + 1}`}
           fill
-          sizes={inModal ? "64px" : "25vw"}
-          quality={60}
+          sizes="56px"
+          quality={50}
           loading="lazy"
-          className={`object-contain ${!isMounted ? '[transition:none!important]' : ''}`}
-          style={getImageStyle()}
+          className="object-contain p-1"
         />
-        {/* Hover overlay (only for non-selected thumbnails) */}
-        {!isSelected && !inModal && (
-          <div className="absolute inset-0 bg-rose-600/0 group-hover:bg-rose-600/5 transition-colors duration-300" />
-        )}
       </div>
     </button>
   )
@@ -161,45 +66,6 @@ export default function ProductGallery({ images, productName, productSlug = "" }
 
   // ✅ Filter out any empty or invalid images
   const validImages = images.filter(img => img && img.trim() !== "")
-
-  // ✅ Parsear la imagen actual para obtener colorSlug e imageIndex
-  const currentImagePath = validImages[selectedIndex] || ''
-  const { productSlug: imageParsedSlug, colorSlug, imageIndex } = parseImagePath(currentImagePath)
-  const actualProductSlug = imageParsedSlug || productSlug
-
-  // ✅ Usar hook para obtener transform guardado
-  const { transform: savedTransform, isMounted } = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'gallery')
-
-  // 🎨 Calcular estilo de imagen basado en tipo de producto
-  const getImageTransform = () => {
-    const slug = productSlug.toLowerCase()
-    const imagePath = validImages[selectedIndex]?.toLowerCase() || ""
-
-    // ✅ PRIORIDAD 0 (MÁXIMA): Transform guardado
-    if (savedTransform) {
-      return {
-        transform: `translate(${savedTransform.x}px, ${savedTransform.y}px) scale(${savedTransform.scale})`,
-        transformOrigin: 'center center'
-      }
-    }
-
-    // ✅ PRIORIDAD 1: Buscar override PERMANENTE específico del producto
-    const permanentOverride = PRODUCT_OVERRIDES[productSlug]
-    if (permanentOverride) {
-      return {
-        transform: `scale(${permanentOverride.scale}) translateY(${permanentOverride.translateY}%) translateX(${permanentOverride.translateX}%)`,
-        transformOrigin: slug.includes('top') || slug.includes('camiseta') || slug.includes('body')
-          ? 'center top'
-          : 'center bottom'
-      }
-    }
-
-    // Default
-    return {
-      transform: 'scale(1)',
-      transformOrigin: 'center center'
-    }
-  }
 
   const goToPrevious = () => {
     setSelectedIndex((prev) => (prev === 0 ? validImages.length - 1 : prev - 1))
@@ -349,9 +215,9 @@ export default function ProductGallery({ images, productName, productSlug = "" }
         )}
       </div>
 
-      {/* Thumbnails (miniaturas) - Con transforms aplicados */}
+      {/* Thumbnails (miniaturas) - Estilo minimalista tipo Lululemon */}
       {validImages.length > 1 && (
-        <div className="grid grid-cols-4 gap-3">
+        <div className="flex justify-center gap-2">
           {validImages.map((image, index) => (
             <ThumbnailImage
               key={index}
@@ -360,7 +226,6 @@ export default function ProductGallery({ images, productName, productSlug = "" }
               isSelected={index === selectedIndex}
               productName={productName}
               onClick={() => setSelectedIndex(index)}
-              fallbackSlug={productSlug}
             />
           ))}
         </div>
@@ -451,7 +316,7 @@ export default function ProductGallery({ images, productName, productSlug = "" }
             </>
           )}
 
-          {/* Thumbnails en modal - Con transforms aplicados */}
+          {/* Thumbnails en modal - Estilo minimalista */}
           {validImages.length > 1 && (
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 max-w-[90vw] overflow-x-auto px-4 pb-2">
               {validImages.map((image, index) => (
@@ -463,7 +328,6 @@ export default function ProductGallery({ images, productName, productSlug = "" }
                   productName={productName}
                   onClick={() => setSelectedIndex(index)}
                   inModal={true}
-                  fallbackSlug={productSlug}
                 />
               ))}
             </div>
