@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, useLayoutEffect } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut, Maximize2 } from "lucide-react"
 import { useImageTransform } from "@/hooks/useImageTransform"
@@ -28,14 +28,15 @@ type ProductGalleryProps = {
   productSlug?: string
 }
 
-// ✅ Componente para thumbnail - Muestra imagen completa sin recortes con diseño mejorado
+// ✅ Componente para thumbnail - Aplica los mismos transforms que ProductCard
 function ThumbnailImage({
   image,
   index,
   isSelected,
   productName,
   onClick,
-  inModal = false
+  inModal = false,
+  fallbackSlug = ""
 }: {
   image: string
   index: number
@@ -43,7 +44,75 @@ function ThumbnailImage({
   productName: string
   onClick: () => void
   inModal?: boolean
+  fallbackSlug?: string
 }) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [containerWidth, setContainerWidth] = useState<number | null>(null)
+
+  // Parsear la imagen para obtener el transform correcto
+  const { productSlug: imageParsedSlug, colorSlug, imageIndex } = parseImagePath(image)
+  const actualProductSlug = imageParsedSlug || fallbackSlug
+
+  // Usar hook para obtener transform guardado (usando contexto 'card' como ProductCard)
+  const { transform: savedTransform, isMounted } = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'card')
+
+  // Medir contenedor
+  useLayoutEffect(() => {
+    const updateSize = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth)
+      }
+    }
+
+    updateSize()
+    window.addEventListener('resize', updateSize)
+    return () => window.removeEventListener('resize', updateSize)
+  }, [])
+
+  // Calcular estilo de imagen (igual que ProductCard)
+  const getImageStyle = () => {
+    const productSlug = actualProductSlug.toLowerCase()
+    const imagePath = image.toLowerCase()
+
+    // PRIORIDAD 0: Transform guardado - ESCALADO PROPORCIONAL AL CONTENEDOR
+    if (savedTransform) {
+      if (containerWidth === null) {
+        return {
+          transform: 'none',
+          transformOrigin: 'center center'
+        }
+      }
+
+      const baseContainerSize = savedTransform.containerWidth || 220
+      const scaleFactor = containerWidth / baseContainerSize
+
+      const scaledX = savedTransform.x * scaleFactor
+      const scaledY = savedTransform.y * scaleFactor
+
+      return {
+        transform: `translate(${scaledX}px, ${scaledY}px) scale(${savedTransform.scale})`,
+        transformOrigin: 'center center'
+      }
+    }
+
+    // PRIORIDAD 1: Override específico del producto
+    const permanentOverride = PRODUCT_OVERRIDES[actualProductSlug]
+    if (permanentOverride) {
+      return {
+        transform: `scale(${permanentOverride.scale}) translateY(${permanentOverride.translateY}%) translateX(${permanentOverride.translateX}%)`,
+        transformOrigin: productSlug.includes('top') || productSlug.includes('camiseta') || productSlug.includes('body')
+          ? 'center top'
+          : 'center bottom'
+      }
+    }
+
+    // Default
+    return {
+      transform: 'scale(1)',
+      transformOrigin: 'center center'
+    }
+  }
+
   // Clases específicas para modal vs gallery
   const buttonClasses = inModal
     ? `relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden transition-all duration-200 ${
@@ -62,7 +131,10 @@ function ThumbnailImage({
       onClick={onClick}
       className={buttonClasses}
     >
-      <div className={`relative w-full h-full bg-gradient-to-br from-neutral-50 to-neutral-100 ${isSelected ? 'bg-white' : ''}`}>
+      <div
+        ref={containerRef}
+        className={`relative w-full h-full bg-gradient-to-br from-neutral-50 to-neutral-100 ${isSelected ? 'bg-white' : ''}`}
+      >
         <Image
           src={image}
           alt={inModal ? `Miniatura ${index + 1}` : `${productName} - Vista ${index + 1}`}
@@ -70,9 +142,8 @@ function ThumbnailImage({
           sizes={inModal ? "64px" : "25vw"}
           quality={60}
           loading="lazy"
-          className={`object-contain transition-all duration-300 ${
-            isSelected ? 'scale-100' : 'group-hover:scale-105'
-          }`}
+          className={`object-contain ${!isMounted ? '[transition:none!important]' : ''}`}
+          style={getImageStyle()}
         />
         {/* Hover overlay (only for non-selected thumbnails) */}
         {!isSelected && !inModal && (
@@ -278,7 +349,7 @@ export default function ProductGallery({ images, productName, productSlug = "" }
         )}
       </div>
 
-      {/* Thumbnails (miniaturas) - Imagen completa sin recortes */}
+      {/* Thumbnails (miniaturas) - Con transforms aplicados */}
       {validImages.length > 1 && (
         <div className="grid grid-cols-4 gap-3">
           {validImages.map((image, index) => (
@@ -289,6 +360,7 @@ export default function ProductGallery({ images, productName, productSlug = "" }
               isSelected={index === selectedIndex}
               productName={productName}
               onClick={() => setSelectedIndex(index)}
+              fallbackSlug={productSlug}
             />
           ))}
         </div>
@@ -379,7 +451,7 @@ export default function ProductGallery({ images, productName, productSlug = "" }
             </>
           )}
 
-          {/* Thumbnails en modal - Imagen completa sin recortes */}
+          {/* Thumbnails en modal - Con transforms aplicados */}
           {validImages.length > 1 && (
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 max-w-[90vw] overflow-x-auto px-4 pb-2">
               {validImages.map((image, index) => (
@@ -391,6 +463,7 @@ export default function ProductGallery({ images, productName, productSlug = "" }
                   productName={productName}
                   onClick={() => setSelectedIndex(index)}
                   inModal={true}
+                  fallbackSlug={productSlug}
                 />
               ))}
             </div>
