@@ -2,591 +2,357 @@
 import { useEffect } from 'react'
 
 // ✅ Transformaciones con containerWidth - Sistema proporcional
+// Actualizado: 2025-01-08
 const SAVED_TRANSFORMS = {
-    "camiseta-cuello-alto-azul-marino-cuello-alto": {
-      "azulmarino": {
-        "0": {
-          "rail": {
-            "x": 0,
-            "y": 110,
-            "scale": 1.68,
-            "context": "rail",
-            "containerWidth": 483
-          },
-          "card": {
-            "x": 0,
-            "y": 48,
-            "scale": 1.35,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+  "camiseta-cuello-alto-azul-marino-cuello-alto": {
+    "azulmarino": {
+      "0": {
+        "rail": { "x": 0, "y": 110, "scale": 1.68, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": 75, "scale": 1.74, "context": "card", "containerWidth": 220 }
+      }
+    }
+  },
+  "camiseta-manga-larga-azul-marino-manga-larga-azul": {
+    "marino": {
+      "1": {
+        "rail": { "x": 0, "y": 133, "scale": 1.62, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": 11, "scale": 1.05, "context": "card", "containerWidth": 220 }
+      }
+    }
+  },
+  "camiseta-manga-corta-azul-marino-camiseta": {
+    "azulmarino": {
+      "0": {
+        "rail": { "x": 0, "y": 110, "scale": 1.68, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": 63, "scale": 1.66, "context": "card", "containerWidth": 220 }
+      }
+    }
+  },
+  "camiseta-tropical": {
+    "placeholder.svg": {
+      "0": {
+        "rail": { "x": 0, "y": 0, "scale": 1, "context": "rail", "containerWidth": 483 }
       }
     },
-    "camiseta-manga-larga-azul-marino-manga-larga-azul": {
-      "marino": {
-        "1": {
-          "rail": {
-            "x": 0,
-            "y": 133,
-            "scale": 1.62,
-            "context": "rail",
-            "containerWidth": 483
-          },
-          "card": {
-            "x": 0,
-            "y": 0,
-            "scale": 1,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    "blanco": {
+      "0": {
+        "card": { "x": 0, "y": 3, "scale": 1, "context": "card", "containerWidth": 220 }
+      }
+    }
+  },
+  "camiseta-gia-blanco-camiseta-gia": {
+    "blanco": {
+      "0": {
+        "rail": { "x": 0, "y": 122, "scale": 1.68, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": 57, "scale": 1.46, "context": "card", "containerWidth": 220 }
+      }
+    }
+  },
+  "short-slim-suplex-liso-premium-acero-short-slim": {
+    "acero": {
+      "0": {
+        "rail": { "x": 0, "y": -158, "scale": 1.68, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": -34, "scale": 1.25, "context": "card", "containerWidth": 220 }
+      }
+    }
+  },
+  "short-ciclista-active": {
+    "aqua": {
+      "0": {
+        "rail": { "x": 0, "y": -99, "scale": 1.51, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": -40, "scale": 1.44, "context": "card", "containerWidth": 220 }
+      }
+    }
+  },
+  "short-lux": {
+    "aqua": {
+      "0": {
+        "rail": { "x": 0, "y": -108, "scale": 1.51, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": -52, "scale": 1.38, "context": "card", "containerWidth": 220 }
+      }
+    }
+  },
+  "short-brasil-beige-short-brasil": {
+    "beige": {
+      "0": {
+        "rail": { "x": 0, "y": -106, "scale": 1.51, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": -64, "scale": 1.44, "context": "card", "containerWidth": 220 }
+      }
+    }
+  },
+  "maxi-short-beige-MAXI-SHORT": {
+    "BEIGE": {
+      "0": {
+        "rail": { "x": 0, "y": -103, "scale": 1.51, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": -69, "scale": 1.54, "context": "card", "containerWidth": 220 }
+      }
+    }
+  },
+  "camiseta-deportiva": {
+    "placeholder.svg": {
+      "0": {
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
     },
-    "camiseta-manga-corta-azul-marino-camiseta": {
-      "azulmarino": {
-        "0": {
-          "rail": {
-            "x": 0,
-            "y": 110,
-            "scale": 1.68,
-            "context": "rail",
-            "containerWidth": 483
-          },
-          "card": {
-            "x": 0,
-            "y": 53,
-            "scale": 1.38,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    "negro": {
+      "0": {
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
-    },
-    "camiseta-tropical": {
-      "placeholder.svg": {
-        "0": {
-          "rail": {
-            "x": 0,
-            "y": 0,
-            "scale": 1,
-            "context": "rail",
-            "containerWidth": 483
-          }
-        }
+    }
+  },
+  "short-clasico": {
+    "negro": {
+      "0": {
+        "card": { "x": 0, "y": -63, "scale": 1.44, "context": "card", "containerWidth": 220 },
+        "rail": { "x": 0, "y": -103, "scale": 1.51, "context": "rail", "containerWidth": 483 }
       }
-    },
-    "camiseta-gia-blanco-camiseta-gia": {
-      "blanco": {
-        "0": {
-          "rail": {
-            "x": 0,
-            "y": 122,
-            "scale": 1.68,
-            "context": "rail",
-            "containerWidth": 483
-          },
-          "card": {
-            "x": 0,
-            "y": 64,
-            "scale": 1.38,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "mini-short-beige-mini-short": {
+    "beige": {
+      "0": {
+        "card": { "x": 0, "y": -64, "scale": 1.44, "context": "card", "containerWidth": 220 },
+        "rail": { "x": 0, "y": -103, "scale": 1.51, "context": "rail", "containerWidth": 483 }
       }
-    },
-    "short-slim-suplex-liso-premium-acero-short-slim": {
-      "acero": {
-        "0": {
-          "rail": {
-            "x": 0,
-            "y": -158,
-            "scale": 1.68,
-            "context": "rail",
-            "containerWidth": 483
-          },
-          "card": {
-            "x": 0,
-            "y": -25,
-            "scale": 1.25,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "body-manga-corta-suplex-azul": {
+    "marino": {
+      "0": {
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 },
+        "rail": { "x": 0, "y": 78, "scale": 1.42, "context": "rail", "containerWidth": 483 }
       }
-    },
-    "short-ciclista-active": {
-      "aqua": {
-        "0": {
-          "rail": {
-            "x": 0,
-            "y": -99,
-            "scale": 1.51,
-            "context": "rail",
-            "containerWidth": 483
-          },
-          "card": {
-            "x": 0,
-            "y": -64,
-            "scale": 1.44,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "body-manga-larga-beige-manga-larga": {
+    "beige": {
+      "0": {
+        "card": { "x": 0, "y": 60, "scale": 1.58, "context": "card", "containerWidth": 220 }
       }
-    },
-    "short-lux": {
-      "aqua": {
-        "0": {
-          "rail": {
-            "x": 0,
-            "y": -108,
-            "scale": 1.51,
-            "context": "rail",
-            "containerWidth": 483
-          },
-          "card": {
-            "x": 0,
-            "y": -57,
-            "scale": 1.4,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "top-afrodita-suplex-liso-premium-azulino-afrodita": {
+    "azulino": {
+      "0": {
+        "card": { "x": 0, "y": 0, "scale": 1.01, "context": "card", "containerWidth": 220 }
       }
-    },
-    "short-brasil-beige-short-brasil": {
-      "beige": {
-        "0": {
-          "rail": {
-            "x": 0,
-            "y": -106,
-            "scale": 1.51,
-            "context": "rail",
-            "containerWidth": 483
-          },
-          "card": {
-            "x": 0,
-            "y": -64,
-            "scale": 1.44,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "top-venus": {
+    "azulino": {
+      "0": {
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
-    },
-    "maxi-short-beige-MAXI-SHORT": {
-      "BEIGE": {
-        "0": {
-          "rail": {
-            "x": 0,
-            "y": -103,
-            "scale": 1.51,
-            "context": "rail",
-            "containerWidth": 483
-          },
-          "card": {
-            "x": 0,
-            "y": -64,
-            "scale": 1.44,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "top-soporte": {
+    "beige": {
+      "0": {
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
-    },
-    "camiseta-deportiva": {
-      "placeholder.svg": {
-        "0": {
-          "card": {
-            "x": 0,
-            "y": 0,
-            "scale": 1,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "top-zafiro": {
+    "blanco": {
+      "0": {
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
-    },
-    "short-clasico": {
-      "negro": {
-        "0": {
-          "card": {
-            "x": 0,
-            "y": -62,
-            "scale": 1.44,
-            "context": "card",
-            "containerWidth": 220
-          },
-          "rail": {
-            "x": 0,
-            "y": -103,
-            "scale": 1.51,
-            "context": "rail",
-            "containerWidth": 483
-          }
-        }
+    }
+  },
+  "top-luna": {
+    "beige": {
+      "0": {
+        "card": { "x": 0, "y": 44, "scale": 1.48, "context": "card", "containerWidth": 220 }
       }
-    },
-    "mini-short-beige-mini-short": {
-      "beige": {
-        "0": {
-          "card": {
-            "x": 0,
-            "y": -64,
-            "scale": 1.44,
-            "context": "card",
-            "containerWidth": 220
-          },
-          "rail": {
-            "x": 0,
-            "y": -103,
-            "scale": 1.51,
-            "context": "rail",
-            "containerWidth": 483
-          }
-        }
+    }
+  },
+  "top-arena": {
+    "blanco": {
+      "0": {
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
-    },
-    "body-manga-corta-suplex-azul": {
-      "marino": {
-        "0": {
-          "card": {
-            "x": 0,
-            "y": 0,
-            "scale": 1,
-            "context": "card",
-            "containerWidth": 220
-          },
-          "rail": {
-            "x": 0,
-            "y": 78,
-            "scale": 1.42,
-            "context": "rail",
-            "containerWidth": 483
-          }
-        }
+    }
+  },
+  "top-perla": {
+    "blanco": {
+      "0": {
+        "card": { "x": 0, "y": 0, "scale": 1.04, "context": "card", "containerWidth": 220 }
       }
-    },
-    "body-manga-larga-beige-manga-larga": {
-      "beige": {
-        "0": {
-          "card": {
-            "x": 0,
-            "y": 53,
-            "scale": 1.38,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "enterizo-manga-cero": {
+    "azulino": {
+      "0": {
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
-    },
-    "top-afrodita-suplex-liso-premium-azulino-afrodita": {
-      "azulino": {
-        "0": {
-          "card": {
-            "x": 0,
-            "y": 0,
-            "scale": 1.01,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "cafarena-nina": {
+    "azulmarino": {
+      "0": {
+        "rail": { "x": 0, "y": 101, "scale": 1.53, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
-    },
-    "top-venus": {
-      "azulino": {
-        "0": {
-          "card": {
-            "x": 0,
-            "y": 0,
-            "scale": 1,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "enterizo-manga-corta-nina": {
+    "amarillo": {
+      "0": {
+        "rail": { "x": 2, "y": 92, "scale": 1.58, "context": "rail", "containerWidth": 483 },
+        "card": { "x": -3, "y": 55, "scale": 1.63, "context": "card", "containerWidth": 220 }
       }
-    },
-    "top-soporte": {
-      "beige": {
-        "0": {
-          "card": {
-            "x": 0,
-            "y": 0,
-            "scale": 1,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "enterizo-manga-larga-nina": {
+    "amarillo": {
+      "0": {
+        "rail": { "x": 0, "y": 103, "scale": 1.5, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": 46, "scale": 1.38, "context": "card", "containerWidth": 220 }
       }
-    },
-    "top-zafiro": {
-      "blanco": {
-        "0": {
-          "card": {
-            "x": 0,
-            "y": 0,
-            "scale": 1,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "legging-nina": {
+    "blanco": {
+      "0": {
+        "rail": { "x": 0, "y": -122, "scale": 1.55, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
-    },
-    "top-luna": {
-      "beige": {
-        "0": {
-          "card": {
-            "x": 0,
-            "y": 44,
-            "scale": 1.31,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "maxi-short-nina": {
+    "azulmarino": {
+      "0": {
+        "rail": { "x": 0, "y": -110, "scale": 1.55, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
-    },
-    "top-arena": {
-      "blanco": {
-        "0": {
-          "card": {
-            "x": 0,
-            "y": 0,
-            "scale": 1,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "panty-nina": {
+    "azulmarino": {
+      "0": {
+        "rail": { "x": 0, "y": -110, "scale": 1.55, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
-    },
-    "top-perla": {
-      "blanco": {
-        "0": {
-          "card": {
-            "x": 0,
-            "y": 0,
-            "scale": 1.04,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "short-juvenil-nina": {
+    "azulmarino": {
+      "0": {
+        "rail": { "x": 0, "y": -131, "scale": 1.55, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
-    },
-    "enterizo-manga-cero": {
-      "azulino": {
-        "0": {
-          "card": {
-            "x": 0,
-            "y": 0,
-            "scale": 1,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "top-jazmin": {
+    "beige": {
+      "0": {
+        "rail": { "x": 0, "y": 120, "scale": 1.65, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
-    },
-    "cafarena-nina": {
-      "azulmarino": {
-        "0": {
-          "rail": {
-            "x": 0,
-            "y": 101,
-            "scale": 1.53,
-            "context": "rail",
-            "containerWidth": 483
-          },
-          "card": {
-            "x": 0,
-            "y": 0,
-            "scale": 1,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "top-margarita": {
+    "beige": {
+      "0": {
+        "rail": { "x": 0, "y": 120, "scale": 1.5, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
-    },
-    "enterizo-manga-corta-nina": {
-      "amarillo": {
-        "0": {
-          "rail": {
-            "x": 2,
-            "y": 92,
-            "scale": 1.58,
-            "context": "rail",
-            "containerWidth": 483
-          },
-          "card": {
-            "x": 0,
-            "y": 0,
-            "scale": 1,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "top-vani": {
+    "blanco": {
+      "0": {
+        "rail": { "x": 0, "y": 120, "scale": 1.5, "context": "rail", "containerWidth": 483 },
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
-    },
-    "enterizo-manga-larga-nina": {
-      "amarillo": {
-        "0": {
-          "rail": {
-            "x": 0,
-            "y": 103,
-            "scale": 1.5,
-            "context": "rail",
-            "containerWidth": 483
-          },
-          "card": {
-            "x": 0,
-            "y": 0,
-            "scale": 1,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "body-manga-corta-suplex-liso-premium-rojo-body-rojo": {
+    "suplex": {
+      "0": {
+        "card": { "x": 0, "y": 37, "scale": 1.74, "context": "card", "containerWidth": 220 },
+        "rail": { "x": 0, "y": 57, "scale": 1.65, "context": "rail", "containerWidth": 464 }
       }
-    },
-    "legging-nina": {
-      "blanco": {
-        "0": {
-          "rail": {
-            "x": 0,
-            "y": -122,
-            "scale": 1.55,
-            "context": "rail",
-            "containerWidth": 483
-          },
-          "card": {
-            "x": 0,
-            "y": 0,
-            "scale": 1,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "body-manga-corta-rosado-body-mc": {
+    "rosado": {
+      "0": {
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
-    },
-    "maxi-short-nina": {
-      "azulmarino": {
-        "0": {
-          "rail": {
-            "x": 0,
-            "y": -110,
-            "scale": 1.55,
-            "context": "rail",
-            "containerWidth": 483
-          },
-          "card": {
-            "x": 0,
-            "y": 0,
-            "scale": 1,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "top-paradise-suplex-liso-premium-azulino-paradise": {
+    "azulino": {
+      "0": {
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
-    },
-    "panty-nina": {
-      "azulmarino": {
-        "0": {
-          "rail": {
-            "x": 0,
-            "y": -110,
-            "scale": 1.55,
-            "context": "rail",
-            "containerWidth": 483
-          },
-          "card": {
-            "x": 0,
-            "y": 0,
-            "scale": 1,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "top-jungle": {
+    "azulino": {
+      "0": {
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
       }
-    },
-    "short-juvenil-nina": {
-      "azulmarino": {
-        "0": {
-          "rail": {
-            "x": 0,
-            "y": -131,
-            "scale": 1.55,
-            "context": "rail",
-            "containerWidth": 483
-          },
-          "card": {
-            "x": 0,
-            "y": 0,
-            "scale": 1,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "enterizo-tiras-suplex-liso-premium-azulino-enterizo": {
+    "azulino": {
+      "0": {
+        "card": { "x": 0, "y": 17, "scale": 1.44, "context": "card", "containerWidth": 220 }
       }
-    },
-    "top-jazmin": {
-      "beige": {
-        "0": {
-          "rail": {
-            "x": 0,
-            "y": 120,
-            "scale": 1.65,
-            "context": "rail",
-            "containerWidth": 483
-          },
-          "card": {
-            "x": 0,
-            "y": 0,
-            "scale": 1,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "enterizo-manga-cero-suplex-liso-premium-azulino-Manga-cero": {
+    "azulino": {
+      "0": {
+        "card": { "x": 0, "y": 46, "scale": 1.34, "context": "card", "containerWidth": 220 }
       }
-    },
-    "top-margarita": {
-      "beige": {
-        "0": {
-          "rail": {
-            "x": 0,
-            "y": 120,
-            "scale": 1.5,
-            "context": "rail",
-            "containerWidth": 483
-          },
-          "card": {
-            "x": 0,
-            "y": 0,
-            "scale": 1,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "legging-slim-suplex-liso-premium-azul-marino-legging-azul": {
+    "marino": {
+      "0": {
+        "card": { "x": 0, "y": -57, "scale": 1.51, "context": "card", "containerWidth": 220 }
       }
-    },
-    "top-vani": {
-      "blanco": {
-        "0": {
-          "rail": {
-            "x": 0,
-            "y": 120,
-            "scale": 1.5,
-            "context": "rail",
-            "containerWidth": 483
-          },
-          "card": {
-            "x": 0,
-            "y": 0,
-            "scale": 1,
-            "context": "card",
-            "containerWidth": 220
-          }
-        }
+    }
+  },
+  "straple-chanel": {
+    "blanco": {
+      "0": {
+        "card": { "x": 0, "y": 0, "scale": 1, "context": "card", "containerWidth": 220 }
+      }
+    }
+  },
+  "legging-slim-suplex-perchado-azul": {
+    "marino": {
+      "0": {
+        "card": { "x": 14, "y": -66, "scale": 1.45, "context": "card", "containerWidth": 220 }
+      }
+    }
+  },
+  "legging-functional-azul": {
+    "marino": {
+      "0": {
+        "card": { "x": 0, "y": -66, "scale": 1.45, "context": "card", "containerWidth": 220 }
+      }
+    }
+  },
+  "legging-clasica-gamuza": {
+    "blanco": {
+      "0": {
+        "card": { "x": 0, "y": -66, "scale": 1.45, "context": "card", "containerWidth": 220 }
+      }
+    }
+  },
+  "pescador-realce": {
+    "azulino": {
+      "0": {
+        "card": { "x": 0, "y": 0, "scale": 1.08, "context": "card", "containerWidth": 220 }
       }
     }
   }
+}
 
 export default function ImageTransformLoader() {
   useEffect(() => {

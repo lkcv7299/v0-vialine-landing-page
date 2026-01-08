@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut, Maximize2 } from "lucide-react"
-import { useImageDebug } from "@/contexts/ImageDebugContext"
 import { useImageTransform } from "@/hooks/useImageTransform"
 import { parseImagePath } from "@/lib/imageTransformUtils"
 
@@ -86,9 +85,8 @@ function ThumbnailImage({
 
 export default function ProductGallery({ images, productName, productSlug = "" }: ProductGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState(0)
-  const [isZoomOpen, setIsZoomOpen] = useState(false) // ✅ Modal de zoom
-  const [zoomLevel, setZoomLevel] = useState(1) // ✅ Nivel de zoom (1 = 100%, 2 = 200%, etc.)
-  const { values } = useImageDebug()
+  const [isZoomOpen, setIsZoomOpen] = useState(false)
+  const [zoomLevel, setZoomLevel] = useState(1)
 
   // ✅ Filter out any empty or invalid images
   const validImages = images.filter(img => img && img.trim() !== "")
@@ -98,18 +96,18 @@ export default function ProductGallery({ images, productName, productSlug = "" }
   const { productSlug: imageParsedSlug, colorSlug, imageIndex } = parseImagePath(currentImagePath)
   const actualProductSlug = imageParsedSlug || productSlug
 
-  // ✅ Usar hook para obtener transform del debugger (MÁXIMA PRIORIDAD)
-  const { transform: debuggerTransform, isMounted } = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'gallery')
+  // ✅ Usar hook para obtener transform guardado
+  const { transform: savedTransform, isMounted } = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'gallery')
 
   // 🎨 Calcular estilo de imagen basado en tipo de producto
   const getImageTransform = () => {
     const slug = productSlug.toLowerCase()
     const imagePath = validImages[selectedIndex]?.toLowerCase() || ""
 
-    // ✅ PRIORIDAD 0 (MÁXIMA): Transform desde el debugger
-    if (debuggerTransform) {
+    // ✅ PRIORIDAD 0 (MÁXIMA): Transform guardado
+    if (savedTransform) {
       return {
-        transform: `translate(${debuggerTransform.x}px, ${debuggerTransform.y}px) scale(${debuggerTransform.scale})`,
+        transform: `translate(${savedTransform.x}px, ${savedTransform.y}px) scale(${savedTransform.scale})`,
         transformOrigin: 'center center'
       }
     }
@@ -122,44 +120,6 @@ export default function ProductGallery({ images, productName, productSlug = "" }
         transformOrigin: slug.includes('top') || slug.includes('camiseta') || slug.includes('body')
           ? 'center top'
           : 'center bottom'
-      }
-    }
-
-    // ✅ PRIORIDAD 2: Valores generales por tipo de producto (fallback)
-    // Detectar si es producto de niña
-    const isGirlProduct = slug.includes('nina') || imagePath.includes('nina')
-
-    // Productos superiores: tops/camisetas
-    if (slug.includes('camiseta') || slug.includes('top') || slug.includes('body') || slug.includes('enterizo') ||
-        imagePath.includes('camiseta') || imagePath.includes('top') || imagePath.includes('body') || imagePath.includes('enterizo')) {
-
-      if (isGirlProduct) {
-        return {
-          transform: `scale(${values.girlTopScale}) translateY(${values.girlTopTranslateY}%) translateX(${values.girlTopTranslateX}%)`,
-          transformOrigin: 'center top'
-        }
-      }
-
-      return {
-        transform: `scale(${values.cardTopScale}) translateY(${values.cardTopTranslateY}%) translateX(${values.cardTopTranslateX}%)`,
-        transformOrigin: 'center top'
-      }
-    }
-
-    // Productos inferiores: leggings/shorts
-    if (slug.includes('legging') || slug.includes('short') || slug.includes('biker') || slug.includes('pantalon') ||
-        imagePath.includes('legging') || imagePath.includes('short') || imagePath.includes('biker') || imagePath.includes('pantalon')) {
-
-      if (isGirlProduct) {
-        return {
-          transform: `scale(${values.girlBottomScale}) translateY(${values.girlBottomTranslateY}%) translateX(${values.girlBottomTranslateX}%)`,
-          transformOrigin: 'center bottom'
-        }
-      }
-
-      return {
-        transform: `scale(${values.cardBottomScale}) translateY(${values.cardBottomTranslateY}%) translateX(${values.cardBottomTranslateX}%)`,
-        transformOrigin: 'center bottom'
       }
     }
 
@@ -180,16 +140,16 @@ export default function ProductGallery({ images, productName, productSlug = "" }
 
   // ✅ Controles de zoom
   const handleZoomIn = () => {
-    setZoomLevel((prev) => Math.min(prev + 0.5, 3)) // Max 3x zoom
+    setZoomLevel((prev) => Math.min(prev + 0.5, 3))
   }
 
   const handleZoomOut = () => {
-    setZoomLevel((prev) => Math.max(prev - 0.5, 1)) // Min 1x zoom
+    setZoomLevel((prev) => Math.max(prev - 0.5, 1))
   }
 
   const openZoom = () => {
     setIsZoomOpen(true)
-    setZoomLevel(1) // Reset zoom al abrir
+    setZoomLevel(1)
   }
 
   const closeZoom = () => {
@@ -204,7 +164,7 @@ export default function ProductGallery({ images, productName, productSlug = "" }
     }
     if (isZoomOpen) {
       document.addEventListener('keydown', handleEsc)
-      document.body.style.overflow = 'hidden' // Prevent scroll
+      document.body.style.overflow = 'hidden'
     }
     return () => {
       document.removeEventListener('keydown', handleEsc)

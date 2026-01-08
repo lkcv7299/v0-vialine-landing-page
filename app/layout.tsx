@@ -14,9 +14,6 @@ import { WishlistProvider } from "@/components/providers/WishlistContext"
 import { CartProvider } from "@/contexts/CartContext"
 import SessionProvider from "@/components/providers/SessionProvider"
 import { Toaster } from "sonner"
-import { ImageDebugProvider } from "@/contexts/ImageDebugContext"
-import { ImageFramingProvider } from "@/contexts/ImageFramingContext"
-import { ImageFramingPanel } from "@/components/ImageFramingPanel"
 import ImageTransformLoader from "@/components/ImageTransformLoader"
 
 export const metadata: Metadata = {
@@ -60,7 +57,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  // ✅ SOLUCIÓN: Detectar si estamos en producción
   const isProduction = process.env.NODE_ENV === "production"
 
   return (
@@ -98,32 +94,26 @@ export default function RootLayout({
             }),
           }}
         />
-        
-        {/* ✅ NUEVO: SessionProvider envuelve todo */}
+
         <SessionProvider>
           <CartProvider>
             <WishlistProvider>
-              <ImageDebugProvider>
-                <ImageFramingProvider>
-                  <ImageTransformLoader />
-                  <ClientWrapper>
-                    <PromoBar />
-                    <SiteHeader />
-                    {children}
-                    <WhatsAppFloat />
-                    <Toaster
-                      position="bottom-right"
-                      toastOptions={{
-                        classNames: {
-                          success: 'bg-rose-600 text-white border-rose-600',
-                          error: 'bg-red-600 text-white border-red-600',
-                        },
-                      }}
-                    />
-                    {!isProduction && <ImageFramingPanel />}
-                  </ClientWrapper>
-                </ImageFramingProvider>
-              </ImageDebugProvider>
+              <ImageTransformLoader />
+              <ClientWrapper>
+                <PromoBar />
+                <SiteHeader />
+                {children}
+                <WhatsAppFloat />
+                <Toaster
+                  position="bottom-right"
+                  toastOptions={{
+                    classNames: {
+                      success: 'bg-rose-600 text-white border-rose-600',
+                      error: 'bg-red-600 text-white border-red-600',
+                    },
+                  }}
+                />
+              </ClientWrapper>
             </WishlistProvider>
           </CartProvider>
         </SessionProvider>

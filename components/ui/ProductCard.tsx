@@ -1,12 +1,10 @@
 "use client"
-import { useState, useRef, useEffect, useLayoutEffect } from "react"
+import { useState, useRef, useLayoutEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import WishlistHeart from "@/components/WishlistHeart"
-import { useImageDebug } from "@/contexts/ImageDebugContext"
 import { useImageTransform } from "@/hooks/useImageTransform"
 import { parseImagePath } from "@/lib/imageTransformUtils"
-import { useImageFraming } from "@/contexts/ImageFramingContext"
 
 // ✅ PRODUCT-SPECIFIC OVERRIDES - Ajustes visuales permanentes para productos específicos
 const PRODUCT_OVERRIDES: { [slug: string]: { scale: number; translateY: number; translateX: number } } = {
@@ -19,10 +17,30 @@ const PRODUCT_OVERRIDES: { [slug: string]: { scale: number; translateY: number; 
   "top-perla": { scale: 1.00, translateY: -4, translateX: 1 },
   "top-athena": { scale: 1.00, translateY: -5, translateX: 0 },
   "top-luna": { scale: 1.50, translateY: 15, translateX: 2 },
-  "enterizo-manga-cero": { scale: 1.00, translateY: -33, translateX: 0 },
+  "enterizo-manga-cero": { scale: 1.00, translateY: 0, translateX: 0 },
   "legging-harmony": { scale: 1.05, translateY: -29, translateX: 0 },
   "pescador-realce": { scale: 1.00, translateY: -20, translateX: 0 },
   "torero-energy": { scale: 1.00, translateY: 0, translateX: 0 },
+  "camiseta-tiras-fijas": { scale: 1.00, translateY: 0, translateX: 0 },
+  "straple-chanel": { scale: 1.00, translateY: 0, translateX: 0 },
+  "top-deportivo": { scale: 1.00, translateY: 0, translateX: 0 },
+  "top-tira-fijas": { scale: 1.00, translateY: 0, translateX: 0 },
+}
+
+// Valores por defecto para fallback (antes estaban en ImageDebugContext)
+const DEFAULT_VALUES = {
+  cardTopScale: 1,
+  cardTopTranslateY: 0,
+  cardTopTranslateX: 0,
+  cardBottomScale: 1,
+  cardBottomTranslateY: 0,
+  cardBottomTranslateX: 0,
+  girlTopScale: 1,
+  girlTopTranslateY: 0,
+  girlTopTranslateX: 0,
+  girlBottomScale: 1,
+  girlBottomTranslateY: 0,
+  girlBottomTranslateX: 0,
 }
 
 type Props = {
@@ -42,19 +60,15 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
   const [isHovering, setIsHovering] = useState(false)
   const displayImage = image || fallbackImage || "/placeholder.svg"
   const isOutOfStock = inventory === 0
-  const { values } = useImageDebug()
   const containerRef = useRef<HTMLDivElement>(null)
   const [containerWidth, setContainerWidth] = useState<number | null>(null)
-
-  // ✅ Modo Framing
-  const { isFramingMode, selectedImage, setSelectedImage } = useImageFraming()
 
   // ✅ SIEMPRE parsear la imagen principal para obtener el transform correcto
   const { productSlug: imageParsedSlug, colorSlug, imageIndex } = parseImagePath(displayImage)
   const actualProductSlug = imageParsedSlug || slug
 
-  // ✅ Usar hook para obtener transform del debugger (MÁXIMA PRIORIDAD)
-  const { transform: debuggerTransform, isMounted } = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'card')
+  // ✅ Usar hook para obtener transform guardado
+  const { transform: savedTransform, isMounted } = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'card')
 
   // ✅ USAR useLayoutEffect para medir ANTES del primer paint (evita flash)
   useLayoutEffect(() => {
@@ -72,39 +86,14 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
   // Usar hover image si está disponible y estamos hovering
   const currentImage = isHovering && hoverImage ? hoverImage : displayImage
 
-  // ✅ Check si este producto está seleccionado
-  const isSelected =
-    isFramingMode &&
-    selectedImage?.productSlug === actualProductSlug &&
-    selectedImage?.colorSlug === colorSlug &&
-    selectedImage?.imageIndex === imageIndex
-
-  // ✅ Handler para seleccionar este producto en modo framing
-  const handleFramingClick = (e: React.MouseEvent) => {
-    if (isFramingMode) {
-      e.preventDefault()
-      e.stopPropagation()
-      setSelectedImage({
-        productSlug: actualProductSlug,
-        colorSlug: colorSlug || '',
-        imageIndex,
-        imagePath: currentImage,
-        context: 'card',
-        containerWidth: containerWidth || 350 // ✅ Usar valor medido o fallback
-      })
-    }
-  }
-
   // SOLUCIÓN DEFINITIVA: scale + translateY + translateX para mover físicamente la imagen
   const getImageStyle = () => {
     const productSlug = slug.toLowerCase()
     const imagePath = displayImage.toLowerCase()
-    const hoverScale = isHovering ? 1.05 : 1
 
-    // ✅ PRIORIDAD 0 (MÁXIMA): Transform desde el debugger - ESCALADO PROPORCIONAL AL CONTENEDOR
-    if (debuggerTransform) {
+    // ✅ PRIORIDAD 0 (MÁXIMA): Transform guardado - ESCALADO PROPORCIONAL AL CONTENEDOR
+    if (savedTransform) {
       // ⚠️ CRÍTICO: Si tenemos transform pero no hemos medido el contenedor, NO aplicar NINGÚN transform
-      // Esto evita el flash donde se aplica primero el transform general y luego el específico
       if (containerWidth === null) {
         return {
           transform: 'none',
@@ -113,15 +102,15 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
       }
 
       // ✅ USAR EL CONTAINER WIDTH GUARDADO (cuando se ajustó originalmente)
-      const baseContainerSize = debuggerTransform.containerWidth || 350
+      const baseContainerSize = savedTransform.containerWidth || 350
       const scaleFactor = containerWidth / baseContainerSize
 
-      // Aplicar los valores EXACTOS del usuario, pero escalados proporcionalmente
-      const scaledX = debuggerTransform.x * scaleFactor
-      const scaledY = debuggerTransform.y * scaleFactor
+      // Aplicar los valores EXACTOS, pero escalados proporcionalmente
+      const scaledX = savedTransform.x * scaleFactor
+      const scaledY = savedTransform.y * scaleFactor
 
       return {
-        transform: `translate(${scaledX}px, ${scaledY}px) scale(${debuggerTransform.scale * hoverScale})`,
+        transform: `translate(${scaledX}px, ${scaledY}px) scale(${savedTransform.scale})`,
         transformOrigin: 'center center'
       }
     }
@@ -130,18 +119,17 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
     const permanentOverride = PRODUCT_OVERRIDES[slug]
     if (permanentOverride) {
       return {
-        transform: `scale(${permanentOverride.scale * hoverScale}) translateY(${permanentOverride.translateY}%) translateX(${permanentOverride.translateX}%)`,
+        transform: `scale(${permanentOverride.scale}) translateY(${permanentOverride.translateY}%) translateX(${permanentOverride.translateX}%)`,
         transformOrigin: productSlug.includes('top') || productSlug.includes('camiseta') || productSlug.includes('body')
           ? 'center top'
           : 'center bottom'
       }
     }
 
-    // ✅ PRIORIDAD 2: Valores generales por tipo de producto (fallback) - SOLO DESKTOP
-    // Detectar si es producto de niña
+    // ✅ PRIORIDAD 2: Valores generales por tipo de producto (fallback)
     const isGirlProduct = productSlug.includes('nina') || imagePath.includes('nina')
 
-    // Productos superiores: ZOOM + MOVER ARRIBA para mostrar cara + producto
+    // Productos superiores
     if (productSlug.includes('camiseta') ||
         productSlug.includes('top') ||
         productSlug.includes('body') ||
@@ -153,18 +141,18 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
 
       if (isGirlProduct) {
         return {
-          transform: `scale(${values.girlTopScale * hoverScale}) translateY(${values.girlTopTranslateY}%) translateX(${values.girlTopTranslateX}%)`,
+          transform: `scale(${DEFAULT_VALUES.girlTopScale}) translateY(${DEFAULT_VALUES.girlTopTranslateY}%) translateX(${DEFAULT_VALUES.girlTopTranslateX}%)`,
           transformOrigin: 'center top'
         }
       }
 
       return {
-        transform: `scale(${values.cardTopScale * hoverScale}) translateY(${values.cardTopTranslateY}%) translateX(${values.cardTopTranslateX}%)`,
+        transform: `scale(${DEFAULT_VALUES.cardTopScale}) translateY(${DEFAULT_VALUES.cardTopTranslateY}%) translateX(${DEFAULT_VALUES.cardTopTranslateX}%)`,
         transformOrigin: 'center top'
       }
     }
 
-    // Productos inferiores: ZOOM + MOVER ABAJO para mostrar piernas
+    // Productos inferiores
     if (productSlug.includes('legging') ||
         productSlug.includes('short') ||
         productSlug.includes('biker') ||
@@ -176,32 +164,30 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
 
       if (isGirlProduct) {
         return {
-          transform: `scale(${values.girlBottomScale * hoverScale}) translateY(${values.girlBottomTranslateY}%) translateX(${values.girlBottomTranslateX}%)`,
+          transform: `scale(${DEFAULT_VALUES.girlBottomScale}) translateY(${DEFAULT_VALUES.girlBottomTranslateY}%) translateX(${DEFAULT_VALUES.girlBottomTranslateX}%)`,
           transformOrigin: 'center bottom'
         }
       }
 
       return {
-        transform: `scale(${values.cardBottomScale * hoverScale}) translateY(${values.cardBottomTranslateY}%) translateX(${values.cardBottomTranslateX}%)`,
+        transform: `scale(${DEFAULT_VALUES.cardBottomScale}) translateY(${DEFAULT_VALUES.cardBottomTranslateY}%) translateX(${DEFAULT_VALUES.cardBottomTranslateX}%)`,
         transformOrigin: 'center bottom'
       }
     }
 
-    // Default: solo zoom
+    // Default: sin transformación
     return {
-      transform: `scale(${isHovering ? 1.1 : 1})`,
+      transform: 'none',
       transformOrigin: 'center center'
     }
   }
 
-  // ✅ Renderizar contenido del card
-  const renderCardContent = () => (
-    <>
+  return (
+    <Link href={href} className="group block">
       <div
         ref={containerRef}
-        className={`relative aspect-[3/4] w-full overflow-hidden rounded-md transition-all ${
-          isFramingMode ? 'ring-2 ring-blue-400 ring-offset-2 hover:ring-blue-600' : ''
-        } ${isSelected ? 'ring-4 ring-blue-600 ring-offset-4' : ''}`}
+        className="relative aspect-[3/4] w-full overflow-hidden rounded-md"
+        style={{ backgroundColor: '#FFFFFF' }}
         onMouseEnter={() => !isOutOfStock && setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
       >
@@ -212,20 +198,13 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           quality={75}
           loading="lazy"
-          className={`object-cover ${!isMounted ? '[transition:none!important]' : ''}`}
+          className={`object-contain ${!isMounted ? '[transition:none!important]' : ''}`}
           style={getImageStyle()}
         />
 
-        {/* ✅ Indicador de modo framing */}
-        {isFramingMode && (
-          <div className="absolute top-2 right-2 bg-blue-600 text-white px-2 py-1 rounded text-[10px] font-medium shadow-lg">
-            Click para ajustar
-          </div>
-        )}
+        <WishlistHeart slug={slug} />
 
-        {!isFramingMode && <WishlistHeart slug={slug} />}
-
-        {/* Badge NUEVO o OFERTA - Estilo unificado */}
+        {/* Badge NUEVO o OFERTA */}
         {badge && !isOutOfStock && (
           <span className={`absolute left-2 bottom-2 rounded-sm px-2 py-1 text-[10px] font-semibold uppercase tracking-wide shadow-sm ${
             badge === "nuevo"
@@ -236,7 +215,7 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
           </span>
         )}
 
-        {/* Badge AGOTADO - Estilo unificado con los demás badges */}
+        {/* Badge AGOTADO */}
         {isOutOfStock && (
           <>
             <div className="absolute inset-0 bg-black/10" />
@@ -266,21 +245,6 @@ export default function ProductCard({ href, title, price, image, hoverImage, bad
           )}
         </div>
       </div>
-    </>
-  )
-
-  // ✅ Renderizar con wrapper condicional
-  if (isFramingMode) {
-    return (
-      <div className="group block cursor-crosshair" onClick={handleFramingClick}>
-        {renderCardContent()}
-      </div>
-    )
-  }
-
-  return (
-    <Link href={href} className="group block">
-      {renderCardContent()}
     </Link>
   )
 }

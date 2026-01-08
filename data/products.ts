@@ -250,8 +250,7 @@ export const products: Product[] = [
     sizes: ["S","M","L","XL"],
     audience: "mujer",    tags: ["COD.393", "Colección Camisetas Algodón Licrado", "Algodón Licrado"],
 
-    inventory: 0,
-      attributes: {
+    attributes: {
         "material": "Algodón Licrado",
         "detalles": [
             "Manga larga",
@@ -902,10 +901,10 @@ export const products: Product[] = [
       hex: "#F5F5DC",
       images: [
         "/productos/mujer/short/mini-short-beige-mini-short-beige1.webp",
-        "/productos/mujer/short/mini-short-beige-mini-short-beige2.webp",
+        "/productos/mujer/short/mini-short-beige-mini-short-beige5.webp",
         "/productos/mujer/short/mini-short-beige-mini-short-beige3.webp",
         "/productos/mujer/short/mini-short-beige-mini-short-beige4.webp",
-        "/productos/mujer/short/mini-short-beige-mini-short-beige5.webp"
+        "/productos/mujer/short/mini-short-beige-mini-short-beige2.webp"
       ]
     },
       {
@@ -914,10 +913,10 @@ export const products: Product[] = [
       hex: "#FFFFFF",
       images: [
         "/productos/mujer/short/mini-short-blanco-mini-short-blanco1.webp",
-        "/productos/mujer/short/mini-short-blanco-mini-short-blanco2.webp",
+        "/productos/mujer/short/mini-short-blanco-mini-short-blanco5.webp",
         "/productos/mujer/short/mini-short-blanco-mini-short-blanco3.webp",
         "/productos/mujer/short/mini-short-blanco-mini-short-blanco4.webp",
-        "/productos/mujer/short/mini-short-blanco-mini-short-blanco5.webp"
+        "/productos/mujer/short/mini-short-blanco-mini-short-blanco2.webp"
       ]
     },
       {
@@ -926,10 +925,10 @@ export const products: Product[] = [
       hex: "#000000",
       images: [
         "/productos/mujer/short/mini-short-negro-mini-short-negro.webp",
-        "/productos/mujer/short/mini-short-negro-mini-short-negro2..webp",
+        "/productos/mujer/short/mini-short-negro-mini-short-negro5..webp",
         "/productos/mujer/short/mini-short-negro-mini-short-negro3..webp",
         "/productos/mujer/short/mini-short-negro-mini-short-negro4..webp",
-        "/productos/mujer/short/mini-short-negro-mini-short-negro5..webp"
+        "/productos/mujer/short/mini-short-negro-mini-short-negro2..webp"
       ]
     },
     ],
@@ -951,56 +950,55 @@ export const products: Product[] = [
     slug: "body-manga-corta-suplex",
     title: "Body manga corta suplex",
     price: 36,
-    image: "/productos/mujer/bodys/body-manga-corta-suplex-azul-marino.webp",
+    image: "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex1.webp",
     category: "bodysuits",
     fabric: "suplex",
     colors: [
       {
-        name: "Azul Marino",
-        slug: "azul-marino",
-        hex: "#1E3A8A",
-        image: "/productos/mujer/bodys/body-manga-corta-suplex-azul-marino.webp",
+        name: "Rojo",
+        slug: "rojo",
+        hex: "#D22B2B",
+        images: [
+          "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex1.webp",
+          "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex2.webp",
+          "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex3.webp",
+          "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex-4.webp",
+          "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex5.webp"
+        ]
+      },
+      {
+        name: "Negro",
+        slug: "negro",
+        hex: "#000000",
+        images: [
+          "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-negro-Body-mc-negro1.webp",
+          "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-negro-body-mc-negro2.webp",
+          "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-negro-body-mc-negro3.webp",
+          "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-negro-body-mc-negro4.webp",
+          "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-negro-body-mc-negro5.webp"
+        ]
       },
       {
         name: "Blanco",
         slug: "blanco",
         hex: "#FFFFFF",
-        image: "/productos/mujer/bodys/body-manga-corta-suplex-blanco.webp",
+        images: [
+          "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-blanco-body-mc-blanco-suplex1.webp",
+          "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-blanco-body-mc-blanco-xuplex2.webp",
+          "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-blanco-body-mc-blanoc-suplex3.webp",
+          "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-blanco-body-mc-blanco4.webp"
+        ]
       },
       {
-      name: "Azul Marino",
-      slug: "azulmarino",
-      hex: "#1E3A8A",
-      images: [
-        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex-1.webp",
-        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex2.webp",
-        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex3.webp"
-      ]
-    },
-      {
-      name: "Negro",
-      slug: "negro",
-      hex: "#000000",
-      images: [
-        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-negro-Body-mc-negro1.webp",
-        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-negro-body-mc-negro2.webp",
-        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-negro-body-mc-negro3.webp",
-        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-negro-body-mc-negro4.webp",
-        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-negro-body-mc-negro5.webp"
-      ]
-    },
-      {
-      name: "Rojo",
-      slug: "rojo",
-      hex: "#D22B2B",
-      images: [
-        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex1.webp",
-        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex2.webp",
-        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex3.webp",
-        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex-4.webp",
-        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex5.webp"
-      ]
-    },
+        name: "Azul Marino",
+        slug: "azul-marino",
+        hex: "#1E3A8A",
+        images: [
+          "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex-1.webp",
+          "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex2.webp",
+          "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex3.webp"
+        ]
+      },
     ],
     sizes: ["S","M","L","XL"],
     audience: "mujer",    tags: ["COD.228", "Colección Nueva Temporada", "Suplex"],
@@ -1021,48 +1019,20 @@ export const products: Product[] = [
     slug: "body-manga-corta",
     title: "Body manga corta",
     price: 33,
-    image: "/productos/mujer/bodys/body-manga-corta-amarillo.webp",
+    image: "/productos/mujer/bodys/body-manga-corta-rosado-body-mc-rosado2.webp",
     category: "bodysuits",
     fabric: "algodon",
     colors: [
       {
-        name: "Amarillo",
-        slug: "amarillo",
-        hex: "#FFD700",
-        image: "/productos/mujer/bodys/body-manga-corta-amarillo.webp",
-      },
-      {
-      name: "Beige",
-      slug: "beige",
-      hex: "#F5F5DC",
+      name: "Rosado",
+      slug: "rosado",
+      hex: "#FFC0CB",
       images: [
-        "/productos/mujer/bodys/body-manga-corta-beige-manga-corta-beige1.webp",
-        "/productos/mujer/bodys/body-manga-corta-beige-manga-corta-beige2.webp",
-        "/productos/mujer/bodys/body-manga-corta-beige-manga-corta-beige3.webp",
-        "/productos/mujer/bodys/body-manga-corta-beige-manga-corta-beige4.webp",
-        "/productos/mujer/bodys/body-manga-corta-beige-manga-corta-beige-5.webp"
-      ]
-    },
-      {
-      name: "Blanco",
-      slug: "blanco",
-      hex: "#FFFFFF",
-      images: [
-        "/productos/mujer/bodys/body-manga-corta-blanco-manga-corta-blanco1.webp",
-        "/productos/mujer/bodys/body-manga-corta-blanco-manga-corta-blanco2.webp",
-        "/productos/mujer/bodys/body-manga-corta-blanco-manga-corta-blanco3.webp",
-        "/productos/mujer/bodys/body-manga-corta-blanco-manga-corta-blanco4.webp"
-      ]
-    },
-      {
-      name: "Negro",
-      slug: "negro",
-      hex: "#000000",
-      images: [
-        "/productos/mujer/bodys/body-manga-corta-negro-manga-corta-negro1.webp",
-        "/productos/mujer/bodys/body-manga-corta-negro-manga-corta-negro2.webp",
-        "/productos/mujer/bodys/body-manga-corta-negro-manga-corta-negro3.webp",
-        "/productos/mujer/bodys/body-manga-corta-negro-manga-corta-negro4.webp"
+        "/productos/mujer/bodys/body-manga-corta-rosado-body-mc-rosado2.webp",
+        "/productos/mujer/bodys/body-manga-corta-rosado-body-mc-rosado3.webp",
+        "/productos/mujer/bodys/body-manga-corta-rosado-body-mc-rosado4.webp",
+        "/productos/mujer/bodys/body-manga-corta-rosado-body-mc-rosado5.webp",
+        "/productos/mujer/bodys/body-manga-corta-rosado-body-mc-rosado1.webp"
       ]
     },
       {
@@ -1077,31 +1047,37 @@ export const products: Product[] = [
       ]
     },
       {
-      name: "Rosado",
-      slug: "rosado",
-      hex: "#FFC0CB",
+      name: "Negro",
+      slug: "negro",
+      hex: "#000000",
       images: [
-        "/productos/mujer/bodys/body-manga-corta-rosado-body-mc-rosado1.webp",
-        "/productos/mujer/bodys/body-manga-corta-rosado-body-mc-rosado2.webp",
-        "/productos/mujer/bodys/body-manga-corta-rosado-body-mc-rosado3.webp",
-        "/productos/mujer/bodys/body-manga-corta-rosado-body-mc-rosado4.webp",
-        "/productos/mujer/bodys/body-manga-corta-rosado-body-mc-rosado5.webp"
+        "/productos/mujer/bodys/body-manga-corta-negro-manga-corta-negro1.webp",
+        "/productos/mujer/bodys/body-manga-corta-negro-manga-corta-negro2.webp",
+        "/productos/mujer/bodys/body-manga-corta-negro-manga-corta-negro3.webp",
+        "/productos/mujer/bodys/body-manga-corta-negro-manga-corta-negro4.webp"
       ]
     },
       {
-        name: "Azul Marino",
-        slug: "azul-marino",
-        hex: "#1E3A8A",
-        image: "/productos/mujer/bodys/body-manga-corta-suplex-azul-marino.webp",
-      },
-      {
-      name: "Azul",
-      slug: "azul",
-      hex: "#1E3A8A",
+      name: "Blanco",
+      slug: "blanco",
+      hex: "#FFFFFF",
       images: [
-        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex-1.webp",
-        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex2.webp",
-        "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-azul-marino-body-mc-azulmarino-suplex3.webp"
+        "/productos/mujer/bodys/body-manga-corta-blanco-manga-corta-blanco1.webp",
+        "/productos/mujer/bodys/body-manga-corta-blanco-manga-corta-blanco2.webp",
+        "/productos/mujer/bodys/body-manga-corta-blanco-manga-corta-blanco3.webp",
+        "/productos/mujer/bodys/body-manga-corta-blanco-manga-corta-blanco4.webp"
+      ]
+    },
+      {
+      name: "Beige",
+      slug: "beige",
+      hex: "#F5F5DC",
+      images: [
+        "/productos/mujer/bodys/body-manga-corta-beige-manga-corta-beige1.webp",
+        "/productos/mujer/bodys/body-manga-corta-beige-manga-corta-beige2.webp",
+        "/productos/mujer/bodys/body-manga-corta-beige-manga-corta-beige3.webp",
+        "/productos/mujer/bodys/body-manga-corta-beige-manga-corta-beige4.webp",
+        "/productos/mujer/bodys/body-manga-corta-beige-manga-corta-beige-5.webp"
       ]
     },
     ],

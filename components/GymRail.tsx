@@ -1,13 +1,11 @@
 "use client"
 
-import { useRef, useState, useEffect, useLayoutEffect } from "react"
+import { useRef, useState, useLayoutEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight, Star } from "lucide-react"
 import WishlistHeart from "@/components/WishlistHeart"
 import { getAverageRating, getReviewCount } from "@/data/reviews"
-import { useImageDebug } from "@/contexts/ImageDebugContext"
-import { useImageFraming } from "@/contexts/ImageFramingContext"
 import { useImageTransform } from "@/hooks/useImageTransform"
 import { parseImagePath } from "@/lib/imageTransformUtils"
 
@@ -28,17 +26,15 @@ type GymRailProps = {
 
 function RailItem({ item }: { item: Item }) {
   const [isHovering, setIsHovering] = useState(false)
-  const { values } = useImageDebug()
-  const { isFramingMode, selectedImage, setSelectedImage } = useImageFraming()
   const containerRef = useRef<HTMLDivElement>(null)
   const [containerWidth, setContainerWidth] = useState<number | null>(null)
 
   // Parsear imagen para obtener transform
   const { productSlug: imageParsedSlug, colorSlug, imageIndex } = parseImagePath(item.image)
   const actualProductSlug = imageParsedSlug || item.slug
-  const { transform: debuggerTransform, isMounted } = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'rail')
+  const { transform: savedTransform, isMounted } = useImageTransform(actualProductSlug, colorSlug || '', imageIndex, 'rail')
 
-  // ✅ USAR useLayoutEffect para medir ANTES del primer paint (evita flash)
+  // Medir contenedor antes del primer paint
   useLayoutEffect(() => {
     const updateSize = () => {
       if (containerRef.current) {
@@ -51,27 +47,6 @@ function RailItem({ item }: { item: Item }) {
     return () => window.removeEventListener('resize', updateSize)
   }, [])
 
-  const isSelected =
-    isFramingMode &&
-    selectedImage?.productSlug === actualProductSlug &&
-    selectedImage?.colorSlug === colorSlug &&
-    selectedImage?.imageIndex === imageIndex
-
-  const handleFramingClick = (e: React.MouseEvent) => {
-    if (isFramingMode) {
-      e.preventDefault()
-      e.stopPropagation()
-      setSelectedImage({
-        productSlug: actualProductSlug,
-        colorSlug: colorSlug || '',
-        imageIndex,
-        imagePath: item.image,
-        context: 'rail',
-        containerWidth: containerWidth || 300 // ✅ Usar valor medido o fallback
-      })
-    }
-  }
-
   const rating = getAverageRating(item.slug)
   const reviewCount = getReviewCount(item.slug)
 
@@ -79,10 +54,9 @@ function RailItem({ item }: { item: Item }) {
     const productSlug = item.slug.toLowerCase()
     const imagePath = item.image.toLowerCase()
 
-    // PRIORIDAD 0: Transform del debugger - ESCALADO PROPORCIONAL AL CONTENEDOR
-    if (debuggerTransform) {
-      // ⚠️ CRÍTICO: Si tenemos transform pero no hemos medido el contenedor, NO aplicar NINGÚN transform
-      // Esto evita el flash donde se aplica primero el transform general y luego el específico
+    // PRIORIDAD 0: Transform guardado - ESCALADO PROPORCIONAL AL CONTENEDOR
+    if (savedTransform) {
+      // Si tenemos transform pero no hemos medido el contenedor, no aplicar ningún transform
       if (containerWidth === null) {
         return {
           transform: 'none',
@@ -90,21 +64,21 @@ function RailItem({ item }: { item: Item }) {
         }
       }
 
-      // ✅ USAR EL CONTAINER WIDTH GUARDADO (cuando se ajustó originalmente)
-      const baseContainerSize = debuggerTransform.containerWidth || 300
+      // Usar el container width guardado para escalar proporcionalmente
+      const baseContainerSize = savedTransform.containerWidth || 300
       const scaleFactor = containerWidth / baseContainerSize
 
-      // Aplicar los valores EXACTOS del usuario, pero escalados proporcionalmente
-      const scaledX = debuggerTransform.x * scaleFactor
-      const scaledY = debuggerTransform.y * scaleFactor
+      // Aplicar los valores escalados proporcionalmente
+      const scaledX = savedTransform.x * scaleFactor
+      const scaledY = savedTransform.y * scaleFactor
 
       return {
-        transform: `translate(${scaledX}px, ${scaledY}px) scale(${debuggerTransform.scale})`,
+        transform: `translate(${scaledX}px, ${scaledY}px) scale(${savedTransform.scale})`,
         transformOrigin: 'center center'
       }
     }
 
-    // Aplicar transforms generales normalmente
+    // PRIORIDAD 1: Defaults por tipo de producto
     // Productos superiores
     if (productSlug.includes('camiseta') ||
         productSlug.includes('top') ||
@@ -115,7 +89,7 @@ function RailItem({ item }: { item: Item }) {
         imagePath.includes('body') ||
         imagePath.includes('enterizo')) {
       return {
-        transform: `scale(${values.railTopScale}) translateY(${values.railTopTranslateY}%) translateX(${values.railTopTranslateX}%)`,
+        transform: 'scale(1)',
         transformOrigin: 'center top'
       }
     }
@@ -130,7 +104,7 @@ function RailItem({ item }: { item: Item }) {
         imagePath.includes('biker') ||
         imagePath.includes('pantalon')) {
       return {
-        transform: `scale(${values.railBottomScale}) translateY(${values.railBottomTranslateY}%) translateX(${values.railBottomTranslateX}%)`,
+        transform: 'scale(1)',
         transformOrigin: 'center bottom'
       }
     }
@@ -143,73 +117,51 @@ function RailItem({ item }: { item: Item }) {
 
   const currentImage = isHovering && item.hoverImage ? item.hoverImage : item.image
 
-  const content = (
-    <>
-      <div
-        ref={containerRef}
-        className={`relative w-full aspect-square overflow-hidden bg-neutral-100 mb-3 transition-all ${
-          isSelected ? 'ring-4 ring-blue-600 ring-offset-4' : ''
-        } ${isFramingMode && !isSelected ? 'ring-2 ring-blue-400 ring-offset-2 hover:ring-blue-600' : ''}`}
-        onMouseEnter={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
-      >
-        <Image
-          src={currentImage}
-          alt={item.name}
-          fill
-          sizes="(max-width: 768px) 50vw, 25vw"
-          quality={90}
-          className={`object-contain ${!isMounted ? '[transition:none!important]' : ''}`}
-          style={getImageStyle()}
-        />
-
-        {isFramingMode && (
-          <div className="absolute top-2 right-2 bg-blue-600 text-white px-2 py-1 rounded text-[10px] font-medium shadow-lg">
-            Click
-          </div>
-        )}
-
-        {!isFramingMode && <WishlistHeart slug={item.slug} />}
-
-        {item.badge && (
-          <span className="absolute left-3 top-3 bg-white px-2 py-1 text-xs font-bold uppercase">
-            {item.badge}
-          </span>
-        )}
-      </div>
-
-      <p className="text-sm font-medium mb-1 line-clamp-2">{item.name}</p>
-      {reviewCount > 0 && (
-        <div className="flex items-center gap-1 mb-2">
-          <div className="flex items-center">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                className={`w-3 h-3 ${i < Math.floor(rating) ? "fill-yellow-400 text-yellow-400" : "text-neutral-300"}`}
-              />
-            ))}
-          </div>
-          <span className="text-xs text-neutral-500">({reviewCount})</span>
-        </div>
-      )}
-      <p className="text-sm font-semibold">
-        {new Intl.NumberFormat("es-PE", { style: "currency", currency: "PEN" }).format(item.price)}
-      </p>
-    </>
-  )
-
-  if (isFramingMode) {
-    return (
-      <div className="flex-none w-[25vw] min-w-[200px] snap-start px-2 cursor-crosshair" onClick={handleFramingClick}>
-        {content}
-      </div>
-    )
-  }
-
   return (
     <div className="flex-none w-[25vw] min-w-[200px] snap-start px-2">
       <Link href={`/producto/${item.slug}`} className="group/card block">
-        {content}
+        <div
+          ref={containerRef}
+          className="relative w-full aspect-square overflow-hidden bg-neutral-100 mb-3"
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+        >
+          <Image
+            src={currentImage}
+            alt={item.name}
+            fill
+            sizes="(max-width: 768px) 50vw, 25vw"
+            quality={90}
+            className={`object-contain ${!isMounted ? '[transition:none!important]' : ''}`}
+            style={getImageStyle()}
+          />
+
+          <WishlistHeart slug={item.slug} />
+
+          {item.badge && (
+            <span className="absolute left-3 top-3 bg-white px-2 py-1 text-xs font-bold uppercase">
+              {item.badge}
+            </span>
+          )}
+        </div>
+
+        <p className="text-sm font-medium mb-1 line-clamp-2">{item.name}</p>
+        {reviewCount > 0 && (
+          <div className="flex items-center gap-1 mb-2">
+            <div className="flex items-center">
+              {[...Array(5)].map((_, i) => (
+                <Star
+                  key={i}
+                  className={`w-3 h-3 ${i < Math.floor(rating) ? "fill-yellow-400 text-yellow-400" : "text-neutral-300"}`}
+                />
+              ))}
+            </div>
+            <span className="text-xs text-neutral-500">({reviewCount})</span>
+          </div>
+        )}
+        <p className="text-sm font-semibold">
+          {new Intl.NumberFormat("es-PE", { style: "currency", currency: "PEN" }).format(item.price)}
+        </p>
       </Link>
     </div>
   )
