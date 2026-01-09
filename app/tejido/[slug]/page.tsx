@@ -5,11 +5,8 @@ import ProductFiltersDrawer from "@/components/ProductFiltersDrawer"
 import ProductListWithLoadMore from "@/components/ProductListWithLoadMore"
 import {
   FABRIC_LOOKUP,
-  getFullFabricInfo,
-  isNewFabricSlug,
-  NEW_TO_LEGACY_FABRIC
+  getFullFabricInfo
 } from "@/data/fabrics"
-import type { FabricSlug as NewFabricSlug } from "@/types/fabric"
 import type { Metadata } from "next"
 
 function applyFilters(items: Product[], q: { get: (k: string) => string | null; getAll: (k: string) => string[] }) {
@@ -105,13 +102,9 @@ export default async function FabricPage({
   // Obtener info completa del nuevo sistema
   const fabricInfo = getFullFabricInfo(slug)
 
-  // Determinar qué slug usar para buscar productos
-  let productSearchSlug = slug
-  if (isNewFabricSlug(slug)) {
-    productSearchSlug = NEW_TO_LEGACY_FABRIC[slug as NewFabricSlug]
-  }
-
-  const baseProducts = byFabric(productSearchSlug as "suplex" | "algodon")
+  // Buscar productos directamente con el slug específico
+  // Los productos ahora tienen fabric específico: "suplex-liso-premium", "algodon-premium", etc.
+  const baseProducts = byFabric(slug as Product["fabric"])
 
   const filteredProducts = applyFilters(baseProducts, {
     get: (k) => (search?.[k] as string) ?? null,
