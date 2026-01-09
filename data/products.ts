@@ -4,7 +4,7 @@ export type Product = {
   price: number
   image: string // path under /public/productos/<category>/<slug>.jpg
   category: "leggings" | "bikers" | "shorts" | "tops" | "bodysuits" | "camisetas" | "enterizos" | "pescador" | "torero" | "cafarenas" | "pantys"
-  fabric: "suplex" | "algodon"
+  fabric: "suplex" | "algodon" | "suplex-liso-premium" | "suplex-perchado" | "algodon-premium" | "algodon-french-terry" | "algodon-gamusa"
   colors: string[] | { name: string; slug: string; hex: string; image?: string; images?: string[] }[] // Support single image or gallery
   sizes: string[]
   audience: "mujer" | "nina"
@@ -27,7 +27,7 @@ export const products: Product[] = [
     price: 29,
     image: "/productos/mujer/camisetas/camiseta-cuello-alto-azul-marino-cuello-alto-azulmarino1.webp",
     category: "camisetas",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
       {
       name: "Azul Marino",
@@ -138,19 +138,8 @@ export const products: Product[] = [
     price: 36,
     image: "/productos/mujer/camisetas/camiseta-manga-larga-azul-marino-manga-larga-azul-marino2.webp",
     category: "camisetas",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
-      {
-      name: "Azul",
-      slug: "azul",
-      hex: "#1E3A8A",
-      images: [
-        "/productos/mujer/camisetas/camiseta-manga-larga-azul-marino-manga-larga-azul-marino2.webp",
-        "/productos/mujer/camisetas/camiseta-manga-larga-azul-marino-manga-larga-azul-marino3.webp",
-        "/productos/mujer/camisetas/camiseta-manga-larga-azul-marino-manga-larga-azul-marino4.webp",
-        "/productos/mujer/camisetas/camiseta-manga-larga-azul-marino-manga-larga-azul-marino5.webp"
-      ]
-    },
       {
       name: "Azul Marino",
       slug: "azul-marino",
@@ -213,18 +202,6 @@ export const products: Product[] = [
     },
       {
       name: "Turquesa",
-      slug: "tuqrquesa",
-      hex: "#40E0D0",
-      images: [
-        "/productos/mujer/camisetas/camiseta-manga-larga-turquesa-manga-larga-tuqrquesa4.webp",
-        "/productos/mujer/camisetas/camiseta-manga-larga-turquesa-manga-larga-turquesa1.webp",
-        "/productos/mujer/camisetas/camiseta-manga-larga-turquesa-manga-larga-turquesa2.webp",
-        "/productos/mujer/camisetas/camiseta-manga-larga-turquesa-manga-larga-turquesa3.webp",
-        "/productos/mujer/camisetas/camiseta-manga-larga-turquesa-manga-larga-turquesa5.webp"
-      ]
-    },
-      {
-      name: "Turquesa",
       slug: "turquesa",
       hex: "#40E0D0",
       images: [
@@ -266,7 +243,7 @@ export const products: Product[] = [
     price: 29,
     image: "/productos/mujer/camisetas/camiseta-manga-corta-azul-marino-camiseta-azulmarino1.webp",
     category: "camisetas",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
       {
       name: "Azul Marino",
@@ -348,7 +325,7 @@ export const products: Product[] = [
     price: 27,
     image: "/productos/mujer/camisetas/camiseta-gia-blanco-camiseta-gia-blanco1.webp",
     category: "camisetas",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
       {
       name: "Blanco",
@@ -407,7 +384,7 @@ export const products: Product[] = [
     price: 29,
     image: "/productos/mujer/short/short-slim-suplex-liso-premium-acero-short-slim-acero1.webp",
     category: "bikers",
-    fabric: "suplex",
+    fabric: "suplex-liso-premium",
     colors: [
       {
       name: "Acero",
@@ -477,7 +454,7 @@ export const products: Product[] = [
     price: 32,
     image: "/productos/mujer/bikers/short-ciclista-active-aqua1.webp",
     category: "bikers",
-    fabric: "suplex",
+    fabric: "suplex-liso-premium",
     colors: [
         {
             "name": "Aqua",
@@ -605,7 +582,7 @@ export const products: Product[] = [
     price: 28,
     image: "/productos/mujer/short/short-lux-aqua1.webp",
     category: "bikers",
-    fabric: "suplex",
+    fabric: "suplex-liso-premium",
     colors: [
         {
             "name": "Aqua",
@@ -728,7 +705,7 @@ export const products: Product[] = [
     price: 20,
     image: "/productos/mujer/short/short-brasil-beige-short-brasil-beige1.webp",
     category: "shorts",
-    fabric: "suplex",
+    fabric: "algodon-premium",
     colors: [
       {
       name: "Beige",
@@ -787,7 +764,7 @@ export const products: Product[] = [
     price: 19,
     image: "/productos/mujer/short/maxi-short-beige-MAXI-SHORT-BEIGE1.webp",
     category: "shorts",
-    fabric: "suplex",
+    fabric: "algodon-premium",
     colors: [
       {
       name: "Beige",
@@ -845,7 +822,7 @@ export const products: Product[] = [
     price: 16,
     image: "/productos/mujer/short/short-clasico-negro1.webp",
     category: "shorts",
-    fabric: "suplex",
+    fabric: "algodon-premium",
     colors: [
         {
             "name": "Negro",
@@ -893,7 +870,7 @@ export const products: Product[] = [
     price: 16,
     image: "/productos/mujer/short/mini-short-beige-mini-short-beige1.webp",
     category: "shorts",
-    fabric: "suplex",
+    fabric: "algodon-premium",
     colors: [
       {
       name: "Beige",
@@ -952,7 +929,7 @@ export const products: Product[] = [
     price: 36,
     image: "/productos/mujer/bodys/body-manga-corta-suplex-liso-premium-rojo-body-rojo-suplex1.webp",
     category: "bodysuits",
-    fabric: "suplex",
+    fabric: "suplex-liso-premium",
     colors: [
       {
         name: "Rojo",
@@ -1021,7 +998,7 @@ export const products: Product[] = [
     price: 33,
     image: "/productos/mujer/bodys/body-manga-corta-rosado-body-mc-rosado2.webp",
     category: "bodysuits",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
       {
       name: "Rosado",
@@ -1101,7 +1078,7 @@ export const products: Product[] = [
     price: 36,
     image: "/productos/mujer/bodys/body-manga-larga-beige-manga-larga-beige1.webp",
     category: "bodysuits",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
       {
       name: "Beige",
@@ -1194,7 +1171,7 @@ export const products: Product[] = [
     price: 32,
     image: "/productos/mujer/tops/top-afrodita-suplex-liso-premium-azulino-afrodita-azulino1.webp",
     category: "tops",
-    fabric: "algodon",
+    fabric: "suplex-liso-premium",
     colors: [
       {
       name: "Azulino",
@@ -1253,7 +1230,7 @@ export const products: Product[] = [
     price: 32,
     image: "/productos/mujer/tops/top-venus-azulino1.webp",
     category: "tops",
-    fabric: "algodon",
+    fabric: "suplex-liso-premium",
     colors: [
         {
             "name": "Azulino",
@@ -1341,7 +1318,7 @@ export const products: Product[] = [
     price: 32,
     image: "/productos/mujer/tops/top-paradise-suplex-liso-premium-azulino-paradise-azulino1.webp",
     category: "tops",
-    fabric: "algodon",
+    fabric: "suplex-liso-premium",
     colors: [
       {
       name: "Azulino",
@@ -1420,7 +1397,7 @@ export const products: Product[] = [
     price: 32,
     image: "/productos/mujer/tops/top-jungle-azulino1.webp",
     category: "tops",
-    fabric: "algodon",
+    fabric: "suplex-liso-premium",
     colors: [
         {
             "name": "Azulino",
@@ -1491,7 +1468,7 @@ export const products: Product[] = [
     price: 35,
     image: "/productos/mujer/tops/top-soporte-beige1.webp",
     category: "tops",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
         {
             "name": "Beige",
@@ -1556,7 +1533,7 @@ export const products: Product[] = [
     price: 34,
     image: "/productos/mujer/tops/top-arena-blanco1.webp",
     category: "tops",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
         {
             "name": "Blanco",
@@ -1594,7 +1571,7 @@ export const products: Product[] = [
     price: 34,
     image: "/productos/mujer/tops/top-zafiro-blanco1.webp",
     category: "tops",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
         {
             "name": "Blanco",
@@ -1646,7 +1623,7 @@ export const products: Product[] = [
     price: 28,
     image: "/productos/mujer/tops/top-luna-beige1.webp",
     category: "tops",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
         {
             "name": "Beige",
@@ -1708,7 +1685,7 @@ export const products: Product[] = [
     price: 27,
     image: "/productos/mujer/tops/top-perla-blanco1.webp",
     category: "tops",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
         {
             "name": "Blanco",
@@ -1747,7 +1724,7 @@ export const products: Product[] = [
     price: 49,
     image: "/productos/mujer/enterizo/enterizo-tiras-suplex-liso-premium-azulino-enterizo-azulino1.webp",
     category: "enterizos",
-    fabric: "suplex",
+    fabric: "suplex-liso-premium",
     colors: [
       {
         name: "Azulino",
@@ -1806,7 +1783,7 @@ export const products: Product[] = [
     price: 49,
     image: "/productos/mujer/enterizo/enterizo-manga-cero-suplex-liso-premium-azulino-Manga-cero-azulino1.webp",
     category: "enterizos",
-    fabric: "suplex",
+    fabric: "suplex-liso-premium",
     colors: [
       {
         name: "Azulino",
@@ -1855,7 +1832,7 @@ export const products: Product[] = [
     price: 59,
     image: "/productos/mujer/legging/legging-slim-suplex-liso-premium-azul-marino-legging-azul-marino1.webp",
     category: "leggings",
-    fabric: "suplex",
+    fabric: "suplex-liso-premium",
     colors: [
       {
         name: "Azul Marino",
@@ -1948,7 +1925,7 @@ export const products: Product[] = [
     badge: "oferta",
     image: "/productos/mujer/camisetas/camiseta-tropical-blanco1.webp",
     category: "camisetas",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
       {
         name: "Blanco",
@@ -1980,7 +1957,7 @@ export const products: Product[] = [
     price: 24,
     image: "/productos/mujer/camisetas/camiseta-deportiva-negro1.webp",
     category: "camisetas",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
       {
         name: "Negro",
@@ -2020,7 +1997,7 @@ export const products: Product[] = [
     price: 21,
     image: "/productos/mujer/camisetas/camiseta-tiras-fijas-blanco1.webp",
     category: "camisetas",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
       {
         name: "Blanco",
@@ -2055,7 +2032,7 @@ export const products: Product[] = [
     price: 23,
     image: "/productos/mujer/tops/straple-chanel-blanco1.webp",
     category: "tops",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
       {
         name: "Blanco",
@@ -2087,7 +2064,7 @@ export const products: Product[] = [
     price: 14,
     image: "/productos/mujer/tops/top-deportivo-blanco1.webp",
     category: "tops",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
       {
         name: "Blanco",
@@ -2122,7 +2099,7 @@ export const products: Product[] = [
     price: 14,
     image: "/productos/mujer/tops/top-tira-fijas-blanco1.webp",
     category: "tops",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
       {
         name: "Blanco",
@@ -2157,7 +2134,7 @@ export const products: Product[] = [
     price: 59,
     image: "/productos/mujer/legging/legging-slim-suplex-perchado-azul-marino1.webp",
     category: "leggings",
-    fabric: "suplex",
+    fabric: "suplex-perchado",
     colors: [
       {
         name: "Azul Marino",
@@ -2201,7 +2178,7 @@ export const products: Product[] = [
     price: 55,
     image: "/productos/mujer/legging/legging-functional-azul-marino1.webp",
     category: "leggings",
-    fabric: "suplex",
+    fabric: "suplex-liso-premium",
     colors: [
       {
         name: "Azul Marino",
@@ -2241,7 +2218,7 @@ export const products: Product[] = [
     price: 48,
     image: "/productos/mujer/legging/legging-realce-fresh-terry-negro1.webp",
     category: "leggings",
-    fabric: "suplex",
+    fabric: "algodon-french-terry",
     colors: [
       {
         name: "Charcoal",
@@ -2294,7 +2271,7 @@ export const products: Product[] = [
     price: 35,
     image: "/productos/mujer/legging/legging-clasica-gamuza-blanco1.webp",
     category: "leggings",
-    fabric: "suplex",
+    fabric: "algodon-gamusa",
     colors: [
       {
         name: "Blanco",
@@ -2329,7 +2306,7 @@ export const products: Product[] = [
     price: 48,
     image: "/productos/mujer/pescador/pescador-realce-azulino1.webp",
     category: "pescador",
-    fabric: "suplex",
+    fabric: "suplex-liso-premium",
     colors: [
       {
         name: "Azulino",
@@ -2383,7 +2360,7 @@ export const products: Product[] = [
     price: 38,
     image: "/productos/nina/enterizos/enterizo-manga-corta-nina-amarillo1.webp",
     category: "enterizos",
-    fabric: "suplex",
+    fabric: "suplex-liso-premium",
     colors: [
         {
             "name": "Amarillo",
@@ -2511,7 +2488,7 @@ export const products: Product[] = [
     price: 42,
     image: "/productos/nina/enterizos/enterizo-manga-larga-nina-amarillo1.webp",
     category: "enterizos",
-    fabric: "suplex",
+    fabric: "suplex-liso-premium",
     colors: [
         {
             "name": "Amarillo",
@@ -2599,7 +2576,7 @@ export const products: Product[] = [
     price: 32,
     image: "/productos/nina/leggings/legging-nina-blanco1.webp",
     category: "leggings",
-    fabric: "suplex",
+    fabric: "suplex-liso-premium",
     colors: [
         {
             "name": "Blanco",
@@ -2676,7 +2653,7 @@ export const products: Product[] = [
     price: 28,
     image: "/productos/nina/cafarenas/cafarena-nina-azulmarino1.webp",
     category: "cafarenas",
-    fabric: "suplex",
+    fabric: "suplex-liso-premium",
     colors: [
         {
             "name": "Azul Marino",
@@ -2766,7 +2743,7 @@ export const products: Product[] = [
     price: 22,
     image: "/productos/nina/pantys/panty-nina-azulmarino1.webp",
     category: "pantys",
-    fabric: "suplex",
+    fabric: "suplex-liso-premium",
     colors: [
         {
             "name": "Azul Marino",
@@ -2853,7 +2830,7 @@ export const products: Product[] = [
     price: 26,
     image: "/productos/nina/shorts/maxi-short-nina-azulmarino1.webp",
     category: "shorts",
-    fabric: "suplex",
+    fabric: "suplex-liso-premium",
     colors: [
         {
             "name": "Azul Marino",
@@ -2930,7 +2907,7 @@ export const products: Product[] = [
     price: 24,
     image: "/productos/nina/shorts/short-juvenil-nina-azulmarino1.webp",
     category: "shorts",
-    fabric: "suplex",
+    fabric: "suplex-liso-premium",
     colors: [
         {
             "name": "Azul Marino",
@@ -3007,7 +2984,7 @@ export const products: Product[] = [
     price: 30,
     image: "/productos/nina/tops/top-jazmin-beige1.webp",
     category: "tops",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
         {
             "name": "Beige",
@@ -3070,7 +3047,7 @@ export const products: Product[] = [
     price: 30,
     image: "/productos/nina/tops/top-margarita-beige1.webp",
     category: "tops",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
         {
             "name": "Beige",
@@ -3136,7 +3113,7 @@ export const products: Product[] = [
     price: 28,
     image: "/productos/nina/tops/top-vani-blanco1.webp",
     category: "tops",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
         {
             "name": "Blanco",
@@ -3199,7 +3176,7 @@ export const products: Product[] = [
     price: 30,
     image: "/placeholder.svg",
     category: "tops",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
       {
         name: "Top",
@@ -3231,7 +3208,7 @@ export const products: Product[] = [
     price: 30,
     image: "/placeholder.svg",
     category: "tops",
-    fabric: "algodon",
+    fabric: "algodon-premium",
     colors: [
       {
         name: "Top",
@@ -3307,10 +3284,17 @@ export function getAllCollections(): Array<{ name: string; slug: string; count: 
 }
 
 export function getUniqueFabrics(): Array<{ name: string; slug: string; count: number }> {
-  // Mapeo de slug a nombre con tilde correcto
+  // Mapeo de slug a nombre completo
   const fabricNames: Record<string, string> = {
+    // Legacy (para compatibilidad)
     'algodon': 'Algodón',
-    'suplex': 'Suplex'
+    'suplex': 'Suplex',
+    // Nuevas variantes específicas
+    'suplex-liso-premium': 'Suplex Liso Premium',
+    'suplex-perchado': 'Suplex Perchado',
+    'algodon-premium': 'Algodón Premium',
+    'algodon-french-terry': 'Algodón French Terry',
+    'algodon-gamusa': 'Algodón Gamusa'
   }
 
   const fabricsMap = new Map<string, number>()
@@ -3323,7 +3307,7 @@ export function getUniqueFabrics(): Array<{ name: string; slug: string; count: n
 
   return Array.from(fabricsMap.entries())
     .map(([slug, count]) => ({
-      name: fabricNames[slug] || slug.charAt(0).toUpperCase() + slug.slice(1),
+      name: fabricNames[slug] || slug.charAt(0).toUpperCase() + slug.slice(1).replace(/-/g, ' '),
       slug: slug.toLowerCase().replace(/\s+/g, '-'),
       count
     }))
