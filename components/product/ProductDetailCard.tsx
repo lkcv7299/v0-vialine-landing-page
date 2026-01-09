@@ -3,6 +3,18 @@
 import { useState, useEffect } from "react"
 import { Check, Share2, Heart, Package, Truck, Shield } from "lucide-react"
 import type { Product } from "@/data/products"
+
+// Mapeo de fabric slug a nombre de display
+const FABRIC_DISPLAY_NAMES: Record<string, string> = {
+  'suplex-liso-premium': 'Suplex Liso Premium',
+  'suplex-perchado': 'Suplex Perchado',
+  'algodon-premium': 'Algodón Premium',
+  'algodon-french-terry': 'Algodón French Terry',
+  'algodon-gamusa': 'Algodón Gamusa',
+  // Legacy (por si acaso)
+  'suplex': 'Suplex',
+  'algodon': 'Algodón'
+}
 import { buildWhatsAppUrl } from "@/lib/contact"
 import { useCart } from "@/contexts/CartContext"
 import { useWishlist } from "@/components/providers/WishlistContext"
@@ -274,10 +286,10 @@ export default function ProductDetailCard({ product }: { product: Product }) {
           </div>
 
           {/* Material & Key Features - Lululemon Style */}
-          {product.attributes?.material && (
+          {product.fabric && (
             <div className="space-y-2">
               <p className="text-sm font-semibold text-neutral-900">Material</p>
-              <p className="text-sm text-neutral-700">{product.attributes.material}</p>
+              <p className="text-sm text-neutral-700">{FABRIC_DISPLAY_NAMES[product.fabric] || product.fabric}</p>
             </div>
           )}
 
