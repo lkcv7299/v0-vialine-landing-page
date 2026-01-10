@@ -1,16 +1,17 @@
 "use client"
 
 import { usePathname, useRouter } from "next/navigation"
-import { signOut } from "next-auth/react"
+import { useSupabaseAuth } from "@/hooks/use-supabase-auth"
 import { User, Package, MapPin, Heart, LogOut } from "lucide-react"
 
 export default function AccountSidebar() {
   const pathname = usePathname()
   const router = useRouter()
+  const { signOut } = useSupabaseAuth()
 
   const handleSignOut = async () => {
     try {
-      await signOut({ redirect: false })
+      await signOut()
       window.location.href = "/"
     } catch {
       window.location.href = "/"

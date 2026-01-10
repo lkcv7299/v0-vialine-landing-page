@@ -1,8 +1,8 @@
 "use client"
 
-import { useSession } from "next-auth/react"
+import { useSupabaseAuth } from "@/hooks/use-supabase-auth"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect } from "react"
 import AccountSidebar from "@/components/AccountSidebar"
 import { useWishlist } from "@/components/providers/WishlistContext"
 import { products } from "@/data/products"
@@ -12,23 +12,28 @@ import Link from "next/link"
 import { buildWhatsAppUrl } from "@/lib/contact"
 
 export default function FavoritosPage() {
-  const { data: session, status } = useSession()
+  const { user, loading: authLoading } = useSupabaseAuth()
   const router = useRouter()
   const { items } = useWishlist()
 
   // Redirect if not authenticated
-  if (status === "unauthenticated") {
-    router.push("/login")
-    return null
-  }
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push("/login")
+    }
+  }, [authLoading, user, router])
 
   // Loading state
-  if (status === "loading") {
+  if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-rose-600"></div>
       </div>
     )
+  }
+
+  if (!user) {
+    return null
   }
 
   // Obtener productos completos desde los slugs

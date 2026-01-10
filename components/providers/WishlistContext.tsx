@@ -2,7 +2,7 @@
 "use client"
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react"
-import { useSession } from "next-auth/react"
+import { useSupabaseAuth } from "@/hooks/use-supabase-auth"
 import type React from "react"
 import { toast } from "sonner"
 
@@ -16,7 +16,7 @@ type Ctx = {
 const WishlistCtx = createContext<Ctx | null>(null)
 
 export function WishlistProvider({ children }: { children: React.ReactNode }) {
-  const { data: session, status } = useSession()
+  const { user, loading: authLoading } = useSupabaseAuth()
   const [items, setItems] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
   const [hasSynced, setHasSynced] = useState(false)
@@ -30,7 +30,7 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
     const loadWishlist = async () => {
       setLoading(true)
 
-      if (status === "authenticated" && session?.user?.id) {
+      if (!authLoading && user?.id) {
         // Usuario logueado: cargar desde DB
         try {
           const res = await fetch("/api/wishlist")
@@ -59,7 +59,7 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
     }
 
     loadWishlist()
-  }, [status, session])
+  }, [authLoading, user])
 
   // ====================================
   // CARGAR DESDE LOCALSTORAGE (GUEST)
@@ -133,7 +133,7 @@ export function WishlistProvider({ children }: { children: React.ReactNode }) {
   const toggle = async (slug: string) => {
     const isInWishlist = items.includes(slug)
 
-    if (status === "authenticated" && session?.user?.id) {
+    if (!authLoading && user?.id) {
       // Usuario logueado: sync con DB
       try {
         if (isInWishlist) {

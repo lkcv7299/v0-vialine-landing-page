@@ -1,7 +1,7 @@
 // app/account/perfil/page.tsx
 "use client"
 
-import { useSession } from "next-auth/react"
+import { useSupabaseAuth } from "@/hooks/use-supabase-auth"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { useState, useEffect } from "react"
@@ -21,7 +21,7 @@ interface PasswordData {
 }
 
 export default function PerfilPage() {
-  const { data: session, status, update } = useSession()
+  const { user, loading: authLoading } = useSupabaseAuth()
   const router = useRouter()
 
   // Estado de formulario de perfil
@@ -43,17 +43,17 @@ export default function PerfilPage() {
 
   // Cargar datos del usuario
   useEffect(() => {
-    if (status === "unauthenticated") {
+    if (!authLoading && !user) {
       router.push("/login")
     }
 
-    if (session?.user) {
+    if (user) {
       setProfileData({
-        name: session.user.name || "",
-        email: session.user.email || "",
+        name: user.user_metadata?.full_name || user.user_metadata?.name || "",
+        email: user.email || "",
       })
     }
-  }, [status, session, router])
+  }, [authLoading, user, router])
 
   // Guardar cambios de perfil
   const handleSaveProfile = async (e: React.FormEvent) => {
@@ -88,12 +88,6 @@ export default function PerfilPage() {
       const data = await res.json()
 
       if (data.success) {
-        // Actualizar sesión con nuevos datos
-        await update({
-          name: profileData.name,
-          email: profileData.email,
-        })
-
         toast.success("Perfil actualizado correctamente")
       } else {
         toast.error(data.error || "Error al actualizar perfil")
@@ -170,12 +164,16 @@ export default function PerfilPage() {
     }
   }
 
-  if (status === "loading") {
+  if (authLoading) {
     return (
       <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-rose-600" />
       </div>
     )
+  }
+
+  if (!user) {
+    return null
   }
 
   return (

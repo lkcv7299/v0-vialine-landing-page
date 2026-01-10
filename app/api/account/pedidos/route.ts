@@ -1,219 +1,144 @@
 import { NextResponse } from "next/server"
-import { auth } from "@/lib/auth"
-import { sql } from "@vercel/postgres"
+import { createClient } from "@/lib/supabase/server"
 
 /**
  * GET /api/account/pedidos
- * 
+ *
  * Obtiene todas las órdenes del usuario autenticado con sus items
- * 
+ *
  * Query params opcionales:
  * - limit: Número de órdenes a retornar (default: 50, max: 100)
  * - offset: Para paginación (default: 0)
  * - status: Filtrar por estado (opcional)
- * 
+ *
  * @returns {object} { success: true, orders: Order[], pagination: {...} }
  */
 export async function GET(request: Request) {
   try {
-    // ====================================
-    // PASO 1: VALIDAR SESIÓN
-    // ====================================
-    const session = await auth()
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
 
-    if (!session || !session.user?.email) {
+    if (!user?.id) {
       return NextResponse.json(
         { error: "No autenticado" },
         { status: 401 }
       )
     }
 
-    // ====================================
-    // PASO 2: OBTENER USER_ID
-    // ====================================
-    const userResult = await sql`
-      SELECT id FROM users 
-      WHERE email = ${session.user.email}
-      LIMIT 1
-    `
-
-    if (userResult.rows.length === 0) {
-      return NextResponse.json(
-        { error: "Usuario no encontrado" },
-        { status: 404 }
-      )
-    }
-
-    const userId = userResult.rows[0].id
-
-    // ====================================
-    // PASO 3: PARSEAR QUERY PARAMS
-    // ====================================
+    // Parsear query params
     const { searchParams } = new URL(request.url)
-    
-    // Validar y limitar el límite
+
     let limit = parseInt(searchParams.get("limit") || "50")
     if (limit < 1) limit = 50
     if (limit > 100) limit = 100
-    
+
     const offset = parseInt(searchParams.get("offset") || "0")
-    const statusFilter = searchParams.get("status") // opcional
+    const statusFilter = searchParams.get("status")
 
-    // ====================================
-    // PASO 4: CONTAR TOTAL DE ÓRDENES
-    // ====================================
-    let countQuery
-    
+    // Contar total de órdenes
+    let countQuery = supabase
+      .from('orders')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+
     if (statusFilter) {
-      countQuery = sql`
-        SELECT COUNT(*) as total
-        FROM orders
-        WHERE user_id = ${userId} AND status = ${statusFilter}
-      `
-    } else {
-      countQuery = sql`
-        SELECT COUNT(*) as total
-        FROM orders
-        WHERE user_id = ${userId}
-      `
+      countQuery = countQuery.eq('status', statusFilter)
     }
 
-    const countResult = await countQuery
-    const total = parseInt(countResult.rows[0].total) || 0
+    const { count: total } = await countQuery
 
-    // ====================================
-    // PASO 5: OBTENER ÓRDENES
-    // ====================================
-    let ordersQuery
-    
+    // Obtener órdenes
+    let ordersQuery = supabase
+      .from('orders')
+      .select('*')
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limit - 1)
+
     if (statusFilter) {
-      ordersQuery = sql`
-        SELECT
-          id,
-          order_id AS order_number,
-          user_id,
-          customer_email,
-          customer_first_name AS customer_name,
-          customer_last_name AS customer_lastname,
-          customer_phone,
-          shipping_address,
-          shipping_district,
-          shipping_city,
-          shipping_postal_code,
-          shipping_reference,
-          payment_method,
-          subtotal,
-          shipping_cost,
-          total,
-          status,
-          payment_id,
-          payment_status,
-          notes,
-          created_at,
-          updated_at,
-          order_id
-        FROM orders
-        WHERE user_id = ${userId} AND status = ${statusFilter}
-        ORDER BY created_at DESC
-        LIMIT ${limit}
-        OFFSET ${offset}
-      `
-    } else {
-      ordersQuery = sql`
-        SELECT
-          id,
-          order_id AS order_number,
-          user_id,
-          customer_email,
-          customer_first_name AS customer_name,
-          customer_last_name AS customer_lastname,
-          customer_phone,
-          shipping_address,
-          shipping_district,
-          shipping_city,
-          shipping_postal_code,
-          shipping_reference,
-          payment_method,
-          subtotal,
-          shipping_cost,
-          total,
-          status,
-          payment_id,
-          payment_status,
-          notes,
-          created_at,
-          updated_at,
-          order_id
-        FROM orders
-        WHERE user_id = ${userId}
-        ORDER BY created_at DESC
-        LIMIT ${limit}
-        OFFSET ${offset}
-      `
+      ordersQuery = ordersQuery.eq('status', statusFilter)
     }
 
-    const ordersResult = await ordersQuery
+    const { data: orders, error: ordersError } = await ordersQuery
 
-    // ====================================
-    // PASO 6: OBTENER ITEMS DE CADA ORDEN
-    // ====================================
+    if (ordersError) throw ordersError
+
+    // Obtener items de cada orden
     const ordersWithItems = await Promise.all(
-      ordersResult.rows.map(async (order) => {
-        const itemsResult = await sql`
-          SELECT
-            id,
-            order_id,
-            product_slug,
-            product_title AS product_name,
-            product_price AS unit_price,
-            product_image,
-            selected_color AS variant_color,
-            selected_size AS variant_size,
-            quantity,
-            item_total AS total_price
-          FROM order_items
-          WHERE order_id = ${order.order_id}
-          ORDER BY id ASC
-        `
+      (orders || []).map(async (order) => {
+        const { data: items } = await supabase
+          .from('order_items')
+          .select('*')
+          .eq('order_id', order.id)
+          .order('id', { ascending: true })
 
-        // Parse numeric values from strings to numbers
-        const itemsWithParsedNumbers = itemsResult.rows.map(item => ({
-          ...item,
-          unit_price: parseFloat(item.unit_price) || 0,
-          total_price: parseFloat(item.total_price) || 0,
-          quantity: parseInt(item.quantity) || 0,
+        const itemsWithParsedNumbers = (items || []).map(item => ({
+          id: item.id,
+          order_id: item.order_id,
+          product_slug: item.product_slug,
+          product_name: item.product_title,
+          unit_price: item.product_price || 0,
+          product_image: item.product_image,
+          variant_color: item.color_name,
+          variant_size: item.size,
+          quantity: item.quantity || 0,
+          total_price: item.item_total || 0,
         }))
 
+        // Parse customer name into first/last for frontend compatibility
+        const nameParts = (order.customer_name || '').trim().split(' ')
+        const customerFirstName = nameParts[0] || ''
+        const customerLastName = nameParts.slice(1).join(' ') || ''
+
+        // Parse shipping address JSON
+        const shippingAddr = order.shipping_address as any || {}
+
         return {
-          ...order,
-          subtotal: parseFloat(order.subtotal) || 0,
-          shipping_cost: parseFloat(order.shipping_cost) || 0,
-          total: parseFloat(order.total) || 0,
+          id: order.id,
+          order_number: order.order_number,
+          user_id: order.user_id,
+          customer_email: order.customer_email,
+          customer_name: customerFirstName,
+          customer_lastname: customerLastName,
+          customer_phone: order.customer_phone,
+          shipping_address: shippingAddr.address || '',
+          shipping_district: shippingAddr.district || '',
+          shipping_city: shippingAddr.city || '',
+          shipping_postal_code: shippingAddr.postalCode || '',
+          shipping_reference: shippingAddr.reference || '',
+          payment_method: order.payment_method,
+          subtotal: order.subtotal || 0,
+          shipping_cost: order.shipping_cost || 0,
+          total: order.total || 0,
+          status: order.status,
+          payment_id: order.payment_id,
+          payment_status: order.payment_status,
+          notes: order.customer_notes,
+          created_at: order.created_at,
+          updated_at: order.updated_at,
+          order_id: order.order_number,
           items: itemsWithParsedNumbers,
         }
       })
     )
 
-    // ====================================
-    // PASO 7: RETORNAR ÓRDENES CON PAGINACIÓN
-    // ====================================
     return NextResponse.json({
       success: true,
       orders: ordersWithItems,
       pagination: {
-        total,
+        total: total || 0,
         limit,
         offset,
-        hasMore: offset + limit < total,
+        hasMore: offset + limit < (total || 0),
         currentPage: Math.floor(offset / limit) + 1,
-        totalPages: Math.ceil(total / limit),
+        totalPages: Math.ceil((total || 0) / limit),
       },
     })
   } catch (error) {
     console.error("❌ Error en GET /api/account/pedidos:", error)
-    
+
     return NextResponse.json(
-      { 
+      {
         error: "Error al obtener pedidos",
         details: process.env.NODE_ENV === "development" ? String(error) : undefined
       },

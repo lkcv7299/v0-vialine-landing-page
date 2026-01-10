@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { useSession } from "next-auth/react"
+import { useSupabaseAuth } from "@/hooks/use-supabase-auth"
 import { useCart } from "@/contexts/CartContext"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -46,7 +46,7 @@ declare global {
 
 export default function CheckoutPage() {
   const router = useRouter()
-  const { data: session } = useSession()
+  const { user } = useSupabaseAuth()
   const { items, total, clearCart, appliedCoupon, removeCoupon } = useCart()
 
   // Estados
@@ -91,15 +91,16 @@ export default function CheckoutPage() {
 
   // Pre-llenar email y nombre si hay sesión
   useEffect(() => {
-    if (session?.user?.email) {
-      setValue("email", session.user.email)
+    if (user?.email) {
+      setValue("email", user.email)
     }
-    if (session?.user?.name) {
-      const nameParts = session.user.name.split(" ")
+    const userName = user?.user_metadata?.full_name || user?.user_metadata?.name
+    if (userName) {
+      const nameParts = userName.split(" ")
       setValue("firstName", nameParts[0] || "")
       setValue("lastName", nameParts.slice(1).join(" ") || "")
     }
-  }, [session, setValue])
+  }, [user, setValue])
 
   // Track begin checkout cuando el usuario entra a la página
   useEffect(() => {
@@ -117,10 +118,10 @@ export default function CheckoutPage() {
 
   // Cargar direcciones guardadas si hay sesión
   useEffect(() => {
-    if (session?.user) {
+    if (user) {
       loadSavedAddresses()
     }
-  }, [session])
+  }, [user])
 
   // Configurar Culqi cuando se cargue
   useEffect(() => {
@@ -403,7 +404,7 @@ export default function CheckoutPage() {
           <PersonalInfoStep
             register={register}
             errors={errors}
-            isEmailReadOnly={!!session?.user?.email}
+            isEmailReadOnly={!!user?.email}
           />
         )
       case 2:
@@ -411,7 +412,7 @@ export default function CheckoutPage() {
           <AddressStep
             register={register}
             errors={errors}
-            hasSession={!!session?.user}
+            hasSession={!!user}
             savedAddresses={savedAddresses}
             selectedAddressId={selectedAddressId}
             useNewAddress={useNewAddress}

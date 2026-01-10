@@ -1,13 +1,15 @@
 "use client"
 
 import { useState } from "react"
-import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Mail, Lock, User, Eye, EyeOff, Loader2, CheckCircle2 } from "lucide-react"
+import { useSupabaseAuth } from "@/hooks/use-supabase-auth"
 
 export default function RegistroPage() {
   const router = useRouter()
+  const { signUpWithEmail, signInWithGoogle } = useSupabaseAuth()
+
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -18,6 +20,7 @@ export default function RegistroPage() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [confirmEmail, setConfirmEmail] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -63,46 +66,37 @@ export default function RegistroPage() {
     }
 
     try {
-      // Registrar usuario
-      const res = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
+      const { data, error: signUpError } = await signUpWithEmail(email, password, {
+        full_name: name,
       })
 
-      const data = await res.json()
-
-      if (!res.ok) {
-        setError(data.error || "Error al crear la cuenta")
+      if (signUpError) {
+        if (signUpError.message.includes("already registered")) {
+          setError("Este email ya está registrado")
+        } else {
+          setError(signUpError.message)
+        }
+        setLoading(false)
         return
       }
 
-      // Mostrar éxito
-      setSuccess(true)
-
-      // Esperar 1.5s y luego hacer login automático
-      setTimeout(async () => {
-        const result = await signIn("credentials", {
-          email,
-          password,
-          redirect: false,
-        })
-
-        if (result?.error) {
-          router.push("/login")
-        } else {
+      // Check if email confirmation is required
+      if (data?.user && !data.session) {
+        // Email confirmation required
+        setConfirmEmail(true)
+        setSuccess(true)
+      } else {
+        // Logged in directly
+        setSuccess(true)
+        setTimeout(() => {
           router.push("/account")
           router.refresh()
-        }
-      }, 1500)
+        }, 1500)
+      }
     } catch (err) {
       console.error("Registration error:", err)
       setError("Ocurrió un error. Por favor intenta de nuevo.")
-    } finally {
-      // ✅ FIX #11: SIEMPRE desactivar loading (excepto en success)
-      if (!success) {
-        setLoading(false)
-      }
+      setLoading(false)
     }
   }
 
@@ -110,16 +104,48 @@ export default function RegistroPage() {
     setError("")
     setLoading(true)
     try {
-      await signIn("google", { callbackUrl: "/account" })
+      const { error: googleError } = await signInWithGoogle("/account")
+      if (googleError) {
+        setError("Error al registrarse con Google")
+        setLoading(false)
+      }
     } catch (err) {
       setError("Error al registrarse con Google")
-    } finally {
-      // ✅ FIX #11: SIEMPRE desactivar loading
       setLoading(false)
     }
   }
 
-  // Pantalla de éxito
+  // Pantalla de éxito - confirmar email
+  if (success && confirmEmail) {
+    return (
+      <div className="min-h-screen bg-neutral-50 flex items-center justify-center px-4 py-12">
+        <div className="w-full max-w-md">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-8 text-center">
+            <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+              <Mail className="w-8 h-8 text-blue-600" />
+            </div>
+            <h2 className="text-2xl font-bold text-neutral-900 mb-2">
+              ¡Revisa tu correo!
+            </h2>
+            <p className="text-neutral-600 mb-4">
+              Te enviamos un enlace de confirmación a <strong>{email}</strong>
+            </p>
+            <p className="text-sm text-neutral-500">
+              Haz clic en el enlace del correo para activar tu cuenta
+            </p>
+            <Link
+              href="/login"
+              className="mt-6 inline-block text-rose-600 font-medium hover:text-rose-700"
+            >
+              Volver al inicio de sesión
+            </Link>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Pantalla de éxito - login automático
   if (success) {
     return (
       <div className="min-h-screen bg-neutral-50 flex items-center justify-center px-4 py-12">

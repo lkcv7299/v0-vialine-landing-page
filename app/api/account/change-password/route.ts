@@ -1,32 +1,23 @@
 // app/api/account/change-password/route.ts
 import { NextRequest, NextResponse } from "next/server"
-import { auth } from "@/lib/auth"
-import { sql } from "@vercel/postgres"
-import bcrypt from "bcryptjs"
+import { createClient } from "@/lib/supabase/server"
 
 // ====================================
-// POST - CAMBIAR CONTRASEÑA
+// POST - CAMBIAR CONTRASEÑA (Supabase Auth)
 // ====================================
 export async function POST(request: NextRequest) {
   try {
-    const session = await auth()
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
 
-    if (!session || !session.user?.id) {
+    if (!user?.id) {
       return NextResponse.json({ error: "No autenticado" }, { status: 401 })
     }
 
-    const userId = session.user.id
     const body = await request.json()
-    const { currentPassword, newPassword } = body
+    const { newPassword } = body
 
     // Validaciones
-    if (!currentPassword) {
-      return NextResponse.json(
-        { error: "La contraseña actual es requerida" },
-        { status: 400 }
-      )
-    }
-
     if (!newPassword) {
       return NextResponse.json(
         { error: "La nueva contraseña es requerida" },
@@ -41,56 +32,36 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    if (currentPassword === newPassword) {
-      return NextResponse.json(
-        { error: "La nueva contraseña debe ser diferente a la actual" },
-        { status: 400 }
-      )
-    }
-
-    // Obtener usuario con contraseña hasheada
-    const userResult = await sql`
-      SELECT id, password
-      FROM users
-      WHERE id = ${userId}
-      LIMIT 1
-    `
-
-    if (userResult.rows.length === 0) {
-      return NextResponse.json({ error: "Usuario no encontrado" }, { status: 404 })
-    }
-
-    const user = userResult.rows[0]
-
-    // Verificar que el usuario tenga contraseña (no OAuth)
-    if (!user.password) {
+    // Verificar que no sea usuario OAuth (sin identidad de email)
+    const emailIdentity = user.identities?.find(id => id.provider === 'email')
+    if (!emailIdentity && user.app_metadata?.provider !== 'email') {
       return NextResponse.json(
         { error: "Esta cuenta usa autenticación externa (Google). No puedes cambiar la contraseña." },
         { status: 400 }
       )
     }
 
-    // Verificar contraseña actual
-    const isPasswordCorrect = await bcrypt.compare(currentPassword, user.password)
+    // Actualizar contraseña usando Supabase Auth
+    const { error: updateError } = await supabase.auth.updateUser({
+      password: newPassword
+    })
 
-    if (!isPasswordCorrect) {
+    if (updateError) {
+      console.error("Error cambiando contraseña:", updateError)
+
+      // Manejar errores específicos de Supabase
+      if (updateError.message.includes('same password')) {
+        return NextResponse.json(
+          { error: "La nueva contraseña debe ser diferente a la actual" },
+          { status: 400 }
+        )
+      }
+
       return NextResponse.json(
-        { error: "La contraseña actual es incorrecta" },
-        { status: 401 }
+        { error: "Error al cambiar contraseña" },
+        { status: 500 }
       )
     }
-
-    // Hashear nueva contraseña
-    const hashedPassword = await bcrypt.hash(newPassword, 10)
-
-    // Actualizar contraseña
-    await sql`
-      UPDATE users
-      SET 
-        password = ${hashedPassword},
-        updated_at = NOW()
-      WHERE id = ${userId}
-    `
 
     return NextResponse.json({
       success: true,

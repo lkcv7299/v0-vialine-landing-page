@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { useState, useRef, useEffect } from "react"
 import { ShoppingBag, User, LogOut, Package, MapPin, Settings, Heart } from "lucide-react"
-import { useSession, signOut } from "next-auth/react"
+import { useSupabaseAuth } from "@/hooks/use-supabase-auth"
 import { usePathname } from "next/navigation"
 import MegaMenu from "./MegaMenu"
 import MobileMenu from "../nav/MobileMenu"
@@ -15,7 +15,7 @@ import { useScrollDirection } from "@/hooks/useScrollDirection"
 export default function SiteHeader() {
   const [showCartDrawer, setShowCartDrawer] = useState(false)
   const [showAccountMenu, setShowAccountMenu] = useState(false)
-  const { data: session } = useSession()
+  const { user, signOut, loading: authLoading } = useSupabaseAuth()
   const { itemCount } = useCart()
   const accountMenuRef = useRef<HTMLDivElement>(null)
   const pathname = usePathname()
@@ -41,6 +41,16 @@ export default function SiteHeader() {
     document.addEventListener("mousedown", handleClickOutside)
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
+
+  const handleSignOut = async () => {
+    setShowAccountMenu(false)
+    await signOut()
+    window.location.href = "/"
+  }
+
+  // Get user display info from metadata
+  const userName = user?.user_metadata?.full_name || user?.user_metadata?.name || "Cuenta"
+  const userEmail = user?.email || ""
 
   return (
     <header
@@ -76,7 +86,7 @@ export default function SiteHeader() {
           <div className="flex items-center gap-1 lg:gap-2">
 
             {/* Account - Link directo o Dropdown si está logueado */}
-            {session?.user ? (
+            {!authLoading && user ? (
               <div className="relative" ref={accountMenuRef}>
                 <button
                   onClick={() => setShowAccountMenu(!showAccountMenu)}
@@ -85,7 +95,7 @@ export default function SiteHeader() {
                 >
                   <User className="w-[18px] h-[18px] lg:w-5 lg:h-5 text-neutral-600" />
                   <span className="hidden lg:inline text-sm font-medium text-neutral-700">
-                    {session.user.name || 'Cuenta'}
+                    {userName}
                   </span>
                 </button>
 
@@ -93,10 +103,10 @@ export default function SiteHeader() {
                   <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-lg shadow-xl border border-neutral-200 z-50 py-2">
                     <div className="px-4 py-3 border-b border-neutral-200">
                       <p className="text-sm font-semibold text-neutral-900 truncate">
-                        {session.user.name || 'Usuario'}
+                        {userName}
                       </p>
                       <p className="text-xs text-neutral-600 truncate">
-                        {session.user.email}
+                        {userEmail}
                       </p>
                     </div>
 
@@ -121,7 +131,7 @@ export default function SiteHeader() {
                     </Link>
 
                     <div className="border-t border-neutral-200 mt-2 pt-2">
-                      <button onClick={() => { setShowAccountMenu(false); signOut({ callbackUrl: '/' }) }} className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-900 hover:bg-neutral-50 transition w-full">
+                      <button onClick={handleSignOut} className="flex items-center gap-3 px-4 py-2.5 text-sm text-neutral-900 hover:bg-neutral-50 transition w-full">
                         <LogOut className="w-4 h-4" />
                         Cerrar sesión
                       </button>

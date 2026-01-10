@@ -1,7 +1,7 @@
 // app/account/direcciones/page.tsx
 "use client"
 
-import { useSession } from "next-auth/react"
+import { useSupabaseAuth } from "@/hooks/use-supabase-auth"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { useState, useEffect } from "react"
@@ -47,7 +47,7 @@ const initialFormData: FormData = {
 }
 
 export default function DireccionesPage() {
-  const { data: session, status } = useSession()
+  const { user, loading: authLoading } = useSupabaseAuth()
   const router = useRouter()
   const [addresses, setAddresses] = useState<Address[]>([])
   const [loading, setLoading] = useState(true)
@@ -57,10 +57,12 @@ export default function DireccionesPage() {
   const [editingId, setEditingId] = useState<string | null>(null)
 
   useEffect(() => {
-    if (status === "authenticated") {
+    if (!authLoading && !user) {
+      router.push("/login")
+    } else if (user) {
       fetchAddresses()
     }
-  }, [status])
+  }, [authLoading, user, router])
 
   // Fetch direcciones del usuario
   const fetchAddresses = async () => {
@@ -192,17 +194,16 @@ export default function DireccionesPage() {
     setEditingId(null)
   }
 
-  if (status === "unauthenticated") {
-    router.push("/login")
-    return null
-  }
-
-  if (status === "loading") {
+  if (authLoading) {
     return (
       <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-rose-600" />
       </div>
     )
+  }
+
+  if (!user) {
+    return null
   }
 
   const getLabelIcon = (label: string) => {

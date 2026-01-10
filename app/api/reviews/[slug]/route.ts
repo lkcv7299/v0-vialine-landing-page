@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { sql } from "@vercel/postgres"
+import { createServiceClient } from "@/lib/supabase/server"
 
 /**
  * GET /api/reviews/[slug]
@@ -12,77 +12,70 @@ export async function GET(
 ) {
   try {
     const { slug } = await context.params
+    const supabase = await createServiceClient()
 
-    // Crear tabla si no existe
-    await sql`
-      CREATE TABLE IF NOT EXISTS product_reviews (
-        id SERIAL PRIMARY KEY,
-        product_slug VARCHAR(255) NOT NULL,
-        user_id INTEGER,
-        user_name VARCHAR(255) NOT NULL,
-        user_email VARCHAR(255) NOT NULL,
-        rating INTEGER NOT NULL CHECK (rating >= 1 AND rating <= 5),
-        title VARCHAR(255),
-        comment TEXT NOT NULL,
-        verified_purchase BOOLEAN DEFAULT false,
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-      )
-    `
+    // Primero obtener el product_id desde el slug
+    const { data: product, error: productError } = await supabase
+      .from('products')
+      .select('id')
+      .eq('slug', slug)
+      .single()
 
-    // Obtener reviews del producto
-    const reviews = await sql`
-      SELECT
-        id,
-        product_slug,
-        user_name,
-        rating,
-        title,
-        comment,
-        verified_purchase,
-        created_at
-      FROM product_reviews
-      WHERE product_slug = ${slug}
-      ORDER BY created_at DESC
-    `
+    if (productError || !product) {
+      return NextResponse.json({
+        reviews: [],
+        stats: {
+          total_reviews: 0,
+          average_rating: 0,
+          five_star: 0,
+          four_star: 0,
+          three_star: 0,
+          two_star: 0,
+          one_star: 0,
+        }
+      })
+    }
 
-    // Obtener estadísticas
-    const stats = await sql`
-      SELECT
-        COUNT(*) as total_reviews,
-        AVG(rating) as average_rating,
-        COUNT(CASE WHEN rating = 5 THEN 1 END) as five_star,
-        COUNT(CASE WHEN rating = 4 THEN 1 END) as four_star,
-        COUNT(CASE WHEN rating = 3 THEN 1 END) as three_star,
-        COUNT(CASE WHEN rating = 2 THEN 1 END) as two_star,
-        COUNT(CASE WHEN rating = 1 THEN 1 END) as one_star
-      FROM product_reviews
-      WHERE product_slug = ${slug}
-    `
+    // Obtener reviews del producto (solo las aprobadas)
+    const { data: reviews, error: reviewsError } = await supabase
+      .from('reviews')
+      .select('id, product_id, rating, title, comment, is_verified_purchase, created_at, user_id')
+      .eq('product_id', product.id)
+      .eq('is_approved', true)
+      .order('created_at', { ascending: false })
 
-    // ✅ FIX: Convertir tipos de PostgreSQL a number
-    const rawStats = stats.rows[0]
-    const cleanStats = rawStats ? {
-      total_reviews: parseInt(rawStats.total_reviews) || 0,
-      average_rating: parseFloat(rawStats.average_rating) || 0,
-      five_star: parseInt(rawStats.five_star) || 0,
-      four_star: parseInt(rawStats.four_star) || 0,
-      three_star: parseInt(rawStats.three_star) || 0,
-      two_star: parseInt(rawStats.two_star) || 0,
-      one_star: parseInt(rawStats.one_star) || 0,
-    } : {
-      total_reviews: 0,
-      average_rating: 0,
-      five_star: 0,
-      four_star: 0,
-      three_star: 0,
-      two_star: 0,
-      one_star: 0,
+    if (reviewsError) throw reviewsError
+
+    // Calcular estadísticas manualmente
+    const reviewsData = (reviews || []).map(r => ({
+      ...r,
+      product_slug: slug,
+      user_name: 'Cliente verificado', // Default name since we don't store it
+      verified_purchase: r.is_verified_purchase
+    }))
+    const total_reviews = reviewsData.length
+    const average_rating = total_reviews > 0
+      ? reviewsData.reduce((sum, r) => sum + r.rating, 0) / total_reviews
+      : 0
+    const five_star = reviewsData.filter(r => r.rating === 5).length
+    const four_star = reviewsData.filter(r => r.rating === 4).length
+    const three_star = reviewsData.filter(r => r.rating === 3).length
+    const two_star = reviewsData.filter(r => r.rating === 2).length
+    const one_star = reviewsData.filter(r => r.rating === 1).length
+
+    const stats = {
+      total_reviews,
+      average_rating,
+      five_star,
+      four_star,
+      three_star,
+      two_star,
+      one_star,
     }
 
     return NextResponse.json({
-      reviews: reviews.rows,
-      stats: cleanStats,
+      reviews: reviewsData,
+      stats,
     })
   } catch (error) {
     console.error("Error fetching reviews:", error)

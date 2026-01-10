@@ -1,7 +1,7 @@
 // app/account/pedidos/page.tsx
 "use client"
 
-import { useSession } from "next-auth/react"
+import { useSupabaseAuth } from "@/hooks/use-supabase-auth"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { useState, useEffect } from "react"
@@ -48,7 +48,7 @@ interface Order {
 type StatusFilter = "all" | "pending" | "processing" | "shipped" | "delivered" | "cancelled"
 
 export default function PedidosPage() {
-  const { data: session, status } = useSession()
+  const { user, loading: authLoading } = useSupabaseAuth()
   const router = useRouter()
   const [orders, setOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState(true)
@@ -57,16 +57,16 @@ export default function PedidosPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
-    if (status === "unauthenticated") {
+    if (!authLoading && !user) {
       router.push("/login")
     }
-  }, [status, router])
+  }, [authLoading, user, router])
 
   useEffect(() => {
-    if (session?.user?.id) {
+    if (user?.id) {
       fetchOrders()
     }
-  }, [session, statusFilter])
+  }, [user, statusFilter])
 
   // Fetch órdenes del usuario
   const fetchOrders = async () => {
@@ -105,12 +105,16 @@ export default function PedidosPage() {
     setTimeout(() => setSelectedOrder(null), 300)
   }
 
-  if (status === "loading") {
+  if (authLoading || loading) {
     return (
       <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-rose-600" />
       </div>
     )
+  }
+
+  if (!user) {
+    return null
   }
 
   // Filtros de estado

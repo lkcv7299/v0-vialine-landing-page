@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useSession } from "next-auth/react"
+import { useSupabaseAuth } from "@/hooks/use-supabase-auth"
 import { CheckCircle, Star } from "lucide-react"
 import ReviewStars from "./ReviewStars"
 import { toast } from "sonner"
@@ -32,7 +32,7 @@ type ReviewStats = {
 }
 
 export default function ReviewList({ productSlug }: ReviewListProps) {
-  const { data: session } = useSession()
+  const { user } = useSupabaseAuth()
   const [reviews, setReviews] = useState<Review[]>([])
   const [allReviews, setAllReviews] = useState<Review[]>([]) // ✅ Guardamos todas las reviews
   const [stats, setStats] = useState<ReviewStats>({
@@ -94,7 +94,7 @@ export default function ReviewList({ productSlug }: ReviewListProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!session) {
+    if (!user) {
       toast.error("Debes iniciar sesión para dejar una reseña")
       return
     }
@@ -186,7 +186,7 @@ export default function ReviewList({ productSlug }: ReviewListProps) {
           <h2 className="text-2xl font-bold text-neutral-900">
             Opiniones de clientes
           </h2>
-          {session && (
+          {user && (
             <button
               onClick={() => setShowForm(!showForm)}
               className="px-4 py-2 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-700 transition text-sm"
@@ -391,7 +391,7 @@ export default function ReviewList({ productSlug }: ReviewListProps) {
           <p className="text-neutral-600 mb-4">
             Aún no hay reseñas para este producto
           </p>
-          {session && (
+          {user && (
             <button
               onClick={() => setShowForm(true)}
               className="px-6 py-3 bg-rose-600 text-white rounded-lg font-semibold hover:bg-rose-700 transition"

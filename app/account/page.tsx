@@ -1,6 +1,6 @@
 "use client"
 
-import { useSession } from "next-auth/react"
+import { useSupabaseAuth } from "@/hooks/use-supabase-auth"
 import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react"
 import AccountSidebar from "@/components/AccountSidebar"
@@ -15,7 +15,7 @@ interface AccountStats {
 }
 
 export default function AccountPage() {
-  const { data: session, status } = useSession()
+  const { user, loading: authLoading } = useSupabaseAuth()
   const router = useRouter()
   const [stats, setStats] = useState<AccountStats>({
     totalOrders: 0,
@@ -27,10 +27,10 @@ export default function AccountPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    if (status === "unauthenticated") {
+    if (!authLoading && !user) {
       router.push("/login")
     }
-  }, [status, router])
+  }, [authLoading, user, router])
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -47,15 +47,14 @@ export default function AccountPage() {
       }
     }
 
-    if (session?.user?.id) {
+    if (user?.id) {
       fetchStats()
+    } else if (!authLoading) {
+      setLoading(false)
     }
-  }, [session])
+  }, [user, authLoading])
 
-  // ✅ Ya no necesitamos handleSignOut aquí
-  // AccountSidebar maneja el logout por sí mismo
-
-  if (status === "loading" || loading) {
+  if (authLoading || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-rose-600"></div>
@@ -63,11 +62,12 @@ export default function AccountPage() {
     )
   }
 
-  if (!session) {
+  if (!user) {
     return null
   }
 
-  const userName = session.user?.name || "Usuario"
+  const userName = user.user_metadata?.full_name || user.user_metadata?.name || "Usuario"
+  const userEmail = user.email || ""
 
   const quickStats = [
     {
@@ -129,7 +129,7 @@ export default function AccountPage() {
                 </div>
                 <div className="min-w-0 flex-1">
                   <h2 className="text-lg lg:text-2xl font-bold truncate">{userName}</h2>
-                  <p className="text-rose-100 text-sm lg:text-base truncate">{session.user?.email}</p>
+                  <p className="text-rose-100 text-sm lg:text-base truncate">{userEmail}</p>
                 </div>
               </div>
             </div>

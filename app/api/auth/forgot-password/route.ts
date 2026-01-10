@@ -1,10 +1,10 @@
+// app/api/auth/forgot-password/route.ts
 import { NextRequest, NextResponse } from "next/server"
-import { sql } from "@vercel/postgres"
-import crypto from "crypto"
+import { createServiceClient } from "@/lib/supabase/server"
 
 /**
  * POST /api/auth/forgot-password
- * Envía email de recuperación de contraseña
+ * Envía email de recuperación de contraseña usando Supabase Auth + Brevo
  */
 export async function POST(request: NextRequest) {
   try {
@@ -17,35 +17,38 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Verificar si el usuario existe
-    const userResult = await sql`
-      SELECT id, name FROM users
-      WHERE email = ${email}
-      LIMIT 1
-    `
+    const supabase = await createServiceClient()
 
-    if (userResult.rows.length === 0) {
+    // Generar link de recuperación usando Supabase Auth Admin
+    const { data, error } = await supabase.auth.admin.generateLink({
+      type: 'recovery',
+      email: email,
+      options: {
+        redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/auth/callback?next=/restablecer-contrasena`
+      }
+    })
+
+    if (error) {
+      // Si el usuario no existe, Supabase devuelve un error
+      if (error.message.includes('User not found')) {
+        return NextResponse.json(
+          { error: "Este email no está registrado" },
+          { status: 404 }
+        )
+      }
+      console.error("Error generando link de recuperación:", error)
       return NextResponse.json(
-        { error: "Este email no está registrado" },
-        { status: 404 }
+        { error: "Error al procesar la solicitud" },
+        { status: 500 }
       )
     }
 
-    const user = userResult.rows[0]
+    // Obtener el nombre del usuario si está disponible
+    const userName = data.user?.user_metadata?.full_name ||
+                     data.user?.user_metadata?.name ||
+                     'Usuario'
 
-    // Generar token de recuperación (válido por 1 hora)
-    const resetToken = crypto.randomBytes(32).toString("hex")
-    const resetTokenExpiry = new Date(Date.now() + 3600000) // 1 hora
-
-    // Guardar token en la base de datos
-    await sql`
-      UPDATE users
-      SET reset_token = ${resetToken},
-          reset_token_expiry = ${resetTokenExpiry.toISOString()}
-      WHERE id = ${user.id}
-    `
-
-    // Enviar email con Brevo
+    // Enviar email con Brevo usando nuestro template personalizado
     const BREVO_API_KEY = process.env.BREVO_API_KEY || process.env.NEXT_PUBLIC_BREVO_API_KEY
 
     if (!BREVO_API_KEY) {
@@ -56,7 +59,16 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const resetUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/restablecer-contrasena?token=${resetToken}`
+    // El link generado por Supabase
+    const resetUrl = data.properties?.action_link
+
+    if (!resetUrl) {
+      console.error("❌ No se pudo generar el link de recuperación")
+      return NextResponse.json(
+        { error: "Error al generar enlace de recuperación" },
+        { status: 500 }
+      )
+    }
 
     const emailHTML = `
       <!DOCTYPE html>
@@ -83,7 +95,7 @@ export async function POST(request: NextRequest) {
                 <tr>
                   <td style="padding: 40px 30px;">
                     <h2 style="color: #1f2937; margin: 0 0 20px 0; font-size: 24px;">
-                      Hola ${user.name || 'Usuario'},
+                      Hola ${userName},
                     </h2>
                     <p style="color: #4b5563; margin: 0 0 20px 0; font-size: 16px; line-height: 1.6;">
                       Recibimos una solicitud para restablecer la contraseña de tu cuenta en Vialine.
@@ -156,7 +168,7 @@ export async function POST(request: NextRequest) {
         to: [
           {
             email: email,
-            name: user.name || "Usuario",
+            name: userName,
           },
         ],
         subject: "Recuperación de contraseña - Vialine",

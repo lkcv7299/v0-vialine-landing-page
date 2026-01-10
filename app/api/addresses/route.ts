@@ -1,7 +1,6 @@
 // app/api/addresses/route.ts
 import { NextRequest, NextResponse } from "next/server"
-import { auth } from "@/lib/auth"
-import { sql } from "@vercel/postgres"
+import { createClient } from "@/lib/supabase/server"
 
 // ====================================
 // HELPER: Transform DB to Frontend
@@ -39,40 +38,27 @@ function parseFullName(fullName: string) {
 // ====================================
 export async function GET(request: NextRequest) {
   try {
-    const session = await auth()
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
 
-    if (!session || !session.user?.id) {
+    if (!user?.id) {
       return NextResponse.json(
         { error: "No autenticado" },
         { status: 401 }
       )
     }
 
-    const userId = session.user.id
+    const { data: addressesData, error } = await supabase
+      .from('addresses')
+      .select('*')
+      .eq('user_id', user.id)
+      .order('is_default', { ascending: false })
+      .order('created_at', { ascending: false })
 
-    const result = await sql`
-      SELECT
-        id,
-        user_id,
-        label,
-        first_name,
-        last_name,
-        phone,
-        address,
-        district,
-        city,
-        postal_code,
-        reference,
-        is_default,
-        created_at,
-        updated_at
-      FROM user_addresses
-      WHERE user_id = ${userId}
-      ORDER BY is_default DESC, created_at DESC
-    `
+    if (error) throw error
 
     // Transform to frontend format
-    const addresses = result.rows.map(transformToFrontend)
+    const addresses = (addressesData || []).map(transformToFrontend)
 
     return NextResponse.json({
       success: true,
@@ -92,16 +78,16 @@ export async function GET(request: NextRequest) {
 // ====================================
 export async function POST(request: NextRequest) {
   try {
-    const session = await auth()
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
 
-    if (!session || !session.user?.id) {
+    if (!user?.id) {
       return NextResponse.json(
         { error: "No autenticado" },
         { status: 401 }
       )
     }
 
-    const userId = session.user.id
     const body = await request.json()
 
     // Validar campos requeridos del frontend
@@ -118,59 +104,45 @@ export async function POST(request: NextRequest) {
     // Parse full_name into first_name and last_name
     const { first_name, last_name } = parseFullName(body.full_name)
 
-    // Si es la primera dirección O se marca como default, actualizar otras
+    // Si se marca como default, actualizar otras primero
     if (body.is_default) {
-      await sql`
-        UPDATE user_addresses
-        SET is_default = false
-        WHERE user_id = ${userId}
-      `
+      await supabase
+        .from('addresses')
+        .update({ is_default: false })
+        .eq('user_id', user.id)
     }
 
     // Si es la primera dirección del usuario, hacerla default automáticamente
-    const existingAddresses = await sql`
-      SELECT COUNT(*) as count
-      FROM user_addresses
-      WHERE user_id = ${userId}
-    `
-    const isFirstAddress = existingAddresses.rows[0].count === "0"
+    const { count } = await supabase
+      .from('addresses')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', user.id)
 
-    const result = await sql`
-      INSERT INTO user_addresses (
-        user_id,
-        label,
+    const isFirstAddress = count === 0
+
+    const { data: newAddress, error } = await supabase
+      .from('addresses')
+      .insert({
+        user_id: user.id,
+        label: body.label || 'home',
         first_name,
         last_name,
-        phone,
-        address,
-        district,
-        city,
-        postal_code,
-        reference,
-        is_default,
-        created_at,
-        updated_at
-      ) VALUES (
-        ${userId},
-        ${body.label || 'home'},
-        ${first_name},
-        ${last_name},
-        ${body.phone},
-        ${body.street},
-        ${body.city},
-        ${body.state || 'Lima'},
-        ${body.postal_code},
-        ${body.reference || ""},
-        ${body.is_default || isFirstAddress},
-        NOW(),
-        NOW()
-      )
-      RETURNING *
-    `
+        phone: body.phone,
+        address: body.street,
+        district: body.city,
+        city: body.state || 'Lima',
+        postal_code: body.postal_code,
+        reference: body.reference || "",
+        is_default: body.is_default || isFirstAddress
+      })
+      .select()
+      .single()
+
+    if (error) throw error
 
     return NextResponse.json({
       success: true,
-      address: transformToFrontend(result.rows[0]),
+      address: transformToFrontend(newAddress),
       message: "Dirección agregada exitosamente",
     })
   } catch (error) {
@@ -187,16 +159,16 @@ export async function POST(request: NextRequest) {
 // ====================================
 export async function PATCH(request: NextRequest) {
   try {
-    const session = await auth()
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
 
-    if (!session || !session.user?.id) {
+    if (!user?.id) {
       return NextResponse.json(
         { error: "No autenticado" },
         { status: 401 }
       )
     }
 
-    const userId = session.user.id
     const body = await request.json()
 
     if (!body.id) {
@@ -207,12 +179,14 @@ export async function PATCH(request: NextRequest) {
     }
 
     // Verificar que la dirección pertenezca al usuario
-    const ownership = await sql`
-      SELECT id FROM user_addresses
-      WHERE id = ${body.id} AND user_id = ${userId}
-    `
+    const { data: existing } = await supabase
+      .from('addresses')
+      .select('id')
+      .eq('id', body.id)
+      .eq('user_id', user.id)
+      .single()
 
-    if (ownership.rows.length === 0) {
+    if (!existing) {
       return NextResponse.json(
         { error: "Dirección no encontrada o no autorizada" },
         { status: 404 }
@@ -221,15 +195,14 @@ export async function PATCH(request: NextRequest) {
 
     // Si se marca como default, actualizar otras primero
     if (body.is_default === true) {
-      await sql`
-        UPDATE user_addresses
-        SET is_default = false
-        WHERE user_id = ${userId}
-      `
+      await supabase
+        .from('addresses')
+        .update({ is_default: false })
+        .eq('user_id', user.id)
     }
 
     // Parse full_name if provided
-    let updateFields: any = {}
+    let updateFields: any = { updated_at: new Date().toISOString() }
 
     if (body.full_name) {
       const { first_name, last_name } = parseFullName(body.full_name)
@@ -246,27 +219,19 @@ export async function PATCH(request: NextRequest) {
     if (body.reference !== undefined) updateFields.reference = body.reference
     if (body.is_default !== undefined) updateFields.is_default = body.is_default
 
-    const result = await sql`
-      UPDATE user_addresses
-      SET
-        label = COALESCE(${updateFields.label}, label),
-        first_name = COALESCE(${updateFields.first_name}, first_name),
-        last_name = COALESCE(${updateFields.last_name}, last_name),
-        phone = COALESCE(${updateFields.phone}, phone),
-        address = COALESCE(${updateFields.address}, address),
-        district = COALESCE(${updateFields.district}, district),
-        city = COALESCE(${updateFields.city}, city),
-        postal_code = COALESCE(${updateFields.postal_code}, postal_code),
-        reference = COALESCE(${updateFields.reference}, reference),
-        is_default = COALESCE(${updateFields.is_default}, is_default),
-        updated_at = NOW()
-      WHERE id = ${body.id} AND user_id = ${userId}
-      RETURNING *
-    `
+    const { data: updatedAddress, error } = await supabase
+      .from('addresses')
+      .update(updateFields)
+      .eq('id', body.id)
+      .eq('user_id', user.id)
+      .select()
+      .single()
+
+    if (error) throw error
 
     return NextResponse.json({
       success: true,
-      address: transformToFrontend(result.rows[0]),
+      address: transformToFrontend(updatedAddress),
       message: "Dirección actualizada exitosamente",
     })
   } catch (error) {
@@ -283,16 +248,16 @@ export async function PATCH(request: NextRequest) {
 // ====================================
 export async function DELETE(request: NextRequest) {
   try {
-    const session = await auth()
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
 
-    if (!session || !session.user?.id) {
+    if (!user?.id) {
       return NextResponse.json(
         { error: "No autenticado" },
         { status: 401 }
       )
     }
 
-    const userId = session.user.id
     const { searchParams } = new URL(request.url)
     const addressId = searchParams.get("id")
 
@@ -304,39 +269,47 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Verificar ownership y si es default
-    const address = await sql`
-      SELECT is_default FROM user_addresses
-      WHERE id = ${addressId} AND user_id = ${userId}
-    `
+    const { data: address } = await supabase
+      .from('addresses')
+      .select('is_default')
+      .eq('id', addressId)
+      .eq('user_id', user.id)
+      .single()
 
-    if (address.rows.length === 0) {
+    if (!address) {
       return NextResponse.json(
         { error: "Dirección no encontrada" },
         { status: 404 }
       )
     }
 
-    const wasDefault = address.rows[0].is_default
+    const wasDefault = address.is_default
 
     // Eliminar dirección
-    await sql`
-      DELETE FROM user_addresses
-      WHERE id = ${addressId} AND user_id = ${userId}
-    `
+    const { error: deleteError } = await supabase
+      .from('addresses')
+      .delete()
+      .eq('id', addressId)
+      .eq('user_id', user.id)
+
+    if (deleteError) throw deleteError
 
     // Si era default, marcar otra como default
     if (wasDefault) {
-      await sql`
-        UPDATE user_addresses
-        SET is_default = true
-        WHERE user_id = ${userId}
-        AND id = (
-          SELECT id FROM user_addresses
-          WHERE user_id = ${userId}
-          ORDER BY created_at DESC
-          LIMIT 1
-        )
-      `
+      const { data: nextAddress } = await supabase
+        .from('addresses')
+        .select('id')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single()
+
+      if (nextAddress) {
+        await supabase
+          .from('addresses')
+          .update({ is_default: true })
+          .eq('id', nextAddress.id)
+      }
     }
 
     return NextResponse.json({

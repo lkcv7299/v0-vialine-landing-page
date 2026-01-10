@@ -414,18 +414,33 @@ export async function sendAdminNotification(orderData: OrderData): Promise<boole
 }
 
 /**
- * Verifica si un email pertenece a un usuario registrado
+ * Verifica si un email pertenece a un usuario registrado en Supabase Auth
  */
 async function isRegisteredUser(email: string): Promise<boolean> {
   try {
-    const { sql } = await import('@vercel/postgres')
-    const result = await sql`
-      SELECT COUNT(*) as count
-      FROM users
-      WHERE LOWER(email) = LOWER(${email})
-      LIMIT 1
-    `
-    return result.rows[0].count > 0
+    // Import dinámico para evitar problemas con Edge Runtime
+    const { createServiceClient } = await import('@/lib/supabase/server')
+    const supabase = await createServiceClient()
+
+    // Intentar generar un magic link - si el usuario no existe, dará error
+    const { error } = await supabase.auth.admin.generateLink({
+      type: 'magiclink',
+      email: email,
+    })
+
+    // Si no hay error, el usuario existe
+    if (!error) {
+      return true
+    }
+
+    // Si el error indica que el usuario no existe
+    if (error.message.includes('User not found')) {
+      return false
+    }
+
+    // Otro tipo de error, asumimos que existe para no romper el flujo
+    console.error("Error verificando usuario:", error)
+    return false
   } catch (error) {
     console.error("Error verificando usuario registrado:", error)
     // En caso de error, asumimos que no está registrado (fallback a tracking público)

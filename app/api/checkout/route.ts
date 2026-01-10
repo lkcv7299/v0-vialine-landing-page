@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
-import { sql } from "@vercel/postgres"
+import { createClient, createServiceClient } from "@/lib/supabase/server"
 import { sendAdminNotification, sendCustomerConfirmation } from "@/lib/order-notifications"
-import { auth } from "@/lib/auth"
 
 // ====================================
 // TIPOS
@@ -50,86 +49,64 @@ function generateOrderId(): string {
 }
 
 // ====================================
-// FUNCIÓN AUXILIAR: Guardar en BD
+// FUNCIÓN AUXILIAR: Guardar en BD (Supabase)
 // ====================================
-async function saveOrderToDatabase(orderData: CheckoutRequest & { orderId: string; createdAt: string; status: string; userId?: number }) {
+async function saveOrderToDatabase(orderData: CheckoutRequest & { orderId: string; createdAt: string; status: string; userId?: string }) {
+  const supabase = await createServiceClient()
+
   try {
-    // ✅ FIXED: Solo log en desarrollo
     if (process.env.NODE_ENV === 'development') {
       console.log(`💾 Guardando orden ${orderData.orderId} en base de datos...`)
     }
 
-    // Insertar orden principal (con user_id si está logueado)
-    await sql`
-      INSERT INTO orders (
-        order_id,
-        user_id,
-        customer_first_name,
-        customer_last_name,
-        customer_email,
-        customer_phone,
-        shipping_address,
-        shipping_district,
-        shipping_city,
-        shipping_postal_code,
-        shipping_reference,
-        subtotal,
-        shipping_cost,
-        total,
-        payment_method,
-        notes,
-        status,
-        created_at
-      ) VALUES (
-        ${orderData.orderId},
-        ${orderData.userId || null},
-        ${orderData.customer.firstName},
-        ${orderData.customer.lastName},
-        ${orderData.customer.email},
-        ${orderData.customer.phone},
-        ${orderData.shippingAddress.address},
-        ${orderData.shippingAddress.district},
-        ${orderData.shippingAddress.city},
-        ${orderData.shippingAddress.postalCode},
-        ${orderData.shippingAddress.reference},
-        ${orderData.subtotal},
-        ${orderData.shippingCost},
-        ${orderData.total},
-        ${orderData.paymentMethod},
-        ${orderData.notes},
-        ${orderData.status},
-        ${orderData.createdAt}
-      )
-    `
+    // Insertar orden principal
+    const { data: newOrder, error: orderError } = await supabase
+      .from('orders')
+      .insert({
+        order_number: orderData.orderId,
+        user_id: orderData.userId || null,
+        customer_name: `${orderData.customer.firstName} ${orderData.customer.lastName}`.trim(),
+        customer_email: orderData.customer.email,
+        customer_phone: orderData.customer.phone,
+        shipping_address: {
+          address: orderData.shippingAddress.address,
+          district: orderData.shippingAddress.district,
+          city: orderData.shippingAddress.city,
+          postalCode: orderData.shippingAddress.postalCode,
+          reference: orderData.shippingAddress.reference
+        },
+        subtotal: orderData.subtotal,
+        shipping_cost: orderData.shippingCost,
+        total: orderData.total,
+        payment_method: orderData.paymentMethod,
+        customer_notes: orderData.notes,
+        status: orderData.status,
+        created_at: orderData.createdAt
+      })
+      .select('id')
+      .single()
 
-    // Insertar items de la orden en tabla separada
-    for (const item of orderData.items) {
-      await sql`
-        INSERT INTO order_items (
-          order_id,
-          product_slug,
-          product_title,
-          product_price,
-          product_image,
-          selected_color,
-          selected_size,
-          quantity,
-          item_total
-        ) VALUES (
-          ${orderData.orderId},
-          ${item.productSlug},
-          ${item.productTitle},
-          ${item.productPrice},
-          ${item.productImage},
-          ${item.selectedColor},
-          ${item.selectedSize},
-          ${item.quantity},
-          ${item.productPrice * item.quantity}
-        )
-      `
-    }
+    if (orderError) throw orderError
 
-    // ✅ FIXED: Solo log en desarrollo
+    // Insertar items de la orden usando el UUID interno
+    const orderItems = orderData.items.map(item => ({
+      order_id: newOrder.id,
+      product_slug: item.productSlug,
+      product_title: item.productTitle,
+      product_price: item.productPrice,
+      product_image: item.productImage,
+      color_name: item.selectedColor,
+      size: item.selectedSize,
+      quantity: item.quantity,
+      item_total: item.productPrice * item.quantity
+    }))
+
+    const { error: itemsError } = await supabase
+      .from('order_items')
+      .insert(orderItems)
+
+    if (itemsError) throw itemsError
+
     if (process.env.NODE_ENV === 'development') {
       console.log(`✅ Orden ${orderData.orderId} guardada exitosamente`)
     }
@@ -155,27 +132,16 @@ export async function POST(request: NextRequest) {
     }
 
     // ====================================
-    // OBTENER USER_ID si está logueado
+    // OBTENER USER_ID si está logueado (Supabase Auth)
     // ====================================
-    const session = await auth()
-    let userId: number | undefined = undefined
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    let userId: string | undefined = undefined
 
-    if (session?.user?.email) {
-      try {
-        const userResult = await sql`
-          SELECT id FROM users
-          WHERE email = ${session.user.email}
-          LIMIT 1
-        `
-        if (userResult.rows.length > 0) {
-          userId = userResult.rows[0].id
-          if (process.env.NODE_ENV === 'development') {
-            console.log(`👤 Orden para usuario ID: ${userId}`)
-          }
-        }
-      } catch (error) {
-        console.error('Error obteniendo user_id:', error)
-        // Continuar sin user_id (compra como invitado)
+    if (user?.id) {
+      userId = user.id
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`👤 Orden para usuario ID: ${userId}`)
       }
     }
 
@@ -244,38 +210,44 @@ export async function PATCH(request: NextRequest) {
       console.log(`🔄 Actualizando orden ${orderId}...`)
     }
 
-    // Obtener datos de la orden para enviar email
-    const orderResult = await sql`
-      SELECT * FROM orders
-      WHERE order_id = ${orderId}
-      LIMIT 1
-    `
+    // Obtener datos de la orden para enviar email (Supabase)
+    const supabase = await createServiceClient()
 
-    if (orderResult.rows.length === 0) {
+    const { data: order, error: orderError } = await supabase
+      .from('orders')
+      .select('*')
+      .eq('order_number', orderId)
+      .single()
+
+    if (orderError || !order) {
       return NextResponse.json(
         { error: "Orden no encontrada" },
         { status: 404 }
       )
     }
 
-    const order = orderResult.rows[0]
+    // Obtener items de la orden usando el UUID interno
+    const { data: orderItems, error: itemsError } = await supabase
+      .from('order_items')
+      .select('*')
+      .eq('order_id', order.id)
 
-    // Obtener items de la orden
-    const itemsResult = await sql`
-      SELECT * FROM order_items
-      WHERE order_id = ${orderId}
-    `
+    if (itemsError) {
+      console.error("Error obteniendo items:", itemsError)
+    }
 
     // Actualizar estado en BD
-    await sql`
-      UPDATE orders
-      SET 
-        payment_id = ${paymentId || null},
-        payment_status = ${status || 'paid'},
-        status = ${status === 'paid' ? 'paid' : 'pending'},
-        updated_at = CURRENT_TIMESTAMP
-      WHERE order_id = ${orderId}
-    `
+    const { error: updateError } = await supabase
+      .from('orders')
+      .update({
+        payment_id: paymentId || null,
+        payment_status: status || 'paid',
+        status: status === 'paid' ? 'paid' : 'pending',
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', order.id)
+
+    if (updateError) throw updateError
 
     // ✅ FIXED: Solo log en desarrollo
     if (process.env.NODE_ENV === 'development') {
@@ -291,34 +263,42 @@ export async function PATCH(request: NextRequest) {
         console.log(`📧 Enviando confirmación al cliente...`)
       }
       
+      // Parse customer name into first/last for email
+      const nameParts = (order.customer_name || '').trim().split(' ')
+      const firstName = nameParts[0] || ''
+      const lastName = nameParts.slice(1).join(' ') || ''
+
+      // Parse shipping address JSON
+      const shippingAddr = order.shipping_address as any || {}
+
       const emailData = {
-        orderId: order.order_id,
+        orderId: order.order_number,
         customer: {
-          firstName: order.customer_first_name,
-          lastName: order.customer_last_name,
+          firstName,
+          lastName,
           email: order.customer_email,
           phone: order.customer_phone
         },
         shippingAddress: {
-          address: order.shipping_address,
-          district: order.shipping_district,
-          city: order.shipping_city,
-          postalCode: order.shipping_postal_code,
-          reference: order.shipping_reference
+          address: shippingAddr.address || '',
+          district: shippingAddr.district || '',
+          city: shippingAddr.city || '',
+          postalCode: shippingAddr.postalCode || '',
+          reference: shippingAddr.reference || ''
         },
-        items: itemsResult.rows.map((item: any) => ({
+        items: (orderItems || []).map((item: any) => ({
           productTitle: item.product_title,
-          productPrice: parseFloat(item.product_price),
+          productPrice: item.product_price,
           quantity: item.quantity,
-          selectedColor: item.selected_color,
-          selectedSize: item.selected_size
+          selectedColor: item.color_name,
+          selectedSize: item.size
         })),
-        subtotal: parseFloat(order.subtotal),
-        shippingCost: parseFloat(order.shipping_cost),
-        total: parseFloat(order.total),
-        paymentMethod: order.payment_method,
-        notes: order.notes,
-        createdAt: order.created_at
+        subtotal: order.subtotal,
+        shippingCost: order.shipping_cost,
+        total: order.total,
+        paymentMethod: (order.payment_method || 'contra_entrega') as "culqi" | "contra_entrega",
+        notes: order.customer_notes || '',
+        createdAt: order.created_at || new Date().toISOString()
       }
 
       // ✅ Enviar emails de confirmación (pago confirmado)

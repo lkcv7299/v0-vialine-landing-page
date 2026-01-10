@@ -1,48 +1,29 @@
-import { NextRequest, NextResponse } from "next/server"
-import { sql } from "@vercel/postgres"
+// ====================================
+// ARCHIVO DEPRECADO - MIGRADO A SUPABASE AUTH
+// ====================================
+//
+// La validación de tokens de reset ahora es manejada automáticamente
+// por Supabase Auth a través del callback.
+//
+// Flujo:
+// 1. Usuario hace clic en el link del email
+// 2. Supabase valida el token internamente
+// 3. Redirige a /auth/callback con session válida
+// 4. La página /restablecer-contrasena puede usar la sesión
+//
+// Ver: app/auth/callback/route.ts
+//
+// Fecha de migración: 2026-01-09
+//
 
-/**
- * POST /api/auth/validate-reset-token
- * Valida si un token de recuperación es válido y no ha expirado
- */
-export async function POST(request: NextRequest) {
-  try {
-    const { token } = await request.json()
+import { NextResponse } from "next/server"
 
-    if (!token) {
-      return NextResponse.json(
-        { valid: false, error: "Token requerido" },
-        { status: 400 }
-      )
-    }
-
-    // Buscar usuario con ese token
-    const result = await sql`
-      SELECT id, reset_token_expiry
-      FROM users
-      WHERE reset_token = ${token}
-      LIMIT 1
-    `
-
-    if (result.rows.length === 0) {
-      return NextResponse.json({ valid: false })
-    }
-
-    const user = result.rows[0]
-    const expiryDate = new Date(user.reset_token_expiry)
-    const now = new Date()
-
-    // Verificar si el token ha expirado
-    if (expiryDate < now) {
-      return NextResponse.json({ valid: false, error: "Token expirado" })
-    }
-
-    return NextResponse.json({ valid: true })
-  } catch (error) {
-    console.error("Error validating token:", error)
-    return NextResponse.json(
-      { valid: false, error: "Error al validar token" },
-      { status: 500 }
-    )
-  }
+export async function POST() {
+  return NextResponse.json(
+    {
+      error: "Esta ruta ya no está en uso.",
+      hint: "La validación de tokens es manejada automáticamente por Supabase Auth"
+    },
+    { status: 410 }
+  )
 }

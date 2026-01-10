@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
-import { sql } from "@vercel/postgres"
-import { auth } from "@/lib/auth"
+import { createClient, createServiceClient } from "@/lib/supabase/server"
 
 /**
  * POST /api/reviews
@@ -9,9 +8,10 @@ import { auth } from "@/lib/auth"
  */
 export async function POST(request: NextRequest) {
   try {
-    const session = await auth()
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
 
-    if (!session || !session.user?.email) {
+    if (!user?.id || !user?.email) {
       return NextResponse.json(
         { error: "Debes iniciar sesión para dejar una reseña" },
         { status: 401 }
@@ -43,25 +43,32 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Obtener user_id
-    const userResult = await sql`
-      SELECT id FROM users
-      WHERE email = ${session.user.email}
-      LIMIT 1
-    `
+    // Usamos service client para operaciones admin
+    const serviceClient = await createServiceClient()
 
-    const userId = userResult.rows.length > 0 ? userResult.rows[0].id : null
-    const userName = session.user.name || session.user.email.split("@")[0]
+    // Primero obtener el product_id desde el slug
+    const { data: product, error: productError } = await serviceClient
+      .from('products')
+      .select('id')
+      .eq('slug', productSlug)
+      .single()
+
+    if (productError || !product) {
+      return NextResponse.json(
+        { error: "Producto no encontrado" },
+        { status: 404 }
+      )
+    }
 
     // Verificar si el usuario ya dejó una review para este producto
-    const existingReview = await sql`
-      SELECT id FROM product_reviews
-      WHERE product_slug = ${productSlug}
-        AND user_email = ${session.user.email}
-      LIMIT 1
-    `
+    const { data: existingReview } = await serviceClient
+      .from('reviews')
+      .select('id')
+      .eq('product_id', product.id)
+      .eq('user_id', user.id)
+      .single()
 
-    if (existingReview.rows.length > 0) {
+    if (existingReview) {
       return NextResponse.json(
         { error: "Ya has dejado una reseña para este producto" },
         { status: 400 }
@@ -69,46 +76,39 @@ export async function POST(request: NextRequest) {
     }
 
     // Verificar si el usuario compró el producto (con orden pagada)
-    const purchaseCheck = await sql`
-      SELECT o.id
-      FROM orders o
-      INNER JOIN order_items oi ON o.order_id = oi.order_id
-      WHERE o.user_id = ${userId}
-        AND (o.status = 'paid' OR o.payment_status = 'paid')
-        AND oi.product_slug = ${productSlug}
-      LIMIT 1
-    `
+    const { data: purchaseData } = await serviceClient
+      .from('orders')
+      .select(`
+        id,
+        order_items!inner(product_slug)
+      `)
+      .eq('user_id', user.id)
+      .or('status.eq.paid,payment_status.eq.paid')
+      .eq('order_items.product_slug', productSlug)
+      .limit(1)
 
-    const verifiedPurchase = purchaseCheck.rows.length > 0
+    const verifiedPurchase = (purchaseData && purchaseData.length > 0)
 
     // Insertar la review
-    const result = await sql`
-      INSERT INTO product_reviews (
-        product_slug,
-        user_id,
-        user_name,
-        user_email,
+    const { data: newReview, error } = await serviceClient
+      .from('reviews')
+      .insert({
+        product_id: product.id,
+        user_id: user.id,
         rating,
-        title,
+        title: title || null,
         comment,
-        verified_purchase
-      )
-      VALUES (
-        ${productSlug},
-        ${userId},
-        ${userName},
-        ${session.user.email},
-        ${rating},
-        ${title || null},
-        ${comment},
-        ${verifiedPurchase}
-      )
-      RETURNING id, created_at
-    `
+        is_verified_purchase: verifiedPurchase,
+        is_approved: false // Reviews need admin approval
+      })
+      .select('id, created_at')
+      .single()
+
+    if (error) throw error
 
     return NextResponse.json({
       success: true,
-      review: result.rows[0],
+      review: newReview,
     })
   } catch (error) {
     console.error("Error creating review:", error)

@@ -1,14 +1,16 @@
 "use client"
 
-import { Suspense, useState } from "react"
-import { signIn } from "next-auth/react"
+import { Suspense, useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { Mail, Lock, Eye, EyeOff, Loader2 } from "lucide-react"
+import { useSupabaseAuth } from "@/hooks/use-supabase-auth"
 
 function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const { signInWithEmail, signInWithGoogle, user, loading: authLoading } = useSupabaseAuth()
+
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
@@ -16,7 +18,22 @@ function LoginForm() {
   const [loading, setLoading] = useState(false)
 
   // Get callback URL from search params or default to /account
-  const callbackUrl = searchParams.get("callbackUrl") || "/account"
+  const callbackUrl = searchParams.get("callbackUrl") || searchParams.get("redirectTo") || "/account"
+
+  // Check for OAuth errors in URL
+  useEffect(() => {
+    const errorParam = searchParams.get("error")
+    if (errorParam) {
+      setError(decodeURIComponent(errorParam))
+    }
+  }, [searchParams])
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user && !authLoading) {
+      router.push(callbackUrl)
+    }
+  }, [user, authLoading, router, callbackUrl])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -24,14 +41,16 @@ function LoginForm() {
     setLoading(true)
 
     try {
-      const result = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      })
+      const { error: signInError } = await signInWithEmail(email, password)
 
-      if (result?.error) {
-        setError("Email o contraseña incorrectos")
+      if (signInError) {
+        if (signInError.message.includes("Invalid login credentials")) {
+          setError("Email o contraseña incorrectos")
+        } else if (signInError.message.includes("Email not confirmed")) {
+          setError("Debes confirmar tu email antes de iniciar sesión")
+        } else {
+          setError(signInError.message)
+        }
         return
       }
 
@@ -42,7 +61,6 @@ function LoginForm() {
       console.error("Login error:", err)
       setError("Ocurrió un error. Por favor intenta de nuevo.")
     } finally {
-      // ✅ FIX #11: SIEMPRE desactivar loading
       setLoading(false)
     }
   }
@@ -51,13 +69,25 @@ function LoginForm() {
     setError("")
     setLoading(true)
     try {
-      await signIn("google", { callbackUrl })
+      const { error: googleError } = await signInWithGoogle(callbackUrl)
+      if (googleError) {
+        setError("Error al iniciar sesión con Google")
+        setLoading(false)
+      }
+      // Don't set loading to false on success - redirect will happen
     } catch (err) {
       setError("Error al iniciar sesión con Google")
-    } finally {
-      // ✅ FIX #11: SIEMPRE desactivar loading
       setLoading(false)
     }
+  }
+
+  // Show loading while checking auth state
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-neutral-900"></div>
+      </div>
+    )
   }
 
   return (

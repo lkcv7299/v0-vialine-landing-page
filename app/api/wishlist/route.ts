@@ -1,34 +1,38 @@
 // app/api/wishlist/route.ts
 import { NextRequest, NextResponse } from "next/server"
-import { auth } from "@/lib/auth"
-import { sql } from "@vercel/postgres"
+import { createClient, createServiceClient } from "@/lib/supabase/server"
 
 // ====================================
 // GET - OBTENER WISHLIST DEL USUARIO
 // ====================================
 export async function GET(request: NextRequest) {
   try {
-    const session = await auth()
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
 
     // Si no hay sesión, retornar wishlist vacío (guest user)
-    if (!session || !session.user?.id) {
+    if (!user?.id) {
       return NextResponse.json({
         success: true,
         items: [],
       })
     }
 
-    const userId = session.user.id
+    // Obtener wishlist del usuario con join a productos para obtener slugs
+    const { data: wishlistData, error } = await supabase
+      .from('wishlist')
+      .select(`
+        id,
+        product_id,
+        products!inner(slug)
+      `)
+      .eq('user_id', user.id)
+      .order('created_at', { ascending: false })
 
-    // Obtener wishlist del usuario
-    const result = await sql`
-      SELECT product_slug
-      FROM wishlist
-      WHERE user_id = ${userId}
-      ORDER BY added_at DESC
-    `
+    if (error) throw error
 
-    const items = result.rows.map((row) => row.product_slug)
+    // Extraer los slugs de los productos
+    const items = (wishlistData || []).map((row: any) => row.products?.slug).filter(Boolean)
 
     return NextResponse.json({
       success: true,
@@ -48,16 +52,16 @@ export async function GET(request: NextRequest) {
 // ====================================
 export async function POST(request: NextRequest) {
   try {
-    const session = await auth()
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
 
-    if (!session || !session.user?.id) {
+    if (!user?.id) {
       return NextResponse.json(
         { error: "Debes iniciar sesión para guardar favoritos" },
         { status: 401 }
       )
     }
 
-    const userId = session.user.id
     const body = await request.json()
     const { productSlug } = body
 
@@ -68,14 +72,30 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Verificar si ya está en wishlist
-    const existing = await sql`
-      SELECT id FROM wishlist
-      WHERE user_id = ${userId} AND product_slug = ${productSlug}
-      LIMIT 1
-    `
+    // Primero obtener el product_id desde el slug
+    const serviceClient = await createServiceClient()
+    const { data: product, error: productError } = await serviceClient
+      .from('products')
+      .select('id')
+      .eq('slug', productSlug)
+      .single()
 
-    if (existing.rows.length > 0) {
+    if (productError || !product) {
+      return NextResponse.json(
+        { error: "Producto no encontrado" },
+        { status: 404 }
+      )
+    }
+
+    // Verificar si ya está en wishlist
+    const { data: existing } = await supabase
+      .from('wishlist')
+      .select('id')
+      .eq('user_id', user.id)
+      .eq('product_id', product.id)
+      .single()
+
+    if (existing) {
       return NextResponse.json({
         success: true,
         message: "Producto ya está en favoritos",
@@ -83,10 +103,14 @@ export async function POST(request: NextRequest) {
     }
 
     // Agregar a wishlist
-    await sql`
-      INSERT INTO wishlist (user_id, product_slug, added_at)
-      VALUES (${userId}, ${productSlug}, NOW())
-    `
+    const { error } = await supabase
+      .from('wishlist')
+      .insert({
+        user_id: user.id,
+        product_id: product.id
+      })
+
+    if (error) throw error
 
     return NextResponse.json({
       success: true,
@@ -106,13 +130,13 @@ export async function POST(request: NextRequest) {
 // ====================================
 export async function DELETE(request: NextRequest) {
   try {
-    const session = await auth()
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
 
-    if (!session || !session.user?.id) {
+    if (!user?.id) {
       return NextResponse.json({ error: "No autenticado" }, { status: 401 })
     }
 
-    const userId = session.user.id
     const { searchParams } = new URL(request.url)
     const productSlug = searchParams.get("productSlug")
 
@@ -123,11 +147,29 @@ export async function DELETE(request: NextRequest) {
       )
     }
 
+    // Primero obtener el product_id desde el slug
+    const serviceClient = await createServiceClient()
+    const { data: product, error: productError } = await serviceClient
+      .from('products')
+      .select('id')
+      .eq('slug', productSlug)
+      .single()
+
+    if (productError || !product) {
+      return NextResponse.json(
+        { error: "Producto no encontrado" },
+        { status: 404 }
+      )
+    }
+
     // Remover de wishlist
-    await sql`
-      DELETE FROM wishlist
-      WHERE user_id = ${userId} AND product_slug = ${productSlug}
-    `
+    const { error } = await supabase
+      .from('wishlist')
+      .delete()
+      .eq('user_id', user.id)
+      .eq('product_id', product.id)
+
+    if (error) throw error
 
     return NextResponse.json({
       success: true,
